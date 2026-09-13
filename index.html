@@ -1,13 +1,346 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PASS</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Révisions Médecine — Index des matières</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800;9..144,900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#151B2E;
+    --ink-soft:#5C6478;
+    --paper:#F6F4EE;
+    --card:#FFFFFF;
+    --line:#E5E1D4;
+    --gold:#E7A93C;
+
+    /* couleurs par matière (mêmes teintes que les fichiers matière) */
+    --c-biophysique:#E7A93C;
+    --c-medicaments:#34D399;
+    --c-physiologie:#F0729B;
+    --c-biochimie:#2DD4BF;
+    --c-milieu:#4FA6E7;
+    --c-chimie:#A87FEE;
+    --c-sciences-vie:#52C9A6;
+    --c-anglais:#5B8CF0;
+    --c-metiers:#F0894F;
+    --c-sante-pub:#3FCBE8;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'IBM Plex Sans', sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    padding:60px 22px 54px;
+    background:var(--paper);
+  }
+  .blob{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(60px);
+    opacity:0.55;
+    z-index:0;
+  }
+  .blob-1{ width:340px; height:340px; top:-140px; left:-100px; background:radial-gradient(circle, var(--c-medicaments), transparent 70%); }
+  .blob-2{ width:300px; height:300px; top:-80px; right:-120px; background:radial-gradient(circle, var(--c-chimie), transparent 70%); }
+  .blob-3{ width:260px; height:260px; bottom:-160px; left:40%; background:radial-gradient(circle, var(--c-physiologie), transparent 70%); }
+
+  .hero-inner{ position:relative; z-index:1; max-width:900px; margin:0 auto; }
+
+  .badge-row{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:22px; }
+  .badge-row span{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px; letter-spacing:.03em;
+    background:var(--card);
+    border:1px solid var(--line);
+    padding:5px 11px;
+    border-radius:100px;
+    color:var(--ink-soft);
+  }
+
+  .hero h1{
+    font-family:'Fraunces', serif;
+    font-optical-sizing:auto;
+    font-weight:700;
+    font-size:clamp(34px, 6vw, 58px);
+    line-height:1.04;
+    margin:0 0 18px;
+    letter-spacing:-0.01em;
+  }
+  .hero h1 em{
+    font-style:italic;
+    font-weight:500;
+    background:linear-gradient(100deg, var(--c-medicaments), var(--c-chimie) 60%, var(--c-physiologie));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  .hero p{
+    font-size:17px;
+    line-height:1.6;
+    color:var(--ink-soft);
+    max-width:520px;
+    margin:0 0 30px;
+  }
+
+  .hero-meta{
+    display:flex; gap:26px; flex-wrap:wrap;
+  }
+  .hero-meta .stat{ display:flex; flex-direction:column; gap:2px; }
+  .hero-meta .stat b{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:28px;
+  }
+  .hero-meta .stat span{
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
+
+  /* ============ SEARCH ============ */
+  .toolbar{
+    max-width:900px; margin:0 auto; padding:0 22px 8px;
+    position:relative; z-index:1;
+  }
+  #searchBox{
+    width:100%;
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:15px;
+    padding:14px 18px;
+    border-radius:14px;
+    border:1.5px solid var(--line);
+    background:var(--card);
+    color:var(--ink);
+    outline:none;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  #searchBox:focus{ border-color:var(--ink); box-shadow:0 0 0 4px rgba(21,27,46,0.06); }
+  #searchBox::placeholder{ color:#A9A492; }
+
+  /* ============ MODULES ============ */
+  .content{ max-width:900px; margin:0 auto; padding:34px 22px 70px; }
+
+  .module{ margin-bottom:38px; }
+  .module-head{
+    display:flex; align-items:baseline; gap:10px;
+    margin-bottom:14px;
+  }
+  .module-head h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:20px;
+    margin:0;
+  }
+  .module-head .count{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    font-family:'IBM Plex Mono', monospace;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
+    gap:14px;
+  }
+
+  .card{
+    position:relative;
+    display:block;
+    text-decoration:none;
+    color:var(--ink);
+    background:var(--card);
+    border-radius:16px;
+    border:1px solid var(--line);
+    padding:20px 18px 18px;
+    overflow:hidden;
+    transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+  }
+  .card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 14px 28px -14px rgba(21,27,46,0.28);
+  }
+  .card:active{ transform:translateY(-1px); }
+
+  .card .tab{
+    position:absolute; top:0; left:0; right:0; height:5px;
+    background:var(--c);
+  }
+  .card .dot{
+    width:9px; height:9px; border-radius:50%;
+    background:var(--c);
+    margin-bottom:14px;
+  }
+  .card h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:17.5px;
+    margin:0 0 6px;
+    line-height:1.25;
+  }
+  .card p{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin:0 0 16px;
+    line-height:1.45;
+  }
+  .card .go{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:12.5px; font-weight:600;
+    color:var(--c);
+  }
+  .card .go svg{ width:13px; height:13px; transition:transform .16s ease; }
+  .card:hover .go svg{ transform:translateX(3px); }
+
+  .empty{
+    text-align:center;
+    padding:60px 20px;
+    color:var(--ink-soft);
+    font-size:14.5px;
+    display:none;
+  }
+
+  footer{
+    max-width:900px; margin:0 auto;
+    padding:24px 22px 40px;
+    border-top:1px solid var(--line);
+    color:var(--ink-soft);
+    font-size:12px;
+    font-family:'IBM Plex Mono', monospace;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  }
+
+  @media (max-width:480px){
+    .hero{ padding:44px 16px 40px; }
+    .content{ padding:26px 16px 50px; }
+  }
+</style>
 </head>
 <body>
-    <script>
-        window.location.href = "biophysique.html";
-    </script>
+
+<div class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="hero-inner">
+    <div class="badge-row">
+      <span>PASS / LAS · Médisup</span>
+      <span>Flashcards + QRM + fiches PDF</span>
+    </div>
+    <h1>Toutes tes matières,<br><em>une révision à la fois</em>.</h1>
+    <p>Choisis une matière pour ouvrir ses flashcards et ses QRM. Chaque module a sa propre couleur pour que tu t'y retrouves d'un coup d'œil — tout reste local, aucun compte, aucune connexion nécessaire.</p>
+    <div class="hero-meta">
+      <div class="stat"><b id="statCount">10</b><span>matières</span></div>
+      <div class="stat"><b>4</b><span>modules</span></div>
+      <div class="stat"><b>0</b><span>connexion requise</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="toolbar">
+  <input type="text" id="searchBox" placeholder="Rechercher une matière...">
+</div>
+
+<div class="content" id="content"></div>
+
+<footer>
+  <span>Médisup Tours/Orléans — index des matières</span>
+  <span id="footStamp"></span>
+</footer>
+
+<script>
+const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
+const MODULES = [
+  {
+    label: "M1",
+    matieres: [
+      { title:"Biophysique Appliquée", desc:"États de la matière, systèmes gazeux, constitution de la matière.", href:"biophysique.html", color:"var(--c-biophysique)" },
+      { title:"Initiation aux médicaments", desc:"Bases de pharmacologie et du médicament.", href:"initiation-medicaments.html", color:"var(--c-medicaments)" },
+      { title:"Physiologie", desc:"Fonctionnement des grands systèmes du corps humain.", href:"physiologie.html", color:"var(--c-physiologie)" },
+    ]
+  },
+  {
+    label: "M2",
+    matieres: [
+      { title:"Biochimie", desc:"Métabolisme, biomolécules, voies enzymatiques.", href:"biochimie.html", color:"var(--c-biochimie)" },
+      { title:"Biophysique du milieu intérieur", desc:"Équilibres physico-chimiques de l'organisme.", href:"biophysique-milieu-interieur.html", color:"var(--c-milieu)" },
+      { title:"Chimie", desc:"Chimie générale et organique appliquée à la santé.", href:"chimie.html", color:"var(--c-chimie)" },
+    ]
+  },
+  {
+    label: "M3",
+    matieres: [
+      { title:"Sciences de la vie", desc:"Biologie cellulaire, génétique, embryologie.", href:"sciences-vie.html", color:"var(--c-sciences-vie)" },
+    ]
+  },
+  {
+    label: "M4",
+    matieres: [
+      { title:"Anglais", desc:"Anglais médical et scientifique.", href:"anglais.html", color:"var(--c-anglais)" },
+      { title:"Découverte métiers santé", desc:"Panorama des professions de santé.", href:"decouverte-metiers-sante.html", color:"var(--c-metiers)" },
+      { title:"Santé publique", desc:"Organisation du système de santé, prévention, épidémiologie.", href:"sante-publique.html", color:"var(--c-sante-pub)" },
+    ]
+  },
+];
+
+const content = document.getElementById("content");
+const searchBox = document.getElementById("searchBox");
+
+function cardHTML(m){
+  return `
+    <a class="card" href="${m.href}" style="--c:${m.color}">
+      <div class="tab"></div>
+      <div class="dot"></div>
+      <h3>${m.title}</h3>
+      <p>${m.desc}</p>
+      <span class="go">Ouvrir ${ARROW}</span>
+    </a>`;
+}
+
+function render(filter){
+  const q = (filter || "").trim().toLowerCase();
+  let html = "";
+  let total = 0;
+  let visibleTotal = 0;
+
+  MODULES.forEach(mod => {
+    const matched = mod.matieres.filter(m => !q || m.title.toLowerCase().includes(q));
+    total += mod.matieres.length;
+    if (matched.length === 0) return;
+    visibleTotal += matched.length;
+    html += `
+      <div class="module">
+        <div class="module-head">
+          <h2>${mod.label}</h2>
+          <span class="count">${matched.length} matière${matched.length > 1 ? "s" : ""}</span>
+        </div>
+        <div class="grid">
+          ${matched.map(cardHTML).join("")}
+        </div>
+      </div>`;
+  });
+
+  content.innerHTML = html || `<div class="empty" style="display:block;">Aucune matière ne correspond à cette recherche.</div>`;
+  document.getElementById("statCount").textContent = total;
+}
+
+searchBox.addEventListener("input", e => render(e.target.value));
+
+document.getElementById("footStamp").textContent = "généré pour la révision";
+
+render("");
+</script>
+
 </body>
 </html>

@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chimie — Flashcards & QRM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#151B2E;
+    --ink-soft:#636D82;
+    --paper:#F5F3EE;
+    --card:#FFFFFF;
+    --line: #E3DFD5;
+    --accent:#7C3AED;
+    --accent-2:#EA580C;
+    --accent-3:#3D6E63;
+    --accent-soft:#EDE3FC;
+    --grad-a:#D9C6F5;
+    --grad-b:#F5DCC4;
+
+    --sbg:#0F1720;
+    --spanel:#17212C;
+    --spanel-2:#1D2833;
+    --sline: #2A3947;
+    --sink:#EDF1F5;
+    --sink-soft:#8FA1B0;
+    --saccent:#A87FEE;
+    --saccent-2:#F0894F;
+    --saccent-ink:#170B2E;
+    --hover-tint: rgba(255,255,255,0.04);
+    --sred:#E5645A;
+    --sred-soft:#3A2320;
+    --saccent-soft:#33234F;
+
+    --c-general:#B98FE0;
+    --c-solide:#5FA8D3;
+    --c-liquide:#3FC1B0;
+    --c-gaz:#F0894F;
+    --c-transition:#E7C56A;
+    --c-diagramme:#9AA7B5;
+    --c-eau:#4FB2E0;
+    --c-formule:#C98FE0;
+    --c-dispersion:#C99A66;
+    --c-noyau:#4A90D9;
+    --c-fermions:#45C4B0;
+    --c-quarks:#E67E4D;
+    --c-hadrons:#D4A94A;
+    --c-leptons:#A0785A;
+    --c-bosons:#8C93A8;
+    --c-forces:#4FB8D6;
+    --c-liaisons:#A87FD1;
+    --c-generalites:#7c3aed;
+    --c-pression-def:#2563a8;
+    --c-unites:#0d9488;
+    --c-lois-gp:#ea580c;
+    --c-melanges:#b45309;
+    --c-respiration:#7f5539;
+    --c-apnee:#0891b2;
+    --c-bouteille:#4c1d95;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{ font-family:'IBM Plex Sans', sans-serif; -webkit-font-smoothing:antialiased; min-height:100vh; }
+
+  /* ============ shared light theme (home, course, lists) ============ */
+  .light-screen{ background:var(--paper); color:var(--ink); min-height:100vh; padding-bottom: 70px; display:none; }
+
+  .hero{
+    position:relative; overflow:hidden; padding: 52px 22px 40px;
+    background:
+      radial-gradient(120% 140% at 15% -20%, var(--grad-a) 0%, transparent 55%),
+      radial-gradient(100% 120% at 100% 0%, var(--grad-b) 0%, transparent 50%),
+      var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-inner{ max-width: 780px; margin: 0 auto; position:relative; z-index:1; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:7px;
+    font-family:'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing:.08em; text-transform:uppercase;
+    color: var(--accent); background: rgba(184,134,43,0.10); border: 1px solid rgba(184,134,43,0.25);
+    padding: 5px 12px; border-radius: 100px; margin: 0 0 18px;
+  }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background: var(--accent); }
+  .hero h1{ font-family:'Fraunces', serif; font-weight:700; font-size: clamp(30px, 7.5vw, 48px); line-height: 1.05; margin: 0 0 14px; letter-spacing: -0.015em; }
+  .hero h1 .accent-word{ font-style: italic; font-weight:500; color: var(--accent-2); }
+  .hero p{ color:var(--ink-soft); font-size:15.5px; line-height:1.6; max-width: 54ch; margin: 0 0 26px; }
+
+  .hero-stats{ display:flex; gap: 28px; flex-wrap:wrap; }
+  .hero-stat{ display:flex; flex-direction:column; gap:2px; }
+  .hero-stat .num{ font-family:'Fraunces', serif; font-weight:600; font-size: 26px; color: var(--ink); }
+  .hero-stat .lbl{ font-family:'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-soft); letter-spacing:.03em; }
+
+  .top-back-row{ max-width: 780px; margin: 0 auto; padding: 22px 22px 0; }
+  .top-back-btn{
+    display:inline-flex; align-items:center; gap:6px; background: var(--card); border: 1px solid var(--line);
+    color: var(--ink-soft); font-family:'IBM Plex Sans',sans-serif; font-size: 13px; font-weight:600;
+    padding: 8px 14px; border-radius: 100px; cursor:pointer;
+  }
+  .top-back-btn:active{ transform: scale(0.96); }
+
+  .search-row{ max-width: 780px; margin: -22px auto 0; padding: 0 22px; position:relative; z-index:2; }
+  input#searchBox{
+    width:100%; border: 1.5px solid var(--line); background: var(--card);
+    border-radius: 14px; padding: 14px 18px; font-family:'IBM Plex Sans', sans-serif;
+    font-size: 14.5px; color: var(--ink); outline:none;
+    box-shadow: 0 12px 28px -18px rgba(21,27,46,0.35);
+  }
+  input#searchBox:focus{ border-color: var(--accent); }
+
+  .content{ max-width: 780px; margin: 0 auto; padding: 0 22px; }
+  .chapter-block{ margin-top: 40px; }
+  .chapter-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom: 16px; gap: 10px; }
+  .chapter-name{ font-family:'Fraunces', serif; font-weight:600; font-size: 19px; color: var(--ink); }
+  .chapter-sub{ font-family:'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--ink-soft); white-space:nowrap; }
+  .card-stack{ display:flex; flex-direction:column; gap: 14px; }
+
+  .empty{ max-width:780px; margin: 40px auto; padding: 0 20px; color: var(--ink-soft); font-family:'IBM Plex Mono', monospace; font-size: 13px; text-align:center; }
+  .light-screen footer{ max-width:780px; margin: 46px auto 0; padding: 20px 22px 0; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: 12px; font-family:'IBM Plex Mono', monospace; }
+
+  /* ---- home course tiles: minimal & modern ---- */
+  .course-tile{
+    display:flex; align-items:center; gap: 16px; width:100%; text-align:left;
+    border: 1px solid var(--line); background: var(--card); border-radius: 18px;
+    padding: 16px 18px; cursor:pointer; font-family: inherit; color: inherit;
+    position:relative; overflow:hidden;
+    transition: transform .16s cubic-bezier(.2,.7,.3,1), box-shadow .16s ease, border-color .16s ease, background .16s ease;
+  }
+  .course-tile:hover{
+    border-color: transparent; background: linear-gradient(135deg, #FFFFFF, #FBF7EE);
+    box-shadow: 0 18px 36px -20px rgba(21,27,46,0.32); transform: translateY(-2px);
+  }
+  .course-tile:active{ transform: translateY(0) scale(0.99); }
+  .tile-monogram{
+    flex-shrink:0; width: 46px; height: 46px; border-radius: 13px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces', serif; font-weight:700; font-size: 19px; color: #fff;
+    background: linear-gradient(150deg, var(--accent), var(--accent-2));
+  }
+  .tile-body{ flex:1; min-width:0; display:flex; flex-direction:column; gap: 3px; }
+  .tile-kicker{ font-family:'IBM Plex Mono', monospace; font-size: 10px; letter-spacing:.07em; text-transform:uppercase; color: var(--accent); font-weight:700; }
+  .tile-title{ font-family:'Fraunces', serif; font-weight:600; font-size: 18px; line-height:1.28; color: var(--ink); }
+  .tile-meta{ font-family:'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-soft); }
+  .tile-arrow{ flex-shrink:0; font-size: 16px; color: var(--ink-soft); transition: transform .16s ease, color .16s ease; }
+  .course-tile:hover .tile-arrow{ transform: translateX(4px); color: var(--accent); }
+
+  /* ---- course detail intro ---- */
+  .course-intro{ max-width: 780px; margin: 26px auto 0; padding: 0 22px; }
+  .course-intro h2{ font-family:'Fraunces', serif; font-weight:700; font-size: clamp(24px, 5.5vw, 32px); margin: 0 0 10px; line-height:1.15; }
+  .course-intro p{ color: var(--ink-soft); font-size: 14.5px; line-height:1.6; max-width: 60ch; margin:0; }
+  .pdf-link{
+    display:inline-flex; align-items:center; gap:8px; margin-top: 16px;
+    font-family:'IBM Plex Sans', sans-serif; font-size: 13.5px; font-weight:600; color: var(--accent-3);
+    text-decoration:none; border: 1px solid var(--line); background: var(--card);
+    padding: 9px 15px; border-radius: 100px; transition: border-color .15s ease, box-shadow .15s ease, transform .12s ease;
+  }
+  .pdf-link:hover{ border-color: var(--accent-3); box-shadow: 0 8px 20px -14px rgba(107,92,165,0.4); }
+  .pdf-link:active{ transform: scale(0.97); }
+  .pdf-icon{ font-size: 15px; }
+
+  /* ---- mode chooser (Flashcards vs QRM) ---- */
+  .mode-grid{ display:flex; flex-direction:column; gap: 16px; }
+  .mode-card{
+    display:flex; align-items:center; gap: 18px; width:100%; text-align:left;
+    border: 1px solid var(--line); background: var(--card); border-radius: 20px;
+    padding: 24px; cursor:pointer; font-family: inherit; color: inherit;
+    position:relative; overflow:hidden;
+    transition: transform .16s cubic-bezier(.2,.7,.3,1), box-shadow .16s ease, border-color .16s ease;
+  }
+  .mode-card:hover{ border-color: transparent; box-shadow: 0 20px 40px -20px rgba(21,27,46,0.3); transform: translateY(-2px); }
+  .mode-card:active{ transform: translateY(0) scale(0.99); }
+  .mode-icon{
+    flex-shrink:0; width: 58px; height: 58px; border-radius: 16px;
+    display:flex; align-items:center; justify-content:center; font-size: 26px;
+    background: var(--accent-soft); color: var(--accent);
+  }
+  .mode-card.is-qrm .mode-icon{ background: rgba(107,92,165,0.12); color: var(--accent-3); }
+  .mode-card.is-recap .mode-icon{ background: rgba(61,110,99,0.12); color: var(--accent-2); }
+  .mode-card.is-recap{ text-decoration:none; }
+  .mode-body{ flex:1; min-width:0; }
+  .mode-title{ font-family:'Fraunces', serif; font-weight:700; font-size: 21px; margin: 0 0 10px; color: var(--ink); }
+  .mode-desc{ font-size: 13.5px; color: var(--ink-soft); line-height:1.5; margin: 0 0 10px; }
+  .mode-meta{ display:flex; align-items:center; gap: 8px; }
+  .mode-badge{
+    font-family:'IBM Plex Mono', monospace; font-size: 11px; font-weight:600; color: var(--ink-soft);
+    background: var(--paper); border: 1px solid var(--line); border-radius: 100px; padding: 3px 10px;
+  }
+  .mode-arrow{ flex-shrink:0; font-size: 20px; color: var(--ink-soft); transition: transform .16s ease, color .16s ease; }
+  .mode-card:hover .mode-arrow{ transform: translateX(4px); color: var(--accent); }
+  .mode-card.is-qrm:hover .mode-arrow{ color: var(--accent-3); }
+  .mode-card.is-recap:hover .mode-arrow{ color: var(--accent-2); }
+
+  /* ---- deck / serie item cards (level 3 lists) ---- */
+  .item-card{
+    border: 1px solid var(--line); background: var(--card); border-radius: 16px;
+    padding: 20px 22px; cursor:pointer; display:block; width:100%; text-align:left;
+    font-family: inherit; color: inherit; position:relative; overflow:hidden;
+    transition: transform .16s cubic-bezier(.2,.7,.3,1), box-shadow .16s ease, border-color .16s ease;
+  }
+  .item-card::before{ content:""; position:absolute; inset:0 auto 0 0; width:4px; background: var(--accent); }
+  .item-card.is-complement::before{ background: var(--accent-2); }
+  .item-card.is-quiz::before{ background: var(--accent-3); }
+  .item-card:hover{ border-color: transparent; box-shadow: 0 16px 34px -18px rgba(21,27,46,0.28); transform: translateY(-2px); }
+  .item-card:active{ transform: translateY(0) scale(0.99); }
+
+  .item-top{ display:flex; align-items:flex-start; justify-content:space-between; gap: 12px; margin-bottom: 9px; }
+  .item-kicker{ font-family:'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing:.06em; text-transform:uppercase; color: var(--accent); font-weight:600; }
+  .item-card.is-complement .item-kicker{ color: var(--accent-2); }
+  .item-card.is-quiz .item-kicker{ color: var(--accent-3); }
+  .item-badge{ flex-shrink:0; font-family:'IBM Plex Mono', monospace; font-size: 11px; font-weight:600; color: var(--ink-soft); background: var(--paper); border: 1px solid var(--line); border-radius: 100px; padding: 3px 10px; white-space:nowrap; }
+
+  .item-title{ font-family:'Fraunces', serif; font-weight:600; font-size: 19.5px; line-height:1.3; margin: 0 0 7px; }
+  .item-desc{ font-size: 13.5px; color: var(--ink-soft); line-height:1.55; margin: 0 0 15px; }
+
+  .item-meta{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .meta-tags{ display:flex; gap:6px; flex-wrap:wrap; }
+  .meta-tag{ font-family:'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--ink-soft); background: var(--paper); border: 1px solid var(--line); padding: 3px 9px; border-radius: 100px; }
+  .open-link{ font-family:'IBM Plex Sans', sans-serif; font-size: 13px; font-weight:700; color: var(--accent); white-space:nowrap; display:flex; align-items:center; gap:5px; }
+  .item-card.is-complement .open-link{ color: var(--accent-2); }
+  .item-card.is-quiz .open-link{ color: var(--accent-3); }
+  .open-link .arrow{ transition: transform .15s ease; }
+  .item-card:hover .open-link .arrow{ transform: translateX(3px); }
+
+  .serie-progress{ font-family:'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent-3); font-weight:600; }
+
+  /* ============ dark theme (carousel) ============ */
+  .dark-screen{
+    display:none;
+    background: var(--sbg);
+    background-image:
+      radial-gradient(ellipse at 20% -10%, rgba(231,169,60,0.10), transparent 45%),
+      radial-gradient(ellipse at 90% 10%, rgba(95,168,211,0.08), transparent 40%);
+    color: var(--sink);
+    font-family:'Manrope', sans-serif;
+    min-height:100vh;
+    flex-direction:column;
+  }
+
+  /* ============ light theme (QRM quiz) — overrides the same variable
+     names used below, so every component (card, boutons, pills...)
+     switches palette automatically without duplicating rules ============ */
+  .quiz-screen{
+    display:none;
+    --sbg: var(--paper);
+    --spanel: #FFFFFF;
+    --spanel-2: #EAE5D8;
+    --sline: var(--line);
+    --sink: var(--ink);
+    --sink-soft: var(--ink-soft);
+    --saccent:#279A63;
+    --saccent-2:#3FBE85;
+    --saccent-ink: #FFFFFF;
+    --saccent-soft: #E4F4EC;
+    --hover-tint: rgba(21,27,46,0.045);
+
+    background: var(--sbg);
+    background-image:
+      radial-gradient(120% 140% at 15% -10%, rgba(184,134,43,0.07), transparent 55%),
+      radial-gradient(100% 120% at 100% 0%, rgba(39,154,99,0.09), transparent 50%);
+    color: var(--sink);
+    font-family:'Manrope', sans-serif;
+    min-height:100vh;
+    flex-direction:column;
+  }
+  .quiz-screen .qz-card{ box-shadow: 0 16px 40px -22px rgba(21,27,46,0.18); }
+  .quiz-screen .study-face,
+  .quiz-screen .back-btn,
+  .quiz-screen .ghost-btn,
+  .quiz-screen .serie-pill,
+  .quiz-screen .score-chip{ box-shadow: none; }
+
+  .study-wrap{ max-width: 620px; margin: 0 auto; width:100%; padding: 20px 18px 40px; flex:1; display:flex; flex-direction:column; }
+
+  .back-row{ display:flex; align-items:center; margin-bottom: 12px; }
+  .back-btn{
+    display:flex; align-items:center; gap:6px; background: var(--spanel); border: 1px solid var(--sline);
+    color: var(--sink-soft); font-family:'Manrope',sans-serif; font-size: 13px; font-weight:600;
+    padding: 8px 14px; border-radius: 100px; cursor:pointer;
+  }
+  .back-btn:active{ transform: scale(0.96); }
+
+  .study-header{ text-align:center; margin-bottom: 8px; }
+  .study-eyebrow{ font-size: 11.5px; letter-spacing: .14em; text-transform:uppercase; color: var(--saccent); font-weight:700; margin: 0 0 6px; }
+  .study-h1{ font-family:'Source Serif 4', serif; font-weight:600; font-size: clamp(20px, 6vw, 25px); margin: 0; letter-spacing:-0.01em; }
+
+  .progress-row{ display:flex; align-items:center; gap: 10px; margin: 18px 0 4px; }
+  .progress-track{ flex:1; height: 6px; border-radius: 100px; background: var(--spanel-2); overflow:hidden; }
+  .progress-fill{ height:100%; background: var(--saccent); border-radius: 100px; transition: width .3s ease; }
+  .progress-count{ font-size: 12.5px; color: var(--sink-soft); font-variant-numeric: tabular-nums; white-space:nowrap; }
+
+  .filter-row{ margin: 14px 0 6px; display:flex; justify-content:center; }
+  select#catSelect{
+    appearance:none; -webkit-appearance:none;
+    background: var(--spanel); color: var(--sink); border: 1px solid var(--sline);
+    border-radius: 100px; padding: 8px 34px 8px 16px; font-family:'Manrope',sans-serif;
+    font-size: 13.5px; font-weight:600;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238FA1B0'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position: right 14px center;
+  }
+
+  .stage{ flex:1; display:flex; align-items:center; justify-content:center; margin: 18px 0; perspective: 1600px; min-height: 300px; }
+  .study-card{ width:100%; max-width: 520px; min-height: 290px; cursor:pointer; }
+  .study-card-inner{ position:relative; width:100%; height:100%; min-height:290px; transform-style: preserve-3d; transition: transform .5s cubic-bezier(.4,.2,.2,1); }
+  .study-card.flipped .study-card-inner{ transform: rotateY(180deg); }
+
+  .study-face{
+    position:absolute; inset:0; -webkit-backface-visibility:hidden; backface-visibility:hidden;
+    border-radius: 18px; background: var(--spanel); border: 1px solid var(--sline);
+    padding: 28px 26px; display:flex; flex-direction:column;
+    box-shadow: 0 20px 50px -20px rgba(0,0,0,0.5);
+  }
+  .study-face.front{ border-top: 3px solid var(--dot, var(--saccent)); }
+  .study-face.back{ transform: rotateY(180deg); background: var(--spanel-2); border-top: 3px solid var(--dot, var(--saccent)); }
+
+  .face-top{ display:flex; align-items:center; justify-content:space-between; margin-bottom: auto; padding-bottom: 16px; }
+  .cat-pill{ font-size: 11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color: var(--dot, var(--saccent)); background: color-mix(in srgb, var(--dot, var(--saccent)) 16%, transparent); padding: 4px 11px; border-radius: 100px; }
+  .star-pill{ font-size: 11px; font-weight:700; color: var(--saccent); background: var(--saccent-soft); padding: 4px 11px; border-radius: 100px; display:flex; align-items:center; gap: 5px; }
+  .page-ref{ font-size: 10.5px; font-weight:600; color: var(--sink-soft); font-family:'IBM Plex Mono', monospace; letter-spacing:.02em; }
+
+  .face-body{ flex:1; display:flex; align-items:center; }
+  .q-content{ font-family:'Source Serif 4', serif; font-size: clamp(18px, 4.6vw, 22px); line-height:1.4; font-weight:500; }
+  .a-content{ font-family:'Manrope', sans-serif; font-size: 16px; line-height:1.55; color: var(--sink); }
+  .face-bottom{ margin-top: 16px; font-size: 12px; color: var(--sink-soft); text-align:center; font-weight:600; letter-spacing:.02em; }
+
+  .nav-row{ display:flex; align-items:center; justify-content:center; gap: 14px; margin-top: 6px; }
+  .nav-btn{ width: 50px; height: 50px; border-radius: 50%; background: var(--spanel); border: 1px solid var(--sline); color: var(--sink); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size: 18px; }
+  .nav-btn:active{ transform: scale(0.93); }
+  .nav-btn:disabled{ opacity: .3; cursor:default; }
+  .nav-btn.primary{ background: var(--saccent); border-color: var(--saccent); color: var(--saccent-ink); width: 56px; height:56px; font-size: 20px; }
+
+  .secondary-row{ display:flex; justify-content:center; gap: 10px; margin-top: 18px; flex-wrap:wrap; }
+  .ghost-btn{ background: transparent; border: 1px solid var(--sline); color: var(--sink-soft); font-family:'Manrope',sans-serif; font-size: 12.5px; font-weight:600; padding: 8px 16px; border-radius: 100px; cursor:pointer; display:flex; align-items:center; gap:6px; }
+  .ghost-btn:active{ transform: scale(0.96); }
+
+  .pair-banner{
+    margin-top: 22px; padding: 16px 18px; border-radius: 14px;
+    background: var(--spanel); border: 1px solid var(--sline);
+    display:flex; align-items:center; justify-content:space-between; gap: 12px; flex-wrap:wrap;
+    cursor:pointer;
+  }
+  .pair-banner:active{ transform: scale(0.99); }
+  .pair-text{ font-size: 13px; color: var(--sink-soft); }
+  .pair-text b{ color: var(--sink); font-weight:700; }
+  .pair-cta{ font-size: 12.5px; font-weight:700; color: var(--saccent-2); display:flex; align-items:center; gap:5px; white-space:nowrap; }
+
+  .study-footer{ text-align:center; margin-top: 24px; font-size: 11.5px; color: var(--sink-soft); opacity:.7; }
+
+  /* ============ QUIZ QRM specifics ============ */
+  .serie-pills{ display:flex; gap: 7px; overflow-x:auto; padding: 2px 2px 6px; margin: 14px 0 2px; scrollbar-width:none; }
+  .serie-pills::-webkit-scrollbar{ display:none; }
+  .serie-pill{
+    flex-shrink:0; font-family:'IBM Plex Mono', monospace; font-size: 12px; font-weight:700;
+    padding: 8px 15px; border-radius: 100px; border: 1px solid var(--sline); background: var(--spanel);
+    color: var(--sink-soft); cursor:pointer; white-space:nowrap; position:relative;
+    display:flex; align-items:center; gap:6px;
+  }
+  .serie-pill.active{ background: var(--accent-3); border-color: var(--accent-3); color: #fff; }
+  .serie-pill .pip{ width:6px; height:6px; border-radius:50%; background: var(--saccent-2); }
+  .serie-pill.active .pip{ background: #fff; }
+
+  .score-row{ display:flex; justify-content:center; margin: 10px 0 4px; }
+  .score-chip{
+    font-family:'IBM Plex Mono', monospace; font-size: 11.5px; font-weight:600; color: var(--sink-soft);
+    background: var(--spanel); border: 1px solid var(--sline); border-radius: 100px; padding: 5px 14px;
+  }
+  .score-chip b{ color: var(--saccent-2); }
+
+  .qz-card{
+    background: var(--spanel); border: 1px solid var(--sline); border-radius: 18px;
+    padding: 24px 22px; margin: 16px 0; box-shadow: 0 20px 50px -24px rgba(0,0,0,0.5);
+  }
+  .qz-stem{ font-family:'Source Serif 4', serif; font-size: clamp(17px, 4.4vw, 20px); line-height:1.4; font-weight:500; margin: 0 0 18px; }
+
+  .opt-row{
+    display:flex; align-items:flex-start; gap: 12px; padding: 12px 12px; border-radius: 12px;
+    cursor:pointer; transition: background .12s ease; border: 1.5px solid transparent;
+  }
+  .opt-row:hover{ background: var(--hover-tint); }
+  .opt-row + div{ margin-top: 3px; }
+  .opt-check{
+    flex-shrink:0; margin-top: 2px; width: 21px; height: 21px; border-radius: 6px;
+    border: 1.5px solid var(--sline); background: var(--spanel-2);
+    display:flex; align-items:center; justify-content:center; font-size: 13px; color: transparent;
+    transition: all .12s ease;
+  }
+  .opt-row.checked .opt-check{ background: var(--saccent); border-color: var(--saccent); color: var(--saccent-ink); }
+  .opt-letter{ font-family:'IBM Plex Mono', monospace; font-weight:700; font-size: 13px; color: var(--sink-soft); flex-shrink:0; margin-top:1px; }
+  .opt-text{ font-size: 14.5px; line-height:1.5; color: var(--sink); flex:1; }
+
+  .opt-row.revealed{ cursor:default; }
+  .opt-row.revealed:hover{ background: inherit; }
+  .opt-row.is-correct{ background: rgba(79,178,166,0.14); border-color: rgba(79,178,166,0.45); }
+  .opt-row.is-incorrect{ background: transparent; border-color: rgba(229,100,90,0.6); }
+
+  .opt-verdict{
+    flex-shrink:0; font-family:'IBM Plex Mono', monospace; font-size: 10.5px; font-weight:700;
+    padding: 2px 9px; border-radius: 100px; white-space:nowrap; margin-left: 4px;
+  }
+  .opt-verdict.vrai{ background: rgba(79,178,166,0.22); color: var(--saccent-2); }
+  .opt-verdict.faux{ background: rgba(229,100,90,0.22); color: #F19086; }
+
+  .opt-mark-badge{
+    flex-shrink:0; width: 22px; height: 22px; border-radius: 50%;
+    display:flex; align-items:center; justify-content:center; font-size: 13px; font-weight:700;
+  }
+  .opt-mark-badge.ok{ background: var(--saccent-2); color: #08211D; }
+  .opt-mark-badge.ko{ background: var(--sred); color: #2A0D0A; }
+
+  .opt-justif{ font-size: 13px; color: var(--sink-soft); line-height:1.5; margin: 6px 0 10px 33px; }
+  .ref-tag{ font-family:'IBM Plex Mono', monospace; font-size: 11px; font-weight:600; white-space:nowrap; }
+
+  .reveal-btn{
+    width:100%; margin-top: 16px; background: var(--saccent); border: none; color: var(--saccent-ink);
+    font-family:'Manrope',sans-serif; font-weight:700; font-size: 14px; padding: 13px; border-radius: 12px;
+    cursor:pointer;
+  }
+  .reveal-btn:active{ transform: scale(0.98); }
+  .reveal-btn:disabled{ opacity:.4; cursor:default; }
+
+  .result-banner{
+    margin-top: 16px; padding: 11px 14px; border-radius: 10px; font-size: 13px; font-weight:700;
+    text-align:center; border: 1px solid transparent;
+  }
+  .result-banner.full{ background: rgba(79,178,166,0.16); color: var(--saccent-2); border-color: rgba(79,178,166,0.4); }
+  .result-banner.partial{ background: rgba(229,100,90,0.16); color: #F19086; border-color: rgba(229,100,90,0.4); }
+</style>
+</head>
+<body>
+
+<!-- ============ NIVEAU 1 : ACCUEIL (liste des cours) ============ -->
+<div id="homeView" class="light-screen" style="display:block;">
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow"><span class="dot"></span>Médisup · M2</div>
+      <h1>Réviser la chimie, <span class="accent-word">un cours à la fois</span>.</h1>
+      <p>Touchez un cours pour l'ouvrir, puis choisissez entre flashcards et QRM. Tout se passe dans cette page, aucun autre fichier n'est nécessaire.</p>
+      <div class="hero-stats" id="heroStats"></div>
+    </div>
+  </div>
+  <div class="search-row"><input type="text" id="searchBox" placeholder="Rechercher un cours..."></div>
+  <div class="content">
+    <div id="chapters"></div>
+    <div class="empty" id="emptyHome" style="display:none;">Aucun cours ne correspond à cette recherche.</div>
+  </div>
+  <footer>Médisup Tours/Orléans — index Chimie, généré pour la révision</footer>
+</div>
+
+<!-- ============ NIVEAU 2 : DÉTAIL DU COURS (choix Flashcards / QRM) ============ -->
+<div id="courseView" class="light-screen">
+  <div class="top-back-row"><button class="top-back-btn" id="toHomeBtn">← Tous les cours</button></div>
+  <div class="course-intro">
+    <p class="eyebrow" id="courseEyebrow" style="margin-bottom:14px;"><span class="dot"></span>Chapitre</p>
+    <h2 id="courseTitle">—</h2>
+    <p id="courseDesc"></p>
+  </div>
+  <div class="content">
+    <div class="chapter-block" style="margin-top:26px;">
+      <div class="chapter-head"><span class="chapter-name">Comment voulez-vous réviser ?</span></div>
+      <div class="mode-grid" id="modeGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ NIVEAU 3a : LISTE DES SÉRIES DE FLASHCARDS ============ -->
+<div id="decksView" class="light-screen">
+  <div class="top-back-row"><button class="top-back-btn" id="toCourseFromDecksBtn">← Retour au cours</button></div>
+  <div class="course-intro">
+    <p class="eyebrow"><span class="dot"></span>Flashcards</p>
+    <h2 id="decksTitle">—</h2>
+    <p id="decksDesc"></p>
+  </div>
+  <div class="content">
+    <div class="chapter-block" style="margin-top:26px;">
+      <div class="chapter-head"><span class="chapter-name">Séries disponibles</span><span class="chapter-sub" id="deckCountSub"></span></div>
+      <div class="card-stack" id="deckList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ NIVEAU 3b : LISTE DES SÉRIES QRM ============ -->
+<div id="seriesView" class="light-screen">
+  <div class="top-back-row"><button class="top-back-btn" id="toCourseFromSeriesBtn">← Retour au cours</button></div>
+  <div class="course-intro">
+    <p class="eyebrow"><span class="dot"></span>QRM d'entraînement</p>
+    <h2 id="seriesTitle">—</h2>
+    <p id="seriesDesc"></p>
+    <a class="pdf-link" id="seriesPdfLink" href="QRM_Etats_Transitions_de_phase.pdf" target="_blank" rel="noopener">
+      <span class="pdf-icon">📄</span> Ouvrir le PDF (sujet + correction complète)
+    </a>
+  </div>
+  <div class="content">
+    <div class="chapter-block" style="margin-top:26px;">
+      <div class="chapter-head"><span class="chapter-name">Séries disponibles</span><span class="chapter-sub" id="serieCountSub"></span></div>
+      <div class="card-stack" id="serieList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ NIVEAU 4a : CARROUSEL FLASHCARDS ============ -->
+<div id="studyView" class="dark-screen">
+  <div class="study-wrap">
+    <div class="back-row"><button class="back-btn" id="backBtn">← Retour aux séries</button></div>
+    <div class="study-header">
+      <p class="study-eyebrow" id="studyEyebrow">Médisup · M2</p>
+      <h1 class="study-h1" id="studyTitle">—</h1>
+    </div>
+
+    <div class="filter-row"><select id="catSelect"></select></div>
+
+    <div class="progress-row">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-count" id="progressCount">1 / 1</div>
+    </div>
+
+    <div class="stage" id="stage"></div>
+    <div class="nav-row" id="navRow"></div>
+
+    <div class="secondary-row">
+      <button class="ghost-btn" id="shuffleBtn">⤭ Mélanger</button>
+      <button class="ghost-btn" id="restartBtn">↺ Recommencer</button>
+    </div>
+
+    <div id="pairBannerSlot"></div>
+
+    <div class="study-footer">Médisup Tours/Orléans — Fiche n°2, actualisation 2026-2027</div>
+  </div>
+</div>
+
+<!-- ============ NIVEAU 4b : QUIZ QRM ============ -->
+<div id="quizView" class="quiz-screen">
+  <div class="study-wrap">
+    <div class="back-row"><button class="back-btn" id="quizBackBtn">← Retour aux séries</button></div>
+    <div class="study-header">
+      <p class="study-eyebrow" id="quizEyebrow">Médisup · M2</p>
+      <h1 class="study-h1" id="quizTitle">—</h1>
+    </div>
+
+    <div class="serie-pills" id="seriePills"></div>
+
+    <div class="progress-row">
+      <div class="progress-track"><div class="progress-fill" id="quizProgressFill"></div></div>
+      <div class="progress-count" id="quizProgressCount">1 / 20</div>
+    </div>
+    <div class="score-row" id="scoreRow"></div>
+
+    <div class="qz-card" id="qzCard"></div>
+
+    <div class="nav-row" id="quizNavRow"></div>
+
+    <div class="secondary-row">
+      <button class="ghost-btn" id="quizResetBtn">↺ Effacer mes réponses</button>
+    </div>
+
+    <div class="study-footer">Médisup Tours/Orléans — QRM calibrés sur les annales 2020 / 2026</div>
+  </div>
+</div>
+
+<script>
+// ---------------------------------------------------------------------
+// Pour ajouter un nouveau cours : ajouter un objet à COURSES, avec un
+// bloc "flashcards" (decks) et/ou "qrm" (series). Pour ajouter une série
+// à un cours existant, ajouter un objet au tableau correspondant.
+// Tout reste dans ce fichier.
+// ---------------------------------------------------------------------
+const COURSES = [
+  // Exemple pour un futur cours (à dupliquer et compléter) :
+  // {
+  //   id: "slug-du-cours",
+  //   chapter: "Chapitre M1",
+  //   title: "Nom du cours",
+  //   desc: "Brève description du cours.",
+  //   flashcards: {
+  //     desc: "Flashcards du cours.",
+  //     decks: [
+  //       {
+  //         id: "deck-1",
+  //         title: "Nom de la série de flashcards",
+  //         pdfRecap: "Nom_du_fichier_recap.pdf",
+  //         cards: [
+  //           {cat:"general", label:"Catégorie", q:"Question ?", a:"Réponse.", star:false, page:"p.1"},
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   qrm: {
+  //     desc: "QRM du cours.",
+  //     qrmPdf: "Nom_du_fichier_correction.pdf",
+  //     series: [
+  //       {id:"serie-1", title:"Série 1", questions: [ /* {stem, opts:[{letter,text}], ans:{lettre:{verdict,just,page}}} */ ]},
+  //     ],
+  //   },
+  // },
+];
+
+const CATS = [
+  {key:"all", label:"Toutes les catégories", color:"var(--saccent)"},
+  // Ajouter ici les catégories spécifiques au cours (couleur en var(--c-xxx)
+  // définie dans le bloc :root du <head>, ou en hex direct).
+];
+const CAT_COLOR = Object.fromEntries(CATS.filter(c=>c.key!=="all").map(c=>[c.key,c.color]));
+
+// ---- helpers ----
+function flashDeckCount(course){ return course.flashcards ? course.flashcards.decks.length : 0; }
+function flashCardCount(course){ return course.flashcards ? course.flashcards.decks.reduce((s,d)=>s+d.cards.length,0) : 0; }
+function flashStarCount(course){ return course.flashcards ? course.flashcards.decks.reduce((s,d)=>s+d.cards.filter(c=>c.star).length,0) : 0; }
+function deckCardCount(deck){ return deck.cards.length; }
+function deckStarCount(deck){ return deck.cards.filter(c=>c.star).length; }
+function qrmSerieCount(course){ return course.qrm ? course.qrm.series.length : 0; }
+function qrmQuestionCount(course){ return course.qrm ? course.qrm.series.reduce((s,se)=>s+se.questions.length,0) : 0; }
+
+// ================= NIVEAU 1 : HOME =================
+function renderHeroStats(){
+  const totalCards = COURSES.reduce((s,c)=>s+flashCardCount(c),0);
+  const totalQ = COURSES.reduce((s,c)=>s+qrmQuestionCount(c),0);
+  document.getElementById('heroStats').innerHTML = `
+    <div class="hero-stat"><span class="num">${COURSES.length}</span><span class="lbl">COURS</span></div>
+    <div class="hero-stat"><span class="num">${totalCards}</span><span class="lbl">FLASHCARDS</span></div>
+    <div class="hero-stat"><span class="num">${totalQ}</span><span class="lbl">QUESTIONS QRM</span></div>
+  `;
+}
+
+function courseItemHTML(c){
+  const starTotal = flashStarCount(c);
+  const metaParts = [];
+  if(c.flashcards) metaParts.push(`${flashCardCount(c)} cartes`);
+  if(c.qrm) metaParts.push(`${qrmQuestionCount(c)} QRM`);
+  if(starTotal) metaParts.push(`★${starTotal}`);
+  const initial = c.title.trim().charAt(0).toUpperCase();
+  return `
+    <button class="course-tile" data-course="${c.id}">
+      <span class="tile-monogram">${initial}</span>
+      <span class="tile-body">
+        <span class="tile-kicker">${c.chapter}</span>
+        <span class="tile-title">${c.title}</span>
+        <span class="tile-meta">${metaParts.join(' · ')}</span>
+      </span>
+      <span class="tile-arrow">→</span>
+    </button>
+  `;
+}
+
+function renderHome(filter){
+  const wrap = document.getElementById('chapters');
+  const empty = document.getElementById('emptyHome');
+  const q = (filter||"").trim().toLowerCase();
+  const matches = (c) => !q || c.title.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q);
+
+  const chapterOrder = [];
+  const byChapter = {};
+  COURSES.forEach(c=>{
+    if(!byChapter[c.chapter]){ byChapter[c.chapter] = []; chapterOrder.push(c.chapter); }
+    byChapter[c.chapter].push(c);
+  });
+
+  let anyVisible = false;
+  wrap.innerHTML = chapterOrder.map(chapterName=>{
+    const items = byChapter[chapterName].filter(matches);
+    if(items.length === 0) return '';
+    anyVisible = true;
+    return `
+      <div class="chapter-block">
+        <div class="chapter-head"><span class="chapter-name">${chapterName}</span><span class="chapter-sub">${items.length} cours</span></div>
+        <div class="card-stack">${items.map(courseItemHTML).join('')}</div>
+      </div>
+    `;
+  }).join('');
+
+  empty.style.display = anyVisible ? "none" : "block";
+  wrap.querySelectorAll('.course-tile').forEach(btn=>{
+    btn.addEventListener('click', ()=> openCourseDetail(btn.dataset.course));
+  });
+}
+document.getElementById('searchBox').addEventListener('input', (e)=> renderHome(e.target.value));
+
+function showOnly(viewId){
+  ['homeView','courseView','decksView','seriesView','studyView','quizView'].forEach(id=>{
+    document.getElementById(id).style.display = (id===viewId) ? (id==='studyView'||id==='quizView' ? 'flex' : 'block') : 'none';
+  });
+  window.scrollTo(0,0);
+}
+
+// ================= NIVEAU 2 : COURSE DETAIL (mode chooser) =================
+let currentCourseId = null;
+
+function openCourseDetail(courseId){
+  const course = COURSES.find(c=>c.id===courseId);
+  if(!course) return;
+  currentCourseId = courseId;
+
+  document.getElementById('courseEyebrow').innerHTML = `<span class="dot"></span>${course.chapter}`;
+  document.getElementById('courseTitle').textContent = course.title;
+  document.getElementById('courseDesc').textContent = course.desc;
+
+  const modes = [];
+  if(course.flashcards){
+    modes.push(`
+      <button class="mode-card" data-mode="flashcards">
+        <span class="mode-icon">🗂️</span>
+        <span class="mode-body">
+          <span class="mode-title">Flashcards</span>
+          <span class="mode-meta"><span class="mode-badge">${flashDeckCount(course)} séries · ${flashCardCount(course)} cartes</span></span>
+        </span>
+        <span class="mode-arrow">→</span>
+      </button>
+    `);
+  }
+  if(course.qrm){
+    modes.push(`
+      <button class="mode-card is-qrm" data-mode="qrm">
+        <span class="mode-icon">✅</span>
+        <span class="mode-body">
+          <span class="mode-title">QRM d'entraînement</span>
+          <span class="mode-meta"><span class="mode-badge">${qrmSerieCount(course)} séries · ${qrmQuestionCount(course)} questions</span></span>
+        </span>
+        <span class="mode-arrow">→</span>
+      </button>
+    `);
+  }
+  if(course.recapPdf){
+    modes.push(`
+      <a class="mode-card is-recap" href="${course.recapPdf}" target="_blank" rel="noopener">
+        <span class="mode-icon">📄</span>
+        <span class="mode-body">
+          <span class="mode-title">Récapitulatif du cours</span>
+          <span class="mode-meta"><span class="mode-badge">Fiche visuelle PDF</span></span>
+        </span>
+        <span class="mode-arrow">→</span>
+      </a>
+    `);
+  }
+  document.getElementById('modeGrid').innerHTML = modes.join('');
+  document.getElementById('modeGrid').querySelectorAll('.mode-card[data-mode]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      if(btn.dataset.mode === 'flashcards') openDecksList(currentCourseId);
+      else openSeriesList(currentCourseId);
+    });
+  });
+
+  showOnly('courseView');
+}
+document.getElementById('toHomeBtn').addEventListener('click', ()=> showOnly('homeView'));
+
+// ================= NIVEAU 3a : DECKS LIST (flashcards) =================
+function deckItemHTML(deck){
+  return `
+    <button class="item-card ${deck.isComplement?'is-complement':''}" data-deck="${deck.id}">
+      <div class="item-top">
+        <span class="item-kicker">${deck.part}</span>
+        <span class="item-badge">${deckCardCount(deck)} cartes${deckStarCount(deck)?` · ★${deckStarCount(deck)}`:''}</span>
+      </div>
+      <div class="item-title">${deck.title}</div>
+      <div class="item-desc">${deck.desc}</div>
+      <div class="item-meta">
+        <div class="meta-tags">${deck.tags.map(t=>`<span class="meta-tag">${t}</span>`).join('')}</div>
+        <span class="open-link">Réviser <span class="arrow">→</span></span>
+      </div>
+    </button>
+  `;
+}
+
+function openDecksList(courseId){
+  const course = COURSES.find(c=>c.id===courseId);
+  if(!course || !course.flashcards) return;
+  currentCourseId = courseId;
+  document.getElementById('decksTitle').textContent = course.title;
+  document.getElementById('decksDesc').textContent = course.flashcards.desc;
+  document.getElementById('deckCountSub').textContent = `${course.flashcards.decks.length} série${course.flashcards.decks.length>1?'s':''}`;
+  document.getElementById('deckList').innerHTML = course.flashcards.decks.map(deckItemHTML).join('');
+  document.getElementById('deckList').querySelectorAll('.item-card').forEach(btn=>{
+    btn.addEventListener('click', ()=> openDeck(currentCourseId, btn.dataset.deck));
+  });
+  showOnly('decksView');
+}
+document.getElementById('toCourseFromDecksBtn').addEventListener('click', ()=> openCourseDetail(currentCourseId));
+
+// ================= NIVEAU 3b : SERIES LIST (qrm) =================
+function serieProgressLabel(courseId, serie){
+  const total = serie.questions.length;
+  let done = 0;
+  for(let i=0;i<total;i++){
+    if(`${courseId}::${serie.id}::${i}` in quizAnswered) done++;
+  }
+  return done ? `${done}/${total} traitées` : `${total} questions`;
+}
+
+function serieItemHTML(courseId, serie, idx){
+  return `
+    <button class="item-card is-quiz" data-serie="${serie.id}">
+      <div class="item-top">
+        <span class="item-kicker">Série ${idx+1}</span>
+        <span class="item-badge serie-progress">${serieProgressLabel(courseId, serie)}</span>
+      </div>
+      <div class="item-title">${serie.title}</div>
+      <div class="item-desc">20 questions à réponses multiples (5 propositions), mélangeant les notions du cours.</div>
+      <div class="item-meta">
+        <div class="meta-tags"></div>
+        <span class="open-link">Démarrer <span class="arrow">→</span></span>
+      </div>
+    </button>
+  `;
+}
+
+function openSeriesList(courseId){
+  const course = COURSES.find(c=>c.id===courseId);
+  if(!course || !course.qrm) return;
+  currentCourseId = courseId;
+  document.getElementById('seriesTitle').textContent = course.title;
+  document.getElementById('seriesDesc').textContent = course.qrm.desc;
+  document.getElementById('seriesPdfLink').href = course.qrmPdf || 'QRM_Etats_Transitions_de_phase.pdf';
+  document.getElementById('serieCountSub').textContent = `${course.qrm.series.length} séries`;
+  document.getElementById('serieList').innerHTML = course.qrm.series.map((s,i)=>serieItemHTML(courseId, s, i)).join('');
+  document.getElementById('serieList').querySelectorAll('.item-card').forEach(btn=>{
+    btn.addEventListener('click', ()=> openQuiz(currentCourseId, btn.dataset.serie));
+  });
+  showOnly('seriesView');
+}
+document.getElementById('toCourseFromSeriesBtn').addEventListener('click', ()=> openCourseDetail(currentCourseId));
+
+// ================= NIVEAU 4a : STUDY (carrousel flashcards) =================
+let currentDeck = null;
+let active = "all";
+let order = [];
+let pos = 0;
+let flipped = false;
+
+function buildOrder(){
+  const idxs = currentDeck.cards.map((_, i) => i).filter(i => active === "all" || currentDeck.cards[i].cat === active);
+  order = idxs;
+}
+function shuffleOrder(){
+  for(let i = order.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+}
+function renderSelect(){
+  const sel = document.getElementById('catSelect');
+  const usedCats = new Set(currentDeck.cards.map(c=>c.cat));
+  const options = CATS.filter(c => c.key === "all" || usedCats.has(c.key));
+  sel.innerHTML = options.map(c => `<option value="${c.key}">${c.label}</option>`).join('');
+  sel.value = active;
+  sel.onchange = () => { active = sel.value; buildOrder(); pos = 0; flipped = false; renderStudy(); };
+}
+function renderStage(){
+  const stage = document.getElementById('stage');
+  if(order.length === 0){
+    stage.innerHTML = `<div style="text-align:center;color:var(--sink-soft);padding:40px 20px;">Aucune carte dans cette catégorie.</div>`;
+    return;
+  }
+  const d = currentDeck.cards[order[pos]];
+  const color = CAT_COLOR[d.cat];
+  stage.innerHTML = `
+    <div class="study-card ${flipped ? 'flipped' : ''}" id="studyCard" style="--dot:${color}">
+      <div class="study-card-inner">
+        <div class="study-face front">
+          <div class="face-top">
+            <span class="cat-pill">${d.label}</span>
+            ${d.star ? '<span class="star-pill">★ concours</span>' : '<span></span>'}
+          </div>
+          <div class="face-body"><div class="q-content">${d.q}</div></div>
+          <div class="face-bottom">Toucher la carte pour révéler la réponse</div>
+        </div>
+        <div class="study-face back">
+          <div class="face-top"><span class="cat-pill">Réponse</span>${d.page ? `<span class="page-ref">cf. ${d.page}</span>` : '<span></span>'}</div>
+          <div class="face-body"><div class="a-content">${d.a}</div></div>
+          <div class="face-bottom">Toucher pour revenir à la question</div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById('studyCard').addEventListener('click', () => { flipped = !flipped; renderStudy(); });
+}
+function renderProgress(){
+  const total = order.length;
+  const current = total === 0 ? 0 : pos + 1;
+  document.getElementById('progressCount').textContent = `${current} / ${total}`;
+  document.getElementById('progressFill').style.width = total === 0 ? '0%' : `${(current/total)*100}%`;
+}
+function renderNav(){
+  const nav = document.getElementById('navRow');
+  const atStart = pos <= 0;
+  const atEnd = pos >= order.length - 1;
+  nav.innerHTML = `
+    <button class="nav-btn" id="prevBtn" ${atStart ? 'disabled' : ''} aria-label="Précédente">‹</button>
+    <button class="nav-btn primary" id="flipBtn" aria-label="Retourner">⟳</button>
+    <button class="nav-btn" id="nextBtn" ${atEnd ? 'disabled' : ''} aria-label="Suivante">›</button>
+  `;
+  document.getElementById('prevBtn').onclick = () => { if(pos > 0){ pos--; flipped = false; renderStudy(); } };
+  document.getElementById('nextBtn').onclick = () => { if(pos < order.length - 1){ pos++; flipped = false; renderStudy(); } };
+  document.getElementById('flipBtn').onclick = () => { flipped = !flipped; renderStudy(); };
+}
+function renderPairBanner(){
+  const slot = document.getElementById('pairBannerSlot');
+  if(!currentDeck.pairId){ slot.innerHTML = ""; return; }
+  const course = COURSES.find(c => c.id === currentCourseId);
+  const pair = course.flashcards.decks.find(d => d.id === currentDeck.pairId);
+  if(!pair){ slot.innerHTML = ""; return; }
+  const verb = pair.isComplement ? "Continuer avec" : "Revenir aux bases avec";
+  slot.innerHTML = `
+    <div class="pair-banner" id="pairBanner">
+      <div class="pair-text">${verb} <b>${pair.title}</b> — ${deckCardCount(pair)} cartes</div>
+      <div class="pair-cta">Ouvrir <span>→</span></div>
+    </div>
+  `;
+  document.getElementById('pairBanner').addEventListener('click', () => openDeck(currentCourseId, pair.id));
+}
+function renderStudy(){ renderStage(); renderProgress(); renderNav(); renderPairBanner(); }
+
+document.getElementById('shuffleBtn').addEventListener('click', () => { shuffleOrder(); pos = 0; flipped = false; renderStudy(); });
+document.getElementById('restartBtn').addEventListener('click', () => { pos = 0; flipped = false; renderStudy(); });
+document.getElementById('backBtn').addEventListener('click', () => openDecksList(currentCourseId));
+
+function openDeck(courseId, deckId){
+  const course = COURSES.find(c=>c.id===courseId);
+  if(!course) return;
+  const deck = course.flashcards.decks.find(d=>d.id===deckId);
+  if(!deck) return;
+
+  currentCourseId = courseId;
+  currentDeck = deck;
+  document.getElementById('studyEyebrow').textContent = course.title + " · " + deck.part;
+  document.getElementById('studyTitle').textContent = deck.title;
+  active = "all";
+  buildOrder();
+  shuffleOrder();
+  pos = 0; flipped = false;
+  renderSelect();
+  renderStudy();
+  showOnly('studyView');
+}
+
+// ================= NIVEAU 4b : QUIZ QRM =================
+let quizCourseId = null;
+let quizSerieId = null;
+let quizQIdx = 0;
+let quizChecked = new Set();
+let quizRevealed = false;
+let quizAnswered = {}; // key `${courseId}::${serieId}::${qIdx}` -> boolean
+
+function currentQrmCourse(){ return COURSES.find(c=>c.id===quizCourseId); }
+function currentQrmSerie(){ return currentQrmCourse().qrm.series.find(s=>s.id===quizSerieId); }
+function currentQuizQuestion(){ return currentQrmSerie().questions[quizQIdx]; }
+
+function openQuiz(courseId, serieId){
+  const course = COURSES.find(c=>c.id===courseId);
+  if(!course || !course.qrm) return;
+  const serie = course.qrm.series.find(s=>s.id===serieId);
+  if(!serie) return;
+
+  quizCourseId = courseId;
+  quizSerieId = serieId;
+  quizQIdx = 0;
+  quizChecked = new Set();
+  quizRevealed = false;
+
+  document.getElementById('quizEyebrow').textContent = course.title + " · QRM d'entraînement";
+  document.getElementById('quizTitle').textContent = serie.title;
+  renderSeriePills();
+  renderQuiz();
+  showOnly('quizView');
+}
+
+function renderSeriePills(){
+  const course = currentQrmCourse();
+  const wrap = document.getElementById('seriePills');
+  wrap.innerHTML = course.qrm.series.map((s,i)=>{
+    const total = s.questions.length;
+    let done = 0;
+    for(let q=0;q<total;q++){ if(`${quizCourseId}::${s.id}::${q}` in quizAnswered) done++; }
+    return `<button class="serie-pill ${s.id===quizSerieId?'active':''}" data-serie="${s.id}">Série ${i+1}${done?`<span class="pip"></span>`:''}</button>`;
+  }).join('');
+  wrap.querySelectorAll('.serie-pill').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      if(btn.dataset.serie === quizSerieId) return;
+      quizSerieId = btn.dataset.serie;
+      quizQIdx = 0; quizChecked = new Set(); quizRevealed = false;
+      document.getElementById('quizTitle').textContent = currentQrmSerie().title;
+      renderSeriePills();
+      renderQuiz();
+    });
+  });
+}
+
+function toggleOpt(letter){
+  if(quizRevealed) return;
+  if(quizChecked.has(letter)) quizChecked.delete(letter);
+  else quizChecked.add(letter);
+  renderQuizCard();
+}
+
+function revealCorrection(){
+  quizRevealed = true;
+  const q = currentQuizQuestion();
+  let allCorrect = true;
+  for(const opt of q.opts){
+    const isVrai = q.ans[opt.letter].verdict === "Vrai";
+    const userChecked = quizChecked.has(opt.letter);
+    if(isVrai !== userChecked) allCorrect = false;
+  }
+  quizAnswered[`${quizCourseId}::${quizSerieId}::${quizQIdx}`] = allCorrect;
+  renderQuizCard();
+  renderScoreRow();
+  renderSeriePills();
+}
+
+function renderQuizCard(){
+  const q = currentQuizQuestion();
+  const card = document.getElementById('qzCard');
+
+  const optsHtml = q.opts.map(opt=>{
+    const isChecked = quizChecked.has(opt.letter);
+    const ans = q.ans[opt.letter];
+    const isVrai = ans.verdict === "Vrai";
+    let rowClass = "opt-row";
+    if(isChecked) rowClass += " checked";
+    let verdictHtml = "";
+    let markHtml = "";
+    let justifHtml = "";
+    if(quizRevealed){
+      rowClass += " revealed";
+      const userRight = (isVrai === isChecked);
+      rowClass += userRight ? " is-correct" : " is-incorrect";
+      verdictHtml = `<span class="opt-verdict ${isVrai?'vrai':'faux'}">${ans.verdict}</span>`;
+      markHtml = `<span class="opt-mark-badge ${userRight?'ok':'ko'}">${userRight?'✓':'✕'}</span>`;
+      justifHtml = `<div class="opt-justif">${ans.just}${ans.page ? ` <span class="ref-tag">— cf. ${ans.page}</span>` : ''}</div>`;
+    }
+    return `
+      <div>
+        <div class="${rowClass}" data-letter="${opt.letter}">
+          <span class="opt-check">${isChecked?'✓':''}</span>
+          <span class="opt-letter">${opt.letter})</span>
+          <span class="opt-text">${opt.text}</span>
+          ${verdictHtml}${markHtml}
+        </div>
+        ${justifHtml}
+      </div>
+    `;
+  }).join('');
+
+  let resultBanner = "";
+  if(quizRevealed){
+    const allCorrect = quizAnswered[`${quizCourseId}::${quizSerieId}::${quizQIdx}`];
+    resultBanner = allCorrect
+      ? `<div class="result-banner full">✓ Les 5 propositions correctement identifiées</div>`
+      : `<div class="result-banner partial">✕ Au moins une proposition mal identifiée — relisez les justifications ci-dessus</div>`;
+  }
+
+  card.innerHTML = `
+    <div class="qz-stem">${q.stem}</div>
+    ${optsHtml}
+    ${quizRevealed ? resultBanner : `<button class="reveal-btn" id="revealBtn">Voir la correction</button>`}
+  `;
+
+  if(!quizRevealed){
+    card.querySelectorAll('.opt-row').forEach(row=>{
+      row.addEventListener('click', ()=> toggleOpt(row.dataset.letter));
+    });
+    document.getElementById('revealBtn').addEventListener('click', revealCorrection);
+  }
+}
+
+function renderQuizProgress(){
+  const total = currentQrmSerie().questions.length;
+  document.getElementById('quizProgressCount').textContent = `${quizQIdx+1} / ${total}`;
+  document.getElementById('quizProgressFill').style.width = `${((quizQIdx+1)/total)*100}%`;
+}
+
+function renderScoreRow(){
+  const total = currentQrmSerie().questions.length;
+  let answeredCount = 0, correctCount = 0;
+  for(let i=0;i<total;i++){
+    const key = `${quizCourseId}::${quizSerieId}::${i}`;
+    if(key in quizAnswered){ answeredCount++; if(quizAnswered[key]) correctCount++; }
+  }
+  document.getElementById('scoreRow').innerHTML = answeredCount
+    ? `<span class="score-chip">Score de la série : <b>${correctCount} / ${answeredCount}</b> traitées</span>`
+    : `<span class="score-chip">Aucune question corrigée pour l'instant</span>`;
+}
+
+function renderQuizNav(){
+  const nav = document.getElementById('quizNavRow');
+  const total = currentQrmSerie().questions.length;
+  const atStart = quizQIdx <= 0;
+  const atEnd = quizQIdx >= total - 1;
+  nav.innerHTML = `
+    <button class="nav-btn" id="qzPrevBtn" ${atStart ? 'disabled' : ''} aria-label="Précédente">‹</button>
+    <button class="nav-btn primary" id="qzGoBtn" aria-label="Voir la correction">${quizRevealed ? '↺' : '✓'}</button>
+    <button class="nav-btn" id="qzNextBtn" ${atEnd ? 'disabled' : ''} aria-label="Suivante">›</button>
+  `;
+  document.getElementById('qzPrevBtn').onclick = () => {
+    if(quizQIdx > 0){ quizQIdx--; quizChecked = new Set(); quizRevealed = false; renderQuiz(); }
+  };
+  document.getElementById('qzNextBtn').onclick = () => {
+    if(quizQIdx < total - 1){ quizQIdx++; quizChecked = new Set(); quizRevealed = false; renderQuiz(); }
+  };
+  document.getElementById('qzGoBtn').onclick = () => {
+    if(quizRevealed){ quizChecked = new Set(); quizRevealed = false; renderQuiz(); }
+    else { revealCorrection(); renderQuizNav(); }
+  };
+}
+
+function renderQuiz(){ renderQuizProgress(); renderQuizCard(); renderQuizNav(); renderScoreRow(); }
+
+document.getElementById('quizResetBtn').addEventListener('click', () => { quizChecked = new Set(); quizRevealed = false; renderQuiz(); });
+document.getElementById('quizBackBtn').addEventListener('click', () => openSeriesList(quizCourseId));
+
+renderHeroStats();
+renderHome("");
+</script>
+
+</body>
+</html>
