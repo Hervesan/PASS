@@ -595,6 +595,11 @@ const COURSES = [
         {
           id: "bases",
           title: "Bases du cours",
+          part: "Partie 1/2",
+          desc: "Les notions essentielles et prioritaires du cours.",
+          tags: ["Généralités","Unités de mesure","Bilan hydrique","Capital hydrique"],
+          isComplement: false,
+          pairId: "pour-continuer",
           pdfRecap: "Fiche_visuelle_Compartiments_liquidiens.pdf",
           cards: [
         {cat:'concepts', q:'Comment est définie la fixité du milieu intérieur (concept d\'homéostasie) ?', a:'C\'est la condition de la vie libre et indépendante : le milieu intérieur n\'est pas affecté par les variations du milieu extérieur.', star:false, page:'p.2'},
@@ -649,6 +654,11 @@ const COURSES = [
         {
           id: "pour-continuer",
           title: "Pour continuer...",
+          part: "Partie 2/2",
+          desc: "Le reste du cours : compléments, exemples et détails.",
+          tags: ["Généralités","Unités de mesure","Capital hydrique","Échanges capillaires"],
+          isComplement: true,
+          pairId: "bases",
           pdfRecap: "Fiche_visuelle_Compartiments_liquidiens.pdf",
           cards: [
         {cat:'concepts', q:'Quelles sont les caractéristiques principales du LEC et du LIC ?', a:'LEC : liquide où baignent les cellules, composition très stable, régulé par le rein, échanges avec le milieu extérieur, délimité par les cellules protectrices de la peau. LIC : liquide contenu dans les cellules.', star:false, page:'p.2'},
@@ -825,6 +835,11 @@ const COURSES = [
         {
           id: "bases",
           title: "Bases du cours",
+          part: "Partie 1/2",
+          desc: "Les notions essentielles et prioritaires du cours.",
+          tags: ["Transmission & potentiel","Membrane & transports","Diffusion ionique","Potentiel de repos"],
+          isComplement: false,
+          pairId: "pour-continuer",
           cards: [
         {cat:'transmission', q:'Quelles sont les cellules excitables ?', a:'Les neurones, les cellules musculaires et les cellules glandulaires (cellules générant des potentiels d\'action, à membrane excitable).', star:false, page:'p.2'},
         {cat:'transmission', q:'Comment est défini un potentiel d\'action ?', a:'Le renversement de la répartition des charges de part et d\'autre de la membrane.', star:false, page:'p.2'},
@@ -866,6 +881,11 @@ const COURSES = [
         {
           id: "pour-continuer",
           title: "Pour continuer...",
+          part: "Partie 2/2",
+          desc: "Le reste du cours : compléments, exemples et détails.",
+          tags: ["Transmission & potentiel","Membrane & transports","Diffusion ionique","Potentiel de repos"],
+          isComplement: true,
+          pairId: "bases",
           cards: [
         {cat:'transmission', q:'À quels niveaux la transmission de l\'information par signal électrique est-elle nécessaire, et grâce à quoi se propage-t-elle de cellule à cellule ?', a:'Au niveau du système nerveux (recueillir, distribuer, intégrer l\'info) et du cœur (contraction régulière, homogène et structurée) ; elle se propage grâce aux jonctions intercellulaires (ex : synapses).', star:false, page:'p.2'},
         {cat:'transmission', q:'Quelle est l\'unité du potentiel de membrane, et à quoi est due son origine ?', a:'Le Volt ; son origine est une répartition hétérogène des charges (anions/cations) de part et d\'autre de la membrane, entre LEC et LIC.', star:false, page:'p.2'},
@@ -1040,6 +1060,7 @@ const CATS = [
   {key:"potentiel-action", label:"Signaux \u00e9lectriques & PA", color:"var(--c-potentiel-action)"},
 ];
 const CAT_COLOR = Object.fromEntries(CATS.filter(c=>c.key!=="all").map(c=>[c.key,c.color]));
+const CAT_LABEL = Object.fromEntries(CATS.filter(c=>c.key!=="all").map(c=>[c.key,c.label]));
 
 // ---- helpers ----
 function flashDeckCount(course){ return course.flashcards ? course.flashcards.decks.length : 0; }
@@ -1187,13 +1208,13 @@ function deckItemHTML(deck){
   return `
     <button class="item-card ${deck.isComplement?'is-complement':''}" data-deck="${deck.id}">
       <div class="item-top">
-        <span class="item-kicker">${deck.part}</span>
+        <span class="item-kicker">${deck.part||''}</span>
         <span class="item-badge">${deckCardCount(deck)} cartes${deckStarCount(deck)?` · ★${deckStarCount(deck)}`:''}</span>
       </div>
       <div class="item-title">${deck.title}</div>
-      <div class="item-desc">${deck.desc}</div>
+      <div class="item-desc">${deck.desc||''}</div>
       <div class="item-meta">
-        <div class="meta-tags">${deck.tags.map(t=>`<span class="meta-tag">${t}</span>`).join('')}</div>
+        <div class="meta-tags">${(deck.tags||[]).map(t=>`<span class="meta-tag">${t}</span>`).join('')}</div>
         <span class="open-link">Réviser <span class="arrow">→</span></span>
       </div>
     </button>
@@ -1296,7 +1317,7 @@ function renderStage(){
       <div class="study-card-inner">
         <div class="study-face front">
           <div class="face-top">
-            <span class="cat-pill">${d.label}</span>
+            <span class="cat-pill">${d.label || CAT_LABEL[d.cat] || d.cat}</span>
             ${d.star ? '<span class="star-pill">★ concours</span>' : '<span></span>'}
           </div>
           <div class="face-body"><div class="q-content">${d.q}</div></div>
@@ -1360,7 +1381,7 @@ function openDeck(courseId, deckId){
 
   currentCourseId = courseId;
   currentDeck = deck;
-  document.getElementById('studyEyebrow').textContent = course.title + " · " + deck.part;
+  document.getElementById('studyEyebrow').textContent = course.title + " · " + (deck.part||'');
   document.getElementById('studyTitle').textContent = deck.title;
   active = "all";
   buildOrder();
@@ -1435,7 +1456,7 @@ function revealCorrection(){
   const q = currentQuizQuestion();
   let allCorrect = true;
   for(const opt of q.opts){
-    const isVrai = q.ans[opt.letter].verdict === "Vrai";
+    const isVrai = q.ans[opt.letter].verdict.toUpperCase() === "VRAI";
     const userChecked = quizChecked.has(opt.letter);
     if(isVrai !== userChecked) allCorrect = false;
   }
@@ -1452,7 +1473,7 @@ function renderQuizCard(){
   const optsHtml = q.opts.map(opt=>{
     const isChecked = quizChecked.has(opt.letter);
     const ans = q.ans[opt.letter];
-    const isVrai = ans.verdict === "Vrai";
+    const isVrai = ans.verdict.toUpperCase() === "VRAI";
     let rowClass = "opt-row";
     if(isChecked) rowClass += " checked";
     let verdictHtml = "";
