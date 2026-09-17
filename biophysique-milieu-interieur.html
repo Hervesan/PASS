@@ -101,6 +101,14 @@
     --c-osmosevanthoff:#C24E9E;
     --c-filtrationconvection:#D97A34;
     --c-applicationscliniques:#B23A48;
+
+    /* Propriétés mécaniques des solutions - tension superficielle (M2) */
+    --c-forcesintermol:#6B4FA0;
+    --c-laplacegoutte:#2E86AB;
+    --c-laplacebulle:#D97A34;
+    --c-alveoles:#2FA88A;
+    --c-jurin:#B23A48;
+    --c-mouillage:#C9A227;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
@@ -23482,6 +23490,1916 @@ const COURSES = [
   "recapPdf": "Fiche_visuelle_Proprietes_cinetiques_des_solutions.pdf",
   "qrmPdf": "QRM_Proprietes_cinetiques_des_solutions.pdf"
 },
+{
+  "id": "proprietes-mecaniques-solutions",
+  "chapter": "M2",
+  "title": "Propriétés mécaniques des solutions (tension superficielle)",
+  "desc": "Forces inter-moléculaires et coefficient de tension superficielle, loi de Laplace (goutte, calotte sphérique, bulle de savon) et application aux alvéoles pulmonaires, loi de Jurin et ascension capillaire (mouillage parfait et imparfait).",
+  "flashcards": {
+    "desc": "Flashcards du chapitre Propriétés mécaniques des solutions (tension superficielle), réparties en 2 séries.",
+    "decks": [
+      {
+        "id": "bases",
+        "part": "Bases du cours",
+        "title": "Bases du cours",
+        "pdfRecap": "Fiche_visuelle_Proprietes_mecaniques_des_solutions.pdf",
+        "desc": "Les notions essentielles du chapitre : définitions structurantes, formules et le point étoilé au concours.",
+        "tags": [
+          "26 cartes",
+          "Essentiel"
+        ],
+        "isComplement": false,
+        "pairId": "complement",
+        "cards": [
+          {
+            "cat": "forcesintermol",
+            "label": "Forces inter-moléculaires",
+            "q": "Au sein d'un liquide, que vaut la résultante des forces inter-moléculaires ?",
+            "a": "Elle est nulle (Σfi = 0)",
+            "star": false,
+            "page": "p.2"
+          },
+          {
+            "cat": "forcesintermol",
+            "label": "Forces inter-moléculaires",
+            "q": "À l'interface air-liquide, comment est orientée la force de surface et quelle en est la conséquence sur l'aire de l'interface ?",
+            "a": "Elle est orientée de manière à diminuer l'interface : l'aire de l'interface tend à être minimale",
+            "star": false,
+            "page": "p.2"
+          },
+          {
+            "cat": "forcesintermol",
+            "label": "Forces inter-moléculaires",
+            "q": "Quelle énergie ΔW faut-il fournir pour augmenter la surface d'une interface de ΔS ?",
+            "a": "ΔW = σ.ΔS",
+            "star": false,
+            "page": "p.2"
+          },
+          {
+            "cat": "forcesintermol",
+            "label": "Forces inter-moléculaires",
+            "q": "Quelle est l'unité du coefficient de tension superficielle σ ?",
+            "a": "N.m⁻¹",
+            "star": false,
+            "page": "p.2"
+          },
+          {
+            "cat": "forcesintermol",
+            "label": "Forces inter-moléculaires",
+            "q": "Que traduit le coefficient de tension superficielle σ, et à quoi correspond-il physiquement (deux équivalences) ?",
+            "a": "Il traduit l'énergie de cohésion d'une interface ; il correspond à une énergie par unité de surface, ou à une force par unité de longueur",
+            "star": false,
+            "page": "p.2"
+          },
+          {
+            "cat": "forcesintermol",
+            "label": "Forces inter-moléculaires",
+            "q": "Le coefficient de tension superficielle σ est-il caractéristique du liquide seul ou de l'interface ?",
+            "a": "Il est caractéristique de l'interface : σeau/air ≠ σhuile/air",
+            "star": false,
+            "page": "p.2"
+          },
+          {
+            "cat": "laplacegoutte",
+            "label": "Loi de Laplace — goutte",
+            "q": "Selon la loi de Laplace, quelle est la différence de pression ΔP pour une goutte de rayon R ?",
+            "a": "ΔP = 2σ/R",
+            "star": false,
+            "page": "p.2"
+          },
+          {
+            "cat": "laplacegoutte",
+            "label": "Loi de Laplace — goutte",
+            "q": "Dans une goutte, l'intérieur est-il en surpression ou en dépression par rapport à l'extérieur ?",
+            "a": "L'intérieur de la goutte est en surpression par rapport à l'extérieur",
+            "star": false,
+            "page": "p.2"
+          },
+          {
+            "cat": "laplacegoutte",
+            "label": "Loi de Laplace — goutte",
+            "q": "Pourquoi l'intérieur d'une goutte est-il en surpression par rapport à l'extérieur ?",
+            "a": "La tension de surface tend à diminuer l'interface donc à diminuer le rayon de la sphère ; la pression extérieure contraint la surface de la sphère, et la surpression intérieure s'oppose à la tension de surface et à la pression extérieure pour maintenir l'équilibre",
+            "star": false,
+            "page": "p.2"
+          },
+          {
+            "cat": "laplacegoutte",
+            "label": "Loi de Laplace — calotte sphérique",
+            "q": "Quelle est la différence de pression ΔP pour une calotte sphérique de rayon r d'une sphère de rayon R ?",
+            "a": "ΔP = (2σ×cos α)/r",
+            "star": false,
+            "page": "p.2"
+          },
+          {
+            "cat": "laplacebulle",
+            "label": "Loi de Laplace — bulle",
+            "q": "Quelle est la surpression ΔP dans une bulle de savon de rayon R ?",
+            "a": "ΔP = 4σ/R",
+            "star": true,
+            "page": "p.2"
+          },
+          {
+            "cat": "laplacebulle",
+            "label": "Loi de Laplace — bulle",
+            "q": "Pourquoi la surpression dans une bulle de savon fait-elle intervenir un facteur 4 (et non 2 comme pour une goutte) ?",
+            "a": "Car il y a 2 interfaces entre l'air et l'eau savonneuse",
+            "star": false,
+            "page": "p.2"
+          },
+          {
+            "cat": "laplacebulle",
+            "label": "Loi de Laplace — bulle",
+            "q": "Comment varie la surpression dans une bulle de savon avec son rayon R, et qu'est-ce que cela implique pour la stabilité ?",
+            "a": "Plus R est grand, plus la surpression est faible : c'est un état plus stable",
+            "star": false,
+            "page": "p.2"
+          },
+          {
+            "cat": "laplacebulle",
+            "label": "Loi de Laplace — bulle",
+            "q": "Que se passe-t-il si l'on relie deux bulles de savon de tailles différentes entre elles ?",
+            "a": "La petite bulle « se vide » dans la grande",
+            "star": false,
+            "page": "p.2"
+          },
+          {
+            "cat": "alveoles",
+            "label": "Application — alvéoles pulmonaires",
+            "q": "À quoi sont assimilées les alvéoles pulmonaires, et que fait leur rayon au cours du cycle respiratoire ?",
+            "a": "Elles sont assimilables à des sacs dont le rayon varie au cours du cycle respiratoire",
+            "star": false,
+            "page": "p.3"
+          },
+          {
+            "cat": "alveoles",
+            "label": "Application — alvéoles pulmonaires",
+            "q": "Quelle est la différence de pression ΔP à l'interface air/surfactant dans une alvéole pulmonaire ?",
+            "a": "ΔP = 2σ/R",
+            "star": false,
+            "page": "p.3"
+          },
+          {
+            "cat": "alveoles",
+            "label": "Application — alvéoles pulmonaires",
+            "q": "Comment se compare σ du surfactant à σ de l'eau dans les alvéoles pulmonaires ?",
+            "a": "σsurfactant < σeau",
+            "star": false,
+            "page": "p.3"
+          },
+          {
+            "cat": "alveoles",
+            "label": "Application — alvéoles pulmonaires",
+            "q": "Quels sont les rôles du surfactant dans les alvéoles pulmonaires (limite, effet sur les petites alvéoles, effet sur les pressions) ?",
+            "a": "Il limite la surpression dans les alvéoles, empêche les petites alvéoles de se vider dans les grandes, et égalise les pressions dans les alvéoles, ce qui permet un fonctionnement simultané",
+            "star": false,
+            "page": "p.3"
+          },
+          {
+            "cat": "alveoles",
+            "label": "Application — alvéoles pulmonaires",
+            "q": "Quel risque existe chez le nouveau-né prématuré concernant le surfactant, et quelle en est la conséquence ?",
+            "a": "Risque de quantité de surfactant insuffisante, avec risque de détresse respiratoire",
+            "star": false,
+            "page": "p.3"
+          },
+          {
+            "cat": "jurin",
+            "label": "Loi de Jurin — ascension capillaire",
+            "q": "Qu'est-ce qui provoque l'ascension capillaire lorsqu'un tube est plongé dans un liquide ?",
+            "a": "Une perturbation induite par le tube sur la surface du liquide, avec rupture des forces de cohésion",
+            "star": false,
+            "page": "p.3"
+          },
+          {
+            "cat": "jurin",
+            "label": "Loi de Jurin — ascension capillaire",
+            "q": "Jusqu'à quel point la colonne de liquide monte-t-elle dans un capillaire plongé dans un liquide ?",
+            "a": "Jusqu'à ce que la gravité compense la force de tension superficielle FTS qui s'applique sur le contour du ménisque",
+            "star": false,
+            "page": "p.3"
+          },
+          {
+            "cat": "jurin",
+            "label": "Loi de Jurin — ascension capillaire",
+            "q": "Comment la hauteur d'ascension du liquide dans un capillaire varie-t-elle avec la finesse du tube ?",
+            "a": "Plus le tube est fin, plus la hauteur sera grande",
+            "star": false,
+            "page": "p.3"
+          },
+          {
+            "cat": "jurin",
+            "label": "Loi de Jurin — ascension capillaire",
+            "q": "À quoi correspond l'équilibre atteint lors de l'ascension capillaire ?",
+            "a": "À un équilibre entre tension superficielle et pression hydrostatique",
+            "star": false,
+            "page": "p.3"
+          },
+          {
+            "cat": "mouillage",
+            "label": "Loi de Jurin — mouillage parfait",
+            "q": "Quelle est l'expression de la loi de Jurin en cas de mouillage parfait (surface air/liquide plate) ?",
+            "a": "ρgh = 2σ/r",
+            "star": true,
+            "page": "p.3"
+          },
+          {
+            "cat": "mouillage",
+            "label": "Loi de Jurin — mouillage imparfait",
+            "q": "Quelle est l'expression de la loi de Jurin en cas de mouillage imparfait (surface air/liquide courbe) ?",
+            "a": "ρgh = (2σ.cos α)/r, où α est l'angle de contact",
+            "star": false,
+            "page": "p.3"
+          },
+          {
+            "cat": "mouillage",
+            "label": "Loi de Jurin — grandeurs",
+            "q": "Dans la loi de Jurin, que représentent r, σ, ρ, g et h ?",
+            "a": "r = rayon du capillaire ; σ = coefficient de tension superficielle ; ρ = masse volumique du fluide ; g = accélération de la pesanteur ; h = hauteur de la colonne de fluide",
+            "star": false,
+            "page": "p.3"
+          }
+        ]
+      },
+      {
+        "id": "complement",
+        "part": "Pour continuer...",
+        "title": "Pour continuer...",
+        "pdfRecap": "Fiche_visuelle_Proprietes_mecaniques_des_solutions.pdf",
+        "desc": "Applications chiffrées et détails complémentaires, pour une couverture complète du chapitre.",
+        "tags": [
+          "10 cartes",
+          "Complément"
+        ],
+        "isComplement": true,
+        "pairId": "bases",
+        "cards": [
+          {
+            "cat": "laplacegoutte",
+            "label": "Application chiffrée",
+            "q": "Une gouttelette d'eau de rayon R = 40 µm est en suspension dans l'air (σ = 72.10⁻³ N.m⁻¹). Quelle est la différence de pression ΔP entre l'intérieur et l'extérieur ?",
+            "a": "ΔP = 2σ/R = (2×72.10⁻³)/(40.10⁻⁶) = 3600 Pa",
+            "star": false,
+            "page": "p.2"
+          },
+          {
+            "cat": "laplacegoutte",
+            "label": "Application chiffrée",
+            "q": "Une goutte d'eau de rayon R = 0,25 mm est en suspension dans l'air (σ = 75.10⁻³ N.m⁻¹). Quelle est la différence de pression ΔP entre l'intérieur et l'extérieur ?",
+            "a": "ΔP = 2σ/R = (2×75.10⁻³)/(0,25.10⁻³) = 600 Pa",
+            "star": false,
+            "page": "p.2"
+          },
+          {
+            "cat": "laplacebulle",
+            "label": "Application chiffrée",
+            "q": "On souffle une bulle de savon de rayon R = 5 cm avec un liquide de tension superficielle σ = 25.10⁻³ N.m⁻¹. Quelle est la surpression à l'intérieur de cette bulle ?",
+            "a": "ΔP = 4σ/R = (4×25.10⁻³)/(5.10⁻²) = 2 Pa",
+            "star": false,
+            "page": "p.2"
+          },
+          {
+            "cat": "laplacebulle",
+            "label": "Application chiffrée",
+            "q": "On souffle une bulle de savon de rayon R = 2 cm avec un liquide de tension superficielle σ = 30.10⁻³ N.m⁻¹. Quelle est la surpression à l'intérieur de cette bulle ?",
+            "a": "ΔP = 4σ/R = (4×30.10⁻³)/(2.10⁻²) = 6 Pa",
+            "star": false,
+            "page": "p.2"
+          },
+          {
+            "cat": "mouillage",
+            "label": "Application chiffrée",
+            "q": "Un tube capillaire de rayon r = 0,6 mm est plongé (mouillage parfait) dans un liquide de tension superficielle σ = 0,06 N.m⁻¹ et de masse volumique ρ = 1000 kg.m⁻³ (g = 10 m.s⁻²). Quelle est la hauteur d'ascension h ?",
+            "a": "h = 2σ/(ρgr) = (2×0,06)/(1000×10×0,6.10⁻³) = 0,02 m = 20 mm",
+            "star": false,
+            "page": "p.3"
+          },
+          {
+            "cat": "mouillage",
+            "label": "Application chiffrée",
+            "q": "Un tube capillaire de rayon r = 0,8 mm est plongé (mouillage parfait) dans un liquide de tension superficielle σ = 0,04 N.m⁻¹ et de masse volumique ρ = 1000 kg.m⁻³ (g = 10 m.s⁻²). Quelle est la hauteur d'ascension h ?",
+            "a": "h = 2σ/(ρgr) = (2×0,04)/(1000×10×0,8.10⁻³) = 0,01 m = 10 mm",
+            "star": false,
+            "page": "p.3"
+          },
+          {
+            "cat": "forcesintermol",
+            "label": "Détail — tension superficielle",
+            "q": "Le coefficient de tension superficielle σ dépend-il uniquement du liquide, ou aussi du milieu avec lequel il forme l'interface ?",
+            "a": "Il dépend de l'interface : c'est une caractéristique de l'interface, pas du seul liquide",
+            "star": false,
+            "page": "p.2"
+          },
+          {
+            "cat": "laplacebulle",
+            "label": "Détail — stabilité des bulles",
+            "q": "Entre une petite bulle et une grande bulle reliées entre elles, laquelle a la surpression la plus élevée ?",
+            "a": "La petite bulle (rayon plus petit → surpression plus élevée, ΔP=4σ/R), c'est pourquoi elle se vide dans la grande",
+            "star": false,
+            "page": "p.2"
+          },
+          {
+            "cat": "alveoles",
+            "label": "Détail — surfactant",
+            "q": "Que permettent, ensemble, la limitation de la surpression et l'égalisation des pressions par le surfactant dans les alvéoles ?",
+            "a": "Un fonctionnement simultané des alvéoles, en empêchant les petites de se vider dans les grandes",
+            "star": false,
+            "page": "p.3"
+          },
+          {
+            "cat": "jurin",
+            "label": "Détail — ascension capillaire",
+            "q": "Sur quoi s'applique la force de tension superficielle FTS lors de l'ascension capillaire ?",
+            "a": "Sur le contour du ménisque",
+            "star": false,
+            "page": "p.3"
+          }
+        ]
+      }
+    ]
+  },
+  "qrm": {
+    "desc": "30 questions à réponses multiples (2 séries de 15), calibrées sur les annales Médisup 2019-2026.",
+    "qrmPdf": "QRM_Proprietes_mecaniques_des_solutions.pdf",
+    "series": [
+      {
+        "id": "serie-1",
+        "title": "Série 1",
+        "questions": [
+          {
+            "stem": "À propos du rôle du surfactant, quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "Dans une goutte, la surpression intérieure s'oppose à la tension de surface et à la pression extérieure pour maintenir l'équilibre."
+              },
+              {
+                "letter": "b",
+                "text": "Les alvéoles pulmonaires sont assimilables à des sacs dont le rayon varie au cours du cycle respiratoire."
+              },
+              {
+                "letter": "c",
+                "text": "Le surfactant accentue les écarts de pression entre alvéoles, ce qui impose un fonctionnement séquentiel de celles-ci."
+              },
+              {
+                "letter": "d",
+                "text": "En cas de mouillage imparfait (surface air/liquide courbe), la loi de Jurin s'écrit ρgh = (2σ.cos α)/r, où α est l'angle de contact."
+              },
+              {
+                "letter": "e",
+                "text": "À l'interface air/surfactant des alvéoles pulmonaires, ΔP = 4σ/R."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Vrai",
+                "just": "La tension de surface tend à diminuer le rayon de la sphère ; la surpression intérieure s'oppose à la tension de surface et à la pression extérieure.",
+                "page": "p.2"
+              },
+              "b": {
+                "verdict": "Vrai",
+                "just": "Les alvéoles sont assimilées à des sacs dont le rayon varie au cours du cycle respiratoire.",
+                "page": "p.3"
+              },
+              "c": {
+                "verdict": "Faux",
+                "just": "En égalisant les pressions, le surfactant permet un fonctionnement simultané des alvéoles.",
+                "page": "p.3"
+              },
+              "d": {
+                "verdict": "Vrai",
+                "just": "En mouillage imparfait, la loi de Jurin fait intervenir cos α, pas sin α.",
+                "page": "p.3"
+              },
+              "e": {
+                "verdict": "Faux",
+                "just": "Les alvéoles ne comptent qu'une seule interface air/surfactant : ΔP = 2σ/R (comme une goutte, pas comme une bulle).",
+                "page": "p.3"
+              }
+            }
+          },
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "Pour une goutte, l'intérieur est en dépression par rapport à l'extérieur."
+              },
+              {
+                "letter": "b",
+                "text": "Pour augmenter la surface d'une interface de ΔS, il faut fournir une énergie ΔW = σ/ΔS."
+              },
+              {
+                "letter": "c",
+                "text": "Le surfactant limite la surpression dans les alvéoles et empêche les petites alvéoles de se vider dans les grandes."
+              },
+              {
+                "letter": "d",
+                "text": "Les alvéoles pulmonaires sont assimilables à des sacs dont le rayon varie au cours du cycle respiratoire."
+              },
+              {
+                "letter": "e",
+                "text": "Le coefficient de tension superficielle σ est une caractéristique de l'interface : σeau/air est différent de σhuile/air."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Faux",
+                "just": "Le cours précise explicitement que l'intérieur de la goutte est en surpression par rapport à l'extérieur.",
+                "page": "p.2"
+              },
+              "b": {
+                "verdict": "Faux",
+                "just": "La relation donnée par le cours est ΔW = σ.ΔS (produit, pas quotient).",
+                "page": "p.2"
+              },
+              "c": {
+                "verdict": "Vrai",
+                "just": "Le surfactant limite la surpression et empêche les petites alvéoles de se vider dans les grandes.",
+                "page": "p.3"
+              },
+              "d": {
+                "verdict": "Vrai",
+                "just": "Les alvéoles sont assimilées à des sacs dont le rayon varie au cours du cycle respiratoire.",
+                "page": "p.3"
+              },
+              "e": {
+                "verdict": "Vrai",
+                "just": "σ caractérise l'interface (couple des deux milieux en présence), donc σeau/air ≠ σhuile/air.",
+                "page": "p.2"
+              }
+            }
+          },
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "L'ascension capillaire correspond à un équilibre entre la tension superficielle et la pression atmosphérique seule, sans intervention de la pression hydrostatique."
+              },
+              {
+                "letter": "b",
+                "text": "Plus le tube capillaire est fin, plus la hauteur d'ascension du liquide est grande."
+              },
+              {
+                "letter": "c",
+                "text": "Pour une calotte sphérique de rayon r d'une sphère de rayon R, ΔP = (2σ×sin α)/r."
+              },
+              {
+                "letter": "d",
+                "text": "Plus le rayon R d'une bulle est grand, plus la surpression est élevée, ce qui correspond à un état plus stable."
+              },
+              {
+                "letter": "e",
+                "text": "Pour une bulle de savon de rayon R, la surpression vaut ΔP = 4σ/R."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Faux",
+                "just": "Le cours décrit un équilibre entre tension superficielle et pression hydrostatique.",
+                "page": "p.3"
+              },
+              "b": {
+                "verdict": "Vrai",
+                "just": "Le cours indique que plus le tube est fin, plus la hauteur sera grande.",
+                "page": "p.3"
+              },
+              "c": {
+                "verdict": "Faux",
+                "just": "La formule de la calotte sphérique donnée par le cours fait intervenir cos α, pas sin α.",
+                "page": "p.2"
+              },
+              "d": {
+                "verdict": "Faux",
+                "just": "ΔP = 4σ/R diminue quand R augmente ; un grand R correspond donc à un état plus stable.",
+                "page": "p.2"
+              },
+              "e": {
+                "verdict": "Vrai",
+                "just": "Pour une bulle, ΔP = 4σ/R (et non 2σ/R comme pour une goutte).",
+                "page": "p.2"
+              }
+            }
+          },
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "Plus le rayon R d'une bulle est grand, plus la surpression est faible, ce qui correspond à un état plus stable."
+              },
+              {
+                "letter": "b",
+                "text": "Chez le nouveau-né prématuré, il existe un risque de quantité de surfactant excessive, avec risque de détresse respiratoire."
+              },
+              {
+                "letter": "c",
+                "text": "L'ascension capillaire correspond à un équilibre entre la tension superficielle et la pression atmosphérique seule, sans intervention de la pression hydrostatique."
+              },
+              {
+                "letter": "d",
+                "text": "Dans les alvéoles pulmonaires, σsurfactant > σeau."
+              },
+              {
+                "letter": "e",
+                "text": "À l'interface air-liquide, la force de surface est orientée de manière à augmenter l'interface, si bien que l'aire de l'interface tend à être maximale."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Vrai",
+                "just": "ΔP = 4σ/R diminue quand R augmente ; un grand R correspond donc à un état plus stable.",
+                "page": "p.2"
+              },
+              "b": {
+                "verdict": "Faux",
+                "just": "Le risque décrit chez le prématuré est celui d'une quantité de surfactant insuffisante.",
+                "page": "p.3"
+              },
+              "c": {
+                "verdict": "Faux",
+                "just": "Le cours décrit un équilibre entre tension superficielle et pression hydrostatique.",
+                "page": "p.3"
+              },
+              "d": {
+                "verdict": "Faux",
+                "just": "Le cours indique σsurfactant < σeau.",
+                "page": "p.3"
+              },
+              "e": {
+                "verdict": "Faux",
+                "just": "La force de surface est orientée de manière à diminuer l'interface : l'aire de l'interface tend à être minimale.",
+                "page": "p.2"
+              }
+            }
+          },
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "À l'interface air/surfactant des alvéoles pulmonaires, ΔP = 2σ/R."
+              },
+              {
+                "letter": "b",
+                "text": "En cas de mouillage parfait (surface air/liquide plate), la loi de Jurin s'écrit ρgh = 4σ/r."
+              },
+              {
+                "letter": "c",
+                "text": "En cas de mouillage imparfait (surface air/liquide courbe), la loi de Jurin s'écrit ρgh = (2σ.cos α)/r, où α est l'angle de contact."
+              },
+              {
+                "letter": "d",
+                "text": "Plus le tube capillaire est fin, plus la hauteur d'ascension du liquide est petite."
+              },
+              {
+                "letter": "e",
+                "text": "Pour augmenter la surface d'une interface de ΔS, il faut fournir une énergie ΔW = σ.ΔS."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Vrai",
+                "just": "Les alvéoles ne comptent qu'une seule interface air/surfactant : ΔP = 2σ/R (comme une goutte, pas comme une bulle).",
+                "page": "p.3"
+              },
+              "b": {
+                "verdict": "Faux",
+                "just": "En mouillage parfait, la loi de Jurin s'écrit ρgh = 2σ/r.",
+                "page": "p.3"
+              },
+              "c": {
+                "verdict": "Vrai",
+                "just": "En mouillage imparfait, la loi de Jurin fait intervenir cos α, pas sin α.",
+                "page": "p.3"
+              },
+              "d": {
+                "verdict": "Faux",
+                "just": "Le cours indique que plus le tube est fin, plus la hauteur sera grande.",
+                "page": "p.3"
+              },
+              "e": {
+                "verdict": "Vrai",
+                "just": "La relation donnée par le cours est ΔW = σ.ΔS (produit, pas quotient).",
+                "page": "p.2"
+              }
+            }
+          },
+          {
+            "stem": "QRM. Problème — propriétés mécaniques des solutions : quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "Une goutte d'eau de rayon R = 0,25 mm est en suspension dans l'air, avec σ = 75.10⁻³ N.m⁻¹ ; la différence de pression ΔP entre l'intérieur et l'extérieur de la goutte vaut 6000 Pa."
+              },
+              {
+                "letter": "b",
+                "text": "On souffle une bulle de savon de rayon R = 5 cm avec un liquide de tension superficielle σ = 25.10⁻³ N.m⁻¹ ; la surpression à l'intérieur de cette bulle vaut 1 Pa."
+              },
+              {
+                "letter": "c",
+                "text": "Un tube capillaire de rayon r = 0,8 mm est plongé, mouillage parfait considéré, dans un liquide de σ = 0,04 N.m⁻¹ et de ρ = 1000 kg.m⁻³ (g = 10 m.s⁻²) ; la hauteur d'ascension h de ce liquide vaut 10 mm."
+              },
+              {
+                "letter": "d",
+                "text": "Dans une bulle de savon, le facteur 4 (au lieu de 2 pour une goutte) s'explique par la présence de 2 interfaces entre l'air et l'eau savonneuse."
+              },
+              {
+                "letter": "e",
+                "text": "En cas de mouillage imparfait (surface air/liquide courbe), la loi de Jurin s'écrit ρgh = (2σ.sin α)/r, où α est l'angle de contact."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Faux",
+                "just": "ΔP = 2σ/R = (2×75.10⁻³)/(0,25.10⁻³) = 600 Pa (une erreur de conversion d'unité sur R donnerait à tort 6000 Pa).",
+                "page": "p.2"
+              },
+              "b": {
+                "verdict": "Faux",
+                "just": "ΔP = 4σ/R = (4×25.10⁻³)/(5.10⁻²) = 2 Pa (utiliser à tort la formule de la goutte ΔP=2σ/R donnerait 1 Pa).",
+                "page": "p.2"
+              },
+              "c": {
+                "verdict": "Vrai",
+                "just": "h = 2σ/(ρgr) = (2×0,04)/(1000×10×0,8.10⁻³) = 0,01 m = 10 mm (une erreur de conversion d'unité donnerait à tort 100 mm).",
+                "page": "p.3"
+              },
+              "d": {
+                "verdict": "Vrai",
+                "just": "Une bulle possède 2 interfaces air/eau savonneuse, ce qui double le facteur 2 de la goutte en facteur 4.",
+                "page": "p.2"
+              },
+              "e": {
+                "verdict": "Faux",
+                "just": "En mouillage imparfait, la loi de Jurin fait intervenir cos α, pas sin α.",
+                "page": "p.3"
+              }
+            }
+          },
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "Le surfactant égalise les pressions dans les alvéoles, ce qui permet un fonctionnement simultané de celles-ci."
+              },
+              {
+                "letter": "b",
+                "text": "Dans une goutte, la surpression intérieure s'oppose à la tension de surface et à la pression extérieure pour maintenir l'équilibre."
+              },
+              {
+                "letter": "c",
+                "text": "Le surfactant limite la surpression dans les alvéoles et empêche les petites alvéoles de se vider dans les grandes."
+              },
+              {
+                "letter": "d",
+                "text": "En cas de mouillage imparfait (surface air/liquide courbe), la loi de Jurin s'écrit ρgh = (2σ.cos α)/r, où α est l'angle de contact."
+              },
+              {
+                "letter": "e",
+                "text": "Dans une bulle de savon, le facteur 4 s'explique par la présence de 4 interfaces entre l'air et l'eau savonneuse."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Vrai",
+                "just": "En égalisant les pressions, le surfactant permet un fonctionnement simultané des alvéoles.",
+                "page": "p.3"
+              },
+              "b": {
+                "verdict": "Vrai",
+                "just": "La tension de surface tend à diminuer le rayon de la sphère ; la surpression intérieure s'oppose à la tension de surface et à la pression extérieure.",
+                "page": "p.2"
+              },
+              "c": {
+                "verdict": "Vrai",
+                "just": "Le surfactant limite la surpression et empêche les petites alvéoles de se vider dans les grandes.",
+                "page": "p.3"
+              },
+              "d": {
+                "verdict": "Vrai",
+                "just": "En mouillage imparfait, la loi de Jurin fait intervenir cos α, pas sin α.",
+                "page": "p.3"
+              },
+              "e": {
+                "verdict": "Faux",
+                "just": "Une bulle possède 2 interfaces air/eau savonneuse, ce qui double le facteur 2 de la goutte en facteur 4.",
+                "page": "p.2"
+              }
+            }
+          },
+          {
+            "stem": "QRM. Problème — propriétés mécaniques des solutions : quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "Un tube capillaire de rayon r = 0,6 mm est plongé, mouillage parfait considéré, dans un liquide de σ = 0,06 N.m⁻¹ et de ρ = 1000 kg.m⁻³ (g = 10 m.s⁻²) ; la hauteur d'ascension h de ce liquide vaut 20 mm."
+              },
+              {
+                "letter": "b",
+                "text": "Un tube capillaire de rayon r = 0,8 mm est plongé, mouillage parfait considéré, dans un liquide de σ = 0,04 N.m⁻¹ et de ρ = 1000 kg.m⁻³ (g = 10 m.s⁻²) ; la hauteur d'ascension h de ce liquide vaut 100 mm."
+              },
+              {
+                "letter": "c",
+                "text": "En cas de mouillage parfait (surface air/liquide plate), la loi de Jurin s'écrit ρgh = 2σ/r."
+              },
+              {
+                "letter": "d",
+                "text": "Dans la loi de Jurin, r désigne le rayon du capillaire, σ le coefficient de tension superficielle, ρ la masse volumique du fluide, g l'accélération de la pesanteur et h la hauteur de la colonne de fluide."
+              },
+              {
+                "letter": "e",
+                "text": "Plus le tube capillaire est fin, plus la hauteur d'ascension du liquide est petite."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Vrai",
+                "just": "h = 2σ/(ρgr) = (2×0,06)/(1000×10×0,6.10⁻³) = 0,02 m = 20 mm (une erreur de conversion d'unité donnerait à tort 2 mm).",
+                "page": "p.3"
+              },
+              "b": {
+                "verdict": "Faux",
+                "just": "h = 2σ/(ρgr) = (2×0,04)/(1000×10×0,8.10⁻³) = 0,01 m = 10 mm (une erreur de conversion d'unité donnerait à tort 100 mm).",
+                "page": "p.3"
+              },
+              "c": {
+                "verdict": "Vrai",
+                "just": "En mouillage parfait, la loi de Jurin s'écrit ρgh = 2σ/r.",
+                "page": "p.3"
+              },
+              "d": {
+                "verdict": "Vrai",
+                "just": "h désigne la hauteur de la colonne de fluide, pas une surpression.",
+                "page": "p.3"
+              },
+              "e": {
+                "verdict": "Faux",
+                "just": "Le cours indique que plus le tube est fin, plus la hauteur sera grande.",
+                "page": "p.3"
+              }
+            }
+          },
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "En cas de mouillage imparfait (surface air/liquide courbe), la loi de Jurin s'écrit ρgh = (2σ.sin α)/r, où α est l'angle de contact."
+              },
+              {
+                "letter": "b",
+                "text": "Dans les alvéoles pulmonaires, σsurfactant > σeau."
+              },
+              {
+                "letter": "c",
+                "text": "Si on relie deux bulles de savon de tailles différentes entre elles, la grande bulle se vide dans la petite."
+              },
+              {
+                "letter": "d",
+                "text": "Le coefficient de tension superficielle σ s'exprime en N.m⁻²."
+              },
+              {
+                "letter": "e",
+                "text": "L'ascension capillaire correspond à un équilibre entre la tension superficielle et la pression hydrostatique."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Faux",
+                "just": "En mouillage imparfait, la loi de Jurin fait intervenir cos α, pas sin α.",
+                "page": "p.3"
+              },
+              "b": {
+                "verdict": "Faux",
+                "just": "Le cours indique σsurfactant < σeau.",
+                "page": "p.3"
+              },
+              "c": {
+                "verdict": "Faux",
+                "just": "La petite bulle, de surpression plus élevée, se vide dans la grande bulle.",
+                "page": "p.2"
+              },
+              "d": {
+                "verdict": "Faux",
+                "just": "σ est un coefficient de tension superficielle exprimé en N.m⁻¹.",
+                "page": "p.2"
+              },
+              "e": {
+                "verdict": "Vrai",
+                "just": "Le cours décrit un équilibre entre tension superficielle et pression hydrostatique.",
+                "page": "p.3"
+              }
+            }
+          },
+          {
+            "stem": "Concernant la loi de Laplace pour une goutte, quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "Pour une calotte sphérique de rayon r d'une sphère de rayon R, ΔP = (2σ×cos α)/r."
+              },
+              {
+                "letter": "b",
+                "text": "Pour une goutte de rayon R, la loi de Laplace donne ΔP = 2σ/R."
+              },
+              {
+                "letter": "c",
+                "text": "Plus le tube capillaire est fin, plus la hauteur d'ascension du liquide est petite."
+              },
+              {
+                "letter": "d",
+                "text": "Pour une goutte, l'intérieur est en dépression par rapport à l'extérieur."
+              },
+              {
+                "letter": "e",
+                "text": "Plus le rayon R d'une bulle est grand, plus la surpression est faible, ce qui correspond à un état plus stable."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Vrai",
+                "just": "La formule de la calotte sphérique donnée par le cours fait intervenir cos α, pas sin α.",
+                "page": "p.2"
+              },
+              "b": {
+                "verdict": "Vrai",
+                "just": "La loi de Laplace pour une goutte s'écrit ΔP = 2σ/R.",
+                "page": "p.2"
+              },
+              "c": {
+                "verdict": "Faux",
+                "just": "Le cours indique que plus le tube est fin, plus la hauteur sera grande.",
+                "page": "p.3"
+              },
+              "d": {
+                "verdict": "Faux",
+                "just": "Le cours précise explicitement que l'intérieur de la goutte est en surpression par rapport à l'extérieur.",
+                "page": "p.2"
+              },
+              "e": {
+                "verdict": "Vrai",
+                "just": "ΔP = 4σ/R diminue quand R augmente ; un grand R correspond donc à un état plus stable.",
+                "page": "p.2"
+              }
+            }
+          },
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "Pour une goutte de rayon R, la loi de Laplace donne ΔP = σ/R."
+              },
+              {
+                "letter": "b",
+                "text": "Pour une goutte, l'intérieur est en dépression par rapport à l'extérieur."
+              },
+              {
+                "letter": "c",
+                "text": "Plus le tube capillaire est fin, plus la hauteur d'ascension du liquide est grande."
+              },
+              {
+                "letter": "d",
+                "text": "Dans une bulle de savon, le facteur 4 (au lieu de 2 pour une goutte) s'explique par la présence de 2 interfaces entre l'air et l'eau savonneuse."
+              },
+              {
+                "letter": "e",
+                "text": "Le surfactant accentue les écarts de pression entre alvéoles, ce qui impose un fonctionnement séquentiel de celles-ci."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Faux",
+                "just": "La loi de Laplace pour une goutte s'écrit ΔP = 2σ/R.",
+                "page": "p.2"
+              },
+              "b": {
+                "verdict": "Faux",
+                "just": "Le cours précise explicitement que l'intérieur de la goutte est en surpression par rapport à l'extérieur.",
+                "page": "p.2"
+              },
+              "c": {
+                "verdict": "Vrai",
+                "just": "Le cours indique que plus le tube est fin, plus la hauteur sera grande.",
+                "page": "p.3"
+              },
+              "d": {
+                "verdict": "Vrai",
+                "just": "Une bulle possède 2 interfaces air/eau savonneuse, ce qui double le facteur 2 de la goutte en facteur 4.",
+                "page": "p.2"
+              },
+              "e": {
+                "verdict": "Faux",
+                "just": "En égalisant les pressions, le surfactant permet un fonctionnement simultané des alvéoles.",
+                "page": "p.3"
+              }
+            }
+          },
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "Le coefficient de tension superficielle σ est une caractéristique de l'interface : σeau/air est différent de σhuile/air."
+              },
+              {
+                "letter": "b",
+                "text": "Le surfactant égalise les pressions dans les alvéoles, ce qui permet un fonctionnement simultané de celles-ci."
+              },
+              {
+                "letter": "c",
+                "text": "Dans une goutte, la surpression intérieure s'oppose à la tension de surface et à la pression extérieure pour maintenir l'équilibre."
+              },
+              {
+                "letter": "d",
+                "text": "Chez le nouveau-né prématuré, il existe un risque de quantité de surfactant excessive, avec risque de détresse respiratoire."
+              },
+              {
+                "letter": "e",
+                "text": "Pour une goutte, l'intérieur est en dépression par rapport à l'extérieur."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Vrai",
+                "just": "σ caractérise l'interface (couple des deux milieux en présence), donc σeau/air ≠ σhuile/air.",
+                "page": "p.2"
+              },
+              "b": {
+                "verdict": "Vrai",
+                "just": "En égalisant les pressions, le surfactant permet un fonctionnement simultané des alvéoles.",
+                "page": "p.3"
+              },
+              "c": {
+                "verdict": "Vrai",
+                "just": "La tension de surface tend à diminuer le rayon de la sphère ; la surpression intérieure s'oppose à la tension de surface et à la pression extérieure.",
+                "page": "p.2"
+              },
+              "d": {
+                "verdict": "Faux",
+                "just": "Le risque décrit chez le prématuré est celui d'une quantité de surfactant insuffisante.",
+                "page": "p.3"
+              },
+              "e": {
+                "verdict": "Faux",
+                "just": "Le cours précise explicitement que l'intérieur de la goutte est en surpression par rapport à l'extérieur.",
+                "page": "p.2"
+              }
+            }
+          },
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "Pour une calotte sphérique de rayon r d'une sphère de rayon R, ΔP = (2σ×cos α)/r."
+              },
+              {
+                "letter": "b",
+                "text": "Si on relie deux bulles de savon de tailles différentes entre elles, la petite bulle se vide dans la grande."
+              },
+              {
+                "letter": "c",
+                "text": "Plus le rayon R d'une bulle est grand, plus la surpression est faible, ce qui correspond à un état plus stable."
+              },
+              {
+                "letter": "d",
+                "text": "Le coefficient de tension superficielle σ correspond à une énergie par unité de surface, ou à une force par unité de longueur."
+              },
+              {
+                "letter": "e",
+                "text": "Au sein d'un liquide, la résultante des forces inter-moléculaires est nulle."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Vrai",
+                "just": "La formule de la calotte sphérique donnée par le cours fait intervenir cos α, pas sin α.",
+                "page": "p.2"
+              },
+              "b": {
+                "verdict": "Vrai",
+                "just": "La petite bulle, de surpression plus élevée, se vide dans la grande bulle.",
+                "page": "p.2"
+              },
+              "c": {
+                "verdict": "Vrai",
+                "just": "ΔP = 4σ/R diminue quand R augmente ; un grand R correspond donc à un état plus stable.",
+                "page": "p.2"
+              },
+              "d": {
+                "verdict": "Vrai",
+                "just": "σ traduit l'énergie de cohésion d'une interface : énergie par unité de surface = force par unité de longueur.",
+                "page": "p.2"
+              },
+              "e": {
+                "verdict": "Vrai",
+                "just": "Au sein du liquide, la résultante des forces est nulle (Σfi = 0) ; ce n'est qu'à l'interface qu'une force résultante apparaît.",
+                "page": "p.2"
+              }
+            }
+          },
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "Le coefficient de tension superficielle σ correspond à une énergie par unité de surface, ou à une force par unité de longueur."
+              },
+              {
+                "letter": "b",
+                "text": "Plus le tube capillaire est fin, plus la hauteur d'ascension du liquide est grande."
+              },
+              {
+                "letter": "c",
+                "text": "Chez le nouveau-né prématuré, il existe un risque de quantité de surfactant excessive, avec risque de détresse respiratoire."
+              },
+              {
+                "letter": "d",
+                "text": "Pour une goutte de rayon R, la loi de Laplace donne ΔP = 2σ/R."
+              },
+              {
+                "letter": "e",
+                "text": "Pour augmenter la surface d'une interface de ΔS, il faut fournir une énergie ΔW = σ/ΔS."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Vrai",
+                "just": "σ traduit l'énergie de cohésion d'une interface : énergie par unité de surface = force par unité de longueur.",
+                "page": "p.2"
+              },
+              "b": {
+                "verdict": "Vrai",
+                "just": "Le cours indique que plus le tube est fin, plus la hauteur sera grande.",
+                "page": "p.3"
+              },
+              "c": {
+                "verdict": "Faux",
+                "just": "Le risque décrit chez le prématuré est celui d'une quantité de surfactant insuffisante.",
+                "page": "p.3"
+              },
+              "d": {
+                "verdict": "Vrai",
+                "just": "La loi de Laplace pour une goutte s'écrit ΔP = 2σ/R.",
+                "page": "p.2"
+              },
+              "e": {
+                "verdict": "Faux",
+                "just": "La relation donnée par le cours est ΔW = σ.ΔS (produit, pas quotient).",
+                "page": "p.2"
+              }
+            }
+          },
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "Dans une goutte, la surpression intérieure s'oppose à la tension de surface et à la pression extérieure pour maintenir l'équilibre."
+              },
+              {
+                "letter": "b",
+                "text": "Pour une calotte sphérique de rayon r d'une sphère de rayon R, ΔP = (2σ×sin α)/r."
+              },
+              {
+                "letter": "c",
+                "text": "En cas de mouillage parfait (surface air/liquide plate), la loi de Jurin s'écrit ρgh = 2σ/r."
+              },
+              {
+                "letter": "d",
+                "text": "Le coefficient de tension superficielle σ correspond à une énergie par unité de volume, ou à une force par unité de surface."
+              },
+              {
+                "letter": "e",
+                "text": "Si on relie deux bulles de savon de tailles différentes entre elles, la grande bulle se vide dans la petite."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Vrai",
+                "just": "La tension de surface tend à diminuer le rayon de la sphère ; la surpression intérieure s'oppose à la tension de surface et à la pression extérieure.",
+                "page": "p.2"
+              },
+              "b": {
+                "verdict": "Faux",
+                "just": "La formule de la calotte sphérique donnée par le cours fait intervenir cos α, pas sin α.",
+                "page": "p.2"
+              },
+              "c": {
+                "verdict": "Vrai",
+                "just": "En mouillage parfait, la loi de Jurin s'écrit ρgh = 2σ/r.",
+                "page": "p.3"
+              },
+              "d": {
+                "verdict": "Faux",
+                "just": "σ traduit l'énergie de cohésion d'une interface : énergie par unité de surface = force par unité de longueur.",
+                "page": "p.2"
+              },
+              "e": {
+                "verdict": "Faux",
+                "just": "La petite bulle, de surpression plus élevée, se vide dans la grande bulle.",
+                "page": "p.2"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "serie-2",
+        "title": "Série 2",
+        "questions": [
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "En cas de mouillage parfait (surface air/liquide plate), la loi de Jurin s'écrit ρgh = 4σ/r."
+              },
+              {
+                "letter": "b",
+                "text": "En cas de mouillage imparfait (surface air/liquide courbe), la loi de Jurin s'écrit ρgh = (2σ.sin α)/r, où α est l'angle de contact."
+              },
+              {
+                "letter": "c",
+                "text": "Le surfactant accentue les écarts de pression entre alvéoles, ce qui impose un fonctionnement séquentiel de celles-ci."
+              },
+              {
+                "letter": "d",
+                "text": "L'ascension capillaire correspond à un équilibre entre la tension superficielle et la pression atmosphérique seule, sans intervention de la pression hydrostatique."
+              },
+              {
+                "letter": "e",
+                "text": "Dans une goutte, c'est la pression extérieure seule, sans surpression intérieure, qui s'oppose à la tension de surface pour maintenir l'équilibre."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Faux",
+                "just": "En mouillage parfait, la loi de Jurin s'écrit ρgh = 2σ/r.",
+                "page": "p.3"
+              },
+              "b": {
+                "verdict": "Faux",
+                "just": "En mouillage imparfait, la loi de Jurin fait intervenir cos α, pas sin α.",
+                "page": "p.3"
+              },
+              "c": {
+                "verdict": "Faux",
+                "just": "En égalisant les pressions, le surfactant permet un fonctionnement simultané des alvéoles.",
+                "page": "p.3"
+              },
+              "d": {
+                "verdict": "Faux",
+                "just": "Le cours décrit un équilibre entre tension superficielle et pression hydrostatique.",
+                "page": "p.3"
+              },
+              "e": {
+                "verdict": "Faux",
+                "just": "La tension de surface tend à diminuer le rayon de la sphère ; la surpression intérieure s'oppose à la tension de surface et à la pression extérieure.",
+                "page": "p.2"
+              }
+            }
+          },
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "En cas de mouillage parfait (surface air/liquide plate), la loi de Jurin s'écrit ρgh = 4σ/r."
+              },
+              {
+                "letter": "b",
+                "text": "L'ascension capillaire correspond à un équilibre entre la tension superficielle et la pression hydrostatique."
+              },
+              {
+                "letter": "c",
+                "text": "Pour une bulle de savon de rayon R, la surpression vaut ΔP = 2σ/R."
+              },
+              {
+                "letter": "d",
+                "text": "Le coefficient de tension superficielle σ correspond à une énergie par unité de volume, ou à une force par unité de surface."
+              },
+              {
+                "letter": "e",
+                "text": "Pour augmenter la surface d'une interface de ΔS, il faut fournir une énergie ΔW = σ/ΔS."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Faux",
+                "just": "En mouillage parfait, la loi de Jurin s'écrit ρgh = 2σ/r.",
+                "page": "p.3"
+              },
+              "b": {
+                "verdict": "Vrai",
+                "just": "Le cours décrit un équilibre entre tension superficielle et pression hydrostatique.",
+                "page": "p.3"
+              },
+              "c": {
+                "verdict": "Faux",
+                "just": "Pour une bulle, ΔP = 4σ/R (et non 2σ/R comme pour une goutte).",
+                "page": "p.2"
+              },
+              "d": {
+                "verdict": "Faux",
+                "just": "σ traduit l'énergie de cohésion d'une interface : énergie par unité de surface = force par unité de longueur.",
+                "page": "p.2"
+              },
+              "e": {
+                "verdict": "Faux",
+                "just": "La relation donnée par le cours est ΔW = σ.ΔS (produit, pas quotient).",
+                "page": "p.2"
+              }
+            }
+          },
+          {
+            "stem": "QRM. Problème — propriétés mécaniques des solutions : quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "On souffle une bulle de savon de rayon R = 5 cm avec un liquide de tension superficielle σ = 25.10⁻³ N.m⁻¹ ; la surpression à l'intérieur de cette bulle vaut 1 Pa."
+              },
+              {
+                "letter": "b",
+                "text": "On souffle une bulle de savon de rayon R = 2 cm avec un liquide de tension superficielle σ = 30.10⁻³ N.m⁻¹ ; la surpression à l'intérieur de cette bulle vaut 60 Pa."
+              },
+              {
+                "letter": "c",
+                "text": "Pour une bulle de savon de rayon R, la surpression vaut ΔP = 4σ/R."
+              },
+              {
+                "letter": "d",
+                "text": "Plus le rayon R d'une bulle est grand, plus la surpression est faible, ce qui correspond à un état plus stable."
+              },
+              {
+                "letter": "e",
+                "text": "Si on relie deux bulles de savon de tailles différentes entre elles, la petite bulle se vide dans la grande."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Faux",
+                "just": "ΔP = 4σ/R = (4×25.10⁻³)/(5.10⁻²) = 2 Pa (utiliser à tort la formule de la goutte ΔP=2σ/R donnerait 1 Pa).",
+                "page": "p.2"
+              },
+              "b": {
+                "verdict": "Faux",
+                "just": "ΔP = 4σ/R = (4×30.10⁻³)/(2.10⁻²) = 6 Pa (une erreur de conversion d'unité sur R donnerait à tort 60 Pa).",
+                "page": "p.2"
+              },
+              "c": {
+                "verdict": "Vrai",
+                "just": "Pour une bulle, ΔP = 4σ/R (et non 2σ/R comme pour une goutte).",
+                "page": "p.2"
+              },
+              "d": {
+                "verdict": "Vrai",
+                "just": "ΔP = 4σ/R diminue quand R augmente ; un grand R correspond donc à un état plus stable.",
+                "page": "p.2"
+              },
+              "e": {
+                "verdict": "Vrai",
+                "just": "La petite bulle, de surpression plus élevée, se vide dans la grande bulle.",
+                "page": "p.2"
+              }
+            }
+          },
+          {
+            "stem": "QRM. Problème — propriétés mécaniques des solutions : quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "On souffle une bulle de savon de rayon R = 2 cm avec un liquide de tension superficielle σ = 30.10⁻³ N.m⁻¹ ; la surpression à l'intérieur de cette bulle vaut 6 Pa."
+              },
+              {
+                "letter": "b",
+                "text": "Un tube capillaire de rayon r = 0,6 mm est plongé, mouillage parfait considéré, dans un liquide de σ = 0,06 N.m⁻¹ et de ρ = 1000 kg.m⁻³ (g = 10 m.s⁻²) ; la hauteur d'ascension h de ce liquide vaut 20 mm."
+              },
+              {
+                "letter": "c",
+                "text": "Une gouttelette d'eau de rayon R = 40 µm est en suspension dans l'air, avec σ = 72.10⁻³ N.m⁻¹ ; la différence de pression ΔP entre l'intérieur et l'extérieur de la gouttelette vaut alors 3600 Pa."
+              },
+              {
+                "letter": "d",
+                "text": "L'ascension capillaire résulte d'une perturbation induite par le tube sur la surface du liquide, avec renforcement des forces de cohésion."
+              },
+              {
+                "letter": "e",
+                "text": "Au sein d'un liquide, la résultante des forces inter-moléculaires est non nulle et dirigée vers la surface."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Vrai",
+                "just": "ΔP = 4σ/R = (4×30.10⁻³)/(2.10⁻²) = 6 Pa (une erreur de conversion d'unité sur R donnerait à tort 60 Pa).",
+                "page": "p.2"
+              },
+              "b": {
+                "verdict": "Vrai",
+                "just": "h = 2σ/(ρgr) = (2×0,06)/(1000×10×0,6.10⁻³) = 0,02 m = 20 mm (une erreur de conversion d'unité donnerait à tort 2 mm).",
+                "page": "p.3"
+              },
+              "c": {
+                "verdict": "Vrai",
+                "just": "ΔP = 2σ/R = (2×72.10⁻³)/(40.10⁻⁶) = 3600 Pa (oublier le facteur 2 donnerait à tort 1800 Pa).",
+                "page": "p.2"
+              },
+              "d": {
+                "verdict": "Faux",
+                "just": "La perturbation induite par le tube entraîne une rupture des forces de cohésion, pas un renforcement.",
+                "page": "p.3"
+              },
+              "e": {
+                "verdict": "Faux",
+                "just": "Au sein du liquide, la résultante des forces est nulle (Σfi = 0) ; ce n'est qu'à l'interface qu'une force résultante apparaît.",
+                "page": "p.2"
+              }
+            }
+          },
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "Dans la loi de Jurin, r désigne le rayon du capillaire, σ le coefficient de tension superficielle, ρ la masse volumique du fluide, g l'accélération de la pesanteur et h la hauteur de la colonne de fluide."
+              },
+              {
+                "letter": "b",
+                "text": "Plus le tube capillaire est fin, plus la hauteur d'ascension du liquide est grande."
+              },
+              {
+                "letter": "c",
+                "text": "Le coefficient de tension superficielle σ correspond à une énergie par unité de surface, ou à une force par unité de longueur."
+              },
+              {
+                "letter": "d",
+                "text": "L'ascension capillaire résulte d'une perturbation induite par le tube sur la surface du liquide, avec renforcement des forces de cohésion."
+              },
+              {
+                "letter": "e",
+                "text": "En cas de mouillage parfait (surface air/liquide plate), la loi de Jurin s'écrit ρgh = 4σ/r."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Vrai",
+                "just": "h désigne la hauteur de la colonne de fluide, pas une surpression.",
+                "page": "p.3"
+              },
+              "b": {
+                "verdict": "Vrai",
+                "just": "Le cours indique que plus le tube est fin, plus la hauteur sera grande.",
+                "page": "p.3"
+              },
+              "c": {
+                "verdict": "Vrai",
+                "just": "σ traduit l'énergie de cohésion d'une interface : énergie par unité de surface = force par unité de longueur.",
+                "page": "p.2"
+              },
+              "d": {
+                "verdict": "Faux",
+                "just": "La perturbation induite par le tube entraîne une rupture des forces de cohésion, pas un renforcement.",
+                "page": "p.3"
+              },
+              "e": {
+                "verdict": "Faux",
+                "just": "En mouillage parfait, la loi de Jurin s'écrit ρgh = 2σ/r.",
+                "page": "p.3"
+              }
+            }
+          },
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "La colonne de liquide monte dans le capillaire jusqu'à ce que la gravité compense la force de tension superficielle FTS qui s'applique sur le contour du ménisque."
+              },
+              {
+                "letter": "b",
+                "text": "Le coefficient de tension superficielle σ correspond à une énergie par unité de volume, ou à une force par unité de surface."
+              },
+              {
+                "letter": "c",
+                "text": "Dans les alvéoles pulmonaires, σsurfactant > σeau."
+              },
+              {
+                "letter": "d",
+                "text": "Le surfactant égalise les pressions dans les alvéoles, ce qui permet un fonctionnement simultané de celles-ci."
+              },
+              {
+                "letter": "e",
+                "text": "Le coefficient de tension superficielle σ s'exprime en N.m⁻¹."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Vrai",
+                "just": "L'ascension s'arrête à l'équilibre entre gravité et force de tension superficielle FTS, la gravité n'est jamais annulée.",
+                "page": "p.3"
+              },
+              "b": {
+                "verdict": "Faux",
+                "just": "σ traduit l'énergie de cohésion d'une interface : énergie par unité de surface = force par unité de longueur.",
+                "page": "p.2"
+              },
+              "c": {
+                "verdict": "Faux",
+                "just": "Le cours indique σsurfactant < σeau.",
+                "page": "p.3"
+              },
+              "d": {
+                "verdict": "Vrai",
+                "just": "En égalisant les pressions, le surfactant permet un fonctionnement simultané des alvéoles.",
+                "page": "p.3"
+              },
+              "e": {
+                "verdict": "Vrai",
+                "just": "σ est un coefficient de tension superficielle exprimé en N.m⁻¹.",
+                "page": "p.2"
+              }
+            }
+          },
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "À l'interface air-liquide, la force de surface est orientée de manière à augmenter l'interface, si bien que l'aire de l'interface tend à être maximale."
+              },
+              {
+                "letter": "b",
+                "text": "Plus le rayon R d'une bulle est grand, plus la surpression est faible, ce qui correspond à un état plus stable."
+              },
+              {
+                "letter": "c",
+                "text": "Le coefficient de tension superficielle σ correspond à une énergie par unité de surface, ou à une force par unité de longueur."
+              },
+              {
+                "letter": "d",
+                "text": "En cas de mouillage imparfait (surface air/liquide courbe), la loi de Jurin s'écrit ρgh = (2σ.cos α)/r, où α est l'angle de contact."
+              },
+              {
+                "letter": "e",
+                "text": "Le surfactant égalise les pressions dans les alvéoles, ce qui permet un fonctionnement simultané de celles-ci."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Faux",
+                "just": "La force de surface est orientée de manière à diminuer l'interface : l'aire de l'interface tend à être minimale.",
+                "page": "p.2"
+              },
+              "b": {
+                "verdict": "Vrai",
+                "just": "ΔP = 4σ/R diminue quand R augmente ; un grand R correspond donc à un état plus stable.",
+                "page": "p.2"
+              },
+              "c": {
+                "verdict": "Vrai",
+                "just": "σ traduit l'énergie de cohésion d'une interface : énergie par unité de surface = force par unité de longueur.",
+                "page": "p.2"
+              },
+              "d": {
+                "verdict": "Vrai",
+                "just": "En mouillage imparfait, la loi de Jurin fait intervenir cos α, pas sin α.",
+                "page": "p.3"
+              },
+              "e": {
+                "verdict": "Vrai",
+                "just": "En égalisant les pressions, le surfactant permet un fonctionnement simultané des alvéoles.",
+                "page": "p.3"
+              }
+            }
+          },
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "Dans une bulle de savon, le facteur 4 (au lieu de 2 pour une goutte) s'explique par la présence de 2 interfaces entre l'air et l'eau savonneuse."
+              },
+              {
+                "letter": "b",
+                "text": "Pour une goutte, l'intérieur est en dépression par rapport à l'extérieur."
+              },
+              {
+                "letter": "c",
+                "text": "Pour une bulle de savon de rayon R, la surpression vaut ΔP = 2σ/R."
+              },
+              {
+                "letter": "d",
+                "text": "En cas de mouillage imparfait (surface air/liquide courbe), la loi de Jurin s'écrit ρgh = (2σ.sin α)/r, où α est l'angle de contact."
+              },
+              {
+                "letter": "e",
+                "text": "Le coefficient de tension superficielle σ s'exprime en N.m⁻¹."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Vrai",
+                "just": "Une bulle possède 2 interfaces air/eau savonneuse, ce qui double le facteur 2 de la goutte en facteur 4.",
+                "page": "p.2"
+              },
+              "b": {
+                "verdict": "Faux",
+                "just": "Le cours précise explicitement que l'intérieur de la goutte est en surpression par rapport à l'extérieur.",
+                "page": "p.2"
+              },
+              "c": {
+                "verdict": "Faux",
+                "just": "Pour une bulle, ΔP = 4σ/R (et non 2σ/R comme pour une goutte).",
+                "page": "p.2"
+              },
+              "d": {
+                "verdict": "Faux",
+                "just": "En mouillage imparfait, la loi de Jurin fait intervenir cos α, pas sin α.",
+                "page": "p.3"
+              },
+              "e": {
+                "verdict": "Vrai",
+                "just": "σ est un coefficient de tension superficielle exprimé en N.m⁻¹.",
+                "page": "p.2"
+              }
+            }
+          },
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "Dans la loi de Jurin, r désigne le rayon du capillaire, σ le coefficient de tension superficielle, ρ la masse volumique du fluide, g l'accélération de la pesanteur et h la hauteur de la colonne de fluide."
+              },
+              {
+                "letter": "b",
+                "text": "Le surfactant accentue les écarts de pression entre alvéoles, ce qui impose un fonctionnement séquentiel de celles-ci."
+              },
+              {
+                "letter": "c",
+                "text": "Dans une bulle de savon, le facteur 4 s'explique par la présence de 4 interfaces entre l'air et l'eau savonneuse."
+              },
+              {
+                "letter": "d",
+                "text": "À l'interface air-liquide, la force de surface est orientée de manière à augmenter l'interface, si bien que l'aire de l'interface tend à être maximale."
+              },
+              {
+                "letter": "e",
+                "text": "Pour une goutte de rayon R, la loi de Laplace donne ΔP = 2σ/R."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Vrai",
+                "just": "h désigne la hauteur de la colonne de fluide, pas une surpression.",
+                "page": "p.3"
+              },
+              "b": {
+                "verdict": "Faux",
+                "just": "En égalisant les pressions, le surfactant permet un fonctionnement simultané des alvéoles.",
+                "page": "p.3"
+              },
+              "c": {
+                "verdict": "Faux",
+                "just": "Une bulle possède 2 interfaces air/eau savonneuse, ce qui double le facteur 2 de la goutte en facteur 4.",
+                "page": "p.2"
+              },
+              "d": {
+                "verdict": "Faux",
+                "just": "La force de surface est orientée de manière à diminuer l'interface : l'aire de l'interface tend à être minimale.",
+                "page": "p.2"
+              },
+              "e": {
+                "verdict": "Vrai",
+                "just": "La loi de Laplace pour une goutte s'écrit ΔP = 2σ/R.",
+                "page": "p.2"
+              }
+            }
+          },
+          {
+            "stem": "À propos de la tension superficielle, quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "Le coefficient de tension superficielle σ correspond à une énergie par unité de volume, ou à une force par unité de surface."
+              },
+              {
+                "letter": "b",
+                "text": "L'ascension capillaire résulte d'une perturbation induite par le tube sur la surface du liquide, avec rupture des forces de cohésion."
+              },
+              {
+                "letter": "c",
+                "text": "Pour augmenter la surface d'une interface de ΔS, il faut fournir une énergie ΔW = σ/ΔS."
+              },
+              {
+                "letter": "d",
+                "text": "Le surfactant accentue les écarts de pression entre alvéoles, ce qui impose un fonctionnement séquentiel de celles-ci."
+              },
+              {
+                "letter": "e",
+                "text": "Le coefficient de tension superficielle σ est une caractéristique de l'interface : σeau/air est différent de σhuile/air."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Faux",
+                "just": "σ traduit l'énergie de cohésion d'une interface : énergie par unité de surface = force par unité de longueur.",
+                "page": "p.2"
+              },
+              "b": {
+                "verdict": "Vrai",
+                "just": "La perturbation induite par le tube entraîne une rupture des forces de cohésion, pas un renforcement.",
+                "page": "p.3"
+              },
+              "c": {
+                "verdict": "Faux",
+                "just": "La relation donnée par le cours est ΔW = σ.ΔS (produit, pas quotient).",
+                "page": "p.2"
+              },
+              "d": {
+                "verdict": "Faux",
+                "just": "En égalisant les pressions, le surfactant permet un fonctionnement simultané des alvéoles.",
+                "page": "p.3"
+              },
+              "e": {
+                "verdict": "Vrai",
+                "just": "σ caractérise l'interface (couple des deux milieux en présence), donc σeau/air ≠ σhuile/air.",
+                "page": "p.2"
+              }
+            }
+          },
+          {
+            "stem": "QRM. Problème — propriétés mécaniques des solutions : quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "Une gouttelette d'eau de rayon R = 40 µm est en suspension dans l'air, avec σ = 72.10⁻³ N.m⁻¹ ; la différence de pression ΔP entre l'intérieur et l'extérieur de la gouttelette vaut alors 1800 Pa."
+              },
+              {
+                "letter": "b",
+                "text": "Une goutte d'eau de rayon R = 0,25 mm est en suspension dans l'air, avec σ = 75.10⁻³ N.m⁻¹ ; la différence de pression ΔP entre l'intérieur et l'extérieur de la goutte vaut 600 Pa."
+              },
+              {
+                "letter": "c",
+                "text": "Pour une goutte de rayon R, la loi de Laplace donne ΔP = 2σ/R."
+              },
+              {
+                "letter": "d",
+                "text": "Pour une goutte, l'intérieur est en surpression par rapport à l'extérieur."
+              },
+              {
+                "letter": "e",
+                "text": "Le coefficient de tension superficielle σ s'exprime en N.m⁻²."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Faux",
+                "just": "ΔP = 2σ/R = (2×72.10⁻³)/(40.10⁻⁶) = 3600 Pa (oublier le facteur 2 donnerait à tort 1800 Pa).",
+                "page": "p.2"
+              },
+              "b": {
+                "verdict": "Vrai",
+                "just": "ΔP = 2σ/R = (2×75.10⁻³)/(0,25.10⁻³) = 600 Pa (une erreur de conversion d'unité sur R donnerait à tort 6000 Pa).",
+                "page": "p.2"
+              },
+              "c": {
+                "verdict": "Vrai",
+                "just": "La loi de Laplace pour une goutte s'écrit ΔP = 2σ/R.",
+                "page": "p.2"
+              },
+              "d": {
+                "verdict": "Vrai",
+                "just": "Le cours précise explicitement que l'intérieur de la goutte est en surpression par rapport à l'extérieur.",
+                "page": "p.2"
+              },
+              "e": {
+                "verdict": "Faux",
+                "just": "σ est un coefficient de tension superficielle exprimé en N.m⁻¹.",
+                "page": "p.2"
+              }
+            }
+          },
+          {
+            "stem": "QRM. Problème — propriétés mécaniques des solutions : quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "Une gouttelette d'eau de rayon R = 40 µm est en suspension dans l'air, avec σ = 72.10⁻³ N.m⁻¹ ; la différence de pression ΔP entre l'intérieur et l'extérieur de la gouttelette vaut alors 1800 Pa."
+              },
+              {
+                "letter": "b",
+                "text": "On souffle une bulle de savon de rayon R = 2 cm avec un liquide de tension superficielle σ = 30.10⁻³ N.m⁻¹ ; la surpression à l'intérieur de cette bulle vaut 6 Pa."
+              },
+              {
+                "letter": "c",
+                "text": "Un tube capillaire de rayon r = 0,6 mm est plongé, mouillage parfait considéré, dans un liquide de σ = 0,06 N.m⁻¹ et de ρ = 1000 kg.m⁻³ (g = 10 m.s⁻²) ; la hauteur d'ascension h de ce liquide vaut 2 mm."
+              },
+              {
+                "letter": "d",
+                "text": "Dans une goutte, c'est la pression extérieure seule, sans surpression intérieure, qui s'oppose à la tension de surface pour maintenir l'équilibre."
+              },
+              {
+                "letter": "e",
+                "text": "À l'interface air/surfactant des alvéoles pulmonaires, ΔP = 2σ/R."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Faux",
+                "just": "ΔP = 2σ/R = (2×72.10⁻³)/(40.10⁻⁶) = 3600 Pa (oublier le facteur 2 donnerait à tort 1800 Pa).",
+                "page": "p.2"
+              },
+              "b": {
+                "verdict": "Vrai",
+                "just": "ΔP = 4σ/R = (4×30.10⁻³)/(2.10⁻²) = 6 Pa (une erreur de conversion d'unité sur R donnerait à tort 60 Pa).",
+                "page": "p.2"
+              },
+              "c": {
+                "verdict": "Faux",
+                "just": "h = 2σ/(ρgr) = (2×0,06)/(1000×10×0,6.10⁻³) = 0,02 m = 20 mm (une erreur de conversion d'unité donnerait à tort 2 mm).",
+                "page": "p.3"
+              },
+              "d": {
+                "verdict": "Faux",
+                "just": "La tension de surface tend à diminuer le rayon de la sphère ; la surpression intérieure s'oppose à la tension de surface et à la pression extérieure.",
+                "page": "p.2"
+              },
+              "e": {
+                "verdict": "Vrai",
+                "just": "Les alvéoles ne comptent qu'une seule interface air/surfactant : ΔP = 2σ/R (comme une goutte, pas comme une bulle).",
+                "page": "p.3"
+              }
+            }
+          },
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "En cas de mouillage parfait (surface air/liquide plate), la loi de Jurin s'écrit ρgh = 4σ/r."
+              },
+              {
+                "letter": "b",
+                "text": "Les alvéoles pulmonaires sont assimilables à des sacs dont le rayon varie au cours du cycle respiratoire."
+              },
+              {
+                "letter": "c",
+                "text": "Le surfactant accentue les écarts de pression entre alvéoles, ce qui impose un fonctionnement séquentiel de celles-ci."
+              },
+              {
+                "letter": "d",
+                "text": "L'ascension capillaire correspond à un équilibre entre la tension superficielle et la pression hydrostatique."
+              },
+              {
+                "letter": "e",
+                "text": "Plus le tube capillaire est fin, plus la hauteur d'ascension du liquide est grande."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Faux",
+                "just": "En mouillage parfait, la loi de Jurin s'écrit ρgh = 2σ/r.",
+                "page": "p.3"
+              },
+              "b": {
+                "verdict": "Vrai",
+                "just": "Les alvéoles sont assimilées à des sacs dont le rayon varie au cours du cycle respiratoire.",
+                "page": "p.3"
+              },
+              "c": {
+                "verdict": "Faux",
+                "just": "En égalisant les pressions, le surfactant permet un fonctionnement simultané des alvéoles.",
+                "page": "p.3"
+              },
+              "d": {
+                "verdict": "Vrai",
+                "just": "Le cours décrit un équilibre entre tension superficielle et pression hydrostatique.",
+                "page": "p.3"
+              },
+              "e": {
+                "verdict": "Vrai",
+                "just": "Le cours indique que plus le tube est fin, plus la hauteur sera grande.",
+                "page": "p.3"
+              }
+            }
+          },
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "À l'interface air-liquide, la force de surface est orientée de manière à diminuer l'interface, si bien que l'aire de l'interface tend à être minimale."
+              },
+              {
+                "letter": "b",
+                "text": "Plus le rayon R d'une bulle est grand, plus la surpression est faible, ce qui correspond à un état plus stable."
+              },
+              {
+                "letter": "c",
+                "text": "Pour une bulle de savon de rayon R, la surpression vaut ΔP = 4σ/R."
+              },
+              {
+                "letter": "d",
+                "text": "Chez le nouveau-né prématuré, il existe un risque de quantité de surfactant excessive, avec risque de détresse respiratoire."
+              },
+              {
+                "letter": "e",
+                "text": "La colonne de liquide monte dans le capillaire jusqu'à ce que la tension superficielle FTS annule totalement la gravité, qui devient nulle dans le capillaire."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Vrai",
+                "just": "La force de surface est orientée de manière à diminuer l'interface : l'aire de l'interface tend à être minimale.",
+                "page": "p.2"
+              },
+              "b": {
+                "verdict": "Vrai",
+                "just": "ΔP = 4σ/R diminue quand R augmente ; un grand R correspond donc à un état plus stable.",
+                "page": "p.2"
+              },
+              "c": {
+                "verdict": "Vrai",
+                "just": "Pour une bulle, ΔP = 4σ/R (et non 2σ/R comme pour une goutte).",
+                "page": "p.2"
+              },
+              "d": {
+                "verdict": "Faux",
+                "just": "Le risque décrit chez le prématuré est celui d'une quantité de surfactant insuffisante.",
+                "page": "p.3"
+              },
+              "e": {
+                "verdict": "Faux",
+                "just": "L'ascension s'arrête à l'équilibre entre gravité et force de tension superficielle FTS, la gravité n'est jamais annulée.",
+                "page": "p.3"
+              }
+            }
+          },
+          {
+            "stem": "Concernant les propriétés mécaniques des solutions (tension superficielle), quelles affirmations sont exactes ?",
+            "opts": [
+              {
+                "letter": "a",
+                "text": "Pour une bulle de savon de rayon R, la surpression vaut ΔP = 2σ/R."
+              },
+              {
+                "letter": "b",
+                "text": "Dans une goutte, la surpression intérieure s'oppose à la tension de surface et à la pression extérieure pour maintenir l'équilibre."
+              },
+              {
+                "letter": "c",
+                "text": "Au sein d'un liquide, la résultante des forces inter-moléculaires est non nulle et dirigée vers la surface."
+              },
+              {
+                "letter": "d",
+                "text": "Plus le tube capillaire est fin, plus la hauteur d'ascension du liquide est petite."
+              },
+              {
+                "letter": "e",
+                "text": "Dans les alvéoles pulmonaires, σsurfactant < σeau."
+              }
+            ],
+            "ans": {
+              "a": {
+                "verdict": "Faux",
+                "just": "Pour une bulle, ΔP = 4σ/R (et non 2σ/R comme pour une goutte).",
+                "page": "p.2"
+              },
+              "b": {
+                "verdict": "Vrai",
+                "just": "La tension de surface tend à diminuer le rayon de la sphère ; la surpression intérieure s'oppose à la tension de surface et à la pression extérieure.",
+                "page": "p.2"
+              },
+              "c": {
+                "verdict": "Faux",
+                "just": "Au sein du liquide, la résultante des forces est nulle (Σfi = 0) ; ce n'est qu'à l'interface qu'une force résultante apparaît.",
+                "page": "p.2"
+              },
+              "d": {
+                "verdict": "Faux",
+                "just": "Le cours indique que plus le tube est fin, plus la hauteur sera grande.",
+                "page": "p.3"
+              },
+              "e": {
+                "verdict": "Vrai",
+                "just": "Le cours indique σsurfactant < σeau.",
+                "page": "p.3"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "recapPdf": "Fiche_visuelle_Proprietes_mecaniques_des_solutions.pdf",
+  "qrmPdf": "QRM_Proprietes_mecaniques_des_solutions.pdf"
+},
+
   // Exemple pour un futur cours (à dupliquer et compléter) :
   // {
   //   id: "slug-du-cours",
@@ -23548,6 +25466,12 @@ const CATS = [
   {key:"osmosevanthoff", label:"Osmose (loi de Van't Hoff)", color:"var(--c-osmosevanthoff)"},
   {key:"filtrationconvection", label:"Filtration & convection", color:"var(--c-filtrationconvection)"},
   {key:"applicationscliniques", label:"Applications cliniques", color:"var(--c-applicationscliniques)"},
+  {key:"forcesintermol", label:"Forces inter-moléculaires", color:"var(--c-forcesintermol)"},
+  {key:"laplacegoutte", label:"Loi de Laplace — goutte", color:"var(--c-laplacegoutte)"},
+  {key:"laplacebulle", label:"Loi de Laplace — bulle", color:"var(--c-laplacebulle)"},
+  {key:"alveoles", label:"Application — alvéoles pulmonaires", color:"var(--c-alveoles)"},
+  {key:"jurin", label:"Loi de Jurin — ascension capillaire", color:"var(--c-jurin)"},
+  {key:"mouillage", label:"Loi de Jurin — mouillage", color:"var(--c-mouillage)"},
 ];
 const CAT_COLOR = Object.fromEntries(CATS.filter(c=>c.key!=="all").map(c=>[c.key,c.color]));
 const CAT_LABEL = Object.fromEntries(CATS.filter(c=>c.key!=="all").map(c=>[c.key,c.label]));
