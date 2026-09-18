@@ -486,6 +486,30 @@
   }
   .result-banner.full{ background: rgba(79,178,166,0.16); color: var(--saccent-2); border-color: rgba(79,178,166,0.4); }
   .result-banner.partial{ background: rgba(229,100,90,0.16); color: #F19086; border-color: rgba(229,100,90,0.4); }
+
+  .mode-toggle-row{ display:flex; justify-content:center; gap:6px; margin: 12px 0 0; }
+  .mode-toggle-btn{
+    background: var(--spanel); border: 1px solid var(--sline); color: var(--sink-soft);
+    font-family:'Manrope',sans-serif; font-size: 12px; font-weight:700; padding: 7px 14px;
+    border-radius: 100px; cursor:pointer;
+  }
+  .mode-toggle-btn.active{ background: var(--saccent); border-color: var(--saccent); color: var(--saccent-ink); }
+  .mode-hint{ text-align:center; font-size:12px; color: var(--sink-soft); margin: 10px 0 0; line-height:1.5; }
+
+  .exam-final-banner{
+    padding: 16px; border-radius: 14px; text-align:center; margin-bottom: 16px;
+    background: rgba(79,178,166,0.14); border: 1px solid rgba(79,178,166,0.4);
+  }
+  .exam-final-banner .big-score{ font-family:'IBM Plex Mono', monospace; font-size: 26px; font-weight:700; color: var(--saccent-2); }
+  .exam-final-banner .sub{ font-size: 12.5px; color: var(--sink-soft); margin-top:4px; }
+
+  .exam-qblock{ margin-bottom: 22px; }
+  .exam-qblock .exam-qnum{
+    font-family:'IBM Plex Mono', monospace; font-size: 11.5px; font-weight:700; color: var(--saccent-2);
+    margin-bottom: 6px; display:block;
+  }
+  .exam-qblock .qz-stem{ margin-bottom:10px; }
+  .exam-qblock + .exam-qblock{ border-top: 1px solid var(--sline); padding-top: 18px; }
 </style>
 </head>
 <body>
@@ -599,6 +623,9 @@
     </div>
 
     <div class="serie-pills" id="seriePills"></div>
+
+    <div class="mode-toggle-row" id="modeToggleRow"></div>
+    <div class="mode-hint" id="modeHint"></div>
 
     <div class="progress-row">
       <div class="progress-track"><div class="progress-fill" id="quizProgressFill"></div></div>
@@ -2354,10 +2381,21 @@ let quizQIdx = 0;
 let quizChecked = new Set();
 let quizRevealed = false;
 let quizAnswered = {}; // key `${courseId}::${serieId}::${qIdx}` -> boolean
+let quizMode = 'exam'; // 'step' | 'exam'
+let examChecked = {};  // qIdx -> Set of checked letters (exam mode only)
+let examSubmitted = false;
 
 function currentQrmCourse(){ return COURSES.find(c=>c.id===quizCourseId); }
 function currentQrmSerie(){ return currentQrmCourse().qrm.series.find(s=>s.id===quizSerieId); }
 function currentQuizQuestion(){ return currentQrmSerie().questions[quizQIdx]; }
+
+function resetSerieProgress(){
+  quizQIdx = 0;
+  quizChecked = new Set();
+  quizRevealed = false;
+  examChecked = {};
+  examSubmitted = false;
+}
 
 function openQuiz(courseId, serieId){
   const course = COURSES.find(c=>c.id===courseId);
@@ -2367,9 +2405,8 @@ function openQuiz(courseId, serieId){
 
   quizCourseId = courseId;
   quizSerieId = serieId;
-  quizQIdx = 0;
-  quizChecked = new Set();
-  quizRevealed = false;
+  quizMode = 'exam';
+  resetSerieProgress();
 
   document.getElementById('quizEyebrow').textContent = course.title + " · QRM d'entraînement";
   document.getElementById('quizTitle').textContent = serie.title;
@@ -2391,7 +2428,7 @@ function renderSeriePills(){
     btn.addEventListener('click', ()=>{
       if(btn.dataset.serie === quizSerieId) return;
       quizSerieId = btn.dataset.serie;
-      quizQIdx = 0; quizChecked = new Set(); quizRevealed = false;
+      resetSerieProgress();
       document.getElementById('quizTitle').textContent = currentQrmSerie().title;
       renderSeriePills();
       renderQuiz();
@@ -2399,11 +2436,66 @@ function renderSeriePills(){
   });
 }
 
+function setQuizMode(mode){
+  if(mode === quizMode) return;
+  quizMode = mode;
+  resetSerieProgress();
+  renderQuiz();
+}
+
+function renderModeToggle(){
+  const wrap = document.getElementById('modeToggleRow');
+  wrap.innerHTML = `
+    <button class="mode-toggle-btn ${quizMode==='step'?'active':''}" id="modeStepBtn">Pas à pas</button>
+    <button class="mode-toggle-btn ${quizMode==='exam'?'active':''}" id="modeExamBtn">Mode examen</button>
+  `;
+  document.getElementById('modeStepBtn').addEventListener('click', ()=> setQuizMode('step'));
+  document.getElementById('modeExamBtn').addEventListener('click', ()=> setQuizMode('exam'));
+
+  const hint = document.getElementById('modeHint');
+  if(quizMode === 'exam' && !examSubmitted){
+    const total = currentQrmSerie().questions.length;
+    const atEnd = quizQIdx >= total - 1;
+    hint.textContent = atEnd
+      ? "Dernière question : validez (✓✓) pour afficher la correction complète."
+      : "Répondez aux questions puis validez à la fin pour voir la correction complète.";
+  } else {
+    hint.textContent = "";
+  }
+}
+
 function toggleOpt(letter){
+  if(quizMode === 'exam'){
+    if(examSubmitted) return;
+    if(!examChecked[quizQIdx]) examChecked[quizQIdx] = new Set();
+    const set = examChecked[quizQIdx];
+    if(set.has(letter)) set.delete(letter); else set.add(letter);
+    renderQuizCard();
+    return;
+  }
   if(quizRevealed) return;
   if(quizChecked.has(letter)) quizChecked.delete(letter);
   else quizChecked.add(letter);
   renderQuizCard();
+}
+
+function submitExam(){
+  const serie = currentQrmSerie();
+  const total = serie.questions.length;
+  for(let i=0;i<total;i++){
+    const q = serie.questions[i];
+    const checked = examChecked[i] || new Set();
+    let allCorrect = true;
+    for(const opt of q.opts){
+      const isVrai = q.ans[opt.letter].verdict.toUpperCase() === "VRAI";
+      const userChecked = checked.has(opt.letter);
+      if(isVrai !== userChecked) allCorrect = false;
+    }
+    quizAnswered[`${quizCourseId}::${quizSerieId}::${i}`] = allCorrect;
+  }
+  examSubmitted = true;
+  renderQuiz();
+  renderSeriePills();
 }
 
 function revealCorrection(){
@@ -2421,12 +2513,9 @@ function revealCorrection(){
   renderSeriePills();
 }
 
-function renderQuizCard(){
-  const q = currentQuizQuestion();
-  const card = document.getElementById('qzCard');
-
-  const optsHtml = q.opts.map(opt=>{
-    const isChecked = quizChecked.has(opt.letter);
+function renderOptionRowsHtml(q, checkedSet, revealed, qIdxForScore){
+  return q.opts.map(opt=>{
+    const isChecked = checkedSet.has(opt.letter);
     const ans = q.ans[opt.letter];
     const isVrai = ans.verdict.toUpperCase() === "VRAI";
     let rowClass = "opt-row";
@@ -2434,7 +2523,7 @@ function renderQuizCard(){
     let verdictHtml = "";
     let markHtml = "";
     let justifHtml = "";
-    if(quizRevealed){
+    if(revealed){
       rowClass += " revealed";
       const userRight = (isVrai === isChecked);
       rowClass += userRight ? " is-correct" : " is-incorrect";
@@ -2442,9 +2531,10 @@ function renderQuizCard(){
       markHtml = `<span class="opt-mark-badge ${userRight?'ok':'ko'}">${userRight?'✓':'✕'}</span>`;
       justifHtml = `<div class="opt-justif">${ans.just}${ans.page ? ` <span class="ref-tag">— cf. ${ans.page}</span>` : ''}</div>`;
     }
+    const clickable = revealed ? '' : ` data-qidx="${qIdxForScore}"`;
     return `
       <div>
-        <div class="${rowClass}" data-letter="${opt.letter}">
+        <div class="${rowClass}" data-letter="${opt.letter}"${clickable}>
           <span class="opt-check">${isChecked?'✓':''}</span>
           <span class="opt-letter">${opt.letter})</span>
           <span class="opt-text">${opt.text}</span>
@@ -2454,43 +2544,109 @@ function renderQuizCard(){
       </div>
     `;
   }).join('');
+}
+
+function renderQuizCard(){
+  const card = document.getElementById('qzCard');
+
+  if(quizMode === 'exam' && examSubmitted){
+    renderExamCorrection(card);
+    return;
+  }
+
+  const q = currentQuizQuestion();
+  const checkedSet = quizMode === 'exam' ? (examChecked[quizQIdx] || new Set()) : quizChecked;
+  const revealed = quizMode === 'exam' ? false : quizRevealed;
+  const optsHtml = renderOptionRowsHtml(q, checkedSet, revealed);
 
   let resultBanner = "";
-  if(quizRevealed){
+  if(revealed){
     const allCorrect = quizAnswered[`${quizCourseId}::${quizSerieId}::${quizQIdx}`];
     resultBanner = allCorrect
       ? `<div class="result-banner full">✓ Les 5 propositions correctement identifiées</div>`
       : `<div class="result-banner partial">✕ Au moins une proposition mal identifiée — relisez les justifications ci-dessus</div>`;
   }
 
+  let bottomHtml = "";
+  if(quizMode === 'step'){
+    bottomHtml = revealed ? resultBanner : `<button class="reveal-btn" id="revealBtn">Voir la correction</button>`;
+  }
+
   card.innerHTML = `
     <div class="qz-stem">${q.stem}</div>
     ${optsHtml}
-    ${quizRevealed ? resultBanner : `<button class="reveal-btn" id="revealBtn">Voir la correction</button>`}
+    ${bottomHtml}
   `;
 
-  if(!quizRevealed){
+  if(!revealed){
     card.querySelectorAll('.opt-row').forEach(row=>{
       row.addEventListener('click', ()=> toggleOpt(row.dataset.letter));
     });
-    document.getElementById('revealBtn').addEventListener('click', revealCorrection);
+    const revealBtn = document.getElementById('revealBtn');
+    if(revealBtn) revealBtn.addEventListener('click', revealCorrection);
   }
+}
+
+function renderExamCorrection(card){
+  const serie = currentQrmSerie();
+  const total = serie.questions.length;
+  let correctCount = 0;
+  for(let i=0;i<total;i++){ if(quizAnswered[`${quizCourseId}::${quizSerieId}::${i}`]) correctCount++; }
+  const pct = Math.round((correctCount/total)*100);
+
+  const blocksHtml = serie.questions.map((q,i)=>{
+    const checkedSet = examChecked[i] || new Set();
+    const optsHtml = renderOptionRowsHtml(q, checkedSet, true);
+    return `
+      <div class="exam-qblock">
+        <span class="exam-qnum">Question ${i+1} / ${total}</span>
+        <div class="qz-stem">${q.stem}</div>
+        ${optsHtml}
+      </div>
+    `;
+  }).join('');
+
+  card.innerHTML = `
+    <div class="exam-final-banner">
+      <div class="big-score">${correctCount} / ${total}</div>
+      <div class="sub">questions entièrement correctes (${pct}%)</div>
+    </div>
+    ${blocksHtml}
+  `;
 }
 
 function renderQuizProgress(){
   const total = currentQrmSerie().questions.length;
+  if(quizMode === 'exam' && examSubmitted){
+    document.getElementById('quizProgressCount').textContent = `Corrigé complet`;
+    document.getElementById('quizProgressFill').style.width = `100%`;
+    return;
+  }
   document.getElementById('quizProgressCount').textContent = `${quizQIdx+1} / ${total}`;
   document.getElementById('quizProgressFill').style.width = `${((quizQIdx+1)/total)*100}%`;
 }
 
 function renderScoreRow(){
   const total = currentQrmSerie().questions.length;
+  const scoreRow = document.getElementById('scoreRow');
+
+  if(quizMode === 'exam'){
+    if(!examSubmitted){
+      let answered = 0;
+      for(let i=0;i<total;i++){ if(examChecked[i] && examChecked[i].size>0) answered++; }
+      scoreRow.innerHTML = `<span class="score-chip">Réponses saisies : <b>${answered} / ${total}</b></span>`;
+    } else {
+      scoreRow.innerHTML = "";
+    }
+    return;
+  }
+
   let answeredCount = 0, correctCount = 0;
   for(let i=0;i<total;i++){
     const key = `${quizCourseId}::${quizSerieId}::${i}`;
     if(key in quizAnswered){ answeredCount++; if(quizAnswered[key]) correctCount++; }
   }
-  document.getElementById('scoreRow').innerHTML = answeredCount
+  scoreRow.innerHTML = answeredCount
     ? `<span class="score-chip">Score de la série : <b>${correctCount} / ${answeredCount}</b> traitées</span>`
     : `<span class="score-chip">Aucune question corrigée pour l'instant</span>`;
 }
@@ -2498,8 +2654,32 @@ function renderScoreRow(){
 function renderQuizNav(){
   const nav = document.getElementById('quizNavRow');
   const total = currentQrmSerie().questions.length;
+
+  if(quizMode === 'exam' && examSubmitted){
+    nav.innerHTML = `<button class="nav-btn primary" id="qzRedoBtn" aria-label="Reprendre la série" style="width:auto; border-radius:100px; padding:0 22px; font-size:14px; font-family:'Manrope',sans-serif; font-weight:700;">↺ Reprendre la série</button>`;
+    document.getElementById('qzRedoBtn').onclick = () => { resetSerieProgress(); renderQuiz(); };
+    return;
+  }
+
   const atStart = quizQIdx <= 0;
   const atEnd = quizQIdx >= total - 1;
+
+  if(quizMode === 'exam'){
+    nav.innerHTML = `
+      <button class="nav-btn" id="qzPrevBtn" ${atStart ? 'disabled' : ''} aria-label="Précédente">‹</button>
+      <button class="nav-btn primary" id="qzGoBtn" aria-label="Voir toute la correction" style="${atEnd ? 'font-size:15px;' : 'visibility:hidden;'}">✓✓</button>
+      <button class="nav-btn" id="qzNextBtn" ${atEnd ? 'disabled' : ''} aria-label="Suivante">›</button>
+    `;
+    document.getElementById('qzPrevBtn').onclick = () => {
+      if(quizQIdx > 0){ quizQIdx--; renderQuiz(); }
+    };
+    document.getElementById('qzNextBtn').onclick = () => {
+      if(quizQIdx < total - 1){ quizQIdx++; renderQuiz(); }
+    };
+    document.getElementById('qzGoBtn').onclick = () => { if(atEnd) submitExam(); };
+    return;
+  }
+
   nav.innerHTML = `
     <button class="nav-btn" id="qzPrevBtn" ${atStart ? 'disabled' : ''} aria-label="Précédente">‹</button>
     <button class="nav-btn primary" id="qzGoBtn" aria-label="Voir la correction">${quizRevealed ? '↺' : '✓'}</button>
@@ -2517,9 +2697,9 @@ function renderQuizNav(){
   };
 }
 
-function renderQuiz(){ renderQuizProgress(); renderQuizCard(); renderQuizNav(); renderScoreRow(); }
+function renderQuiz(){ renderModeToggle(); renderQuizProgress(); renderQuizCard(); renderQuizNav(); renderScoreRow(); }
 
-document.getElementById('quizResetBtn').addEventListener('click', () => { quizChecked = new Set(); quizRevealed = false; renderQuiz(); });
+document.getElementById('quizResetBtn').addEventListener('click', () => { resetSerieProgress(); renderQuiz(); });
 document.getElementById('quizBackBtn').addEventListener('click', () => openSeriesList(quizCourseId));
 
 renderHeroStats();
