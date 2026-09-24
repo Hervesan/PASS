@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules — Constitution de la matière</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#ffffff; --ink:#1d2330; --muted:#5b6474; --line:#e3e6ec;
+  --star:#e8a900; --starbg:#fff6d6; --fbg:#f4f6fb; --ded:#3f9a6a; --dedbg:#eef6f1;
+  --A:#2f86a8; --B:#d0632e; --C:#c9971c; --D:#6f5aa8; --E:#a64b4b; --F:#b0527f;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.4}
+.wrap{max-width:860px;margin:0 auto;padding:18px 14px 40px}
+h1{font-size:1.6rem;font-weight:800;margin:0}
+.sub{color:var(--muted);font-size:.9rem;margin:2px 0 0}
+.s{color:var(--star);letter-spacing:1px;white-space:nowrap}
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 0;margin:12px 0 4px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.toolbar button{font:inherit;font-size:.88rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 11px;border-radius:999px;cursor:pointer}
+.toolbar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.toolbar button:focus-visible,.card:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.count{margin-left:auto;color:var(--muted);font-size:.82rem}
+section{margin-top:22px}
+h2{font-size:1rem;margin:0 0 8px;padding:6px 12px;color:#fff;border-radius:6px}
+.card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:stretch;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.def{padding:10px 12px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.def .top{display:flex;gap:8px;align-items:baseline;font-size:.8rem;font-weight:800}
+.def .q{font-weight:700;font-size:1rem}
+.def .d{color:var(--muted);font-size:.86rem}
+.fm{background:var(--fbg);border-left:5px solid var(--sec);padding:12px 14px;display:flex;flex-direction:column;justify-content:center}
+.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.35rem;line-height:1.25}
+.f sub{font-size:.62em}
+.u{margin-top:6px;font-size:.9rem;font-weight:600;color:var(--ink)}
+.u b{color:var(--sec)}
+.card.starred .def{background:linear-gradient(90deg,var(--starbg),transparent 70%)}
+.card.derived{border-style:dashed}
+.card.derived .fm{border-left-color:var(--ded)}
+.card.derived .top .tag{color:var(--ded)}
+#A{--sec:var(--A)} #B{--sec:var(--B)} #C{--sec:var(--C)} #D{--sec:var(--D)} #E{--sec:var(--E)} #F{--sec:var(--F)}
+#A h2{background:var(--A)} #B h2{background:var(--B)} #C h2{background:var(--C)} #D h2{background:var(--D)} #E h2{background:var(--E)} #F h2{background:var(--F)}
+section .top .code{color:var(--sec)}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+body.hide .card{cursor:pointer}
+body.stars .card:not(.starred){display:none}
+body.base .card.derived{display:none}
+.hint{display:none;color:var(--muted);font-size:.85rem;margin:6px 0 0}
+body.hide .hint{display:block}
+@media (max-width:600px){
+  .card{grid-template-columns:1fr}
+  .fm{border-left:0;border-top:4px solid var(--sec)}
+  .card.derived .fm{border-top-color:var(--ded)}
+}
+@media (prefers-reduced-motion:no-preference){.f,.u{transition:filter .2s}}
+@media print{.toolbar,.hint{display:none}body.hide .fm .f,body.hide .fm .u{filter:none}.card{break-inside:avoid}}
+
+/* Cartes plus isolées */
+section{margin-top:34px}
+h2{margin-bottom:14px}
+.card{margin-bottom:18px;border:1.5px solid var(--line);border-radius:12px;box-shadow:0 2px 0 var(--line),0 6px 14px -8px rgba(29,35,48,.25)}
+.def{padding:14px 16px}
+.fm{padding:16px 18px}
+.card.derived{border-width:1.5px}
+@media (max-width:600px){.card{margin-bottom:16px}}
+
+/* Couple définition/formule plus serré, séparation légère */
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.def{padding:14px 12px 14px 16px}
+.fm{padding:14px 16px 14px 14px}
+.card{margin-bottom:28px}
+section{margin-top:40px}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px dashed var(--line)!important}
+  .def{padding:14px 16px 8px}
+  .fm{padding:10px 16px 14px}
+  .card{margin-bottom:26px}
+}
+
+.wrap{max-width:980px}
+.legend{margin-top:6px;font-size:.88rem;color:var(--muted)}
+.chain{margin:14px 0 4px;padding:12px 14px;border-left:4px solid var(--star);background:var(--starbg);border-radius:0 8px 8px 0;font-size:.95rem}
+.mnemo{margin:12px 0 4px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:.92rem}
+.mnemo strong{display:block;margin-bottom:6px}
+.mnemo ul{margin:0;padding-left:18px;columns:2;column-gap:28px}
+.mnemo li{margin-bottom:4px;break-inside:avoid}
+.chain .f,.mnemo .f{font-size:1rem}
+.card{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
+.x{grid-column:1 / -1;border-top:1px dashed var(--line);padding:12px 16px 14px;font-size:.9rem;color:var(--muted)}
+.x p{margin:0 0 5px}
+.x b,.x .tip,.x .trap{color:var(--ink)}
+.tip,.trap{display:block;margin-top:5px}
+.tip::before{content:"💡 "}
+.trap::before{content:"⚠️ "}
+.ded{margin-top:8px;padding:8px 10px;background:var(--dedbg);border-left:3px solid var(--ded);border-radius:0 6px 6px 0;font-size:.86rem;color:var(--ink)}
+.ded strong{display:block;margin-bottom:3px}
+.ded ol{margin:0;padding-left:20px}
+.from{display:block;margin-top:4px;font-size:.84rem;color:var(--ded);font-weight:600}
+.gives{display:block;margin-top:8px;font-size:.86rem;color:var(--ded);font-weight:600}
+.chip{display:inline-block;text-decoration:none;font-size:.78rem;font-weight:700;border:1px solid var(--line);border-radius:5px;padding:0 5px;background:var(--bg);color:var(--ink)}
+.card{scroll-margin-top:70px}
+.card:target{box-shadow:0 0 0 3px var(--star)}
+/* mode test : seul le titre reste visible */
+body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:blur(8px);user-select:none}
+body.hide .card.show .def .d,body.hide .card.show .def .from,body.hide .card.show .fm,body.hide .card.show .x{filter:none;user-select:auto}
+@media (max-width:600px){.mnemo ul{columns:1}.x{padding:10px 16px 14px}}
+@media print{body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:none}}
+
+/* Traits pleins fins à l'intérieur, cadre plus marqué */
+:root{--frame:#b9c0cc}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--frame:#4a5263}}
+:root[data-theme="dark"]{--frame:#4a5263}
+.card{border:2px solid var(--frame)!important}
+.card.derived{border:2px solid var(--ded)!important}
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.x{border-top:1px solid var(--line)!important}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px solid var(--line)!important}
+}
+
+/* Traits intérieurs un peu plus épais */
+.fm,.card.derived .fm{border-left:1.5px solid var(--frame)!important;border-top:0!important}
+.x{border-top:1.5px solid var(--frame)!important}
+@media (max-width:600px){.fm,.card.derived .fm{border-left:0!important;border-top:1.5px solid var(--frame)!important}}
+
+/* Cadre d'épaisseur identique sur les 4 côtés */
+.card{box-shadow:0 6px 14px -10px rgba(29,35,48,.28)!important}
+
+/* Mobile : carte empilée comme la page épurée (évite le trait doublé en haut de la formule) */
+@media (max-width:600px){.card{grid-template-columns:1fr!important}}
+
+/* Fractions : numérateur au-dessus du dénominateur */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor;padding-bottom:.08em}
+.frac>span:last-child{padding-top:.08em}
+
+/* Arbre : formule de base → formules déduites (comme la page arbre) */
+.grp{margin-bottom:28px}
+.grp .card{margin-bottom:0}
+.tree{list-style:none;margin:0 0 0 26px;padding:0}
+.tree > li{position:relative;padding:12px 0 0 30px}
+.tree > li::before{content:"";position:absolute;left:0;top:0;bottom:0;border-left:2px solid var(--ded)}
+.tree > li:last-child::before{bottom:auto;height:36px}
+.tree > li::after{content:"";position:absolute;left:0;top:36px;width:24px;border-top:2px solid var(--ded)}
+.tree .card{box-shadow:none!important}
+.tree .card .f{font-size:1.18rem}
+body.stars .grp:not(.gstar){display:none}
+body.stars .tree{display:none}
+body.base .tree{display:none}
+@media (max-width:600px){
+  .tree{margin-left:12px}
+  .tree > li{padding-left:22px}
+  .tree > li::after{width:18px}
+}
+
+/* Singe = bascule vers la vue épurée floutée (définition → formule) */
+body.hide .x,body.hide .chain,body.hide .mnemo,body.hide .legend,body.hide .from{display:none}
+body.hide .def .d{filter:none!important;user-select:auto}
+body.hide .fm{filter:none!important}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+@media (prefers-reduced-motion:no-preference){.fm .f,.fm .u{transition:filter .2s}}
+.nw{white-space:nowrap}
+.nuc{display:inline-flex;flex-direction:column;align-items:flex-end;vertical-align:middle;font-size:.58em;line-height:1.05;margin-right:.1em}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Constitution de la matière : les formules</h1>
+<p class="sub">M1 · Biophysique Appliquée · formules expliquées</p>
+<div class="legend"><span class="s">★</span> = tombée au concours (d'après la fiche de cours) · <span class="s">★★★</span> = la plus fréquente · <span style="color:var(--ded);font-weight:700">🔁</span> = formule déduite d'une autre (cadre vert)</div>
+<div class="toolbar" role="toolbar" aria-label="Options">
+  <a href="formules-constitution.html" style="font-size:.88rem;font-weight:600;text-decoration:none;color:var(--ink);border:1.5px solid var(--line);padding:6px 11px;border-radius:999px">← Tableau des formules</a>
+  <button id="bHide" aria-pressed="false">🙈 Réviser (vue épurée)</button>
+  <button id="bStars" aria-pressed="false"><span class="s">★</span> Concours</button>
+  <button id="bBase" aria-pressed="false">Sans les déduites</button>
+  <span class="count" id="count"></span>
+</div>
+<p class="hint">Vue épurée : touche une carte pour révéler la formule. Retouche 🙈 pour revenir aux explications.</p>
+<div class="chain">Le fil qui relie tout : Quarks <span class="f">u = +2/3 e, d = −1/3 e</span> → <span class="f">proton uud = +e</span>, <span class="f">neutron udd = 0</span> → noyau ≈ 10<sup>−14</sup> m dans un atome ≈ 10<sup>−10</sup> m → forces : <span class="f">F ∝ 1/r²</span> et <span class="f">E<sub>p</sub> ∝ 1/r</span> (gravitation, Coulomb), portée <span class="f">r<sub>0</sub> = 1/μ</span> pour la forte.</div>
+
+<div class="mnemo">
+  <strong>Moyens mnémotechniques</strong>
+  <ul>
+    <li><b>U-C-T</b> = +2/3 e ; <b>D-S-B</b> = −1/3 e.</li>
+    <li><b>P</b>roton = <b>P</b>ositif = 2 <b>up</b> (uud) ; <b>N</b>eutron = <b>N</b>eutre = 2 <b>down</b> (udd).</li>
+    <li>Proton ≈ neutron ≈ <b>1 u.m.a</b> ; électron ≈ <b>1/2000</b> u.m.a = <b>0,511 MeV/c²</b>.</li>
+    <li>Atome 10<sup>−<b>10</b></sup> m, noyau 10<sup>−<b>14</b></sup> m : rapport 10<sup>4</sup>.</li>
+    <li>Force en <b>1/r²</b>, énergie potentielle en <b>1/r</b>.</li>
+    <li>Gravitation et Coulomb : même forme, G ↔ K et masses ↔ charges.</li>
+    <li>G = 6,67.10<sup>−11</sup> ; K = 9.10<sup>9</sup>.</li>
+    <li>r × 2 → F ÷ 4.</li>
+    <li>Forte : e<sup>−μr</sup>, portée r<sub>0</sub> = 1/μ ≈ 10<sup>−15</sup> m.</li>
+  </ul>
+</div>
+
+<main id="main"></main>
+<footer style="margin-top:30px;color:var(--muted);font-size:.8rem;text-align:center">Source : fiche de cours Médisup Tours/Orléans 2026-2027 + annales classées corrigées.</footer>
+</div>
+<script>
+const S = n => n ? '<span class="s">' + '★'.repeat(n) + '</span>' : '';
+const H = steps => `<div class="ded"><strong>🔁 Comment la retrouver</strong><ol>${steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>`;
+const fr=(n,d)=>`<span class='frac'><span>${n}</span><span>${d}</span></span>`;
+const nuc=(a,z,s='')=>`<span class='nw'><span class='nuc'><span>${a}</span><span>${z}</span></span>${s}</span>`;
+const data = [
+ {id:"A", title:"L'atome : masses, charges, tailles", pages:"p.2-5", rows:[
+  {k:"mp", st:0, q:"Masse du proton", d:"Nucléon chargé positivement",
+   f:"m<sub>p</sub> = 1,6723.10<sup>−27</sup> kg = 1 u.m.a", u:"Charge : <b>+1,6.10<sup>−19</sup> C</b> · découvert en 1910 (Rutherford)",
+   x:"<p>Le proton est l'un des deux <b>nucléons</b> du noyau. Sa masse vaut environ <b>1 unité de masse atomique</b> (u.m.a), l'unité de référence des masses atomiques.</p><span class='tip'><b>P</b>roton = <b>P</b>ositif.</span>"},
+  {k:"mn", st:0, q:"Masse du neutron", d:"Nucléon non chargé",
+   f:"m<sub>n</sub> = 1,6747.10<sup>−27</sup> kg = 1 u.m.a", u:"<b>Neutre</b> · découvert en 1932 (Chadwick)",
+   x:"<p>Presque la même masse que le proton (un tout petit peu plus lourd : 1,67<b>47</b> contre 1,67<b>23</b>), mais <b>aucune charge</b>.</p><span class='tip'><b>N</b>eutron = <b>N</b>eutre.</span>"},
+  {k:"me", st:0, q:"Masse de l'électron", d:"Particule du cortège électronique",
+   f:"m<sub>e</sub> = 9,11.10<sup>−31</sup> kg = "+fr("1","2000")+" u.m.a", u:"Charge : <b>−1,6.10<sup>−19</sup> C</b>",
+   x:"<p>L'électron est environ <b>2000 fois plus léger</b> qu'un nucléon : la masse d'un atome est donc presque entièrement celle de son noyau.</p><span class='trap'>Même charge que le proton en valeur (1,6.10<sup>−19</sup> C), mais de signe <b>opposé</b>.</span>"},
+  {k:"me2", st:0, q:"Masse de l'électron (en énergie)", d:"Équivalent énergétique (MeV/c²)",
+   f:"m<sub>e</sub> = 0,511 MeV/c²", u:"Positon : même masse · tous deux <b>stables</b>",
+   x:"<p>Valeur à retenir : on la retrouve plus loin avec les photons de <b>511 keV</b> émis quand un positon s'annihile avec un électron.</p><span class='tip'>Muon : 105,66 MeV/c² (durée de vie 2,2.10<sup>−6</sup> s) ; tau : 1748,2 MeV/c².</span>"},
+  {k:"taille", st:0, q:"Tailles du noyau et du cortège", d:"Ordres de grandeur",
+   f:"noyau ≈ 10<sup>−14</sup> m · cortège ≈ 10<sup>−10</sup> m", u:"",
+   x:"<p>Modèle de Bohr : un noyau minuscule entouré d'un nuage d'électrons qui gravitent autour.</p><span class='tip'>Atome : 10<sup>−<b>10</b></sup> m ; noyau : 10<sup>−<b>14</b></sup> m.</span>"},
+  {k:"rap", der:["taille"], q:"Rapport de taille atome / noyau", d:"",
+   f:fr("10<sup>−10</sup>","10<sup>−14</sup>")+" = 10<sup>4</sup>", u:"",
+   x:"<p>L'atome est environ <b>10 000 fois plus grand</b> que son noyau : il est essentiellement fait de vide.</p>"
+   + H(["Prends la taille du cortège : 10<sup>−10</sup> m.","Divise par la taille du noyau : 10<sup>−14</sup> m.","10<sup>−10</sup> / 10<sup>−14</sup> = 10<sup>−10+14</sup> = 10<sup>4</sup>."])}
+ ]},
+ {id:"B", title:"Charges des quarks", pages:"p.4", rows:[
+  {k:"qch", st:1, q:"Charges des 6 quarks (6 « saveurs »)", d:"En fraction de la charge élémentaire e",
+   f:"u, c, t : +"+fr("2","3")+" e · d, s, b : −"+fr("1","3")+" e", u:"u = up · c = charm · t = top · d = down · s = strange · b = bottom",
+   x:"<p>Six <b>saveurs</b> de quarks : trois de charge <b>+2/3 e</b> (up, charm, top) et trois de charge <b>−1/3 e</b> (down, strange, bottom). Chaque quark a un anti-quark associé.</p><span class='tip'><b>U-C-T</b> = les « +2/3 » ; <b>D-S-B</b> = les « −1/3 ».</span><span class='trap'>Les quarks sont <b>confinés</b> : on ne les observe jamais isolément.</span>"},
+  {k:"qp", st:2, q:"Charge du proton (2 up + 1 down)", d:"Proton = baryon uud",
+   f:"2 × (+"+fr("2","3")+") + (−"+fr("1","3")+") = +1 e", u:"",
+   x:"<p>Les charges des quarks s'additionnent : on retrouve la charge <b>+e</b> du proton (+1,6.10<sup>−19</sup> C).</p>"
+   + H(["Proton = 2 up + 1 down.","Up = +2/3 e, down = −1/3 e.","4/3 − 1/3 = 3/3 = +1 e."])},
+  {k:"qn", st:0, q:"Charge du neutron (1 up + 2 down)", d:"Neutron = baryon udd",
+   f:"(+"+fr("2","3")+") + 2 × (−"+fr("1","3")+") = 0", u:"",
+   x:"<p>Les charges se compensent exactement : le neutron est bien <b>neutre</b>.</p>"
+   + H(["Neutron = 1 up + 2 down.","2/3 − 2/3 = 0."])}
+ ]},
+ {id:"C", title:"Les forces fondamentales", pages:"p.7-9", rows:[
+  {k:"grav", st:0, q:"Force de gravitation", d:"Attraction entre 2 masses m et m' à la distance r",
+   f:"F = G × "+fr("m × m'","r²"), u:"G = <b>6,67.10<sup>−11</sup> N.m².kg<sup>−2</sup></b> · boson : graviton · portée infinie",
+   x:"<p>Interaction <b>newtonienne</b>, toujours attractive. Plus les masses sont grandes, plus l'attraction est forte ; plus elles sont éloignées, plus elle est faible. Force dominante à l'échelle humaine et des astres.</p><span class='tip'>G = constante universelle de gravitation.</span>"},
+  {k:"r2", der:["grav"], q:"Effet d'un doublement de la distance", d:"Force en 1/r²",
+   f:"r × 2 → F ÷ 4", u:"",
+   x:"<p>La force décroît avec le <b>carré</b> de la distance. Même raisonnement pour la force de Coulomb (@coulF).</p>"
+   + H(["Pars de F = G × m m' / r².","Remplace r par 2r : r² devient 4r².","F est donc divisée par 4."])},
+  {k:"epg", st:0, q:"Énergie potentielle de gravitation", d:"",
+   f:"E<sub>p</sub> = G × "+fr("m × m'","r"), u:"",
+   x:"<p>Même forme que la force, mais avec <b>r</b> au dénominateur au lieu de <b>r²</b>.</p><span class='tip'>Force en 1/r², énergie en 1/r.</span>"},
+  {k:"coulF", st:0, q:"Force de Coulomb", d:"Interaction électromagnétique entre 2 charges q et q' à la distance r",
+   f:"F = K × "+fr("q × q'","r²"), u:"K = "+fr("1","4πε<sub>0</sub>")+" = <b>9.10<sup>9</sup> N.m².C<sup>−2</sup></b> · boson : photon · portée infinie",
+   x:"<p>Attractive (charges opposées) ou répulsive (même signe). Force dominante à l'échelle de l'<b>atome et des molécules</b> : elle lie les électrons au noyau.</p><span class='tip'>Même forme que la gravitation : G → K, masses → charges.</span>"},
+  {k:"epc", st:0, q:"Énergie potentielle électrostatique", d:"",
+   f:"E<sub>p</sub> = K × "+fr("q × q'","r"), u:"",
+   x:"<p>Comme pour la gravitation : on passe de r² (force) à r (énergie).</p>"},
+  {k:"epf", st:0, q:"Énergie potentielle entre 2 nucléons (interaction forte)", d:"Force de couleur",
+   f:"E<sub>p</sub> = g × "+fr("e<sup>−μr</sup>","r"), u:"g = <b>constante de couplage</b> · boson : gluon",
+   x:"<p>L'interaction forte assure la <b>cohésion des noyaux</b> malgré la répulsion entre protons : elle est <b>100 à 1000 fois plus forte</b> que Coulomb, mais le terme e<sup>−μr</sup> la fait s'effondrer dès qu'on s'éloigne.</p>"},
+  {k:"r0", st:0, q:"Portée de l'interaction forte", d:"Distance caractéristique",
+   f:"r<sub>0</sub> = "+fr("1","μ")+" ≈ 10<sup>−15</sup> m", u:"Interaction <b>nulle</b> pour r = 2 à 3 r<sub>0</sub> (ordre du femtomètre)",
+   x:"<p>μ est le coefficient de l'exponentielle de @epf : plus μ est grand, plus la portée est courte.</p><span class='trap'>Portée finie (fm) pour la forte, contrairement à la gravitation et Coulomb (portée infinie).</span>"}
+ ]}
+];
+
+
+const code={}, gives={};
+data.forEach(sec=>sec.rows.forEach((r,i)=>{code[r.k]=sec.id+(i+1);}));
+data.forEach(sec=>sec.rows.forEach(r=>(r.der||[]).forEach(p=>{(gives[p]=gives[p]||[]).push(r.k);})));
+const chip=k=>`<a class="chip" href="#r-${code[k]}">${code[k]}</a>`;
+const refs=t=>t.replace(/@(\w+)/g,(m,k)=>code[k]?chip(k):m);
+const main=document.getElementById('main');
+let total=0,starred=0,derived=0;
+const cardHTML=(r,extra='')=>{
+  const from=r.der?`<span class="from">🔁 Déduite de ${r.der.map(chip).join(' ')}</span>`:'';
+  return `<div class="card${r.st?' starred':''}${r.der?' derived':''}" id="r-${code[r.k]}" tabindex="0">
+      <div class="def"><div class="top"><span class="code">${code[r.k]}</span>${S(r.st)}${r.der?'<span class="tag">🔁</span>':''}</div>
+      <div class="q">${r.q}</div>${r.d?`<div class="d">${r.d}</div>`:''}${from}</div>
+      <div class="fm"><span class="f">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div>
+      <div class="x">${refs(r.x)}</div></div>`;
+};
+data.forEach(sec=>{
+  let h=`<section id="${sec.id}"><h2>${sec.id} · ${sec.title} <small style="opacity:.85;font-weight:600">${sec.pages}</small></h2>`;
+  const groups=[];
+  sec.rows.forEach(r=>{ if(r.der&&groups.length) groups[groups.length-1].kids.push(r); else groups.push({r,kids:[]}); });
+  groups.forEach(({r,kids})=>{
+    total++; if(r.st)starred++;
+    h+=`<div class="grp${r.st?' gstar':''}">`+cardHTML(r);
+    if(kids.length){ h+=`<ul class="tree">`+kids.map(k=>{total++;derived++;return `<li>${cardHTML(k)}</li>`;}).join('')+`</ul>`; }
+    h+=`</div>`;
+  });
+  main.insertAdjacentHTML('beforeend',h+'</section>');
+});
+const B=document.body.classList,count=document.getElementById('count');
+const upd=()=>{count.textContent=B.contains('stars')?`${starred} ★`:B.contains('base')?`${total-derived} formules`:`${total} formules`;};
+upd();
+const tog=(id,c)=>{const b=document.getElementById(id);b.addEventListener('click',()=>{const on=B.toggle(c);b.setAttribute('aria-pressed',on);upd();if(c==='hide')document.querySelectorAll('.card.show').forEach(x=>x.classList.remove('show'));});};
+tog('bHide','hide');document.getElementById('bHide').addEventListener('click',()=>window.scrollTo({top:0}));tog('bStars','stars');tog('bBase','base');
+const flip=ev=>{if(ev.target.closest('a'))return;const c=ev.target.closest('.card');if(c&&B.contains('hide'))c.classList.toggle('show');};
+main.addEventListener('click',flip);
+main.addEventListener('keydown',ev=>{if(ev.target.classList.contains('card')&&(ev.key==='Enter'||ev.key===' ')){ev.preventDefault();flip(ev);}});
+
+</script>
+</body>
+</html>

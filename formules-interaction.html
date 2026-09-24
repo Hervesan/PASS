@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules en 2 colonnes — Interaction des rayonnements ionisants avec la matière</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff;--ink:#1d2330;--muted:#5b6474;--line:#e3e6ec;--frame:#b9c0cc;--star:#e8a900;--starbg:#fff6d6;--ded:#3f9a6a;
+--A:#2f86a8;--B:#d0632e;--C:#c9971c;--D:#6f5aa8;--E:#a64b4b;--F:#b0527f}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.35}
+.wrap{max-width:820px;margin:0 auto;padding:16px 12px 40px}
+h1{font-size:1.4rem;margin:0 0 10px;font-weight:800}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:6px 0 8px;z-index:2;display:flex;gap:8px;align-items:center}
+.bar button{font:inherit;font-size:.9rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+.bar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.bar button:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.bar span{font-size:.8rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;border:2px solid var(--frame)}
+th{text-align:left;font-size:.78rem;color:var(--muted);font-weight:700;padding:6px 10px;border-bottom:2px solid var(--frame)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+td.d{width:42%;font-weight:700;font-size:.95rem;border-right:1.5px solid var(--frame)}
+td.d .s{color:var(--star);font-size:.8rem;margin-left:4px;white-space:nowrap}
+td.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.12rem}
+td.f .u{display:block;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.82rem;color:var(--muted);margin-top:2px}
+td.f .u b{color:var(--ink)}
+tr.sec td{background:var(--c);color:#fff;font-weight:800;font-size:.95rem;padding:6px 10px;border-bottom:0}
+tr.der td.d{padding-left:24px;color:var(--ded);font-weight:600;font-size:.9rem}
+tr.der td.d::before{content:"↳ ";font-weight:800}
+tr.der td.f{font-size:1rem;color:var(--ded)}
+sub{font-size:.65em}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor}
+body.hide td.f .ft,body.hide td.f .u{filter:blur(7px)}
+body.hide tr:not(.sec){cursor:pointer}
+body.hide tr.show td.f .ft,body.hide tr.show td.f .u{filter:none}
+@media (prefers-reduced-motion:no-preference){.ft,.u{transition:filter .2s}}
+@media (max-width:480px){td{padding:8px 7px}td.d{font-size:.88rem}td.f{font-size:1rem}tr.der td.d{padding-left:16px}}
+@media print{.bar{display:none}body.hide .ft,body.hide .u{filter:none}tr{break-inside:avoid}}
+
+/* ---- Mise en page soignée ---- */
+body{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0)}
+.wrap{max-width:860px;padding:22px 14px 50px}
+.top{padding:4px 2px 6px}
+.kicker{margin:0;font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--muted)}
+.top h1{font-size:1.9rem;margin:2px 0 4px;letter-spacing:-.01em}
+.meta{margin:0;font-size:.88rem;color:var(--muted)}
+.meta .s{color:var(--star)} .meta .g{color:var(--ded);font-weight:800}
+.bar{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0);padding:10px 0}
+.bar button{background:var(--bg);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.cols{display:grid;grid-template-columns:42% 58%;font-size:.72rem;font-weight:700;letter-spacing:.03em;color:var(--muted);padding:4px 16px 6px}
+.blk{background:var(--bg);border-radius:16px;margin:0 0 22px;overflow:hidden;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25);border:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.blk header{display:flex;align-items:center;gap:10px;padding:12px 16px;font-weight:800;font-size:1.02rem;color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--bg));border-bottom:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.letter{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--c);color:#fff;font-size:.95rem}
+.row{display:grid;grid-template-columns:42% 58%;align-items:stretch;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .d{padding:12px 12px 12px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.code{font-size:.72rem;font-weight:800;color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg));border-radius:5px;padding:1px 6px}
+.name{font-weight:700;font-size:.95rem;flex-basis:100%}
+.row .d .s{color:var(--star);font-size:.82rem;letter-spacing:1px}
+.row .f{padding:12px 16px;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line));display:flex;flex-direction:column;justify-content:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.2rem}
+.row .f .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px;line-height:1.3}
+.row .f .u b{color:var(--c)}
+.row.star .d{background:linear-gradient(90deg,var(--starbg),transparent 75%)}
+.row.der .d{padding-left:30px;position:relative}
+.row.der .d::before{content:"↳";position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ded);font-weight:800}
+.row.der .name{color:var(--ded);font-weight:600;font-size:.9rem}
+.row.der .code{color:var(--ded);background:color-mix(in srgb,var(--ded) 12%,var(--bg))}
+.row.der .f{font-size:1.05rem;color:var(--ded);background:color-mix(in srgb,var(--ded) 6%,var(--bg))}
+body.hide .ft,body.hide .u{filter:blur(7px);user-select:none}
+body.hide .row{cursor:pointer}
+body.hide .row.show .ft,body.hide .row.show .u{filter:none}
+.row:focus-visible{outline:3px solid var(--star);outline-offset:-3px}
+@media (max-width:480px){
+  .cols,.row{grid-template-columns:44% 56%}
+  .row .d{padding:10px 8px 10px 12px}.row .f{padding:10px 12px;font-size:1.05rem}
+  .name{font-size:.88rem}.row.der .d{padding-left:24px}.row.der .d::before{left:8px}
+  .top h1{font-size:1.6rem}
+}
+@media print{body{background:#fff}.blk{box-shadow:none;break-inside:avoid}}
+
+
+/* Option 1 : groupe encadré (formule mère + filles dans une bande verte) */
+.grp{border-top:1px solid var(--line)}
+.grp:first-child{border-top:0}
+.grp > .row{border-top:0}
+.kids{background:color-mix(in srgb,var(--ded) 13%,var(--bg));padding:8px 10px 10px;display:flex;flex-direction:column;gap:7px;border-top:1px solid color-mix(in srgb,var(--ded) 30%,var(--line))}
+.kids .row{border:1px solid color-mix(in srgb,var(--ded) 30%,var(--line));border-radius:10px;overflow:hidden;background:var(--bg);grid-template-columns:calc(42% - 4px) auto}
+.kids .row .d{padding:9px 10px}
+.kids .row .f{background:color-mix(in srgb,var(--ded) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--ded) 25%,var(--line))}
+.row.der .d{padding-left:10px}
+.row.der .d::before{content:none}
+@media (max-width:480px){.kids{padding:7px 7px 8px}.kids .row .d{padding:8px}}
+
+/* Formules déduites : mêmes couleurs que les autres (seul le regroupement les distingue) */
+.kids{background:color-mix(in srgb,var(--ink) 5%,var(--bg));border-top:1px solid var(--line)}
+.kids .row{border-color:var(--line)}
+.row.der .name{color:var(--ink);font-weight:700;font-size:.95rem}
+.row.der .code{color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg))}
+.row.der .code::before{content:none}
+.row.der .f,.kids .row .f{color:var(--ink);font-size:1.2rem;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line))}
+@media (max-width:480px){.row.der .f,.kids .row .f{font-size:1.05rem}.row.der .name{font-size:.88rem}}
+
+/* Comme la page explication : filles décalées, reliées par un trait à leur formule mère */
+.kids{background:transparent;border-top:0;padding:0 12px 14px 38px;gap:10px;position:relative}
+.kids .row{position:relative;overflow:visible;border:1.5px solid color-mix(in srgb,var(--ded) 60%,var(--line));border-radius:10px;background:var(--bg)}
+.kids .row .d{border-radius:9px 0 0 9px}
+.kids .row .f{border-radius:0 9px 9px 0}
+.kids .row::before{content:"";position:absolute;left:-24px;top:-12px;bottom:-12px;border-left:2px solid var(--ded)}
+.kids .row:first-child::before{top:-2px}
+.kids .row:last-child::before{bottom:50%}
+.kids .row::after{content:"";position:absolute;left:-24px;top:50%;width:22px;border-top:2px solid var(--ded)}
+.grp:has(.kids) > .row{border-bottom:0}
+.from{flex-basis:100%;font-size:.76rem;font-weight:700;color:var(--ded)}
+.from b{font-weight:800}
+@media (max-width:480px){
+  .kids{padding:0 8px 12px 28px}
+  .kids .row::before,.kids .row::after{left:-18px}
+  .kids .row::after{width:16px}
+}
+
+/* Colonnes alignées partout + petit espace entre formules principales + cadres déduits plus étroits */
+.blk{container-type:inline-size}
+.row{grid-template-columns:42cqw minmax(0,1fr)!important}
+.kids .row{grid-template-columns:calc(42cqw - 39.5px) minmax(0,1fr)!important}
+.cols{grid-template-columns:42% 58%}
+.rows{display:flex;flex-direction:column;gap:6px;background:color-mix(in srgb,var(--ink) 6%,var(--bg))}
+.grp{border-top:0!important;background:var(--bg)}
+.kids{padding:0 34px 14px 38px}
+@media (max-width:480px){
+  .kids{padding:0 22px 12px 38px}
+  .kids .row::before,.kids .row::after{left:-24px}
+  .kids .row::after{width:22px}
+}
+.from{white-space:nowrap;font-size:.7rem}
+@media (max-width:480px){.kids .row .d{padding:8px 6px 8px 8px}}
+
+/* Tableau neutre (mode singe) : sans sections, sans codes, sans étoiles, mélangé */
+.neutral{--c:var(--muted);border-color:var(--line)}
+.neutral .row .f{background:color-mix(in srgb,var(--ink) 4%,var(--bg));border-left:1px solid var(--line)}
+.neutral .row .u b{color:var(--ink)}
+.neutral .row .u [style]{color:inherit!important}
+.qbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin:0 0 10px;font-size:.85rem;color:var(--muted)}
+.qbar button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer}
+[hidden]{display:none!important}
+body.hide .meta{display:none}
+
+/* ---- Mode entraînement (singe) ---- */
+.qhead{background:var(--bg);border-radius:16px;padding:14px 16px;margin:0 0 16px;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25)}
+.qtop{display:flex;justify-content:space-between;align-items:baseline}
+.qtitle{font-weight:800;font-size:1.1rem}
+.qcount{font-size:.85rem;color:var(--muted);font-weight:600}
+.prog{height:8px;border-radius:99px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));margin:10px 0 12px;overflow:hidden}
+.prog span{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#f5c542,var(--star));transition:width .3s}
+.qbtns{display:flex;gap:8px;flex-wrap:wrap}
+.qbtns button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 13px;border-radius:999px;cursor:pointer}
+.qlist{display:flex;flex-direction:column;gap:10px;container-type:inline-size}
+.qc{display:grid;grid-template-columns:42cqw minmax(0,1fr);background:var(--bg);border-radius:14px;overflow:hidden;cursor:pointer;
+  border:1px solid var(--line);box-shadow:0 1px 2px rgba(20,30,50,.05),0 6px 16px -10px rgba(20,30,50,.3);transition:transform .15s}
+.qc:active{transform:scale(.99)}
+.qc:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.qc.star{border-color:color-mix(in srgb,var(--star) 45%,var(--line))}
+.qd{padding:12px 12px 12px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.qc.star .qd{background:linear-gradient(90deg,var(--starbg),transparent 85%)}
+.qn{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:7px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));color:var(--muted);font-size:.75rem;font-weight:800}
+.qs{color:var(--star);font-size:.85rem;letter-spacing:1px}
+.qq{flex-basis:100%;font-weight:700;font-size:.95rem}
+.qf{position:relative;padding:12px 14px;background:color-mix(in srgb,var(--ink) 3.5%,var(--bg));border-left:1px solid var(--line);display:flex;align-items:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.15rem}
+.qans{display:flex;flex-direction:column;filter:blur(8px);opacity:.6;transition:filter .25s,opacity .25s;user-select:none}
+.qans .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px}
+.qans .u b,.qans .u [style]{color:var(--ink)!important}
+.qhint{position:absolute;inset:0;display:grid;place-items:center;font-family:"Source Sans 3",system-ui,sans-serif;font-size:.8rem;font-weight:700;color:var(--muted)}
+.qc.show .qans{filter:none;opacity:1;user-select:auto}
+.qc.show .qhint{display:none}
+.qc.show .qf{background:color-mix(in srgb,#3f9a6a 7%,var(--bg))}
+.qc.show .qn{background:#3f9a6a;color:#fff}
+@media (max-width:480px){.qf{font-size:1.02rem;padding:10px 12px}.qq{font-size:.88rem}}
+body.hide .qc .ft,body.hide .qc .u{filter:none!important;user-select:auto}
+.bar{flex-wrap:wrap}
+.blink{font-size:.9rem;font-weight:600;text-decoration:none;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);padding:6px 12px;border-radius:999px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.blink:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.nw{white-space:nowrap}
+.nuc{display:inline-flex;flex-direction:column;align-items:flex-end;vertical-align:middle;font-size:.58em;line-height:1.05;margin-right:.1em}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><p class="kicker">M1 · Biophysique Appliquée</p><h1>Interaction des rayonnements ionisants avec la matière</h1><p class="meta">24 formules · <span class="s">★</span> tombées au concours · <span class="g">🔁</span> formules déduites, reliées à leur formule de base</p></header>
+<div class="bar"><button id="bHide" aria-pressed="false">🙈 Cacher les formules</button><a class="blink" href="formules.html" style="margin-left:auto">← Cours</a><a class="blink" href="formules-interaction-explications.html">📖 Explications</a></div>
+<div class="cols"><span>Définition</span><span>Formule · unité · constante</span></div><div id="tb"></div>
+<div id="quiz" hidden>
+<div class="qhead"><div class="qtop"><span class="qtitle">Entraînement</span><span id="qcount" class="qcount"></span></div>
+<div class="prog"><span id="qbar"></span></div>
+<div class="qbtns"><button id="bShuffle">🔀 Mélanger</button><button id="bReset">🙈 Tout recacher</button></div></div>
+<div id="qrows" class="qlist"></div></div>
+</div>
+<script>
+const H=()=>'';
+const fr=(n,d)=>`<span class='frac'><span>${n}</span><span>${d}</span></span>`;
+const nuc=(a,z,s='')=>`<span class='nw'><span class='nuc'><span>${a}</span><span>${z}</span></span>${s}</span>`;
+const data = [
+ {id:"A", title:"Photons, énergie et seuil ionisant", pages:"p.2-3", rows:[
+  {k:"Eh", st:2, q:"Énergie d'un photon", d:"Grain d'énergie sans support matériel, sans masse au repos",
+   f:"E = hν = "+fr("hc","λ"), u:"h = <b>6,6.10<sup>−34</sup> J.s</b> = 4,1356.10<sup>−15</sup> eV.s · c = <b>3.10<sup>8</sup> m/s</b> · ν en Hz · λ en m",
+   x:"<p>L'énergie du photon est <b>proportionnelle à la fréquence</b> et <b>inversement proportionnelle à la longueur d'onde</b>. Ordre : γ &gt; RX &gt; UV &gt; visible &gt; IR &gt; micro-ondes.</p><span class='trap'>Proportionnelle à la <b>fréquence</b>, pas à une masse au repos (annales 2021, 2024).</span>"},
+  {k:"Emc", st:0, q:"Énergie de masse au repos", d:"Rayonnements particulaires",
+   f:"E = mc²", u:"S'ajoute à l'énergie <b>cinétique</b> des particules",
+   x:"<p>Les particules (électrons, protons, α…) véhiculent deux énergies : leur énergie de masse et leur énergie cinétique. Les photons n'ont que E = hν.</p>"},
+  {k:"ion", st:0, q:"Seuil des rayonnements ionisants", d:"Capables d'arracher des électrons à la matière",
+   f:"E &gt; 12,4 eV · λ &lt; 0,1 µm", u:"Ionisants : RX, Rγ, toutes les particules · non ionisants : UV, visible, IR, micro-ondes, radio",
+   x:"<p>Il faut une énergie supérieure à l'énergie de liaison minimale des électrons du milieu.</p><span class='trap'>Les <b>UV</b> sont non ionisants. 0,1 µm = <b>100 nm</b> ; au-dessus de 100 nm : non ionisant.</span>"},
+  {k:"seuil", der:["Eh","ion"], q:"Vérifier que 12,4 eV ↔ 0,1 µm", d:"",
+   f:"E = "+fr("4,1356.10<sup>−15</sup> × 3.10<sup>8</sup>","10<sup>−7</sup>")+" ≈ 12,4 eV", u:"",
+   x:"<p>Les deux seuils décrivent la <b>même limite</b>, l'un en énergie, l'autre en longueur d'onde.</p>"
+   + H(["Pars de E = hc/λ avec h en eV.s.","λ = 0,1 µm = 10<sup>−7</sup> m.","4,1356.10<sup>−15</sup> × 3.10<sup>8</sup> / 10<sup>−7</sup> ≈ 12,4 eV."])}
+ ]},
+ {id:"B", title:"Interactions des photons (RX, Rγ)", pages:"p.8-9", rows:[
+  {k:"pe", st:2, q:"Effet photoélectrique", d:"Transfert <b>total</b> de l'énergie à un électron profond (K, L)",
+   f:"E<sub>c</sub> = E − E<sub>l</sub>", u:"E<sub>l</sub> = énergie de liaison · électron expulsé = <b>photoélectron</b>",
+   x:"<p>Le photon <b>disparaît</b> : il faut E &gt; E<sub>l</sub>. Plus probable quand E<sub>l</sub> est élevée. Suivi de RX de fluorescence ou d'électrons Auger.</p><span class='trap'>Interaction photon ↔ <b>électron</b>, pas noyau ni positon (annales 2020, 2023).</span>"},
+  {k:"comp", st:1, q:"Effet Compton", d:"Transfert <b>partiel</b> à un électron peu lié (couches externes)",
+   f:"E = E<sub>c</sub> + E<sub>photon dif</sub>", u:"Photon diffusé : direction différente, énergie plus faible",
+   x:"<p>L'énergie se partage entre l'électron Compton et le photon diffusé. E<sub>c</sub> est absorbée au <b>voisinage</b> de l'interaction.</p><span class='trap'>Concerne photons X <b>et</b> γ ; l'électron cible est <b>peu lié</b>.</span>"},
+  {k:"paire", st:2, q:"Production de paires (matérialisation)", d:"Interaction photon ↔ noyau",
+   f:"E = 1,022 MeV + E<sub>c</sub>(e<sup>−</sup>) + E<sub>c</sub>(e<sup>+</sup>)", u:"Seuil : <b>E &gt; 1,022 MeV</b>",
+   x:"<p>Le photon disparaît et crée un électron et un positon ; l'excédent au-delà du seuil devient leur énergie cinétique.</p><span class='trap'>1,022 <b>MeV</b>, pas keV ; en dessous l'effet est nul (annales 2022, 2025).</span>"},
+  {k:"1022", der:["paire"], q:"Origine du seuil 1,022 MeV", d:"",
+   f:"2 × 511 keV = 1,022 MeV", u:"",
+   x:"<p>Le seuil correspond à la <b>masse au repos de deux électrons</b>.</p>"
+   + H(["L'électron et le positon nécessitent chacun 511 keV d'énergie de masse.","511 + 511 = 1022 keV = 1,022 MeV."])}
+ ]},
+ {id:"C", title:"Atténuation d'un faisceau de photons", pages:"p.10-11", rows:[
+  {k:"dN", st:0, q:"Nombre de photons atténués", d:"Dans une épaisseur dx",
+   f:"dN = −μ.N<sub>0</sub>.dx · |dN| = μ.N<sub>0</sub>.dx", u:"μ = coefficient linéique d'atténuation (cm<sup>−1</sup>) · dx en cm",
+   x:"<p>Chaque interaction fait <b>disparaître</b> un photon incident du faisceau.</p>"},
+  {k:"Nx", st:0, q:"Nombre de photons transmis", d:"Après une épaisseur x",
+   f:"N(x) = N<sub>0</sub>.e<sup>−μx</sup>", u:"Aussi : N(x) = N<sub>0</sub> − dN",
+   x:"<p>L'atténuation suit une <b>loi exponentielle</b> en fonction de l'épaisseur (QCM séance 2).</p>"},
+  {k:"mu", st:0, q:"Coefficient linéique d'atténuation", d:"Probabilité d'interaction par unité de longueur",
+   f:"μ = τ + σ + π", u:"τ photoélectrique · σ Compton · π paires · unité : <b>cm<sup>−1</sup></b>",
+   x:"<p>Plus μ est élevé, plus le faisceau est rapidement atténué. μ dépend du <b>milieu</b> et de l'<b>énergie</b> des photons.</p><span class='trap'>μ est une somme, donc μ &gt; τ (QCM séance 2).</span>"},
+  {k:"dNmu", der:["dN","mu"], q:"Photons atténués par type d'effet", d:"",
+   f:"|dN| = (τ + σ + π).N<sub>0</sub>.dx", u:"",
+   x:"<p>Chaque effet contribue à l'atténuation proportionnellement à son coefficient.</p>"
+   + H(["Pars de |dN| = μ.N<sub>0</sub>.dx.","Remplace μ par τ + σ + π."])},
+  {k:"cda", st:0, q:"Couche de demi-atténuation (CDA)", d:"Épaisseur qui atténue 50 % du rayonnement",
+   f:"N(CDA) = "+fr("N<sub>0</sub>","2"), u:"",
+   x:"<p>Même logique que la période radioactive, mais dans l'<b>espace</b> au lieu du temps.</p><span class='trap'>Divisé par <b>2</b>, pas par ln 2.</span>"},
+  {k:"cdaE", der:["cda","Nx"], q:"CDA dans l'exponentielle", d:"",
+   f:"N(CDA) = N<sub>0</sub>.e<sup>−μ×CDA</sup>", u:"",
+   x:"<p>La loi exponentielle appliquée à x = CDA.</p>"
+   + H(["Pars de N(x) = N<sub>0</sub> e<sup>−μx</sup>.","Remplace x par CDA."])},
+  {k:"cdaln", der:["cda","cdaE"], q:"CDA en fonction de μ", d:"",
+   f:"CDA = "+fr("ln 2","μ"), u:"",
+   x:"<p>μ permet de calculer la CDA (QCM séance 2).</p>"
+   + H(["N<sub>0</sub>/2 = N<sub>0</sub> e<sup>−μ×CDA</sup> → 1/2 = e<sup>−μ×CDA</sup>.","Prends le ln : −ln 2 = −μ × CDA.","Divise par μ."])},
+  {k:"ncda", st:1, q:"Après n CDA", d:"Épaisseur équivalente à n × CDA",
+   f:"N(nCDA) = "+fr("N<sub>0</sub>","2<sup>n</sup>"), u:"",
+   x:"<p>La formule des QCM de calcul : on compte combien de CDA contient l'épaisseur.</p><span class='tip'>Annale 2021 : ÷ 8 = 2³ en 1 cm → CDA = 0,33 cm. Annale 2020 : 1 mm = 2 CDA → 25 % transmis ; 10 CDA → ≈ 1/1000.</span>"},
+  {k:"tau", st:0, q:"Coefficient photoélectrique τ", d:"",
+   f:"τ ∝ "+fr("1","E³")+" · τ ∝ Z³", u:"τ proportionnel à la masse volumique",
+   x:"<p>τ diminue <b>rapidement</b> quand l'énergie augmente et augmente rapidement avec Z : c'est pourquoi le <b>plomb</b> arrête bien les photons X.</p>"},
+  {k:"sig", st:1, q:"Coefficient Compton σ", d:"",
+   f:"σ ∝ E<sup>−1/3</sup>", u:"Proportionnel au nombre d'électrons par unité de volume · dépend peu de Z",
+   x:"<p>σ diminue quand l'énergie augmente, mais beaucoup moins vite que τ. Le coefficient π de création de paires, lui, est nul sous 1,022 MeV puis augmente avec E.</p>"}
+ ]},
+ {id:"D", title:"Énergie déposée, dose et neutrons", pages:"p.6, p.11-12", rows:[
+  {k:"TLE", st:2, q:"Transfert linéique d'énergie (TLE)", d:"Énergie cédée par unité de longueur de trajectoire",
+   f:"TLE = "+fr("dE","dx"), u:"dE en keV ou MeV · dx en cm · TLE en <b>keV.cm<sup>−1</sup></b> ou MeV.cm<sup>−1</sup>",
+   x:"<p>Plus les électrons sont <b>ralentis</b>, plus l'énergie cédée à la matière est grande et plus ils <b>lèsent les cellules</b>. Le TLE dépend de l'énergie et du milieu.</p><span class='trap'>Le TLE n'est <b>pas constant</b> le long du parcours (QCM séance 2).</span>"},
+  {k:"Etr", st:0, q:"Énergie transportée par le faisceau", d:"",
+   f:"N<sub>0</sub> × E", u:"N<sub>0</sub> = nb de photons incidents · E = énergie des photons",
+   x:"<p>Chaque photon transporte l'énergie E.</p>"},
+  {k:"Eperd", st:0, q:"Énergie perdue dans l'épaisseur dx", d:"",
+   f:"dN.E = dN.E<sub>abs</sub> + dN.E<sub>dif</sub>", u:"E<sub>abs</sub> = énergie absorbée · E<sub>dif</sub> = énergie diffusée",
+   x:"<p>Une partie est <b>absorbée</b> (électrons secondaires), une partie <b>diffusée</b> (photons secondaires). L'énergie diffusée cause le <b>flou</b> des images et irradie surtout le personnel médical.</p>"},
+  {k:"D", st:1, q:"Dose absorbée", d:"Énergie cédée par unité de masse",
+   f:"D = "+fr("dE","dm"), u:"SI : <b>J.kg<sup>−1</sup></b> · 1 Gy = 1 J.kg<sup>−1</sup> · 1 Gy = 100 rad",
+   x:"<p>Valable <b>quelle que soit la nature du rayonnement</b> et de la matière absorbante (annale 2021).</p>"},
+  {k:"Dp", st:0, q:"Débit de dose absorbée", d:"Dose par unité de temps",
+   f:"Ḋ = "+fr("dD","dt"), u:"SI : <b>Gy.s<sup>−1</sup></b> · 1 Gy.h<sup>−1</sup> = 100 rad.h<sup>−1</sup>",
+   x:"<p>Plus Ḋ est élevé, plus la concentration de radicaux libres augmente et plus les dommages chimiques sont importants.</p>"},
+  {k:"neut", st:1, q:"Section efficace totale des neutrons", d:"Neutrons : seulement avec les noyaux",
+   f:"σ<sub>tot</sub> = σ<sub>absorption</sub> + σ<sub>diffusion</sub>", u:"Atténués par une grande épaisseur de <b>béton</b>",
+   x:"<p>La probabilité d'interaction varie énormément avec la vitesse : les neutrons <b>les plus lents</b> interagissent le plus. Absorption (émission γ, α, proton ou fission) ou diffusion (« choc de boules »).</p><span class='trap'>Pas d'effet photoélectrique pour les neutrons ; une paroi en plomb ne les arrête pas, il faut du béton (annale 2025).</span>"}
+ ]}
+];
+
+
+
+const tb=document.getElementById('tb');let h='';
+const rowHTML=(r,code,par)=>`<div class="row${r.der?' der':''}${r.st?' star':''}" tabindex="0">
+      <div class="d"><span class="code">${code}</span>${par?`<span class="from">🔁 Déduite de <b>${par}</b></span>`:''}<span class="name">${r.q}</span>${r.st?`<span class="s">${'★'.repeat(r.st)}</span>`:''}</div>
+      <div class="f"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div></div>`;
+data.forEach(sec=>{
+  h+=`<section class="blk" style="--c:var(--${sec.id})"><header><span class="letter">${sec.id}</span>${sec.title}</header><div class="rows">`;
+  const groups=[];
+  sec.rows.forEach((r,i)=>{const c=sec.id+(i+1); if(r.der&&groups.length) groups[groups.length-1].kids.push([r,c]); else groups.push({r,c,kids:[]});});
+  groups.forEach(g=>{
+    h+=`<div class="grp">`+rowHTML(g.r,g.c);
+    if(g.kids.length) h+=`<div class="kids">`+g.kids.map(([r,c])=>rowHTML(r,c,g.c)).join('')+`</div>`;
+    h+=`</div>`;
+  });
+  h+=`</div></section>`;
+});
+tb.innerHTML=h;
+const b=document.getElementById('bHide'),quiz=document.getElementById('quiz'),qrows=document.getElementById('qrows');
+const all=[];data.forEach(sec=>sec.rows.forEach(r=>all.push(r)));
+const upd=()=>{const n=qrows.querySelectorAll('.qc.show').length,t=all.length;
+  document.getElementById('qcount').textContent=`${n} / ${t} révélées`;document.getElementById('qbar').style.width=(100*n/t)+'%';};
+const shuffle=()=>{
+  const a=all.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  qrows.innerHTML=a.map((r,i)=>`<div class="qc${r.st?' star':''}" tabindex="0">
+    <div class="qd"><span class="qn">${i+1}</span>${r.st?`<span class="qs">${'★'.repeat(r.st)}</span>`:''}<span class="qq">${r.q}</span></div>
+    <div class="qf"><div class="qans"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div><span class="qhint">👁 Révéler</span></div></div>`).join('');
+  upd();
+};
+document.getElementById('bShuffle').onclick=()=>{shuffle();window.scrollTo({top:0});};
+document.getElementById('bReset').onclick=()=>{qrows.querySelectorAll('.qc.show').forEach(c=>c.classList.remove('show'));upd();};
+b.onclick=()=>{
+  const on=document.body.classList.toggle('hide');b.setAttribute('aria-pressed',on);
+  b.textContent=on?'↩ Revenir à la page de référence':'🙈 Cacher les formules';
+  if(on)shuffle();
+  quiz.hidden=!on;tb.hidden=on;document.querySelector('.cols').hidden=on;
+  window.scrollTo({top:0});
+};
+const flip=e=>{const t=e.target.closest('.qc');if(t){t.classList.toggle('show');upd();}};
+qrows.addEventListener('click',flip);
+qrows.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip(e);}});
+</script>
+</body>
+</html>

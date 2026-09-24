@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules — Noyaux et rayonnements</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#ffffff; --ink:#1d2330; --muted:#5b6474; --line:#e3e6ec;
+  --star:#e8a900; --starbg:#fff6d6; --fbg:#f4f6fb; --ded:#3f9a6a; --dedbg:#eef6f1;
+  --A:#2f86a8; --B:#d0632e; --C:#c9971c; --D:#6f5aa8; --E:#a64b4b; --F:#b0527f;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.4}
+.wrap{max-width:860px;margin:0 auto;padding:18px 14px 40px}
+h1{font-size:1.6rem;font-weight:800;margin:0}
+.sub{color:var(--muted);font-size:.9rem;margin:2px 0 0}
+.s{color:var(--star);letter-spacing:1px;white-space:nowrap}
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 0;margin:12px 0 4px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.toolbar button{font:inherit;font-size:.88rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 11px;border-radius:999px;cursor:pointer}
+.toolbar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.toolbar button:focus-visible,.card:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.count{margin-left:auto;color:var(--muted);font-size:.82rem}
+section{margin-top:22px}
+h2{font-size:1rem;margin:0 0 8px;padding:6px 12px;color:#fff;border-radius:6px}
+.card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:stretch;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.def{padding:10px 12px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.def .top{display:flex;gap:8px;align-items:baseline;font-size:.8rem;font-weight:800}
+.def .q{font-weight:700;font-size:1rem}
+.def .d{color:var(--muted);font-size:.86rem}
+.fm{background:var(--fbg);border-left:5px solid var(--sec);padding:12px 14px;display:flex;flex-direction:column;justify-content:center}
+.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.35rem;line-height:1.25}
+.f sub{font-size:.62em}
+.u{margin-top:6px;font-size:.9rem;font-weight:600;color:var(--ink)}
+.u b{color:var(--sec)}
+.card.starred .def{background:linear-gradient(90deg,var(--starbg),transparent 70%)}
+.card.derived{border-style:dashed}
+.card.derived .fm{border-left-color:var(--ded)}
+.card.derived .top .tag{color:var(--ded)}
+#A{--sec:var(--A)} #B{--sec:var(--B)} #C{--sec:var(--C)} #D{--sec:var(--D)} #E{--sec:var(--E)} #F{--sec:var(--F)}
+#A h2{background:var(--A)} #B h2{background:var(--B)} #C h2{background:var(--C)} #D h2{background:var(--D)} #E h2{background:var(--E)} #F h2{background:var(--F)}
+section .top .code{color:var(--sec)}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+body.hide .card{cursor:pointer}
+body.stars .card:not(.starred){display:none}
+body.base .card.derived{display:none}
+.hint{display:none;color:var(--muted);font-size:.85rem;margin:6px 0 0}
+body.hide .hint{display:block}
+@media (max-width:600px){
+  .card{grid-template-columns:1fr}
+  .fm{border-left:0;border-top:4px solid var(--sec)}
+  .card.derived .fm{border-top-color:var(--ded)}
+}
+@media (prefers-reduced-motion:no-preference){.f,.u{transition:filter .2s}}
+@media print{.toolbar,.hint{display:none}body.hide .fm .f,body.hide .fm .u{filter:none}.card{break-inside:avoid}}
+
+/* Cartes plus isolées */
+section{margin-top:34px}
+h2{margin-bottom:14px}
+.card{margin-bottom:18px;border:1.5px solid var(--line);border-radius:12px;box-shadow:0 2px 0 var(--line),0 6px 14px -8px rgba(29,35,48,.25)}
+.def{padding:14px 16px}
+.fm{padding:16px 18px}
+.card.derived{border-width:1.5px}
+@media (max-width:600px){.card{margin-bottom:16px}}
+
+/* Couple définition/formule plus serré, séparation légère */
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.def{padding:14px 12px 14px 16px}
+.fm{padding:14px 16px 14px 14px}
+.card{margin-bottom:28px}
+section{margin-top:40px}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px dashed var(--line)!important}
+  .def{padding:14px 16px 8px}
+  .fm{padding:10px 16px 14px}
+  .card{margin-bottom:26px}
+}
+
+.wrap{max-width:980px}
+.legend{margin-top:6px;font-size:.88rem;color:var(--muted)}
+.chain{margin:14px 0 4px;padding:12px 14px;border-left:4px solid var(--star);background:var(--starbg);border-radius:0 8px 8px 0;font-size:.95rem}
+.mnemo{margin:12px 0 4px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:.92rem}
+.mnemo strong{display:block;margin-bottom:6px}
+.mnemo ul{margin:0;padding-left:18px;columns:2;column-gap:28px}
+.mnemo li{margin-bottom:4px;break-inside:avoid}
+.chain .f,.mnemo .f{font-size:1rem}
+.card{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
+.x{grid-column:1 / -1;border-top:1px dashed var(--line);padding:12px 16px 14px;font-size:.9rem;color:var(--muted)}
+.x p{margin:0 0 5px}
+.x b,.x .tip,.x .trap{color:var(--ink)}
+.tip,.trap{display:block;margin-top:5px}
+.tip::before{content:"💡 "}
+.trap::before{content:"⚠️ "}
+.ded{margin-top:8px;padding:8px 10px;background:var(--dedbg);border-left:3px solid var(--ded);border-radius:0 6px 6px 0;font-size:.86rem;color:var(--ink)}
+.ded strong{display:block;margin-bottom:3px}
+.ded ol{margin:0;padding-left:20px}
+.from{display:block;margin-top:4px;font-size:.84rem;color:var(--ded);font-weight:600}
+.gives{display:block;margin-top:8px;font-size:.86rem;color:var(--ded);font-weight:600}
+.chip{display:inline-block;text-decoration:none;font-size:.78rem;font-weight:700;border:1px solid var(--line);border-radius:5px;padding:0 5px;background:var(--bg);color:var(--ink)}
+.card{scroll-margin-top:70px}
+.card:target{box-shadow:0 0 0 3px var(--star)}
+/* mode test : seul le titre reste visible */
+body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:blur(8px);user-select:none}
+body.hide .card.show .def .d,body.hide .card.show .def .from,body.hide .card.show .fm,body.hide .card.show .x{filter:none;user-select:auto}
+@media (max-width:600px){.mnemo ul{columns:1}.x{padding:10px 16px 14px}}
+@media print{body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:none}}
+
+/* Traits pleins fins à l'intérieur, cadre plus marqué */
+:root{--frame:#b9c0cc}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--frame:#4a5263}}
+:root[data-theme="dark"]{--frame:#4a5263}
+.card{border:2px solid var(--frame)!important}
+.card.derived{border:2px solid var(--ded)!important}
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.x{border-top:1px solid var(--line)!important}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px solid var(--line)!important}
+}
+
+/* Traits intérieurs un peu plus épais */
+.fm,.card.derived .fm{border-left:1.5px solid var(--frame)!important;border-top:0!important}
+.x{border-top:1.5px solid var(--frame)!important}
+@media (max-width:600px){.fm,.card.derived .fm{border-left:0!important;border-top:1.5px solid var(--frame)!important}}
+
+/* Cadre d'épaisseur identique sur les 4 côtés */
+.card{box-shadow:0 6px 14px -10px rgba(29,35,48,.28)!important}
+
+/* Mobile : carte empilée comme la page épurée (évite le trait doublé en haut de la formule) */
+@media (max-width:600px){.card{grid-template-columns:1fr!important}}
+
+/* Fractions : numérateur au-dessus du dénominateur */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor;padding-bottom:.08em}
+.frac>span:last-child{padding-top:.08em}
+
+/* Arbre : formule de base → formules déduites (comme la page arbre) */
+.grp{margin-bottom:28px}
+.grp .card{margin-bottom:0}
+.tree{list-style:none;margin:0 0 0 26px;padding:0}
+.tree > li{position:relative;padding:12px 0 0 30px}
+.tree > li::before{content:"";position:absolute;left:0;top:0;bottom:0;border-left:2px solid var(--ded)}
+.tree > li:last-child::before{bottom:auto;height:36px}
+.tree > li::after{content:"";position:absolute;left:0;top:36px;width:24px;border-top:2px solid var(--ded)}
+.tree .card{box-shadow:none!important}
+.tree .card .f{font-size:1.18rem}
+body.stars .grp:not(.gstar){display:none}
+body.stars .tree{display:none}
+body.base .tree{display:none}
+@media (max-width:600px){
+  .tree{margin-left:12px}
+  .tree > li{padding-left:22px}
+  .tree > li::after{width:18px}
+}
+
+/* Singe = bascule vers la vue épurée floutée (définition → formule) */
+body.hide .x,body.hide .chain,body.hide .mnemo,body.hide .legend,body.hide .from{display:none}
+body.hide .def .d{filter:none!important;user-select:auto}
+body.hide .fm{filter:none!important}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+@media (prefers-reduced-motion:no-preference){.fm .f,.fm .u{transition:filter .2s}}
+.nw{white-space:nowrap}
+.nuc{display:inline-flex;flex-direction:column;align-items:flex-end;vertical-align:middle;font-size:.58em;line-height:1.05;margin-right:.1em}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Noyaux et rayonnements : les formules</h1>
+<p class="sub">M1 · Biophysique Appliquée · formules expliquées</p>
+<div class="legend"><span class="s">★</span> = tombée au concours (d'après la fiche de cours) · <span class="s">★★★</span> = la plus fréquente · <span style="color:var(--ded);font-weight:700">🔁</span> = formule déduite d'une autre (cadre vert)</div>
+<div class="toolbar" role="toolbar" aria-label="Options">
+  <a href="formules-noyaux.html" style="font-size:.88rem;font-weight:600;text-decoration:none;color:var(--ink);border:1.5px solid var(--line);padding:6px 11px;border-radius:999px">← Tableau des formules</a>
+  <button id="bHide" aria-pressed="false">🙈 Réviser (vue épurée)</button>
+  <button id="bStars" aria-pressed="false"><span class="s">★</span> Concours</button>
+  <button id="bBase" aria-pressed="false">Sans les déduites</button>
+  <span class="count" id="count"></span>
+</div>
+<p class="hint">Vue épurée : touche une carte pour révéler la formule. Retouche 🙈 pour revenir aux explications.</p>
+<div class="chain">Le fil qui relie tout : <span class="f">A = Z + N</span> → <span class="f">M = Z m<sub>p</sub> + N m<sub>n</sub> − δm</span> → <span class="f">W = δm c²</span> et <span class="f">W̄ = W/A</span> (stabilité) → noyau instable : α, β<sup>−</sup>, β<sup>+</sup>, CE, γ → décroissance <span class="f">A(t) = A<sub>0</sub>e<sup>−λt</sup></span>, <span class="f">T = ln2/λ</span>, <span class="f">A(nT) = A<sub>0</sub>/2<sup>n</sup></span>, et dans le corps <span class="f">1/T<sub>e</sub> = 1/T<sub>bio</sub> + 1/T<sub>phy</sub></span>.</div>
+
+<div class="mnemo">
+  <strong>Moyens mnémotechniques</strong>
+  <ul>
+    <li>N = A − Z : le calcul de base.</li>
+    <li>α : A − 4, Z − 2, <b>non isobarique</b>, thérapie.</li>
+    <li>β<sup>−</sup> : excès de <b>neutrons</b>, Z + 1, antineutrino ; β<sup>+</sup> : excès de <b>protons</b>, Z − 1, neutrino.</li>
+    <li>β<sup>±</sup> et CE sont <b>isobariques</b> (A constant).</li>
+    <li>Spectre <b>continu</b> pour β (E<sub>moy</sub> = E<sub>max</sub>/3) ; <b>raies</b> pour α, γ, X.</li>
+    <li>511 keV = masse d'un électron ; 1,022 MeV = 2 × 511 keV.</li>
+    <li>γ vient du <b>noyau</b> ; X vient du <b>cortège</b>.</li>
+    <li>÷ 2<sup>n</sup> = n périodes (÷ 8 → 3T, ÷ 16 → 4T).</li>
+    <li>T<sub>e</sub> = « produit sur somme », toujours plus petite que T<sub>bio</sub> et T<sub>phy</sub>.</li>
+    <li>1 Bq = 1 désintégration par <b>seconde</b>.</li>
+  </ul>
+</div>
+
+<main id="main"></main>
+<footer style="margin-top:30px;color:var(--muted);font-size:.8rem;text-align:center">Source : fiche de cours Médisup Tours/Orléans 2026-2027 + annales classées corrigées.</footer>
+</div>
+<script>
+const S = n => n ? '<span class="s">' + '★'.repeat(n) + '</span>' : '';
+const H = steps => `<div class="ded"><strong>🔁 Comment la retrouver</strong><ol>${steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>`;
+const fr=(n,d)=>`<span class='frac'><span>${n}</span><span>${d}</span></span>`;
+const nuc=(a,z,s='')=>`<span class='nw'><span class='nuc'><span>${a}</span><span>${z}</span></span>${s}</span>`;
+const data = [
+ {id:"A", title:"Noyau, masses et unités", pages:"p.2-6", rows:[
+  {k:"AZN", st:0, q:"Nombre de masse", d:"Symbole "+nuc("A","Z","X")+"<sup>N</sup>",
+   f:"A = Z + N", u:"A = nombre de <b>nucléons</b> · Z = numéro atomique = nb de <b>protons</b> = nb d'électrons · N = nb de <b>neutrons</b>",
+   x:"<p>Z caractérise l'<b>élément chimique</b> ; le couple (A, Z) caractérise un <b>nucléide</b> (340 naturels, 1500 connus).</p><span class='tip'><b>A</b> en h<b>A</b>ut, <b>Z</b> en bas (Z comme « zéro étage »).</span>"},
+  {k:"N", der:["AZN"], q:"Nombre de neutrons", d:"",
+   f:"N = A − Z", u:"",
+   x:"<p>Le calcul de base de tous les exercices sur les noyaux.</p><span class='tip'>Annale 2019 : iode 123, Z = 53 → N = 70.</span>"
+   + H(["Pars de A = Z + N.","Soustrais Z des deux côtés."])},
+  {k:"e", st:0, q:"Charge élémentaire", d:"",
+   f:"e = 1,6.10<sup>−19</sup> C", u:"Électron : <b>−e</b> · proton : <b>+e</b>",
+   x:"<p>Autant de protons que d'électrons : la charge totale de l'atome est <b>nulle</b>.</p>"},
+  {k:"uma", st:0, q:"Unité de masse atomique", d:"Masse de référence (notée μ ou u.m.a)",
+   f:"1 u.m.a = "+fr("1","12")+" masse du noyau de <sup>12</sup>C = 1,6605.10<sup>−27</sup> kg", u:"Exprimée en grammes, l'u.m.a est l'<b>inverse du nombre d'Avogadro</b>",
+   x:"<p>Tous les nucléons ont une masse ≈ 1 u.m.a.</p><span class='tip'>Annale 2018 : l'u.m.a correspond au <b>douzième</b> de la masse d'un atome de carbone 12.</span>"},
+  {k:"mass", st:0, q:"Masses des particules", d:"Répartition hétérogène",
+   f:"m<sub>p</sub> = 1,6723.10<sup>−27</sup> kg · m<sub>n</sub> = 1,6747.10<sup>−27</sup> kg · m<sub>e</sub> = 9,11.10<sup>−31</sup> kg", u:"Électron <b>1840 fois</b> plus léger qu'un nucléon",
+   x:"<p>La masse d'un atome ≈ la masse de ses nucléons (<b>99,75 %</b>).</p>"},
+  {k:"M", st:0, q:"Masse du noyau", d:"Inférieure à la masse des nucléons séparés",
+   f:"M(A,Z) = Z m<sub>p</sub> + N m<sub>n</sub> − δm", u:"δm = <b>défaut de masse</b> · m<sub>p</sub>, m<sub>n</sub> = masses du proton et du neutron",
+   x:"<p>Quand le noyau se forme, une partie de la masse des nucléons est <b>transformée en énergie de liaison</b>.</p><span class='tip'>Annale 2019 : Σ nucléons de l'iode 123 = 53 × 1,008 + 70 × 1,009 = 124,054 uma.</span>"},
+  {k:"dm", der:["M"], q:"Défaut de masse", d:"",
+   f:"δm = Z m<sub>p</sub> + N m<sub>n</sub> − M(A,Z)", u:"",
+   x:"<p>C'est la masse « manquante » : elle représente l'énergie nécessaire pour séparer les nucléons.</p>"
+   + H(["Pars de M(A,Z) = Z m<sub>p</sub> + N m<sub>n</sub> − δm.","Isole δm."])}
+ ]},
+ {id:"B", title:"Énergie et liaison", pages:"p.7-10", rows:[
+  {k:"eV", st:0, q:"Électron-volt", d:"Énergie d'un électron soumis à 1 V",
+   f:"1 eV = 1,602.10<sup>−19</sup> J", u:"eV : lumière visible · keV : RX · MeV : γ et α",
+   x:"<p>Le joule est l'unité SI, mais l'électron-volt est l'unité usuelle en physique atomique.</p><span class='tip'>Origine des RX : électrons ; origine des γ et α : noyau.</span>"},
+  {k:"Emc", st:0, q:"Relation d'Einstein (1905)", d:"Équivalence masse-énergie",
+   f:"E = mc²", u:"c = <b>3.10<sup>8</sup> m/s</b>",
+   x:"<p>Une masse peut s'exprimer comme une énergie divisée par c² : d'où les masses en MeV/c².</p>"},
+  {k:"umaE", st:0, q:"Masses en MeV/c²", d:"",
+   f:"1 u.m.a = 931,502 MeV/c² · m<sub>e</sub> = 0,511 MeV/c²", u:"Proton ≈ 938 · neutron ≈ 940 · particule α ≈ 3727 MeV/c²",
+   x:"<p>Valeurs à connaître pour les QCM d'unités.</p><span class='tip'>Annale 2018 : 511 keV équivaut à la masse d'un électron.</span>"},
+  {k:"W", st:0, q:"Énergie de liaison des nucléons", d:"= énergie de cohésion",
+   f:"W = δm c²", u:"",
+   x:"<p>C'est E = mc² appliqué au défaut de masse (@dm) : l'énergie qu'il faut apporter pour « casser » le noyau.</p>"},
+  {k:"Wm", st:0, q:"Énergie moyenne de liaison par nucléon", d:"Pour comparer les noyaux entre eux",
+   f:"W̄ = "+fr("W","A"), u:"≈ <b>8 MeV/nucléon</b> pour la plupart des nucléides",
+   x:"<p>Un noyau est <b>d'autant plus stable</b> que W̄ est grande. Les noyaux légers et lourds ont une W̄ plus faible que les moyens (courbe d'Aston).</p><span class='tip'>Stables : W̄ &gt; 8 MeV/nucléon (20 &lt; A &lt; 190).</span>"},
+  {k:"A2Z", st:0, q:"Vallée de stabilité pour Z &lt; 20", d:"",
+   f:"N = Z donc A = 2 × Z", u:"Pour Z &gt; 20 : N &gt; Z et A ≈ 2,6 Z",
+   x:"<p>Ex. <sup>4</sup>He, <sup>12</sup>C, <sup>16</sup>O, <sup>40</sup>Ca.</p>"
+   + H(["Pour Z &lt; 20, N = Z.","A = Z + N = Z + Z = 2Z."])}
+ ]},
+ {id:"C", title:"Désintégrations radioactives", pages:"p.11-19", rows:[
+  {k:"alpha", st:0, q:"Désintégration alpha (α)", d:"Noyaux lourds : Z &gt; 82",
+   f:nuc("A","Z","X")+" → "+nuc("A<sub>1</sub>","Z−2","Y")+" + "+nuc("4","2","He"), u:"A = N + Z · A<sub>1</sub> = (N − 2) + (Z − 2) · émission d'un noyau d'hélium · <b>non isobarique</b>",
+   x:"<p>Le noyau trop « gros » se débarrasse de 2 protons et 2 neutrons. Spectre <b>discret</b> (raies, 3 à 9 MeV). Peu d'intérêt en imagerie (★★) : utilisé en <b>thérapie</b>.</p><span class='trap'>Alpha n'est pas isobarique : A change.</span>"},
+  {k:"A4", der:["alpha","AZN"], q:"Nombre de masse après une émission α", d:"",
+   f:"A<sub>1</sub> = A − 4", u:"",
+   x:"<p>Le noyau fils perd 4 nucléons et 2 protons.</p>"
+   + H(["A<sub>1</sub> = (N − 2) + (Z − 2).","= (N + Z) − 4 = A − 4."])},
+  {k:"bm", st:1, q:"Désintégration bêta moins (β<sup>−</sup>)", d:"Excès de neutrons · généralement naturelle",
+   f:"n → p + e<sup>−</sup> + ν̄<sub>e</sub> · "+nuc("A","Z","X")+" → "+nuc("A","Z+1","Y")+"<sup>N−1</sup> + β<sup>−</sup> + ν̄<sub>e</sub>", u:"A constant : <b>isobarique</b> · émet un électron + un antineutrino",
+   x:"<p>Un neutron se transforme en proton : Z augmente de 1, A ne change pas. Ex. <sup>14</sup>C → <sup>14</sup>N.</p><span class='tip'>β<b>−</b> : on émet une charge −, donc Z <b>+</b>1.</span>"},
+  {k:"bp", st:1, q:"Désintégration bêta plus (β<sup>+</sup>)", d:"Excès de protons · énergie en excès ≥ 1,022 MeV",
+   f:"p → n + β<sup>+</sup> + ν<sub>e</sub> · "+nuc("A","Z","X")+" → "+nuc("A","Z−1","Y")+"<sup>N+1</sup> + β<sup>+</sup> + ν<sub>e</sub>", u:"<b>Isobarique</b> · émet un positon + un neutrino · généralement artificielle",
+   x:"<p>Un proton se transforme en neutron : Z diminue de 1. Intérêt médical : <b>TEP</b> (★), glucose marqué au <sup>18</sup>F.</p><span class='trap'>β<sup>−</sup> → <b>anti</b>neutrino ; β<sup>+</sup> → neutrino.</span>"},
+  {k:"Ebeta", st:0, q:"Partage de l'énergie bêta", d:"Répartition aléatoire",
+   f:"E = E<sub>β</sub> + E<sub>ν</sub>", u:"E<sub>β</sub> = 0 si tout part au (anti)neutrino · E<sub>β</sub> = E<sub>max</sub> si tout part au β",
+   x:"<p>Comme l'énergie se partage au hasard entre 2 particules, le spectre β est <b>continu</b> (contrairement à α et γ).</p>"},
+  {k:"Emoy", der:["Ebeta"], q:"Énergie moyenne des β", d:"Spectre continu",
+   f:"E<sub>moy</sub> = "+fr("E<sub>max</sub>","3"), u:"0 ≤ E<sub>β</sub> ≤ E<sub>max</sub> · E<sub>max</sub> : 10 keV à 3 MeV",
+   x:"<p>En moyenne, la particule β n'emporte qu'un tiers de l'énergie maximale.</p>"
+   + H(["E<sub>β</sub> varie de 0 à E<sub>max</sub> (@Ebeta).","Le spectre donne une valeur moyenne à E<sub>max</sub>/3."])},
+  {k:"ce", st:1, q:"Capture électronique (CE)", d:"Excès de protons · électron des couches K ou L",
+   f:"p + e<sup>−</sup> → n + ν<sub>e</sub> · "+nuc("A","Z","X")+" + e<sup>−</sup> → "+nuc("A","Z−1","Y")+"<sup>N+1</sup> + ν<sub>e</sub>", u:"<b>Isobarique</b> · une seule particule émise : le neutrino",
+   x:"<p>Le noyau « avale » un électron profond. La place vacante est comblée par un électron périphérique : émission de <b>RX</b> ou d'<b>électron Auger</b> (★).</p><span class='tip'>En compétition avec β<sup>+</sup> (★) : les lourds préfèrent la CE, les légers le β<sup>+</sup>. Fluor 18 : 97 % β<sup>+</sup>, 3 % CE.</span>"},
+  {k:"RX", der:["ce"], q:"Énergie du photon X après CE", d:"",
+   f:"E = hν = E<sub>K</sub> − E<sub>L</sub>", u:"Spectre de raies",
+   x:"<p>Un électron descend de la couche L vers la place vacante en K : la différence d'énergie part en photon X.</p><span class='trap'>Électron Auger : électron <b>périphérique</b> éjecté par ce photon X (annale 2025).</span>"
+   + H(["Après la CE, un électron L comble la place en K.","L'énergie libérée = différence entre les deux niveaux : E<sub>K</sub> − E<sub>L</sub>."])},
+  {k:"annih", st:0, q:"Annihilation du positon", d:"Avec un électron, après quelques mm",
+   f:"2 photons γ de 511 keV à 180°", u:"Base de la <b>TEP</b>",
+   x:"<p>Le positon épuise son énergie (durée de vie &lt; 10<sup>−9</sup> s) puis s'annihile : l'énergie totale = somme des masses de l'électron et du positon.</p>"},
+  {k:"seuil", der:["annih","umaE"], q:"Pourquoi 511 keV et 1,022 MeV", d:"",
+   f:"2 × 0,511 MeV = 1,022 MeV", u:"",
+   x:"<p>Chaque photon emporte l'énergie de masse d'un électron ; et un β<sup>+</sup> nécessite au moins l'énergie de 2 électrons.</p>"
+   + H(["m<sub>e</sub> = 0,511 MeV/c² = 511 keV.","Électron + positon = 2 × 511 keV = 1,022 MeV."])},
+  {k:"gam", st:1, q:"Énergie du photon γ (désexcitation)", d:"Sans modification de la structure du noyau",
+   f:"E<sub>γ</sub> = ΔE = E<sub>n</sub> − E<sub>f</sub>", u:"Spectre de raies · <b>60 keV à 3 MeV</b>",
+   x:"<p>Le photon γ vient du <b>noyau</b> (le X vient du cortège). En compétition avec la <b>conversion interne</b> (★) : l'énergie est alors transmise à un électron K éjecté.</p><span class='tip'>Désintégration = avec modification du noyau ; désexcitation = sans (annale 2023).</span>"}
+ ]},
+ {id:"D", title:"Décroissance et activité", pages:"p.20-21", rows:[
+  {k:"v", st:0, q:"Vitesse de désintégration", d:"Caractéristique du noyau",
+   f:"v(t) = λ.N(t) = −"+fr("dN","dt"), u:"N(t) = nombre de noyaux radioactifs · λ = constante radioactive en <b>s<sup>−1</sup></b> (probabilité de désintégration par unité de temps)",
+   x:"<p>Indépendante de l'état physique, de l'état chimique et de l'âge.</p>"},
+  {k:"Nt", st:0, q:"Décroissance exponentielle", d:"Nombre de noyaux au bout d'un temps t",
+   f:"N(t) = N<sub>0</sub>.e<sup>−λt</sup>", u:"N<sub>0</sub> = nombre initial de noyaux",
+   x:"<p>Le nombre de noyaux radioactifs diminue de façon exponentielle : la transformation est <b>inéluctable</b>.</p>"},
+  {k:"NT", der:["Nt"], q:"Au bout d'une période", d:"",
+   f:"N(T) = "+fr("N<sub>0</sub>","2"), u:"",
+   x:"<p>C'est la définition même de la période.</p>"
+   + H(["Pars de N(t) = N<sub>0</sub> e<sup>−λt</sup>.","À t = T : e<sup>−λT</sup> = e<sup>−ln2</sup> = 1/2."])},
+  {k:"T", st:2, q:"Période radioactive (demi-vie)", d:"Temps pour que le nombre de noyaux soit divisé par 2",
+   f:"T = "+fr("ln 2","λ")+" = "+fr("0,693","λ"), u:"Oxygène 15 : 2,05 min · uranium 238 : 4,5 milliards d'années",
+   x:"<p>T est <b>caractéristique du noyau</b> : de la fraction de seconde à des milliards d'années.</p><span class='trap'>Période physique = moitié des <b>noyaux désintégrés</b> (pas éliminés par l'organisme).</span>"},
+  {k:"A", st:1, q:"Activité", d:"Nombre de désintégrations par unité de temps",
+   f:"A(t) = λ.N(t) = "+fr("ln 2","T")+".N(t)", u:"<b>1 Bq = 1 désintégration/s</b> · 1 Ci = 37 GBq",
+   x:"<p>L'activité est <b>proportionnelle à N</b> et <b>inversement proportionnelle à T</b>.</p><span class='trap'>Becquerel = par <b>seconde</b>, pas par minute.</span>"},
+  {k:"At", der:["A","Nt"], q:"Décroissance de l'activité", d:"",
+   f:"A(t) = A<sub>0</sub>.e<sup>−λt</sup> = A<sub>0</sub>.e<sup>−("+fr("t","T")+")×ln 2</sup>", u:"A<sub>0</sub> = activité initiale",
+   x:"<p>L'activité suit la même exponentielle que le nombre de noyaux.</p><span class='tip'>Annale 2020 : 200 × e<sup>−(60/110)×ln2</sup> = 200 × 0,7 = 140 MBq.</span>"
+   + H(["A = λN et N = N<sub>0</sub> e<sup>−λt</sup>.","Donc A = λN<sub>0</sub> e<sup>−λt</sup> = A<sub>0</sub> e<sup>−λt</sup>.","Remplace λ par ln2/T."])},
+  {k:"AnT", st:2, q:"Activité après n périodes", d:"",
+   f:"A(nT) = "+fr("A<sub>0</sub>","2<sup>n</sup>"), u:"",
+   x:"<p>La plus utile en QCM : si l'activité est divisée par 2<sup>n</sup>, il s'est écoulé <b>n périodes</b>.</p><span class='tip'>÷ 8 = 2³ → 3 T ; ÷ 16 = 2⁴ → 4 T (annales 2024, 2025).</span>"},
+  {k:"Te", st:2, q:"Période effective", d:"Radionucléide introduit dans le corps",
+   f:fr("1","T<sub>e</sub>")+" = "+fr("1","T<sub>bio</sub>")+" + "+fr("1","T<sub>phy</sub>"), u:"T<sub>bio</sub> = élimination biologique · T<sub>phy</sub> = période physique",
+   x:"<p>L'activité dans l'organisme baisse pour deux raisons à la fois : désintégration <b>et</b> élimination. T<sub>e</sub> est donc <b>plus courte</b> que chacune des deux.</p><span class='trap'>On additionne les <b>inverses</b>, pas les périodes (annale 2020).</span>"},
+  {k:"Te2", der:["Te"], q:"Période effective calculée directement", d:"",
+   f:"T<sub>e</sub> = "+fr("T<sub>bio</sub> × T<sub>phy</sub>","T<sub>bio</sub> + T<sub>phy</sub>"), u:"",
+   x:"<p>« Produit sur somme » : plus rapide en QCM.</p><span class='tip'>Annale 2022 : (4,8 × 8) / (4,8 + 8) = 38,4 / 12,8 = <b>3 jours</b>.</span>"
+   + H(["Réduis au même dénominateur : 1/T<sub>e</sub> = (T<sub>phy</sub> + T<sub>bio</sub>) / (T<sub>bio</sub> × T<sub>phy</sub>).","Prends l'inverse des deux côtés."])}
+ ]}
+];
+
+
+const code={}, gives={};
+data.forEach(sec=>sec.rows.forEach((r,i)=>{code[r.k]=sec.id+(i+1);}));
+data.forEach(sec=>sec.rows.forEach(r=>(r.der||[]).forEach(p=>{(gives[p]=gives[p]||[]).push(r.k);})));
+const chip=k=>`<a class="chip" href="#r-${code[k]}">${code[k]}</a>`;
+const refs=t=>t.replace(/@(\w+)/g,(m,k)=>code[k]?chip(k):m);
+const main=document.getElementById('main');
+let total=0,starred=0,derived=0;
+const cardHTML=(r,extra='')=>{
+  const from=r.der?`<span class="from">🔁 Déduite de ${r.der.map(chip).join(' ')}</span>`:'';
+  return `<div class="card${r.st?' starred':''}${r.der?' derived':''}" id="r-${code[r.k]}" tabindex="0">
+      <div class="def"><div class="top"><span class="code">${code[r.k]}</span>${S(r.st)}${r.der?'<span class="tag">🔁</span>':''}</div>
+      <div class="q">${r.q}</div>${r.d?`<div class="d">${r.d}</div>`:''}${from}</div>
+      <div class="fm"><span class="f">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div>
+      <div class="x">${refs(r.x)}</div></div>`;
+};
+data.forEach(sec=>{
+  let h=`<section id="${sec.id}"><h2>${sec.id} · ${sec.title} <small style="opacity:.85;font-weight:600">${sec.pages}</small></h2>`;
+  const groups=[];
+  sec.rows.forEach(r=>{ if(r.der&&groups.length) groups[groups.length-1].kids.push(r); else groups.push({r,kids:[]}); });
+  groups.forEach(({r,kids})=>{
+    total++; if(r.st)starred++;
+    h+=`<div class="grp${r.st?' gstar':''}">`+cardHTML(r);
+    if(kids.length){ h+=`<ul class="tree">`+kids.map(k=>{total++;derived++;return `<li>${cardHTML(k)}</li>`;}).join('')+`</ul>`; }
+    h+=`</div>`;
+  });
+  main.insertAdjacentHTML('beforeend',h+'</section>');
+});
+const B=document.body.classList,count=document.getElementById('count');
+const upd=()=>{count.textContent=B.contains('stars')?`${starred} ★`:B.contains('base')?`${total-derived} formules`:`${total} formules`;};
+upd();
+const tog=(id,c)=>{const b=document.getElementById(id);b.addEventListener('click',()=>{const on=B.toggle(c);b.setAttribute('aria-pressed',on);upd();if(c==='hide')document.querySelectorAll('.card.show').forEach(x=>x.classList.remove('show'));});};
+tog('bHide','hide');document.getElementById('bHide').addEventListener('click',()=>window.scrollTo({top:0}));tog('bStars','stars');tog('bBase','base');
+const flip=ev=>{if(ev.target.closest('a'))return;const c=ev.target.closest('.card');if(c&&B.contains('hide'))c.classList.toggle('show');};
+main.addEventListener('click',flip);
+main.addEventListener('keydown',ev=>{if(ev.target.classList.contains('card')&&(ev.key==='Enter'||ev.key===' ')){ev.preventDefault();flip(ev);}});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules — États et transitions de phase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#ffffff; --ink:#1d2330; --muted:#5b6474; --line:#e3e6ec;
+  --star:#e8a900; --starbg:#fff6d6; --fbg:#f4f6fb; --ded:#3f9a6a; --dedbg:#eef6f1;
+  --A:#2f86a8; --B:#d0632e; --C:#c9971c; --D:#6f5aa8; --E:#a64b4b; --F:#b0527f;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.4}
+.wrap{max-width:860px;margin:0 auto;padding:18px 14px 40px}
+h1{font-size:1.6rem;font-weight:800;margin:0}
+.sub{color:var(--muted);font-size:.9rem;margin:2px 0 0}
+.s{color:var(--star);letter-spacing:1px;white-space:nowrap}
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 0;margin:12px 0 4px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.toolbar button{font:inherit;font-size:.88rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 11px;border-radius:999px;cursor:pointer}
+.toolbar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.toolbar button:focus-visible,.card:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.count{margin-left:auto;color:var(--muted);font-size:.82rem}
+section{margin-top:22px}
+h2{font-size:1rem;margin:0 0 8px;padding:6px 12px;color:#fff;border-radius:6px}
+.card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:stretch;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.def{padding:10px 12px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.def .top{display:flex;gap:8px;align-items:baseline;font-size:.8rem;font-weight:800}
+.def .q{font-weight:700;font-size:1rem}
+.def .d{color:var(--muted);font-size:.86rem}
+.fm{background:var(--fbg);border-left:5px solid var(--sec);padding:12px 14px;display:flex;flex-direction:column;justify-content:center}
+.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.35rem;line-height:1.25}
+.f sub{font-size:.62em}
+.u{margin-top:6px;font-size:.9rem;font-weight:600;color:var(--ink)}
+.u b{color:var(--sec)}
+.card.starred .def{background:linear-gradient(90deg,var(--starbg),transparent 70%)}
+.card.derived{border-style:dashed}
+.card.derived .fm{border-left-color:var(--ded)}
+.card.derived .top .tag{color:var(--ded)}
+#A{--sec:var(--A)} #B{--sec:var(--B)} #C{--sec:var(--C)} #D{--sec:var(--D)} #E{--sec:var(--E)} #F{--sec:var(--F)}
+#A h2{background:var(--A)} #B h2{background:var(--B)} #C h2{background:var(--C)} #D h2{background:var(--D)} #E h2{background:var(--E)} #F h2{background:var(--F)}
+section .top .code{color:var(--sec)}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+body.hide .card{cursor:pointer}
+body.stars .card:not(.starred){display:none}
+body.base .card.derived{display:none}
+.hint{display:none;color:var(--muted);font-size:.85rem;margin:6px 0 0}
+body.hide .hint{display:block}
+@media (max-width:600px){
+  .card{grid-template-columns:1fr}
+  .fm{border-left:0;border-top:4px solid var(--sec)}
+  .card.derived .fm{border-top-color:var(--ded)}
+}
+@media (prefers-reduced-motion:no-preference){.f,.u{transition:filter .2s}}
+@media print{.toolbar,.hint{display:none}body.hide .fm .f,body.hide .fm .u{filter:none}.card{break-inside:avoid}}
+
+/* Cartes plus isolées */
+section{margin-top:34px}
+h2{margin-bottom:14px}
+.card{margin-bottom:18px;border:1.5px solid var(--line);border-radius:12px;box-shadow:0 2px 0 var(--line),0 6px 14px -8px rgba(29,35,48,.25)}
+.def{padding:14px 16px}
+.fm{padding:16px 18px}
+.card.derived{border-width:1.5px}
+@media (max-width:600px){.card{margin-bottom:16px}}
+
+/* Couple définition/formule plus serré, séparation légère */
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.def{padding:14px 12px 14px 16px}
+.fm{padding:14px 16px 14px 14px}
+.card{margin-bottom:28px}
+section{margin-top:40px}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px dashed var(--line)!important}
+  .def{padding:14px 16px 8px}
+  .fm{padding:10px 16px 14px}
+  .card{margin-bottom:26px}
+}
+
+.wrap{max-width:980px}
+.legend{margin-top:6px;font-size:.88rem;color:var(--muted)}
+.chain{margin:14px 0 4px;padding:12px 14px;border-left:4px solid var(--star);background:var(--starbg);border-radius:0 8px 8px 0;font-size:.95rem}
+.mnemo{margin:12px 0 4px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:.92rem}
+.mnemo strong{display:block;margin-bottom:6px}
+.mnemo ul{margin:0;padding-left:18px;columns:2;column-gap:28px}
+.mnemo li{margin-bottom:4px;break-inside:avoid}
+.chain .f,.mnemo .f{font-size:1rem}
+.card{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
+.x{grid-column:1 / -1;border-top:1px dashed var(--line);padding:12px 16px 14px;font-size:.9rem;color:var(--muted)}
+.x p{margin:0 0 5px}
+.x b,.x .tip,.x .trap{color:var(--ink)}
+.tip,.trap{display:block;margin-top:5px}
+.tip::before{content:"💡 "}
+.trap::before{content:"⚠️ "}
+.ded{margin-top:8px;padding:8px 10px;background:var(--dedbg);border-left:3px solid var(--ded);border-radius:0 6px 6px 0;font-size:.86rem;color:var(--ink)}
+.ded strong{display:block;margin-bottom:3px}
+.ded ol{margin:0;padding-left:20px}
+.from{display:block;margin-top:4px;font-size:.84rem;color:var(--ded);font-weight:600}
+.gives{display:block;margin-top:8px;font-size:.86rem;color:var(--ded);font-weight:600}
+.chip{display:inline-block;text-decoration:none;font-size:.78rem;font-weight:700;border:1px solid var(--line);border-radius:5px;padding:0 5px;background:var(--bg);color:var(--ink)}
+.card{scroll-margin-top:70px}
+.card:target{box-shadow:0 0 0 3px var(--star)}
+/* mode test : seul le titre reste visible */
+body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:blur(8px);user-select:none}
+body.hide .card.show .def .d,body.hide .card.show .def .from,body.hide .card.show .fm,body.hide .card.show .x{filter:none;user-select:auto}
+@media (max-width:600px){.mnemo ul{columns:1}.x{padding:10px 16px 14px}}
+@media print{body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:none}}
+
+/* Traits pleins fins à l'intérieur, cadre plus marqué */
+:root{--frame:#b9c0cc}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--frame:#4a5263}}
+:root[data-theme="dark"]{--frame:#4a5263}
+.card{border:2px solid var(--frame)!important}
+.card.derived{border:2px solid var(--ded)!important}
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.x{border-top:1px solid var(--line)!important}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px solid var(--line)!important}
+}
+
+/* Traits intérieurs un peu plus épais */
+.fm,.card.derived .fm{border-left:1.5px solid var(--frame)!important;border-top:0!important}
+.x{border-top:1.5px solid var(--frame)!important}
+@media (max-width:600px){.fm,.card.derived .fm{border-left:0!important;border-top:1.5px solid var(--frame)!important}}
+
+/* Cadre d'épaisseur identique sur les 4 côtés */
+.card{box-shadow:0 6px 14px -10px rgba(29,35,48,.28)!important}
+
+/* Mobile : carte empilée comme la page épurée (évite le trait doublé en haut de la formule) */
+@media (max-width:600px){.card{grid-template-columns:1fr!important}}
+
+/* Fractions : numérateur au-dessus du dénominateur */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor;padding-bottom:.08em}
+.frac>span:last-child{padding-top:.08em}
+
+/* Arbre : formule de base → formules déduites (comme la page arbre) */
+.grp{margin-bottom:28px}
+.grp .card{margin-bottom:0}
+.tree{list-style:none;margin:0 0 0 26px;padding:0}
+.tree > li{position:relative;padding:12px 0 0 30px}
+.tree > li::before{content:"";position:absolute;left:0;top:0;bottom:0;border-left:2px solid var(--ded)}
+.tree > li:last-child::before{bottom:auto;height:36px}
+.tree > li::after{content:"";position:absolute;left:0;top:36px;width:24px;border-top:2px solid var(--ded)}
+.tree .card{box-shadow:none!important}
+.tree .card .f{font-size:1.18rem}
+body.stars .grp:not(.gstar){display:none}
+body.stars .tree{display:none}
+body.base .tree{display:none}
+@media (max-width:600px){
+  .tree{margin-left:12px}
+  .tree > li{padding-left:22px}
+  .tree > li::after{width:18px}
+}
+
+/* Singe = bascule vers la vue épurée floutée (définition → formule) */
+body.hide .x,body.hide .chain,body.hide .mnemo,body.hide .legend,body.hide .from{display:none}
+body.hide .def .d{filter:none!important;user-select:auto}
+body.hide .fm{filter:none!important}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+@media (prefers-reduced-motion:no-preference){.fm .f,.fm .u{transition:filter .2s}}
+.nw{white-space:nowrap}
+.nuc{display:inline-flex;flex-direction:column;align-items:flex-end;vertical-align:middle;font-size:.58em;line-height:1.05;margin-right:.1em}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>États et transitions de phase : les formules</h1>
+<p class="sub">M1 · Biophysique Appliquée · formules expliquées</p>
+<div class="legend"><span class="s">★</span> = tombée au concours (d'après la fiche de cours) · <span class="s">★★★</span> = la plus fréquente · <span style="color:var(--ded);font-weight:700">🔁</span> = formule déduite d'une autre (cadre vert)</div>
+<div class="toolbar" role="toolbar" aria-label="Options">
+  <a href="formules-transitions.html" style="font-size:.88rem;font-weight:600;text-decoration:none;color:var(--ink);border:1.5px solid var(--line);padding:6px 11px;border-radius:999px">← Tableau des formules</a>
+  <button id="bHide" aria-pressed="false">🙈 Réviser (vue épurée)</button>
+  <button id="bStars" aria-pressed="false"><span class="s">★</span> Concours</button>
+  <button id="bBase" aria-pressed="false">Sans les déduites</button>
+  <span class="count" id="count"></span>
+</div>
+<p class="hint">Vue épurée : touche une carte pour révéler la formule. Retouche 🙈 pour revenir aux explications.</p>
+<div class="chain">Le fil qui relie tout : Changer d'état coûte ou libère <span class="f">Q = L × m</span> (pente donnée par Clapeyron) ; pour l'eau, <span class="f">P<sub>Vsat</sub></span> (Rankine) fixe l'ébullition et l'hygrométrie <span class="f">HR = P<sub>V</sub>/P<sub>Vsat</sub></span>.</div>
+
+<div class="mnemo">
+  <strong>Moyens mnémotechniques</strong>
+  <ul>
+    <li><b>Q &gt; 0</b> endothermique ; <b>Q &lt; 0</b> exothermique.</li>
+    <li>L en <b>J/kg</b> ; 1 J = 0,24 cal.</li>
+    <li>Rankine : T ↑ → 5120/T ↓ → P<sub>Vsat</sub> ↑.</li>
+    <li>Clapeyron : L = T × Δ(volume massique) × pente dP/dT.</li>
+    <li>Eau : 100 °C ↔ P<sub>Vsat</sub> = 1 bar.</li>
+    <li>Évaporation tant que P<sub>V</sub> &lt; P<sub>Vsat</sub> ; HR = 100 % : équilibre.</li>
+    <li>HR = P<sub>V</sub>/P<sub>Vsat</sub> → P<sub>V</sub> = HR × P<sub>Vsat</sub>.</li>
+    <li>Alvéoles : 47 mmHg à 37 °C ; peau : 17,5 mmHg à 20 °C.</li>
+  </ul>
+</div>
+
+<main id="main"></main>
+<footer style="margin-top:30px;color:var(--muted);font-size:.8rem;text-align:center">Source : fiche de cours Médisup Tours/Orléans 2026-2027 + annales classées corrigées.</footer>
+</div>
+<script>
+const S = n => n ? '<span class="s">' + '★'.repeat(n) + '</span>' : '';
+const H = steps => `<div class="ded"><strong>🔁 Comment la retrouver</strong><ol>${steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>`;
+const fr=(n,d)=>`<span class='frac'><span>${n}</span><span>${d}</span></span>`;
+const nuc=(a,z,s='')=>`<span class='nw'><span class='nuc'><span>${a}</span><span>${z}</span></span>${s}</span>`;
+const data = [
+ {id:"A", title:"Énergies des changements d'état", pages:"p.8", rows:[
+  {k:"rank", st:0, q:"Formule de Rankine", d:"Pression de vapeur saturante de l'eau",
+   f:"ln P<sub>Vsat</sub> = 13,7 − "+fr("5120","T"), u:"Valable pour l'eau entre <b>0 °C et 130 °C</b>",
+   x:"<p>P<sub>Vsat</sub> est la pression à laquelle liquide et gaz sont <b>en équilibre</b> à une température donnée (point d'ébullition sur la courbe). Quand T augmente, 5120/T diminue donc P<sub>Vsat</sub> <b>augmente</b>.</p><span class='trap'>La fiche ne précise pas les unités de P et T dans cette formule.</span>"},
+  {k:"QL", st:0, q:"Énergie d'un changement d'état", d:"Pour transformer une masse m",
+   f:"Q = L × m", u:"L = chaleur latente massique (= enthalpie de changement d'état) en <b>J/kg</b> · 1 J = 0,24 cal",
+   x:"<p>L est l'énergie nécessaire pour faire changer d'état <b>1 kg</b> de corps. On multiplie par la masse.</p><span class='tip'><b>Q &gt; 0</b> : transformation endothermique ; <b>Q &lt; 0</b> : exothermique.</span>"},
+  {k:"L", der:["QL"], q:"Chaleur latente à partir de Q", d:"",
+   f:"L = "+fr("Q","m"), u:"",
+   x:"<p>Utile si l'énoncé donne l'énergie échangée et la masse transformée.</p>"
+   + H(["Pars de Q = L × m.","Divise les deux côtés par m."])},
+  {k:"clap", st:0, q:"Relation de Clapeyron", d:"Chaleur latente de passage de la phase 1 à la phase 2",
+   f:"L<sub>1→2</sub> = T × (μ<sub>2</sub> − μ<sub>1</sub>) × ("+fr("dP","dT")+")<sub>T<sub>1→2</sub></sub>", u:"T = température du changement d'état · μ<sub>1</sub>, μ<sub>2</sub> = volumes massiques dans les phases 1 et 2",
+   x:"<p>Relie l'énergie du changement d'état à la <b>pente</b> dP/dT de la courbe de transition sur le diagramme de phase, et à la variation de volume massique.</p><span class='trap'>μ désigne ici un <b>volume massique</b>, pas un coefficient d'atténuation.</span>"},
+  {k:"pente", der:["clap"], q:"Pente de la courbe de transition", d:"",
+   f:fr("dP","dT")+" = "+fr("L<sub>1→2</sub>","T × (μ<sub>2</sub> − μ<sub>1</sub>)"), u:"",
+   x:"<p>Donne l'inclinaison de la courbe de changement d'état sur le diagramme P = f(T).</p>"
+   + H(["Pars de L<sub>1→2</sub> = T × (μ<sub>2</sub> − μ<sub>1</sub>) × dP/dT.","Divise les deux côtés par T × (μ<sub>2</sub> − μ<sub>1</sub>)."])}
+ ]},
+ {id:"B", title:"Eau, vapeur et hygrométrie", pages:"p.9-10", rows:[
+  {k:"ebul", st:0, q:"Ébullition de l'eau", d:"Processus rapide, bulles dans tout le liquide",
+   f:"T<sub>éb</sub> = 100 °C à 1 bar · P<sub>Vsat</sub>(100 °C) = 1 bar", u:"Nécessite un <b>chauffage</b> · T<sub>éb</sub> augmente avec la pression",
+   x:"<p>L'eau bout quand sa pression de vapeur saturante atteint la pression ambiante : à 100 °C, P<sub>Vsat</sub> = 1 bar = pression atmosphérique.</p><span class='tip'>Annale 2026 : l'ébullition demande un <b>apport d'énergie</b>.</span>"},
+  {k:"evap", st:0, q:"Condition d'évaporation", d:"Processus lent, sans bulles, de 0 à 100 °C",
+   f:"liquide → gaz tant que P<sub>V</sub> &lt; P<sub>Vsat</sub>", u:"P<sub>V</sub> = pression partielle du corps dans la phase gazeuse",
+   x:"<p>Tant que l'air n'est pas saturé en vapeur, l'eau continue de s'évaporer. <b>Équilibre liquide ↔ gaz</b> quand P<sub>V</sub> = P<sub>Vsat</sub>.</p><span class='tip'>P<sub>Vsat</sub> augmente avec la température.</span>"},
+  {k:"HR", st:0, q:"Hygrométrie (humidité relative)", d:"Quantité de vapeur d'eau dans l'air humide",
+   f:"HR = "+fr("P<sub>V</sub>","P<sub>Vsat</sub>"), u:"S'exprime en <b>%</b>",
+   x:"<p>Compare la vapeur présente à la vapeur maximale possible à cette température. Ne compte que l'eau sous forme de <b>vapeur</b>, pas liquide ni glace.</p>"},
+  {k:"PV", der:["HR"], q:"Pression partielle de vapeur", d:"",
+   f:"P<sub>V</sub> = HR × P<sub>Vsat</sub>", u:"",
+   x:"<p>Si on connaît l'hygrométrie et la température (donc P<sub>Vsat</sub>), on retrouve P<sub>V</sub>.</p>"
+   + H(["Pars de HR = P<sub>V</sub> / P<sub>Vsat</sub>.","Multiplie les deux côtés par P<sub>Vsat</sub>."])},
+  {k:"sat", der:["HR","evap"], q:"Air saturé", d:"",
+   f:"HR = 100 % ⇔ P<sub>V</sub> = P<sub>Vsat</sub>", u:"",
+   x:"<p>À 100 % d'humidité, on est à l'équilibre liquide ↔ gaz : l'eau <b>ne s'évapore plus</b>.</p>"
+   + H(["Équilibre quand P<sub>V</sub> = P<sub>Vsat</sub>.","Alors HR = P<sub>Vsat</sub> / P<sub>Vsat</sub> = 1 = 100 %."])},
+  {k:"pulm", st:0, q:"Évaporation pulmonaire", d:"Perspiration insensible par les alvéoles",
+   f:"T = 37 °C · P<sub>Vsat</sub> = 47 mmHg", u:"<b>0,3 – 0,4 L/jour</b> · dépend de l'hygrométrie de l'air inspiré",
+   x:"<p>L'air expiré est chargé de vapeur d'eau : plus l'air inspiré est sec, plus la masse d'eau évaporée est grande.</p>"},
+  {k:"peau", st:0, q:"Évaporation par la peau", d:"Diffusion passive, sans sudation apparente",
+   f:"T = 20 °C · P<sub>Vsat</sub> = 17,5 mmHg", u:"<b>0,6 – 0,8 L/jour</b>",
+   x:"<p>Autre composante de la perspiration insensible, à ne pas confondre avec la transpiration.</p><span class='tip'>Poumons 0,3-0,4 L ; peau 0,6-0,8 L : la peau perd environ deux fois plus.</span>"}
+ ]}
+];
+
+
+const code={}, gives={};
+data.forEach(sec=>sec.rows.forEach((r,i)=>{code[r.k]=sec.id+(i+1);}));
+data.forEach(sec=>sec.rows.forEach(r=>(r.der||[]).forEach(p=>{(gives[p]=gives[p]||[]).push(r.k);})));
+const chip=k=>`<a class="chip" href="#r-${code[k]}">${code[k]}</a>`;
+const refs=t=>t.replace(/@(\w+)/g,(m,k)=>code[k]?chip(k):m);
+const main=document.getElementById('main');
+let total=0,starred=0,derived=0;
+const cardHTML=(r,extra='')=>{
+  const from=r.der?`<span class="from">🔁 Déduite de ${r.der.map(chip).join(' ')}</span>`:'';
+  return `<div class="card${r.st?' starred':''}${r.der?' derived':''}" id="r-${code[r.k]}" tabindex="0">
+      <div class="def"><div class="top"><span class="code">${code[r.k]}</span>${S(r.st)}${r.der?'<span class="tag">🔁</span>':''}</div>
+      <div class="q">${r.q}</div>${r.d?`<div class="d">${r.d}</div>`:''}${from}</div>
+      <div class="fm"><span class="f">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div>
+      <div class="x">${refs(r.x)}</div></div>`;
+};
+data.forEach(sec=>{
+  let h=`<section id="${sec.id}"><h2>${sec.id} · ${sec.title} <small style="opacity:.85;font-weight:600">${sec.pages}</small></h2>`;
+  const groups=[];
+  sec.rows.forEach(r=>{ if(r.der&&groups.length) groups[groups.length-1].kids.push(r); else groups.push({r,kids:[]}); });
+  groups.forEach(({r,kids})=>{
+    total++; if(r.st)starred++;
+    h+=`<div class="grp${r.st?' gstar':''}">`+cardHTML(r);
+    if(kids.length){ h+=`<ul class="tree">`+kids.map(k=>{total++;derived++;return `<li>${cardHTML(k)}</li>`;}).join('')+`</ul>`; }
+    h+=`</div>`;
+  });
+  main.insertAdjacentHTML('beforeend',h+'</section>');
+});
+const B=document.body.classList,count=document.getElementById('count');
+const upd=()=>{count.textContent=B.contains('stars')?`${starred} ★`:B.contains('base')?`${total-derived} formules`:`${total} formules`;};
+upd();
+const tog=(id,c)=>{const b=document.getElementById(id);b.addEventListener('click',()=>{const on=B.toggle(c);b.setAttribute('aria-pressed',on);upd();if(c==='hide')document.querySelectorAll('.card.show').forEach(x=>x.classList.remove('show'));});};
+tog('bHide','hide');document.getElementById('bHide').addEventListener('click',()=>window.scrollTo({top:0}));tog('bStars','stars');tog('bBase','base');
+const flip=ev=>{if(ev.target.closest('a'))return;const c=ev.target.closest('.card');if(c&&B.contains('hide'))c.classList.toggle('show');};
+main.addEventListener('click',flip);
+main.addEventListener('keydown',ev=>{if(ev.target.classList.contains('card')&&(ev.key==='Enter'||ev.key===' ')){ev.preventDefault();flip(ev);}});
+
+</script>
+</body>
+</html>

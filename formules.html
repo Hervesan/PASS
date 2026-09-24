@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes formules — par matière</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#151B2E; --ink-soft:#5C6478; --paper:#F6F4EE; --card:#FFFFFF; --line:#E5E1D4; --gold:#E7A93C;
+    --c-biophysique:#E7A93C; --c-medicaments:#34D399; --c-physiologie:#F0729B; --c-biochimie:#2DD4BF;
+    --c-milieu:#4FA6E7; --c-chimie:#A87FEE; --c-sciences-vie:#52C9A6; --c-anglais:#5B8CF0; --c-metiers:#F0894F; --c-sante-pub:#3FCBE8;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{font-family:'IBM Plex Sans',sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh;}
+  .wrap{max-width:760px;margin:0 auto;padding:22px 22px 60px;}
+  .back{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--ink-soft);text-decoration:none;padding:6px 12px;border:1px solid var(--line);border-radius:100px;background:var(--card);}
+  .back:hover{color:var(--ink);}
+  .head{display:flex;align-items:center;gap:14px;margin:22px 0 6px;}
+  .icon{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;flex:none;background:linear-gradient(135deg,var(--gold),#F3C878);color:var(--ink);font-family:'Fraunces',serif;font-weight:800;font-size:26px;}
+  h1{font-family:'Fraunces',serif;font-weight:700;font-size:clamp(28px,6vw,38px);margin:0;line-height:1.05;}
+  .sub{margin:4px 0 26px;color:var(--ink-soft);font-size:14.5px;}
+  #searchBox{width:100%;font:inherit;font-size:15px;padding:12px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);outline:none;margin-bottom:26px;}
+  #searchBox:focus{border-color:var(--ink);box-shadow:0 0 0 4px rgba(21,27,46,0.06);}
+  .mat{margin-bottom:26px;}
+  .mat-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .mat-head .dot{width:10px;height:10px;border-radius:50%;background:var(--c);}
+  .mat-head h2{font-family:'Fraunces',serif;font-weight:600;font-size:19px;margin:0;}
+  .mat-head .mod{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-soft);}
+  .list{display:flex;flex-direction:column;gap:8px;}
+  .course{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-left:5px solid var(--c);border-radius:14px;padding:13px 14px 13px 16px;transition:transform .16s ease,box-shadow .16s ease;}
+  .course:hover{transform:translateY(-2px);box-shadow:0 12px 24px -14px rgba(21,27,46,0.3);}
+  .course:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+  .course .t{flex:1;min-width:0;}
+  .course b{display:block;font-family:'Fraunces',serif;font-weight:600;font-size:16.5px;line-height:1.25;}
+  .course small{display:block;margin-top:3px;font-size:12.5px;color:var(--ink-soft);}
+  .course small .st{color:var(--gold);font-weight:700;}
+  .course .go{color:var(--c);flex:none;display:grid;place-items:center;transition:transform .16s ease;}
+  .course .go svg{width:17px;height:17px;}
+  .course:hover .go{transform:translateX(3px);}
+  .empty{text-align:center;padding:40px 10px;color:var(--ink-soft);font-size:14.5px;}
+  footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-soft);font-size:12px;font-family:'IBM Plex Mono',monospace;}
+  @media (max-width:480px){.wrap{padding:18px 16px 50px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← Matières</a>
+  <div class="head"><div class="icon" aria-hidden="true">∑</div><h1>Mes formules</h1></div>
+  <p class="sub">Choisis un cours pour ouvrir sa fiche de formules.</p>
+  <input type="text" id="searchBox" placeholder="Rechercher un cours...">
+  <div id="content"></div>
+  <footer>Médisup Tours/Orléans — fiches formules</footer>
+</div>
+<script>
+const ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+/* Pour ajouter un cours : ajoute une ligne dans "cours" de la bonne matière
+   (ou une nouvelle matière avec sa couleur, comme sur index.html). */
+const MATIERES=[
+  { title:"Biophysique Appliquée", module:"M1", color:"var(--c-biophysique)", cours:[
+    { title:"Constitution de la matière", info:"16 formules", href:"formules-constitution.html" },
+    { title:"États et transitions de phase", info:"12 formules", href:"formules-transitions.html" },
+    { title:"Systèmes gazeux", info:"33 formules", href:"formules-gazeux.html" },
+    { title:"Noyaux et rayonnements", info:"33 formules", href:"formules-noyaux.html" },
+    { title:"Interaction des rayonnements ionisants avec la matière", info:"24 formules", href:"formules-interaction.html" },
+    { title:"Effets biologiques des rayonnements ionisants", info:"13 formules", href:"formules-effets-biologiques.html" },
+  ]},
+  { title:"Biophysique du milieu intérieur", module:"M2", color:"var(--c-milieu)", cours:[
+    { title:"Propriétés colligatives", info:"39 formules", href:"formules-colligatives.html" },
+  ]},
+];
+const content=document.getElementById("content");
+function render(q){
+  q=(q||"").trim().toLowerCase();
+  let html="";
+  MATIERES.forEach(m=>{
+    const list=m.cours.filter(c=>!q||c.title.toLowerCase().includes(q)||m.title.toLowerCase().includes(q));
+    if(!list.length)return;
+    html+=`<div class="mat" style="--c:${m.color}">
+      <div class="mat-head"><span class="dot"></span><h2>${m.title}</h2><span class="mod">${m.module} · ${list.length} cours</span></div>
+      <div class="list">${list.map(c=>`<a class="course" href="${c.href}"><span class="t"><b>${c.title}</b><small><span class="st">★</span> ${c.info}</small></span><span class="go" aria-hidden="true">${ARROW}</span></a>`).join("")}</div></div>`;
+  });
+  content.innerHTML=html||'<div class="empty">Aucun cours ne correspond à cette recherche.</div>';
+}
+document.getElementById("searchBox").addEventListener("input",e=>render(e.target.value));
+render("");
+</script>
+</body>
+</html>

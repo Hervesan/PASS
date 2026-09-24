@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules en 2 colonnes — Systèmes gazeux</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff;--ink:#1d2330;--muted:#5b6474;--line:#e3e6ec;--frame:#b9c0cc;--star:#e8a900;--starbg:#fff6d6;--ded:#3f9a6a;
+--A:#2f86a8;--B:#d0632e;--C:#c9971c;--D:#6f5aa8;--E:#a64b4b;--F:#b0527f}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.35}
+.wrap{max-width:820px;margin:0 auto;padding:16px 12px 40px}
+h1{font-size:1.4rem;margin:0 0 10px;font-weight:800}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:6px 0 8px;z-index:2;display:flex;gap:8px;align-items:center}
+.bar button{font:inherit;font-size:.9rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+.bar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.bar button:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.bar span{font-size:.8rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;border:2px solid var(--frame)}
+th{text-align:left;font-size:.78rem;color:var(--muted);font-weight:700;padding:6px 10px;border-bottom:2px solid var(--frame)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+td.d{width:42%;font-weight:700;font-size:.95rem;border-right:1.5px solid var(--frame)}
+td.d .s{color:var(--star);font-size:.8rem;margin-left:4px;white-space:nowrap}
+td.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.12rem}
+td.f .u{display:block;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.82rem;color:var(--muted);margin-top:2px}
+td.f .u b{color:var(--ink)}
+tr.sec td{background:var(--c);color:#fff;font-weight:800;font-size:.95rem;padding:6px 10px;border-bottom:0}
+tr.der td.d{padding-left:24px;color:var(--ded);font-weight:600;font-size:.9rem}
+tr.der td.d::before{content:"↳ ";font-weight:800}
+tr.der td.f{font-size:1rem;color:var(--ded)}
+sub{font-size:.65em}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor}
+body.hide td.f .ft,body.hide td.f .u{filter:blur(7px)}
+body.hide tr:not(.sec){cursor:pointer}
+body.hide tr.show td.f .ft,body.hide tr.show td.f .u{filter:none}
+@media (prefers-reduced-motion:no-preference){.ft,.u{transition:filter .2s}}
+@media (max-width:480px){td{padding:8px 7px}td.d{font-size:.88rem}td.f{font-size:1rem}tr.der td.d{padding-left:16px}}
+@media print{.bar{display:none}body.hide .ft,body.hide .u{filter:none}tr{break-inside:avoid}}
+
+/* ---- Mise en page soignée ---- */
+body{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0)}
+.wrap{max-width:860px;padding:22px 14px 50px}
+.top{padding:4px 2px 6px}
+.kicker{margin:0;font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--muted)}
+.top h1{font-size:1.9rem;margin:2px 0 4px;letter-spacing:-.01em}
+.meta{margin:0;font-size:.88rem;color:var(--muted)}
+.meta .s{color:var(--star)} .meta .g{color:var(--ded);font-weight:800}
+.bar{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0);padding:10px 0}
+.bar button{background:var(--bg);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.cols{display:grid;grid-template-columns:42% 58%;font-size:.72rem;font-weight:700;letter-spacing:.03em;color:var(--muted);padding:4px 16px 6px}
+.blk{background:var(--bg);border-radius:16px;margin:0 0 22px;overflow:hidden;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25);border:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.blk header{display:flex;align-items:center;gap:10px;padding:12px 16px;font-weight:800;font-size:1.02rem;color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--bg));border-bottom:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.letter{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--c);color:#fff;font-size:.95rem}
+.row{display:grid;grid-template-columns:42% 58%;align-items:stretch;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .d{padding:12px 12px 12px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.code{font-size:.72rem;font-weight:800;color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg));border-radius:5px;padding:1px 6px}
+.name{font-weight:700;font-size:.95rem;flex-basis:100%}
+.row .d .s{color:var(--star);font-size:.82rem;letter-spacing:1px}
+.row .f{padding:12px 16px;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line));display:flex;flex-direction:column;justify-content:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.2rem}
+.row .f .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px;line-height:1.3}
+.row .f .u b{color:var(--c)}
+.row.star .d{background:linear-gradient(90deg,var(--starbg),transparent 75%)}
+.row.der .d{padding-left:30px;position:relative}
+.row.der .d::before{content:"↳";position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ded);font-weight:800}
+.row.der .name{color:var(--ded);font-weight:600;font-size:.9rem}
+.row.der .code{color:var(--ded);background:color-mix(in srgb,var(--ded) 12%,var(--bg))}
+.row.der .f{font-size:1.05rem;color:var(--ded);background:color-mix(in srgb,var(--ded) 6%,var(--bg))}
+body.hide .ft,body.hide .u{filter:blur(7px);user-select:none}
+body.hide .row{cursor:pointer}
+body.hide .row.show .ft,body.hide .row.show .u{filter:none}
+.row:focus-visible{outline:3px solid var(--star);outline-offset:-3px}
+@media (max-width:480px){
+  .cols,.row{grid-template-columns:44% 56%}
+  .row .d{padding:10px 8px 10px 12px}.row .f{padding:10px 12px;font-size:1.05rem}
+  .name{font-size:.88rem}.row.der .d{padding-left:24px}.row.der .d::before{left:8px}
+  .top h1{font-size:1.6rem}
+}
+@media print{body{background:#fff}.blk{box-shadow:none;break-inside:avoid}}
+
+
+/* Option 1 : groupe encadré (formule mère + filles dans une bande verte) */
+.grp{border-top:1px solid var(--line)}
+.grp:first-child{border-top:0}
+.grp > .row{border-top:0}
+.kids{background:color-mix(in srgb,var(--ded) 13%,var(--bg));padding:8px 10px 10px;display:flex;flex-direction:column;gap:7px;border-top:1px solid color-mix(in srgb,var(--ded) 30%,var(--line))}
+.kids .row{border:1px solid color-mix(in srgb,var(--ded) 30%,var(--line));border-radius:10px;overflow:hidden;background:var(--bg);grid-template-columns:calc(42% - 4px) auto}
+.kids .row .d{padding:9px 10px}
+.kids .row .f{background:color-mix(in srgb,var(--ded) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--ded) 25%,var(--line))}
+.row.der .d{padding-left:10px}
+.row.der .d::before{content:none}
+@media (max-width:480px){.kids{padding:7px 7px 8px}.kids .row .d{padding:8px}}
+
+/* Formules déduites : mêmes couleurs que les autres (seul le regroupement les distingue) */
+.kids{background:color-mix(in srgb,var(--ink) 5%,var(--bg));border-top:1px solid var(--line)}
+.kids .row{border-color:var(--line)}
+.row.der .name{color:var(--ink);font-weight:700;font-size:.95rem}
+.row.der .code{color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg))}
+.row.der .code::before{content:none}
+.row.der .f,.kids .row .f{color:var(--ink);font-size:1.2rem;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line))}
+@media (max-width:480px){.row.der .f,.kids .row .f{font-size:1.05rem}.row.der .name{font-size:.88rem}}
+
+/* Comme la page explication : filles décalées, reliées par un trait à leur formule mère */
+.kids{background:transparent;border-top:0;padding:0 12px 14px 38px;gap:10px;position:relative}
+.kids .row{position:relative;overflow:visible;border:1.5px solid color-mix(in srgb,var(--ded) 60%,var(--line));border-radius:10px;background:var(--bg)}
+.kids .row .d{border-radius:9px 0 0 9px}
+.kids .row .f{border-radius:0 9px 9px 0}
+.kids .row::before{content:"";position:absolute;left:-24px;top:-12px;bottom:-12px;border-left:2px solid var(--ded)}
+.kids .row:first-child::before{top:-2px}
+.kids .row:last-child::before{bottom:50%}
+.kids .row::after{content:"";position:absolute;left:-24px;top:50%;width:22px;border-top:2px solid var(--ded)}
+.grp:has(.kids) > .row{border-bottom:0}
+.from{flex-basis:100%;font-size:.76rem;font-weight:700;color:var(--ded)}
+.from b{font-weight:800}
+@media (max-width:480px){
+  .kids{padding:0 8px 12px 28px}
+  .kids .row::before,.kids .row::after{left:-18px}
+  .kids .row::after{width:16px}
+}
+
+/* Colonnes alignées partout + petit espace entre formules principales + cadres déduits plus étroits */
+.blk{container-type:inline-size}
+.row{grid-template-columns:42cqw minmax(0,1fr)!important}
+.kids .row{grid-template-columns:calc(42cqw - 39.5px) minmax(0,1fr)!important}
+.cols{grid-template-columns:42% 58%}
+.rows{display:flex;flex-direction:column;gap:6px;background:color-mix(in srgb,var(--ink) 6%,var(--bg))}
+.grp{border-top:0!important;background:var(--bg)}
+.kids{padding:0 34px 14px 38px}
+@media (max-width:480px){
+  .kids{padding:0 22px 12px 38px}
+  .kids .row::before,.kids .row::after{left:-24px}
+  .kids .row::after{width:22px}
+}
+.from{white-space:nowrap;font-size:.7rem}
+@media (max-width:480px){.kids .row .d{padding:8px 6px 8px 8px}}
+
+/* Tableau neutre (mode singe) : sans sections, sans codes, sans étoiles, mélangé */
+.neutral{--c:var(--muted);border-color:var(--line)}
+.neutral .row .f{background:color-mix(in srgb,var(--ink) 4%,var(--bg));border-left:1px solid var(--line)}
+.neutral .row .u b{color:var(--ink)}
+.neutral .row .u [style]{color:inherit!important}
+.qbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin:0 0 10px;font-size:.85rem;color:var(--muted)}
+.qbar button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer}
+[hidden]{display:none!important}
+body.hide .meta{display:none}
+
+/* ---- Mode entraînement (singe) ---- */
+.qhead{background:var(--bg);border-radius:16px;padding:14px 16px;margin:0 0 16px;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25)}
+.qtop{display:flex;justify-content:space-between;align-items:baseline}
+.qtitle{font-weight:800;font-size:1.1rem}
+.qcount{font-size:.85rem;color:var(--muted);font-weight:600}
+.prog{height:8px;border-radius:99px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));margin:10px 0 12px;overflow:hidden}
+.prog span{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#f5c542,var(--star));transition:width .3s}
+.qbtns{display:flex;gap:8px;flex-wrap:wrap}
+.qbtns button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 13px;border-radius:999px;cursor:pointer}
+.qlist{display:flex;flex-direction:column;gap:10px;container-type:inline-size}
+.qc{display:grid;grid-template-columns:42cqw minmax(0,1fr);background:var(--bg);border-radius:14px;overflow:hidden;cursor:pointer;
+  border:1px solid var(--line);box-shadow:0 1px 2px rgba(20,30,50,.05),0 6px 16px -10px rgba(20,30,50,.3);transition:transform .15s}
+.qc:active{transform:scale(.99)}
+.qc:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.qc.star{border-color:color-mix(in srgb,var(--star) 45%,var(--line))}
+.qd{padding:12px 12px 12px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.qc.star .qd{background:linear-gradient(90deg,var(--starbg),transparent 85%)}
+.qn{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:7px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));color:var(--muted);font-size:.75rem;font-weight:800}
+.qs{color:var(--star);font-size:.85rem;letter-spacing:1px}
+.qq{flex-basis:100%;font-weight:700;font-size:.95rem}
+.qf{position:relative;padding:12px 14px;background:color-mix(in srgb,var(--ink) 3.5%,var(--bg));border-left:1px solid var(--line);display:flex;align-items:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.15rem}
+.qans{display:flex;flex-direction:column;filter:blur(8px);opacity:.6;transition:filter .25s,opacity .25s;user-select:none}
+.qans .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px}
+.qans .u b,.qans .u [style]{color:var(--ink)!important}
+.qhint{position:absolute;inset:0;display:grid;place-items:center;font-family:"Source Sans 3",system-ui,sans-serif;font-size:.8rem;font-weight:700;color:var(--muted)}
+.qc.show .qans{filter:none;opacity:1;user-select:auto}
+.qc.show .qhint{display:none}
+.qc.show .qf{background:color-mix(in srgb,#3f9a6a 7%,var(--bg))}
+.qc.show .qn{background:#3f9a6a;color:#fff}
+@media (max-width:480px){.qf{font-size:1.02rem;padding:10px 12px}.qq{font-size:.88rem}}
+body.hide .qc .ft,body.hide .qc .u{filter:none!important;user-select:auto}
+.bar{flex-wrap:wrap}
+.blink{font-size:.9rem;font-weight:600;text-decoration:none;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);padding:6px 12px;border-radius:999px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.blink:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.nw{white-space:nowrap}
+.nuc{display:inline-flex;flex-direction:column;align-items:flex-end;vertical-align:middle;font-size:.58em;line-height:1.05;margin-right:.1em}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><p class="kicker">M1 · Biophysique Appliquée</p><h1>Systèmes gazeux</h1><p class="meta">33 formules · <span class="s">★</span> tombées au concours · <span class="g">🔁</span> formules déduites, reliées à leur formule de base</p></header>
+<div class="bar"><button id="bHide" aria-pressed="false">🙈 Cacher les formules</button><a class="blink" href="formules.html" style="margin-left:auto">← Cours</a><a class="blink" href="formules-gazeux-explications.html">📖 Explications</a></div>
+<div class="cols"><span>Définition</span><span>Formule · unité · constante</span></div><div id="tb"></div>
+<div id="quiz" hidden>
+<div class="qhead"><div class="qtop"><span class="qtitle">Entraînement</span><span id="qcount" class="qcount"></span></div>
+<div class="prog"><span id="qbar"></span></div>
+<div class="qbtns"><button id="bShuffle">🔀 Mélanger</button><button id="bReset">🙈 Tout recacher</button></div></div>
+<div id="qrows" class="qlist"></div></div>
+</div>
+<script>
+const H=()=>'';
+const fr=(n,d)=>`<span class='frac'><span>${n}</span><span>${d}</span></span>`;
+const nuc=(a,z,s='')=>`<span class='nw'><span class='nuc'><span>${a}</span><span>${z}</span></span>${s}</span>`;
+const data = [
+ {id:"A", title:"Équation des gaz parfaits", pages:"p.2", rows:[
+  {k:"pvn", st:0, q:"Équation des gaz parfaits (particules)", d:"En nombre de particules N",
+   f:"PV = N k<sub>B</sub> T", u:"k<sub>B</sub> = <b>1,381.10<sup>−23</sup> J/K</b> (constante de Boltzmann)",
+   x:"<p>La pression vient des <b>chocs des molécules</b> sur les parois : elle augmente si V diminue, si T augmente ou si N augmente.</p><span class='tip'>Gaz parfait = gaz à faible pression, molécules assez éloignées pour que leurs interactions soient négligeables.</span>"},
+  {k:"pv", st:0, q:"Équation des gaz parfaits (moles)", d:"En quantité de matière n",
+   f:"PV = nRT", u:"P en <b>Pa</b> · V en <b>m³</b> · n en mol · T en <b>K</b> · R = <b>8,31 J.mol<sup>−1</sup>.K<sup>−1</sup></b>",
+   x:"<p>La formule centrale du cours : toutes les lois de transformation et des mélanges en découlent.</p><span class='trap'>Unités SI obligatoires : V en <b>m³</b> (10 L = 10<sup>−2</sup> m³) et T en <b>kelvins</b> (27 °C = 300 K). Annale 2021 : 10<sup>−3</sup> × 8,3 × 300 / 10<sup>−2</sup> = 249 Pa.</span>"},
+  {k:"P", der:["pv"], q:"Pression d'un gaz parfait", d:"",
+   f:"P = "+fr("nRT","V"), u:"",
+   x:"<p>La pression est <b>proportionnelle à T</b> et à la densité de molécules <b>n/V</b>.</p>"
+   + H(["Pars de PV = nRT.","Divise les deux côtés par V."])},
+  {k:"R", st:0, q:"Lien entre R et k<sub>B</sub>", d:"",
+   f:"R = k<sub>B</sub> × N<sub>A</sub>", u:"N<sub>A</sub> = <b>6,022.10<sup>23</sup></b> molécules/mole (constante d'Avogadro)",
+   x:"<p>R est la constante de Boltzmann « à l'échelle d'une mole » : on multiplie par le nombre de molécules dans une mole.</p>"},
+  {k:"NnA", der:["pvn","pv","R"], q:"Nombre de particules et nombre de moles", d:"",
+   f:"N = n × N<sub>A</sub>", u:"",
+   x:"<p>Permet de passer de @pvn à @pv : c'est la même équation écrite en particules ou en moles.</p>"
+   + H(["Égalise N k<sub>B</sub> T = n R T.","Remplace R par k<sub>B</sub> × N<sub>A</sub> : N k<sub>B</sub> T = n k<sub>B</sub> N<sub>A</sub> T.","Simplifie par k<sub>B</sub> T."])},
+  {k:"vm", st:0, q:"Volume molaire", d:"À 0 °C et pression atmosphérique",
+   f:"1 mol de gaz parfait → 22,4 L", u:"Quel que soit le gaz",
+   x:"<p>Tous les gaz parfaits occupent le même volume par mole dans les mêmes conditions : c'est ce qui rend les calculs de mélanges si simples.</p>"}
+ ]},
+ {id:"B", title:"Pressions et unités", pages:"p.2-3", rows:[
+  {k:"PFS", st:0, q:"Définition de la pression", d:"Origine : chocs des molécules sur une surface",
+   f:"P = "+fr("F","S"), u:"Pa = <b>N.m<sup>−2</sup></b> = J.m<sup>−3</sup> · 1 Pa = 1 N sur 1 m²",
+   x:"<p>Plus les chocs sont nombreux et/ou violents, plus la force sur les parois est grande, donc plus la pression augmente.</p>"},
+  {k:"Pr", st:0, q:"Pression relative", d:"Différence avec une pression de référence",
+   f:"P<sub>r</sub> = P − P<sub>ref</sub>", u:"P<sub>r</sub> &gt; 0 : <b>surpression</b> · P<sub>r</sub> &lt; 0 : <b>dépression</b>",
+   x:"<p>La pression absolue P est toujours un réel positif ; la pression relative peut être négative.</p>"},
+  {k:"hyd", st:2, q:"Pression hydrostatique", d:"Colonne de liquide de masse volumique ρ et de hauteur h",
+   f:"P<sub>hyd</sub> = ρ × g × h", u:"ρ = masse volumique · g = accélération de la pesanteur · h = hauteur",
+   x:"<p>Poussée d'un fluide à l'équilibre due à la gravité. Elle s'exerce de façon <b>égale dans toutes les directions</b> et toujours <b>perpendiculairement</b> aux parois. Ex. : pression hydrostatique sanguine, rôle majeur dans la filtration capillaire.</p><span class='tip'>Annale 2024 : 10<sup>3</sup> × 10 × 10<sup>4</sup> = <b>10<sup>8</sup> Pa</b> à 10 000 m.</span>"},
+  {k:"atm", st:0, q:"Atmosphère et bar", d:"",
+   f:"1 atm = 101 325 Pa · 1 bar = 100 000 Pa", u:"1 bar ≈ pression atmosphérique",
+   x:"<p>Le bar sert pour les pneumatiques, les bouteilles d'oxygène et d'acétylène, la plongée.</p><span class='tip'>1 bar ≈ 10<sup>5</sup> Pa ≈ 1 atm.</span>"},
+  {k:"mmHg", st:0, q:"mmHg (torr) et cmH<sub>2</sub>O", d:"",
+   f:"760 mmHg = 1 atm · 1 mmHg = 133,3 Pa", u:"1 atm ≈ 1 bar ≈ <b>1000 cmH<sub>2</sub>O</b> · 1 mmHg ≈ <b>1,3 cmH<sub>2</sub>O</b> (à 0 °C)",
+   x:"<p>Unités très utilisées en médecine (pression artérielle, gaz du sang).</p><span class='trap'>1 mmHg = 133,3 Pa (et non 1 atm / 1000).</span>"}
+ ]},
+ {id:"C", title:"Transformations d'un gaz parfait", pages:"p.4", rows:[
+  {k:"bm", st:0, q:"Loi de Boyle-Mariotte", d:"Température et n constants (isotherme)",
+   f:"PV = nRT = constante", u:"Si P × 2 alors V ÷ 2",
+   x:"<p>À température constante, la pression augmente quand le volume diminue : P et V sont <b>inversement proportionnels</b>.</p>"},
+  {k:"bm2", der:["bm"], q:"Boyle-Mariotte entre deux états", d:"",
+   f:"P<sub>i</sub>V<sub>i</sub> = P<sub>f</sub>V<sub>f</sub>", u:"",
+   x:"<p>La forme à utiliser en exercice (plongée, ballon qu'on descend ou remonte).</p>"
+   + H(["PV est constant pendant la transformation.","Donc sa valeur initiale égale sa valeur finale."])},
+  {k:"ch", st:0, q:"Loi de Charles", d:"Pression et n constants (isobare)",
+   f:"V = "+fr("nRT","P"), u:"Si T × 2 alors V × 2",
+   x:"<p>À pression constante, le volume dépend <b>linéairement</b> de la température.</p>"},
+  {k:"ch2", der:["ch"], q:"Charles entre deux états", d:"",
+   f:fr("V<sub>i</sub>","T<sub>i</sub>")+" = "+fr("V<sub>f</sub>","T<sub>f</sub>"), u:"",
+   x:"<p>V/T reste constant.</p>"
+   + H(["Pars de V = nRT / P.","Divise par T : V/T = nR/P, qui est constant.","Donc V<sub>i</sub>/T<sub>i</sub> = V<sub>f</sub>/T<sub>f</sub>."])},
+  {k:"gl", st:0, q:"Loi de Gay-Lussac", d:"Volume et n constants (isochore)",
+   f:"P = "+fr("nRT","V"), u:"Si T × 2 alors P × 2",
+   x:"<p>À volume constant, la pression est proportionnelle à la température.</p>"},
+  {k:"gl2", der:["gl"], q:"Gay-Lussac entre deux états", d:"",
+   f:fr("P<sub>i</sub>","T<sub>i</sub>")+" = "+fr("P<sub>f</sub>","T<sub>f</sub>"), u:"",
+   x:"<p>P/T reste constant.</p>"
+   + H(["Pars de P = nRT / V.","Divise par T : P/T = nR/V, qui est constant.","Donc P<sub>i</sub>/T<sub>i</sub> = P<sub>f</sub>/T<sub>f</sub>."])},
+  {k:"avo", st:0, q:"Loi d'Avogadro", d:"Pression et température constantes",
+   f:fr("V<sub>i</sub>","n<sub>i</sub>")+" = "+fr("V<sub>f</sub>","n<sub>f</sub>"), u:"V proportionnel à n, indépendamment de la nature du gaz",
+   x:"<p>Le volume d'un gaz est <b>proportionnel au nombre de moles</b> : si la quantité de gaz augmente, le volume augmente.</p><span class='trap'>La fiche écrit « n<sub>i</sub>V<sub>i</sub> = n<sub>f</sub>V<sub>f</sub> », ce qui contredit « V proportionnel à n ». La forme cohérente avec PV = nRT est V/n = constante : vérifie avec ton enseignant.</span>"}
+ ]},
+ {id:"D", title:"Mélanges de gaz parfaits", pages:"p.4", rows:[
+  {k:"pi", st:1, q:"Pression partielle", d:"Pression du gaz i s'il occupait seul le volume total V à T",
+   f:"P<sub>i</sub>V = n<sub>i</sub>RT", u:"",
+   x:"<p>Pas de réaction chimique entre les gaz : chaque gaz se comporte <b>comme s'il était seul</b> dans tout le récipient.</p><span class='tip'>Annale 2021 : n<sub>O2</sub> = n<sub>N2</sub> → P<sub>O2</sub> = P<sub>N2</sub> = 249 Pa.</span>"},
+  {k:"piX", st:2, q:"Pression partielle et fraction molaire", d:"",
+   f:"P<sub>i</sub> = X<sub>i</sub> P", u:"P = pression totale",
+   x:"<p>La formule la plus utilisée en exercice : on multiplie la pression totale par la <b>proportion</b> du gaz dans le mélange.</p><span class='tip'>Annale 2023 : P<sub>O2</sub> = 38 mmHg et X<sub>O2</sub> = 0,1 → P<sub>tot</sub> = 38 / 0,1 = 380 mmHg.</span>"},
+  {k:"X", st:1, q:"Fraction molaire", d:"",
+   f:"X<sub>i</sub> = "+fr("n<sub>i</sub>","n")+" = "+fr("V<sub>i</sub>","V")+" = "+fr("P<sub>i</sub>","P"), u:"n = quantité totale de matière",
+   x:"<p>Trois façons de calculer la même proportion : en moles, en volumes partiels ou en pressions partielles. Un % de composition donne directement X<sub>i</sub> (10 % → 0,1).</p>"},
+  {k:"sX", der:["X","dal"], q:"Somme des fractions molaires", d:"",
+   f:"Σ X<sub>i</sub> = 1", u:"",
+   x:"<p>Toutes les proportions du mélange font 100 %.</p>"
+   + H(["X<sub>i</sub> = P<sub>i</sub> / P.","Additionne pour tous les gaz : Σ X<sub>i</sub> = (Σ P<sub>i</sub>) / P.","Or Σ P<sub>i</sub> = P (Dalton)."])},
+  {k:"vi", st:0, q:"Volume partiel", d:"Volume du gaz i seul, à la pression totale P et à T",
+   f:"PV<sub>i</sub> = n<sub>i</sub>RT", u:"",
+   x:"<p>Symétrique de la pression partielle : ici c'est la <b>pression</b> qu'on garde totale et le <b>volume</b> qui est partiel.</p><span class='trap'>P<sub>i</sub>V = n<sub>i</sub>RT (pression partielle) ≠ PV<sub>i</sub> = n<sub>i</sub>RT (volume partiel).</span>"},
+  {k:"viX", st:0, q:"Volume partiel et fraction molaire", d:"",
+   f:"V<sub>i</sub> = X<sub>i</sub> V", u:"",
+   x:"<p>Même logique que P<sub>i</sub> = X<sub>i</sub> P.</p>"},
+  {k:"dal", st:1, q:"Loi de Dalton", d:"Pression totale",
+   f:"P = Σ<sub>i=1</sub><sup>N</sup> P<sub>i</sub>", u:"",
+   x:"<p>La pression totale est la <b>somme</b> de toutes les pressions partielles.</p><span class='tip'>Annale 2021 : 249 + 249 = <b>498 Pa</b>.</span>"},
+  {k:"dalV", st:0, q:"Volume total", d:"",
+   f:"V = Σ<sub>i=1</sub><sup>N</sup> V<sub>i</sub>", u:"",
+   x:"<p>Le volume total est la somme des volumes partiels.</p>"}
+ ]},
+ {id:"E", title:"Applications : respiration et plongée", pages:"p.5-6", rows:[
+  {k:"air", st:0, q:"Composition de l'air (approximation)", d:"Réel : 78 % N<sub>2</sub> + 21 % O<sub>2</sub> + 1 % autres",
+   f:"X<sub>O<sub>2</sub></sub> = 0,2 · X<sub>N<sub>2</sub></sub> = 0,8", u:"Air = <b>20 % O<sub>2</sub> et 80 % N<sub>2</sub></b>",
+   x:"<p>La pression partielle d'O<sub>2</sub> détermine son absorption dans le sang : en altitude, la pression diminue (essoufflement, maux de tête).</p>"},
+  {k:"airP", der:["air","piX"], q:"Pressions partielles à P<sub>atm</sub>", d:"",
+   f:"P<sub>O<sub>2</sub></sub> = 0,2 bar · P<sub>N<sub>2</sub></sub> = 0,8 bar", u:"",
+   x:"<p>Application directe de P<sub>i</sub> = X<sub>i</sub> P avec P = 1 bar.</p><span class='tip'>Annale LAS 2022 : à 10<sup>5</sup> Pa, P<sub>O2</sub> = 20 000 Pa et P<sub>N2</sub> = 80 000 Pa.</span>"
+   + H(["P<sub>O2</sub> = X<sub>O2</sub> × P<sub>atm</sub> = 0,2 × 1 bar.","P<sub>N2</sub> = X<sub>N2</sub> × P<sub>atm</sub> = 0,8 × 1 bar."])},
+  {k:"plong", st:1, q:"Pression en plongée", d:"La pression dans les poumons s'équilibre avec la pression ambiante",
+   f:"P<sub>T</sub> = P<sub>atm</sub> + P<sub>hyd</sub>", u:"",
+   x:"<p>Sous l'eau, on ajoute au poids de l'atmosphère celui de la colonne d'eau au-dessus du plongeur.</p><span class='trap'>Annale 2025 : à 20 m, P<sub>hyd</sub> = 2 atm mais P<sub>T</sub> = 2 + 1 = <b>3 atm</b>.</span>"},
+  {k:"10m", der:["plong","hyd"], q:"+1 bar tous les 10 m", d:"",
+   f:"à 10 m : P<sub>T</sub> = 2.10<sup>5</sup> Pa = 2 bars", u:"",
+   x:"<p>Chaque tranche de 10 m d'eau ajoute environ 1 bar.</p><span class='tip'>Annale 2019 : à 30 m, P = 10<sup>5</sup> + 3.10<sup>5</sup> = 4 bars.</span>"
+   + H(["P<sub>hyd</sub> = ρ g h = 1000 × 10 × 10 = 10<sup>5</sup> Pa = 1 bar (ρ et g des annales).","P<sub>T</sub> = P<sub>atm</sub> + P<sub>hyd</sub> = 1 + 1 = 2 bars."])},
+  {k:"apnee", st:1, q:"Remontée en apnée depuis 10 m", d:"Respiration bloquée : poumons = ballon",
+   f:"P ÷ 2 donc V × 2", u:"Risque : <b>surpression pulmonaire</b>, embolie gazeuse",
+   x:"<p>Boyle-Mariotte (@bm2) : de 2 bars à 1 bar, le volume d'air double. Les alvéoles peuvent se déchirer : <b>ne jamais bloquer sa respiration en remontant</b>.</p><span class='trap'>À la <b>descente</b> c'est l'inverse : P × 2 donc V ÷ 2 (compression).</span>"},
+  {k:"5m", der:["apnee","bm2"], q:"Remontée de 5 m à la surface", d:"",
+   f:"1,5 bar → 1 bar : V augmente de 50 %", u:"",
+   x:"<p>Même petite profondeur, la variation de volume reste importante.</p>"
+   + H(["P<sub>i</sub>V<sub>i</sub> = P<sub>f</sub>V<sub>f</sub> → V<sub>f</sub> = V<sub>i</sub> × 1,5 / 1.","V<sub>f</sub> = 1,5 V<sub>i</sub>, soit +50 %."])},
+  {k:"tox", st:0, q:"Seuils de toxicité des gaz (plongée en bouteille)", d:"",
+   f:"narcose : P<sub>N<sub>2</sub></sub> = 4 bars (≈ 40 m) · hyperoxie : P<sub>O<sub>2</sub></sub> = 1,8 bar (≈ 80 m)", u:"",
+   x:"<p><b>Narcose</b> = ivresse des profondeurs (trop d'azote). <b>Hyperoxie</b> = pression partielle d'O<sub>2</sub> trop élevée (intoxication, convulsions). Solution : mélanges gazeux adaptés, avec moins d'azote.</p><span class='tip'>En bouteille, les poumons gardent leur volume ; le risque est la saturation/désaturation à l'azote (paliers de décompression).</span>"}
+ ]}
+];
+
+
+
+const tb=document.getElementById('tb');let h='';
+const rowHTML=(r,code,par)=>`<div class="row${r.der?' der':''}${r.st?' star':''}" tabindex="0">
+      <div class="d"><span class="code">${code}</span>${par?`<span class="from">🔁 Déduite de <b>${par}</b></span>`:''}<span class="name">${r.q}</span>${r.st?`<span class="s">${'★'.repeat(r.st)}</span>`:''}</div>
+      <div class="f"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div></div>`;
+data.forEach(sec=>{
+  h+=`<section class="blk" style="--c:var(--${sec.id})"><header><span class="letter">${sec.id}</span>${sec.title}</header><div class="rows">`;
+  const groups=[];
+  sec.rows.forEach((r,i)=>{const c=sec.id+(i+1); if(r.der&&groups.length) groups[groups.length-1].kids.push([r,c]); else groups.push({r,c,kids:[]});});
+  groups.forEach(g=>{
+    h+=`<div class="grp">`+rowHTML(g.r,g.c);
+    if(g.kids.length) h+=`<div class="kids">`+g.kids.map(([r,c])=>rowHTML(r,c,g.c)).join('')+`</div>`;
+    h+=`</div>`;
+  });
+  h+=`</div></section>`;
+});
+tb.innerHTML=h;
+const b=document.getElementById('bHide'),quiz=document.getElementById('quiz'),qrows=document.getElementById('qrows');
+const all=[];data.forEach(sec=>sec.rows.forEach(r=>all.push(r)));
+const upd=()=>{const n=qrows.querySelectorAll('.qc.show').length,t=all.length;
+  document.getElementById('qcount').textContent=`${n} / ${t} révélées`;document.getElementById('qbar').style.width=(100*n/t)+'%';};
+const shuffle=()=>{
+  const a=all.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  qrows.innerHTML=a.map((r,i)=>`<div class="qc${r.st?' star':''}" tabindex="0">
+    <div class="qd"><span class="qn">${i+1}</span>${r.st?`<span class="qs">${'★'.repeat(r.st)}</span>`:''}<span class="qq">${r.q}</span></div>
+    <div class="qf"><div class="qans"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div><span class="qhint">👁 Révéler</span></div></div>`).join('');
+  upd();
+};
+document.getElementById('bShuffle').onclick=()=>{shuffle();window.scrollTo({top:0});};
+document.getElementById('bReset').onclick=()=>{qrows.querySelectorAll('.qc.show').forEach(c=>c.classList.remove('show'));upd();};
+b.onclick=()=>{
+  const on=document.body.classList.toggle('hide');b.setAttribute('aria-pressed',on);
+  b.textContent=on?'↩ Revenir à la page de référence':'🙈 Cacher les formules';
+  if(on)shuffle();
+  quiz.hidden=!on;tb.hidden=on;document.querySelector('.cols').hidden=on;
+  window.scrollTo({top:0});
+};
+const flip=e=>{const t=e.target.closest('.qc');if(t){t.classList.toggle('show');upd();}};
+qrows.addEventListener('click',flip);
+qrows.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip(e);}});
+</script>
+</body>
+</html>

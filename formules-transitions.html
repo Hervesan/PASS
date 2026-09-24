@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules en 2 colonnes — États et transitions de phase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff;--ink:#1d2330;--muted:#5b6474;--line:#e3e6ec;--frame:#b9c0cc;--star:#e8a900;--starbg:#fff6d6;--ded:#3f9a6a;
+--A:#2f86a8;--B:#d0632e;--C:#c9971c;--D:#6f5aa8;--E:#a64b4b;--F:#b0527f}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.35}
+.wrap{max-width:820px;margin:0 auto;padding:16px 12px 40px}
+h1{font-size:1.4rem;margin:0 0 10px;font-weight:800}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:6px 0 8px;z-index:2;display:flex;gap:8px;align-items:center}
+.bar button{font:inherit;font-size:.9rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+.bar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.bar button:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.bar span{font-size:.8rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;border:2px solid var(--frame)}
+th{text-align:left;font-size:.78rem;color:var(--muted);font-weight:700;padding:6px 10px;border-bottom:2px solid var(--frame)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+td.d{width:42%;font-weight:700;font-size:.95rem;border-right:1.5px solid var(--frame)}
+td.d .s{color:var(--star);font-size:.8rem;margin-left:4px;white-space:nowrap}
+td.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.12rem}
+td.f .u{display:block;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.82rem;color:var(--muted);margin-top:2px}
+td.f .u b{color:var(--ink)}
+tr.sec td{background:var(--c);color:#fff;font-weight:800;font-size:.95rem;padding:6px 10px;border-bottom:0}
+tr.der td.d{padding-left:24px;color:var(--ded);font-weight:600;font-size:.9rem}
+tr.der td.d::before{content:"↳ ";font-weight:800}
+tr.der td.f{font-size:1rem;color:var(--ded)}
+sub{font-size:.65em}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor}
+body.hide td.f .ft,body.hide td.f .u{filter:blur(7px)}
+body.hide tr:not(.sec){cursor:pointer}
+body.hide tr.show td.f .ft,body.hide tr.show td.f .u{filter:none}
+@media (prefers-reduced-motion:no-preference){.ft,.u{transition:filter .2s}}
+@media (max-width:480px){td{padding:8px 7px}td.d{font-size:.88rem}td.f{font-size:1rem}tr.der td.d{padding-left:16px}}
+@media print{.bar{display:none}body.hide .ft,body.hide .u{filter:none}tr{break-inside:avoid}}
+
+/* ---- Mise en page soignée ---- */
+body{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0)}
+.wrap{max-width:860px;padding:22px 14px 50px}
+.top{padding:4px 2px 6px}
+.kicker{margin:0;font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--muted)}
+.top h1{font-size:1.9rem;margin:2px 0 4px;letter-spacing:-.01em}
+.meta{margin:0;font-size:.88rem;color:var(--muted)}
+.meta .s{color:var(--star)} .meta .g{color:var(--ded);font-weight:800}
+.bar{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0);padding:10px 0}
+.bar button{background:var(--bg);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.cols{display:grid;grid-template-columns:42% 58%;font-size:.72rem;font-weight:700;letter-spacing:.03em;color:var(--muted);padding:4px 16px 6px}
+.blk{background:var(--bg);border-radius:16px;margin:0 0 22px;overflow:hidden;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25);border:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.blk header{display:flex;align-items:center;gap:10px;padding:12px 16px;font-weight:800;font-size:1.02rem;color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--bg));border-bottom:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.letter{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--c);color:#fff;font-size:.95rem}
+.row{display:grid;grid-template-columns:42% 58%;align-items:stretch;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .d{padding:12px 12px 12px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.code{font-size:.72rem;font-weight:800;color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg));border-radius:5px;padding:1px 6px}
+.name{font-weight:700;font-size:.95rem;flex-basis:100%}
+.row .d .s{color:var(--star);font-size:.82rem;letter-spacing:1px}
+.row .f{padding:12px 16px;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line));display:flex;flex-direction:column;justify-content:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.2rem}
+.row .f .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px;line-height:1.3}
+.row .f .u b{color:var(--c)}
+.row.star .d{background:linear-gradient(90deg,var(--starbg),transparent 75%)}
+.row.der .d{padding-left:30px;position:relative}
+.row.der .d::before{content:"↳";position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ded);font-weight:800}
+.row.der .name{color:var(--ded);font-weight:600;font-size:.9rem}
+.row.der .code{color:var(--ded);background:color-mix(in srgb,var(--ded) 12%,var(--bg))}
+.row.der .f{font-size:1.05rem;color:var(--ded);background:color-mix(in srgb,var(--ded) 6%,var(--bg))}
+body.hide .ft,body.hide .u{filter:blur(7px);user-select:none}
+body.hide .row{cursor:pointer}
+body.hide .row.show .ft,body.hide .row.show .u{filter:none}
+.row:focus-visible{outline:3px solid var(--star);outline-offset:-3px}
+@media (max-width:480px){
+  .cols,.row{grid-template-columns:44% 56%}
+  .row .d{padding:10px 8px 10px 12px}.row .f{padding:10px 12px;font-size:1.05rem}
+  .name{font-size:.88rem}.row.der .d{padding-left:24px}.row.der .d::before{left:8px}
+  .top h1{font-size:1.6rem}
+}
+@media print{body{background:#fff}.blk{box-shadow:none;break-inside:avoid}}
+
+
+/* Option 1 : groupe encadré (formule mère + filles dans une bande verte) */
+.grp{border-top:1px solid var(--line)}
+.grp:first-child{border-top:0}
+.grp > .row{border-top:0}
+.kids{background:color-mix(in srgb,var(--ded) 13%,var(--bg));padding:8px 10px 10px;display:flex;flex-direction:column;gap:7px;border-top:1px solid color-mix(in srgb,var(--ded) 30%,var(--line))}
+.kids .row{border:1px solid color-mix(in srgb,var(--ded) 30%,var(--line));border-radius:10px;overflow:hidden;background:var(--bg);grid-template-columns:calc(42% - 4px) auto}
+.kids .row .d{padding:9px 10px}
+.kids .row .f{background:color-mix(in srgb,var(--ded) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--ded) 25%,var(--line))}
+.row.der .d{padding-left:10px}
+.row.der .d::before{content:none}
+@media (max-width:480px){.kids{padding:7px 7px 8px}.kids .row .d{padding:8px}}
+
+/* Formules déduites : mêmes couleurs que les autres (seul le regroupement les distingue) */
+.kids{background:color-mix(in srgb,var(--ink) 5%,var(--bg));border-top:1px solid var(--line)}
+.kids .row{border-color:var(--line)}
+.row.der .name{color:var(--ink);font-weight:700;font-size:.95rem}
+.row.der .code{color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg))}
+.row.der .code::before{content:none}
+.row.der .f,.kids .row .f{color:var(--ink);font-size:1.2rem;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line))}
+@media (max-width:480px){.row.der .f,.kids .row .f{font-size:1.05rem}.row.der .name{font-size:.88rem}}
+
+/* Comme la page explication : filles décalées, reliées par un trait à leur formule mère */
+.kids{background:transparent;border-top:0;padding:0 12px 14px 38px;gap:10px;position:relative}
+.kids .row{position:relative;overflow:visible;border:1.5px solid color-mix(in srgb,var(--ded) 60%,var(--line));border-radius:10px;background:var(--bg)}
+.kids .row .d{border-radius:9px 0 0 9px}
+.kids .row .f{border-radius:0 9px 9px 0}
+.kids .row::before{content:"";position:absolute;left:-24px;top:-12px;bottom:-12px;border-left:2px solid var(--ded)}
+.kids .row:first-child::before{top:-2px}
+.kids .row:last-child::before{bottom:50%}
+.kids .row::after{content:"";position:absolute;left:-24px;top:50%;width:22px;border-top:2px solid var(--ded)}
+.grp:has(.kids) > .row{border-bottom:0}
+.from{flex-basis:100%;font-size:.76rem;font-weight:700;color:var(--ded)}
+.from b{font-weight:800}
+@media (max-width:480px){
+  .kids{padding:0 8px 12px 28px}
+  .kids .row::before,.kids .row::after{left:-18px}
+  .kids .row::after{width:16px}
+}
+
+/* Colonnes alignées partout + petit espace entre formules principales + cadres déduits plus étroits */
+.blk{container-type:inline-size}
+.row{grid-template-columns:42cqw minmax(0,1fr)!important}
+.kids .row{grid-template-columns:calc(42cqw - 39.5px) minmax(0,1fr)!important}
+.cols{grid-template-columns:42% 58%}
+.rows{display:flex;flex-direction:column;gap:6px;background:color-mix(in srgb,var(--ink) 6%,var(--bg))}
+.grp{border-top:0!important;background:var(--bg)}
+.kids{padding:0 34px 14px 38px}
+@media (max-width:480px){
+  .kids{padding:0 22px 12px 38px}
+  .kids .row::before,.kids .row::after{left:-24px}
+  .kids .row::after{width:22px}
+}
+.from{white-space:nowrap;font-size:.7rem}
+@media (max-width:480px){.kids .row .d{padding:8px 6px 8px 8px}}
+
+/* Tableau neutre (mode singe) : sans sections, sans codes, sans étoiles, mélangé */
+.neutral{--c:var(--muted);border-color:var(--line)}
+.neutral .row .f{background:color-mix(in srgb,var(--ink) 4%,var(--bg));border-left:1px solid var(--line)}
+.neutral .row .u b{color:var(--ink)}
+.neutral .row .u [style]{color:inherit!important}
+.qbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin:0 0 10px;font-size:.85rem;color:var(--muted)}
+.qbar button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer}
+[hidden]{display:none!important}
+body.hide .meta{display:none}
+
+/* ---- Mode entraînement (singe) ---- */
+.qhead{background:var(--bg);border-radius:16px;padding:14px 16px;margin:0 0 16px;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25)}
+.qtop{display:flex;justify-content:space-between;align-items:baseline}
+.qtitle{font-weight:800;font-size:1.1rem}
+.qcount{font-size:.85rem;color:var(--muted);font-weight:600}
+.prog{height:8px;border-radius:99px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));margin:10px 0 12px;overflow:hidden}
+.prog span{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#f5c542,var(--star));transition:width .3s}
+.qbtns{display:flex;gap:8px;flex-wrap:wrap}
+.qbtns button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 13px;border-radius:999px;cursor:pointer}
+.qlist{display:flex;flex-direction:column;gap:10px;container-type:inline-size}
+.qc{display:grid;grid-template-columns:42cqw minmax(0,1fr);background:var(--bg);border-radius:14px;overflow:hidden;cursor:pointer;
+  border:1px solid var(--line);box-shadow:0 1px 2px rgba(20,30,50,.05),0 6px 16px -10px rgba(20,30,50,.3);transition:transform .15s}
+.qc:active{transform:scale(.99)}
+.qc:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.qc.star{border-color:color-mix(in srgb,var(--star) 45%,var(--line))}
+.qd{padding:12px 12px 12px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.qc.star .qd{background:linear-gradient(90deg,var(--starbg),transparent 85%)}
+.qn{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:7px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));color:var(--muted);font-size:.75rem;font-weight:800}
+.qs{color:var(--star);font-size:.85rem;letter-spacing:1px}
+.qq{flex-basis:100%;font-weight:700;font-size:.95rem}
+.qf{position:relative;padding:12px 14px;background:color-mix(in srgb,var(--ink) 3.5%,var(--bg));border-left:1px solid var(--line);display:flex;align-items:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.15rem}
+.qans{display:flex;flex-direction:column;filter:blur(8px);opacity:.6;transition:filter .25s,opacity .25s;user-select:none}
+.qans .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px}
+.qans .u b,.qans .u [style]{color:var(--ink)!important}
+.qhint{position:absolute;inset:0;display:grid;place-items:center;font-family:"Source Sans 3",system-ui,sans-serif;font-size:.8rem;font-weight:700;color:var(--muted)}
+.qc.show .qans{filter:none;opacity:1;user-select:auto}
+.qc.show .qhint{display:none}
+.qc.show .qf{background:color-mix(in srgb,#3f9a6a 7%,var(--bg))}
+.qc.show .qn{background:#3f9a6a;color:#fff}
+@media (max-width:480px){.qf{font-size:1.02rem;padding:10px 12px}.qq{font-size:.88rem}}
+body.hide .qc .ft,body.hide .qc .u{filter:none!important;user-select:auto}
+.bar{flex-wrap:wrap}
+.blink{font-size:.9rem;font-weight:600;text-decoration:none;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);padding:6px 12px;border-radius:999px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.blink:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.nw{white-space:nowrap}
+.nuc{display:inline-flex;flex-direction:column;align-items:flex-end;vertical-align:middle;font-size:.58em;line-height:1.05;margin-right:.1em}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><p class="kicker">M1 · Biophysique Appliquée</p><h1>États et transitions de phase</h1><p class="meta">12 formules · <span class="s">★</span> tombées au concours · <span class="g">🔁</span> formules déduites, reliées à leur formule de base</p></header>
+<div class="bar"><button id="bHide" aria-pressed="false">🙈 Cacher les formules</button><a class="blink" href="formules.html" style="margin-left:auto">← Cours</a><a class="blink" href="formules-transitions-explications.html">📖 Explications</a></div>
+<div class="cols"><span>Définition</span><span>Formule · unité · constante</span></div><div id="tb"></div>
+<div id="quiz" hidden>
+<div class="qhead"><div class="qtop"><span class="qtitle">Entraînement</span><span id="qcount" class="qcount"></span></div>
+<div class="prog"><span id="qbar"></span></div>
+<div class="qbtns"><button id="bShuffle">🔀 Mélanger</button><button id="bReset">🙈 Tout recacher</button></div></div>
+<div id="qrows" class="qlist"></div></div>
+</div>
+<script>
+const H=()=>'';
+const fr=(n,d)=>`<span class='frac'><span>${n}</span><span>${d}</span></span>`;
+const nuc=(a,z,s='')=>`<span class='nw'><span class='nuc'><span>${a}</span><span>${z}</span></span>${s}</span>`;
+const data = [
+ {id:"A", title:"Énergies des changements d'état", pages:"p.8", rows:[
+  {k:"rank", st:0, q:"Formule de Rankine", d:"Pression de vapeur saturante de l'eau",
+   f:"ln P<sub>Vsat</sub> = 13,7 − "+fr("5120","T"), u:"Valable pour l'eau entre <b>0 °C et 130 °C</b>",
+   x:"<p>P<sub>Vsat</sub> est la pression à laquelle liquide et gaz sont <b>en équilibre</b> à une température donnée (point d'ébullition sur la courbe). Quand T augmente, 5120/T diminue donc P<sub>Vsat</sub> <b>augmente</b>.</p><span class='trap'>La fiche ne précise pas les unités de P et T dans cette formule.</span>"},
+  {k:"QL", st:0, q:"Énergie d'un changement d'état", d:"Pour transformer une masse m",
+   f:"Q = L × m", u:"L = chaleur latente massique (= enthalpie de changement d'état) en <b>J/kg</b> · 1 J = 0,24 cal",
+   x:"<p>L est l'énergie nécessaire pour faire changer d'état <b>1 kg</b> de corps. On multiplie par la masse.</p><span class='tip'><b>Q &gt; 0</b> : transformation endothermique ; <b>Q &lt; 0</b> : exothermique.</span>"},
+  {k:"L", der:["QL"], q:"Chaleur latente à partir de Q", d:"",
+   f:"L = "+fr("Q","m"), u:"",
+   x:"<p>Utile si l'énoncé donne l'énergie échangée et la masse transformée.</p>"
+   + H(["Pars de Q = L × m.","Divise les deux côtés par m."])},
+  {k:"clap", st:0, q:"Relation de Clapeyron", d:"Chaleur latente de passage de la phase 1 à la phase 2",
+   f:"L<sub>1→2</sub> = T × (μ<sub>2</sub> − μ<sub>1</sub>) × ("+fr("dP","dT")+")<sub>T<sub>1→2</sub></sub>", u:"T = température du changement d'état · μ<sub>1</sub>, μ<sub>2</sub> = volumes massiques dans les phases 1 et 2",
+   x:"<p>Relie l'énergie du changement d'état à la <b>pente</b> dP/dT de la courbe de transition sur le diagramme de phase, et à la variation de volume massique.</p><span class='trap'>μ désigne ici un <b>volume massique</b>, pas un coefficient d'atténuation.</span>"},
+  {k:"pente", der:["clap"], q:"Pente de la courbe de transition", d:"",
+   f:fr("dP","dT")+" = "+fr("L<sub>1→2</sub>","T × (μ<sub>2</sub> − μ<sub>1</sub>)"), u:"",
+   x:"<p>Donne l'inclinaison de la courbe de changement d'état sur le diagramme P = f(T).</p>"
+   + H(["Pars de L<sub>1→2</sub> = T × (μ<sub>2</sub> − μ<sub>1</sub>) × dP/dT.","Divise les deux côtés par T × (μ<sub>2</sub> − μ<sub>1</sub>)."])}
+ ]},
+ {id:"B", title:"Eau, vapeur et hygrométrie", pages:"p.9-10", rows:[
+  {k:"ebul", st:0, q:"Ébullition de l'eau", d:"Processus rapide, bulles dans tout le liquide",
+   f:"T<sub>éb</sub> = 100 °C à 1 bar · P<sub>Vsat</sub>(100 °C) = 1 bar", u:"Nécessite un <b>chauffage</b> · T<sub>éb</sub> augmente avec la pression",
+   x:"<p>L'eau bout quand sa pression de vapeur saturante atteint la pression ambiante : à 100 °C, P<sub>Vsat</sub> = 1 bar = pression atmosphérique.</p><span class='tip'>Annale 2026 : l'ébullition demande un <b>apport d'énergie</b>.</span>"},
+  {k:"evap", st:0, q:"Condition d'évaporation", d:"Processus lent, sans bulles, de 0 à 100 °C",
+   f:"liquide → gaz tant que P<sub>V</sub> &lt; P<sub>Vsat</sub>", u:"P<sub>V</sub> = pression partielle du corps dans la phase gazeuse",
+   x:"<p>Tant que l'air n'est pas saturé en vapeur, l'eau continue de s'évaporer. <b>Équilibre liquide ↔ gaz</b> quand P<sub>V</sub> = P<sub>Vsat</sub>.</p><span class='tip'>P<sub>Vsat</sub> augmente avec la température.</span>"},
+  {k:"HR", st:0, q:"Hygrométrie (humidité relative)", d:"Quantité de vapeur d'eau dans l'air humide",
+   f:"HR = "+fr("P<sub>V</sub>","P<sub>Vsat</sub>"), u:"S'exprime en <b>%</b>",
+   x:"<p>Compare la vapeur présente à la vapeur maximale possible à cette température. Ne compte que l'eau sous forme de <b>vapeur</b>, pas liquide ni glace.</p>"},
+  {k:"PV", der:["HR"], q:"Pression partielle de vapeur", d:"",
+   f:"P<sub>V</sub> = HR × P<sub>Vsat</sub>", u:"",
+   x:"<p>Si on connaît l'hygrométrie et la température (donc P<sub>Vsat</sub>), on retrouve P<sub>V</sub>.</p>"
+   + H(["Pars de HR = P<sub>V</sub> / P<sub>Vsat</sub>.","Multiplie les deux côtés par P<sub>Vsat</sub>."])},
+  {k:"sat", der:["HR","evap"], q:"Air saturé", d:"",
+   f:"HR = 100 % ⇔ P<sub>V</sub> = P<sub>Vsat</sub>", u:"",
+   x:"<p>À 100 % d'humidité, on est à l'équilibre liquide ↔ gaz : l'eau <b>ne s'évapore plus</b>.</p>"
+   + H(["Équilibre quand P<sub>V</sub> = P<sub>Vsat</sub>.","Alors HR = P<sub>Vsat</sub> / P<sub>Vsat</sub> = 1 = 100 %."])},
+  {k:"pulm", st:0, q:"Évaporation pulmonaire", d:"Perspiration insensible par les alvéoles",
+   f:"T = 37 °C · P<sub>Vsat</sub> = 47 mmHg", u:"<b>0,3 – 0,4 L/jour</b> · dépend de l'hygrométrie de l'air inspiré",
+   x:"<p>L'air expiré est chargé de vapeur d'eau : plus l'air inspiré est sec, plus la masse d'eau évaporée est grande.</p>"},
+  {k:"peau", st:0, q:"Évaporation par la peau", d:"Diffusion passive, sans sudation apparente",
+   f:"T = 20 °C · P<sub>Vsat</sub> = 17,5 mmHg", u:"<b>0,6 – 0,8 L/jour</b>",
+   x:"<p>Autre composante de la perspiration insensible, à ne pas confondre avec la transpiration.</p><span class='tip'>Poumons 0,3-0,4 L ; peau 0,6-0,8 L : la peau perd environ deux fois plus.</span>"}
+ ]}
+];
+
+
+
+const tb=document.getElementById('tb');let h='';
+const rowHTML=(r,code,par)=>`<div class="row${r.der?' der':''}${r.st?' star':''}" tabindex="0">
+      <div class="d"><span class="code">${code}</span>${par?`<span class="from">🔁 Déduite de <b>${par}</b></span>`:''}<span class="name">${r.q}</span>${r.st?`<span class="s">${'★'.repeat(r.st)}</span>`:''}</div>
+      <div class="f"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div></div>`;
+data.forEach(sec=>{
+  h+=`<section class="blk" style="--c:var(--${sec.id})"><header><span class="letter">${sec.id}</span>${sec.title}</header><div class="rows">`;
+  const groups=[];
+  sec.rows.forEach((r,i)=>{const c=sec.id+(i+1); if(r.der&&groups.length) groups[groups.length-1].kids.push([r,c]); else groups.push({r,c,kids:[]});});
+  groups.forEach(g=>{
+    h+=`<div class="grp">`+rowHTML(g.r,g.c);
+    if(g.kids.length) h+=`<div class="kids">`+g.kids.map(([r,c])=>rowHTML(r,c,g.c)).join('')+`</div>`;
+    h+=`</div>`;
+  });
+  h+=`</div></section>`;
+});
+tb.innerHTML=h;
+const b=document.getElementById('bHide'),quiz=document.getElementById('quiz'),qrows=document.getElementById('qrows');
+const all=[];data.forEach(sec=>sec.rows.forEach(r=>all.push(r)));
+const upd=()=>{const n=qrows.querySelectorAll('.qc.show').length,t=all.length;
+  document.getElementById('qcount').textContent=`${n} / ${t} révélées`;document.getElementById('qbar').style.width=(100*n/t)+'%';};
+const shuffle=()=>{
+  const a=all.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  qrows.innerHTML=a.map((r,i)=>`<div class="qc${r.st?' star':''}" tabindex="0">
+    <div class="qd"><span class="qn">${i+1}</span>${r.st?`<span class="qs">${'★'.repeat(r.st)}</span>`:''}<span class="qq">${r.q}</span></div>
+    <div class="qf"><div class="qans"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div><span class="qhint">👁 Révéler</span></div></div>`).join('');
+  upd();
+};
+document.getElementById('bShuffle').onclick=()=>{shuffle();window.scrollTo({top:0});};
+document.getElementById('bReset').onclick=()=>{qrows.querySelectorAll('.qc.show').forEach(c=>c.classList.remove('show'));upd();};
+b.onclick=()=>{
+  const on=document.body.classList.toggle('hide');b.setAttribute('aria-pressed',on);
+  b.textContent=on?'↩ Revenir à la page de référence':'🙈 Cacher les formules';
+  if(on)shuffle();
+  quiz.hidden=!on;tb.hidden=on;document.querySelector('.cols').hidden=on;
+  window.scrollTo({top:0});
+};
+const flip=e=>{const t=e.target.closest('.qc');if(t){t.classList.toggle('show');upd();}};
+qrows.addEventListener('click',flip);
+qrows.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip(e);}});
+</script>
+</body>
+</html>

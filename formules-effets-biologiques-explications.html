@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules — Effets biologiques des rayonnements ionisants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#ffffff; --ink:#1d2330; --muted:#5b6474; --line:#e3e6ec;
+  --star:#e8a900; --starbg:#fff6d6; --fbg:#f4f6fb; --ded:#3f9a6a; --dedbg:#eef6f1;
+  --A:#2f86a8; --B:#d0632e; --C:#c9971c; --D:#6f5aa8; --E:#a64b4b; --F:#b0527f;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.4}
+.wrap{max-width:860px;margin:0 auto;padding:18px 14px 40px}
+h1{font-size:1.6rem;font-weight:800;margin:0}
+.sub{color:var(--muted);font-size:.9rem;margin:2px 0 0}
+.s{color:var(--star);letter-spacing:1px;white-space:nowrap}
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 0;margin:12px 0 4px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.toolbar button{font:inherit;font-size:.88rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 11px;border-radius:999px;cursor:pointer}
+.toolbar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.toolbar button:focus-visible,.card:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.count{margin-left:auto;color:var(--muted);font-size:.82rem}
+section{margin-top:22px}
+h2{font-size:1rem;margin:0 0 8px;padding:6px 12px;color:#fff;border-radius:6px}
+.card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:stretch;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.def{padding:10px 12px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.def .top{display:flex;gap:8px;align-items:baseline;font-size:.8rem;font-weight:800}
+.def .q{font-weight:700;font-size:1rem}
+.def .d{color:var(--muted);font-size:.86rem}
+.fm{background:var(--fbg);border-left:5px solid var(--sec);padding:12px 14px;display:flex;flex-direction:column;justify-content:center}
+.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.35rem;line-height:1.25}
+.f sub{font-size:.62em}
+.u{margin-top:6px;font-size:.9rem;font-weight:600;color:var(--ink)}
+.u b{color:var(--sec)}
+.card.starred .def{background:linear-gradient(90deg,var(--starbg),transparent 70%)}
+.card.derived{border-style:dashed}
+.card.derived .fm{border-left-color:var(--ded)}
+.card.derived .top .tag{color:var(--ded)}
+#A{--sec:var(--A)} #B{--sec:var(--B)} #C{--sec:var(--C)} #D{--sec:var(--D)} #E{--sec:var(--E)} #F{--sec:var(--F)}
+#A h2{background:var(--A)} #B h2{background:var(--B)} #C h2{background:var(--C)} #D h2{background:var(--D)} #E h2{background:var(--E)} #F h2{background:var(--F)}
+section .top .code{color:var(--sec)}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+body.hide .card{cursor:pointer}
+body.stars .card:not(.starred){display:none}
+body.base .card.derived{display:none}
+.hint{display:none;color:var(--muted);font-size:.85rem;margin:6px 0 0}
+body.hide .hint{display:block}
+@media (max-width:600px){
+  .card{grid-template-columns:1fr}
+  .fm{border-left:0;border-top:4px solid var(--sec)}
+  .card.derived .fm{border-top-color:var(--ded)}
+}
+@media (prefers-reduced-motion:no-preference){.f,.u{transition:filter .2s}}
+@media print{.toolbar,.hint{display:none}body.hide .fm .f,body.hide .fm .u{filter:none}.card{break-inside:avoid}}
+
+/* Cartes plus isolées */
+section{margin-top:34px}
+h2{margin-bottom:14px}
+.card{margin-bottom:18px;border:1.5px solid var(--line);border-radius:12px;box-shadow:0 2px 0 var(--line),0 6px 14px -8px rgba(29,35,48,.25)}
+.def{padding:14px 16px}
+.fm{padding:16px 18px}
+.card.derived{border-width:1.5px}
+@media (max-width:600px){.card{margin-bottom:16px}}
+
+/* Couple définition/formule plus serré, séparation légère */
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.def{padding:14px 12px 14px 16px}
+.fm{padding:14px 16px 14px 14px}
+.card{margin-bottom:28px}
+section{margin-top:40px}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px dashed var(--line)!important}
+  .def{padding:14px 16px 8px}
+  .fm{padding:10px 16px 14px}
+  .card{margin-bottom:26px}
+}
+
+.wrap{max-width:980px}
+.legend{margin-top:6px;font-size:.88rem;color:var(--muted)}
+.chain{margin:14px 0 4px;padding:12px 14px;border-left:4px solid var(--star);background:var(--starbg);border-radius:0 8px 8px 0;font-size:.95rem}
+.mnemo{margin:12px 0 4px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:.92rem}
+.mnemo strong{display:block;margin-bottom:6px}
+.mnemo ul{margin:0;padding-left:18px;columns:2;column-gap:28px}
+.mnemo li{margin-bottom:4px;break-inside:avoid}
+.chain .f,.mnemo .f{font-size:1rem}
+.card{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
+.x{grid-column:1 / -1;border-top:1px dashed var(--line);padding:12px 16px 14px;font-size:.9rem;color:var(--muted)}
+.x p{margin:0 0 5px}
+.x b,.x .tip,.x .trap{color:var(--ink)}
+.tip,.trap{display:block;margin-top:5px}
+.tip::before{content:"💡 "}
+.trap::before{content:"⚠️ "}
+.ded{margin-top:8px;padding:8px 10px;background:var(--dedbg);border-left:3px solid var(--ded);border-radius:0 6px 6px 0;font-size:.86rem;color:var(--ink)}
+.ded strong{display:block;margin-bottom:3px}
+.ded ol{margin:0;padding-left:20px}
+.from{display:block;margin-top:4px;font-size:.84rem;color:var(--ded);font-weight:600}
+.gives{display:block;margin-top:8px;font-size:.86rem;color:var(--ded);font-weight:600}
+.chip{display:inline-block;text-decoration:none;font-size:.78rem;font-weight:700;border:1px solid var(--line);border-radius:5px;padding:0 5px;background:var(--bg);color:var(--ink)}
+.card{scroll-margin-top:70px}
+.card:target{box-shadow:0 0 0 3px var(--star)}
+/* mode test : seul le titre reste visible */
+body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:blur(8px);user-select:none}
+body.hide .card.show .def .d,body.hide .card.show .def .from,body.hide .card.show .fm,body.hide .card.show .x{filter:none;user-select:auto}
+@media (max-width:600px){.mnemo ul{columns:1}.x{padding:10px 16px 14px}}
+@media print{body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:none}}
+
+/* Traits pleins fins à l'intérieur, cadre plus marqué */
+:root{--frame:#b9c0cc}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--frame:#4a5263}}
+:root[data-theme="dark"]{--frame:#4a5263}
+.card{border:2px solid var(--frame)!important}
+.card.derived{border:2px solid var(--ded)!important}
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.x{border-top:1px solid var(--line)!important}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px solid var(--line)!important}
+}
+
+/* Traits intérieurs un peu plus épais */
+.fm,.card.derived .fm{border-left:1.5px solid var(--frame)!important;border-top:0!important}
+.x{border-top:1.5px solid var(--frame)!important}
+@media (max-width:600px){.fm,.card.derived .fm{border-left:0!important;border-top:1.5px solid var(--frame)!important}}
+
+/* Cadre d'épaisseur identique sur les 4 côtés */
+.card{box-shadow:0 6px 14px -10px rgba(29,35,48,.28)!important}
+
+/* Mobile : carte empilée comme la page épurée (évite le trait doublé en haut de la formule) */
+@media (max-width:600px){.card{grid-template-columns:1fr!important}}
+
+/* Fractions : numérateur au-dessus du dénominateur */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor;padding-bottom:.08em}
+.frac>span:last-child{padding-top:.08em}
+
+/* Arbre : formule de base → formules déduites (comme la page arbre) */
+.grp{margin-bottom:28px}
+.grp .card{margin-bottom:0}
+.tree{list-style:none;margin:0 0 0 26px;padding:0}
+.tree > li{position:relative;padding:12px 0 0 30px}
+.tree > li::before{content:"";position:absolute;left:0;top:0;bottom:0;border-left:2px solid var(--ded)}
+.tree > li:last-child::before{bottom:auto;height:36px}
+.tree > li::after{content:"";position:absolute;left:0;top:36px;width:24px;border-top:2px solid var(--ded)}
+.tree .card{box-shadow:none!important}
+.tree .card .f{font-size:1.18rem}
+body.stars .grp:not(.gstar){display:none}
+body.stars .tree{display:none}
+body.base .tree{display:none}
+@media (max-width:600px){
+  .tree{margin-left:12px}
+  .tree > li{padding-left:22px}
+  .tree > li::after{width:18px}
+}
+
+/* Singe = bascule vers la vue épurée floutée (définition → formule) */
+body.hide .x,body.hide .chain,body.hide .mnemo,body.hide .legend,body.hide .from{display:none}
+body.hide .def .d{filter:none!important;user-select:auto}
+body.hide .fm{filter:none!important}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+@media (prefers-reduced-motion:no-preference){.fm .f,.fm .u{transition:filter .2s}}
+.nw{white-space:nowrap}
+.nuc{display:inline-flex;flex-direction:column;align-items:flex-end;vertical-align:middle;font-size:.58em;line-height:1.05;margin-right:.1em}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Effets biologiques des rayonnements ionisants : les formules</h1>
+<p class="sub">M1 · Biophysique Appliquée · formules expliquées</p>
+<div class="legend"><span class="s">★</span> = tombée au concours (d'après la fiche de cours) · <span class="s">★★★</span> = la plus fréquente · <span style="color:var(--ded);font-weight:700">🔁</span> = formule déduite d'une autre (cadre vert)</div>
+<div class="toolbar" role="toolbar" aria-label="Options">
+  <a href="formules-effets-biologiques.html" style="font-size:.88rem;font-weight:600;text-decoration:none;color:var(--ink);border:1.5px solid var(--line);padding:6px 11px;border-radius:999px">← Tableau des formules</a>
+  <button id="bHide" aria-pressed="false">🙈 Réviser (vue épurée)</button>
+  <button id="bStars" aria-pressed="false"><span class="s">★</span> Concours</button>
+  <button id="bBase" aria-pressed="false">Sans les déduites</button>
+  <span class="count" id="count"></span>
+</div>
+<p class="hint">Vue épurée : touche une carte pour révéler la formule. Retouche 🙈 pour revenir aux explications.</p>
+<div class="chain">Le fil qui relie tout : <span class="f">D = dE/dm</span> (Gy) → × W<sub>R</sub> (rayonnement) : <span class="f">H<sub>t</sub> = W<sub>r</sub> × D<sub>tr</sub></span> (Sv) → × W<sub>T</sub> (tissu) : <span class="f">E = Σ W<sub>T</sub> × H<sub>t</sub></span> (Sv) → côté cellules : <span class="f">D<sub>0</sub></span> (37 %) et <span class="f">D<sub>50</sub> = D<sub>0</sub> × log 2</span>.</div>
+
+<div class="mnemo">
+  <strong>Moyens mnémotechniques</strong>
+  <ul>
+    <li><b>Gray</b> = dose absorbée (physique) ; <b>Sievert</b> = doses pondérées (équivalente, efficace).</li>
+    <li>W<b>R</b> = <b>R</b>ayonnement ; W<b>T</b> = <b>T</b>issu.</li>
+    <li>1 Gy = 1 J/<b>kg</b> = 100 rad.</li>
+    <li>W<sub>R</sub> : photons et β = 1 ; protons = 5 ; neutrons 5-20 ; α = 20.</li>
+    <li>W<sub>T</sub> : gonades 0,20 en tête ; os et peau 0,01 ; total = 1.</li>
+    <li>D<sub>0</sub> = D<sub>37</sub> ; D<sub>50</sub> = moitié des cellules.</li>
+    <li>Irradiation homogène du corps entier : E = H<sub>t</sub> (car Σ W<sub>T</sub> = 1).</li>
+    <li>D<sub>50</sub> = D<sub>0</sub> × log 2.</li>
+  </ul>
+</div>
+
+<main id="main"></main>
+<footer style="margin-top:30px;color:var(--muted);font-size:.8rem;text-align:center">Source : fiche de cours Médisup Tours/Orléans 2026-2027 + annales classées corrigées.</footer>
+</div>
+<script>
+const S = n => n ? '<span class="s">' + '★'.repeat(n) + '</span>' : '';
+const H = steps => `<div class="ded"><strong>🔁 Comment la retrouver</strong><ol>${steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>`;
+const fr=(n,d)=>`<span class='frac'><span>${n}</span><span>${d}</span></span>`;
+const nuc=(a,z,s='')=>`<span class='nw'><span class='nuc'><span>${a}</span><span>${z}</span></span>${s}</span>`;
+const data = [
+ {id:"A", title:"Dose absorbée", pages:"p.5", rows:[
+  {k:"D", st:1, q:"Dose absorbée", d:"Quantité d'énergie cédée par unité de masse de matière",
+   f:"D = "+fr("dE","dm"), u:"SI : <b>J.kg<sup>−1</sup></b> · unité usuelle : <b>Gray</b>",
+   x:"<p>Valable <b>quelle que soit la nature du rayonnement</b> et celle de la matière absorbante : elle mesure seulement l'énergie déposée.</p><span class='trap'>SI : joule par <b>kilogramme</b>, pas par gramme ; unité usuelle : Gray, pas Sievert (annale 2020).</span>"},
+  {k:"Gy", st:0, q:"Conversions de la dose", d:"3 unités",
+   f:"1 Gy = 1 J.kg<sup>−1</sup> = 100 rad", u:"Rad = ancienne unité",
+   x:"<p>Le Gray est simplement le J/kg ; le rad vaut un centième de Gray.</p><span class='tip'>Annale 2018 : 1 Gy = 1 J absorbé par 1 kg de matière.</span>"},
+  {k:"Dp", st:0, q:"Débit de dose absorbée", d:"",
+   f:"débit = "+fr("dose absorbée","unité de temps"), u:"",
+   x:"<p>À dose égale, plus l'exposition est <b>courte</b> (débit élevé), plus les effets sont destructeurs.</p>"}
+ ]},
+ {id:"B", title:"Pondérations : dose équivalente et efficace", pages:"p.6-8", rows:[
+  {k:"Wr", st:0, q:"Facteur de pondération radiologique W<sub>R</sub>", d:"Efficacité d'un rayonnement à produire une complication (EBR)",
+   f:"X, γ : 1 · β<sup>+/−</sup> : 1 · protons : 5 · neutrons : 5 à 20 · α et noyaux lourds : 20", u:"β : sauf électrons Auger · neutrons : selon l'énergie",
+   x:"<p>W<sub>R</sub> = rapport des doses nécessaires pour obtenir le <b>même effet biologique</b> ; il dépend essentiellement du <b>TLE</b>.</p><span class='tip'>α = 20 : 20 fois plus « nocif » qu'un photon à dose égale.</span>"},
+  {k:"Ht", st:1, q:"Dose équivalente (un rayonnement)", d:"Dose absorbée pondérée par la nature du rayonnement",
+   f:"H<sub>t</sub> = W<sub>r</sub> × D<sub>tr</sub>", u:"D<sub>tr</sub> = dose moyenne absorbée par le tissu en <b>Gy</b> · H<sub>t</sub> en <b>Sievert (Sv)</b>",
+   x:"<p>Tient compte du <b>pouvoir d'ionisation</b>. Évalue la probabilité d'apparition d'<b>effets stochastiques</b>.</p><span class='trap'>Le facteur est lié à la nature du <b>rayonnement</b>, pas du tissu (annale 2023).</span>"},
+  {k:"HtS", der:["Ht"], q:"Dose équivalente (plusieurs rayonnements)", d:"",
+   f:"H<sub>t</sub> = Σ<sub>r</sub> W<sub>r</sub> × D<sub>tr</sub>", u:"",
+   x:"<p>Chaque rayonnement apporte sa contribution pondérée : on les additionne.</p>"
+   + H(["Calcule W<sub>r</sub> × D<sub>tr</sub> pour chaque rayonnement r.","Additionne toutes les contributions."])},
+  {k:"Wt", st:0, q:"Facteur de pondération tissulaire W<sub>T</sub>", d:"Radiosensibilité de chaque tissu",
+   f:"gonades : 0,20 · moelle, côlon, poumons, estomac : 0,12 · seins, vessie, foie, œsophage, thyroïde : 0,05 · os, peau : 0,01", u:"Reste de l'organisme : <b>0,05</b>",
+   x:"<p>La probabilité de complications tardives dépend de la <b>sensibilité intrinsèque</b> du tissu, pas seulement de la dose et du rayonnement.</p><span class='tip'>Les <b>gonades</b> en tête (0,20), <b>os et peau</b> en bas (0,01).</span>"},
+  {k:"sWt", st:0, q:"Somme des W<sub>T</sub>", d:"",
+   f:"Σ W<sub>T</sub> = 1,00", u:"",
+   x:"<p>Les facteurs tissulaires se répartissent le « corps entier » : leur total vaut 1.</p>"},
+  {k:"E", st:0, q:"Dose efficace", d:"Dose absorbée pondérée par W<sub>R</sub> et W<sub>T</sub>",
+   f:"E = Σ<sub>T</sub> (W<sub>T</sub> × H<sub>t</sub>)", u:"H<sub>t</sub> = dose équivalente reçue par le tissu en Sv · E en <b>Sievert (Sv)</b>",
+   x:"<p><b>Dose fictive</b> qui, administrée de façon homogène au corps entier, entraînerait les mêmes dommages tardifs que l'ensemble des doses reçues. Objectif : apprécier le <b>détriment global</b> (effets stochastiques).</p>"},
+  {k:"Efull", der:["E","HtS"], q:"Dose efficace à partir des doses absorbées", d:"",
+   f:"E = Σ<sub>T</sub> W<sub>T</sub> × Σ<sub>r</sub> W<sub>r</sub> × D<sub>tr</sub>", u:"",
+   x:"<p>Montre la double pondération : d'abord le rayonnement, ensuite le tissu.</p>"
+   + H(["Pars de E = Σ<sub>T</sub> (W<sub>T</sub> × H<sub>t</sub>).","Remplace H<sub>t</sub> par Σ<sub>r</sub> W<sub>r</sub> × D<sub>tr</sub>."])},
+  {k:"Ehom", der:["E","sWt"], q:"Irradiation homogène du corps entier", d:"Même H<sub>t</sub> pour tous les tissus",
+   f:"E = H<sub>t</sub>", u:"",
+   x:"<p>C'est cohérent avec la définition de la dose efficace comme dose « corps entier ».</p>"
+   + H(["Si H<sub>t</sub> est le même partout : E = H<sub>t</sub> × Σ W<sub>T</sub>.","Or Σ W<sub>T</sub> = 1, donc E = H<sub>t</sub>."])}
+ ]},
+ {id:"C", title:"Survie cellulaire", pages:"p.8", rows:[
+  {k:"D0", st:0, q:"Dose létale moyenne D<sub>0</sub>", d:"= D<sub>37</sub>",
+   f:"D<sub>0</sub> : survie de "+fr("1","e")+" ≈ 37 % des cellules", u:"",
+   x:"<p>Définie sur la <b>courbe de survie</b> (fraction S de cellules survivantes en fonction de la dose), une courbe <b>exponentielle avec épaulement</b>.</p><span class='trap'>D<sub>0</sub> laisse survivre 37 %, pas 50 % (annale LAS 2021).</span>"},
+  {k:"D50", st:0, q:"Dose D<sub>50</sub>", d:"Laisse survivre la moitié des cellules",
+   f:"D<sub>50</sub> = D<sub>0</sub> × log 2", u:"",
+   x:"<p>Relie les deux doses remarquables de la courbe de survie. Les deux sont d'autant plus élevées que les cellules sont <b>radio-résistantes</b> (★).</p><span class='trap'>La fiche écrit « log 2 » : dans ce contexte exponentiel, il s'agit du logarithme népérien (ln 2 ≈ 0,69), à confirmer avec ton enseignant.</span>"}
+ ]}
+];
+
+
+const code={}, gives={};
+data.forEach(sec=>sec.rows.forEach((r,i)=>{code[r.k]=sec.id+(i+1);}));
+data.forEach(sec=>sec.rows.forEach(r=>(r.der||[]).forEach(p=>{(gives[p]=gives[p]||[]).push(r.k);})));
+const chip=k=>`<a class="chip" href="#r-${code[k]}">${code[k]}</a>`;
+const refs=t=>t.replace(/@(\w+)/g,(m,k)=>code[k]?chip(k):m);
+const main=document.getElementById('main');
+let total=0,starred=0,derived=0;
+const cardHTML=(r,extra='')=>{
+  const from=r.der?`<span class="from">🔁 Déduite de ${r.der.map(chip).join(' ')}</span>`:'';
+  return `<div class="card${r.st?' starred':''}${r.der?' derived':''}" id="r-${code[r.k]}" tabindex="0">
+      <div class="def"><div class="top"><span class="code">${code[r.k]}</span>${S(r.st)}${r.der?'<span class="tag">🔁</span>':''}</div>
+      <div class="q">${r.q}</div>${r.d?`<div class="d">${r.d}</div>`:''}${from}</div>
+      <div class="fm"><span class="f">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div>
+      <div class="x">${refs(r.x)}</div></div>`;
+};
+data.forEach(sec=>{
+  let h=`<section id="${sec.id}"><h2>${sec.id} · ${sec.title} <small style="opacity:.85;font-weight:600">${sec.pages}</small></h2>`;
+  const groups=[];
+  sec.rows.forEach(r=>{ if(r.der&&groups.length) groups[groups.length-1].kids.push(r); else groups.push({r,kids:[]}); });
+  groups.forEach(({r,kids})=>{
+    total++; if(r.st)starred++;
+    h+=`<div class="grp${r.st?' gstar':''}">`+cardHTML(r);
+    if(kids.length){ h+=`<ul class="tree">`+kids.map(k=>{total++;derived++;return `<li>${cardHTML(k)}</li>`;}).join('')+`</ul>`; }
+    h+=`</div>`;
+  });
+  main.insertAdjacentHTML('beforeend',h+'</section>');
+});
+const B=document.body.classList,count=document.getElementById('count');
+const upd=()=>{count.textContent=B.contains('stars')?`${starred} ★`:B.contains('base')?`${total-derived} formules`:`${total} formules`;};
+upd();
+const tog=(id,c)=>{const b=document.getElementById(id);b.addEventListener('click',()=>{const on=B.toggle(c);b.setAttribute('aria-pressed',on);upd();if(c==='hide')document.querySelectorAll('.card.show').forEach(x=>x.classList.remove('show'));});};
+tog('bHide','hide');document.getElementById('bHide').addEventListener('click',()=>window.scrollTo({top:0}));tog('bStars','stars');tog('bBase','base');
+const flip=ev=>{if(ev.target.closest('a'))return;const c=ev.target.closest('.card');if(c&&B.contains('hide'))c.classList.toggle('show');};
+main.addEventListener('click',flip);
+main.addEventListener('keydown',ev=>{if(ev.target.classList.contains('card')&&(ev.key==='Enter'||ev.key===' ')){ev.preventDefault();flip(ev);}});
+
+</script>
+</body>
+</html>

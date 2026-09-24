@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules en 2 colonnes — Noyaux et rayonnements</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff;--ink:#1d2330;--muted:#5b6474;--line:#e3e6ec;--frame:#b9c0cc;--star:#e8a900;--starbg:#fff6d6;--ded:#3f9a6a;
+--A:#2f86a8;--B:#d0632e;--C:#c9971c;--D:#6f5aa8;--E:#a64b4b;--F:#b0527f}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.35}
+.wrap{max-width:820px;margin:0 auto;padding:16px 12px 40px}
+h1{font-size:1.4rem;margin:0 0 10px;font-weight:800}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:6px 0 8px;z-index:2;display:flex;gap:8px;align-items:center}
+.bar button{font:inherit;font-size:.9rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+.bar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.bar button:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.bar span{font-size:.8rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;border:2px solid var(--frame)}
+th{text-align:left;font-size:.78rem;color:var(--muted);font-weight:700;padding:6px 10px;border-bottom:2px solid var(--frame)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+td.d{width:42%;font-weight:700;font-size:.95rem;border-right:1.5px solid var(--frame)}
+td.d .s{color:var(--star);font-size:.8rem;margin-left:4px;white-space:nowrap}
+td.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.12rem}
+td.f .u{display:block;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.82rem;color:var(--muted);margin-top:2px}
+td.f .u b{color:var(--ink)}
+tr.sec td{background:var(--c);color:#fff;font-weight:800;font-size:.95rem;padding:6px 10px;border-bottom:0}
+tr.der td.d{padding-left:24px;color:var(--ded);font-weight:600;font-size:.9rem}
+tr.der td.d::before{content:"↳ ";font-weight:800}
+tr.der td.f{font-size:1rem;color:var(--ded)}
+sub{font-size:.65em}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor}
+body.hide td.f .ft,body.hide td.f .u{filter:blur(7px)}
+body.hide tr:not(.sec){cursor:pointer}
+body.hide tr.show td.f .ft,body.hide tr.show td.f .u{filter:none}
+@media (prefers-reduced-motion:no-preference){.ft,.u{transition:filter .2s}}
+@media (max-width:480px){td{padding:8px 7px}td.d{font-size:.88rem}td.f{font-size:1rem}tr.der td.d{padding-left:16px}}
+@media print{.bar{display:none}body.hide .ft,body.hide .u{filter:none}tr{break-inside:avoid}}
+
+/* ---- Mise en page soignée ---- */
+body{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0)}
+.wrap{max-width:860px;padding:22px 14px 50px}
+.top{padding:4px 2px 6px}
+.kicker{margin:0;font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--muted)}
+.top h1{font-size:1.9rem;margin:2px 0 4px;letter-spacing:-.01em}
+.meta{margin:0;font-size:.88rem;color:var(--muted)}
+.meta .s{color:var(--star)} .meta .g{color:var(--ded);font-weight:800}
+.bar{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0);padding:10px 0}
+.bar button{background:var(--bg);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.cols{display:grid;grid-template-columns:42% 58%;font-size:.72rem;font-weight:700;letter-spacing:.03em;color:var(--muted);padding:4px 16px 6px}
+.blk{background:var(--bg);border-radius:16px;margin:0 0 22px;overflow:hidden;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25);border:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.blk header{display:flex;align-items:center;gap:10px;padding:12px 16px;font-weight:800;font-size:1.02rem;color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--bg));border-bottom:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.letter{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--c);color:#fff;font-size:.95rem}
+.row{display:grid;grid-template-columns:42% 58%;align-items:stretch;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .d{padding:12px 12px 12px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.code{font-size:.72rem;font-weight:800;color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg));border-radius:5px;padding:1px 6px}
+.name{font-weight:700;font-size:.95rem;flex-basis:100%}
+.row .d .s{color:var(--star);font-size:.82rem;letter-spacing:1px}
+.row .f{padding:12px 16px;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line));display:flex;flex-direction:column;justify-content:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.2rem}
+.row .f .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px;line-height:1.3}
+.row .f .u b{color:var(--c)}
+.row.star .d{background:linear-gradient(90deg,var(--starbg),transparent 75%)}
+.row.der .d{padding-left:30px;position:relative}
+.row.der .d::before{content:"↳";position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ded);font-weight:800}
+.row.der .name{color:var(--ded);font-weight:600;font-size:.9rem}
+.row.der .code{color:var(--ded);background:color-mix(in srgb,var(--ded) 12%,var(--bg))}
+.row.der .f{font-size:1.05rem;color:var(--ded);background:color-mix(in srgb,var(--ded) 6%,var(--bg))}
+body.hide .ft,body.hide .u{filter:blur(7px);user-select:none}
+body.hide .row{cursor:pointer}
+body.hide .row.show .ft,body.hide .row.show .u{filter:none}
+.row:focus-visible{outline:3px solid var(--star);outline-offset:-3px}
+@media (max-width:480px){
+  .cols,.row{grid-template-columns:44% 56%}
+  .row .d{padding:10px 8px 10px 12px}.row .f{padding:10px 12px;font-size:1.05rem}
+  .name{font-size:.88rem}.row.der .d{padding-left:24px}.row.der .d::before{left:8px}
+  .top h1{font-size:1.6rem}
+}
+@media print{body{background:#fff}.blk{box-shadow:none;break-inside:avoid}}
+
+
+/* Option 1 : groupe encadré (formule mère + filles dans une bande verte) */
+.grp{border-top:1px solid var(--line)}
+.grp:first-child{border-top:0}
+.grp > .row{border-top:0}
+.kids{background:color-mix(in srgb,var(--ded) 13%,var(--bg));padding:8px 10px 10px;display:flex;flex-direction:column;gap:7px;border-top:1px solid color-mix(in srgb,var(--ded) 30%,var(--line))}
+.kids .row{border:1px solid color-mix(in srgb,var(--ded) 30%,var(--line));border-radius:10px;overflow:hidden;background:var(--bg);grid-template-columns:calc(42% - 4px) auto}
+.kids .row .d{padding:9px 10px}
+.kids .row .f{background:color-mix(in srgb,var(--ded) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--ded) 25%,var(--line))}
+.row.der .d{padding-left:10px}
+.row.der .d::before{content:none}
+@media (max-width:480px){.kids{padding:7px 7px 8px}.kids .row .d{padding:8px}}
+
+/* Formules déduites : mêmes couleurs que les autres (seul le regroupement les distingue) */
+.kids{background:color-mix(in srgb,var(--ink) 5%,var(--bg));border-top:1px solid var(--line)}
+.kids .row{border-color:var(--line)}
+.row.der .name{color:var(--ink);font-weight:700;font-size:.95rem}
+.row.der .code{color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg))}
+.row.der .code::before{content:none}
+.row.der .f,.kids .row .f{color:var(--ink);font-size:1.2rem;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line))}
+@media (max-width:480px){.row.der .f,.kids .row .f{font-size:1.05rem}.row.der .name{font-size:.88rem}}
+
+/* Comme la page explication : filles décalées, reliées par un trait à leur formule mère */
+.kids{background:transparent;border-top:0;padding:0 12px 14px 38px;gap:10px;position:relative}
+.kids .row{position:relative;overflow:visible;border:1.5px solid color-mix(in srgb,var(--ded) 60%,var(--line));border-radius:10px;background:var(--bg)}
+.kids .row .d{border-radius:9px 0 0 9px}
+.kids .row .f{border-radius:0 9px 9px 0}
+.kids .row::before{content:"";position:absolute;left:-24px;top:-12px;bottom:-12px;border-left:2px solid var(--ded)}
+.kids .row:first-child::before{top:-2px}
+.kids .row:last-child::before{bottom:50%}
+.kids .row::after{content:"";position:absolute;left:-24px;top:50%;width:22px;border-top:2px solid var(--ded)}
+.grp:has(.kids) > .row{border-bottom:0}
+.from{flex-basis:100%;font-size:.76rem;font-weight:700;color:var(--ded)}
+.from b{font-weight:800}
+@media (max-width:480px){
+  .kids{padding:0 8px 12px 28px}
+  .kids .row::before,.kids .row::after{left:-18px}
+  .kids .row::after{width:16px}
+}
+
+/* Colonnes alignées partout + petit espace entre formules principales + cadres déduits plus étroits */
+.blk{container-type:inline-size}
+.row{grid-template-columns:42cqw minmax(0,1fr)!important}
+.kids .row{grid-template-columns:calc(42cqw - 39.5px) minmax(0,1fr)!important}
+.cols{grid-template-columns:42% 58%}
+.rows{display:flex;flex-direction:column;gap:6px;background:color-mix(in srgb,var(--ink) 6%,var(--bg))}
+.grp{border-top:0!important;background:var(--bg)}
+.kids{padding:0 34px 14px 38px}
+@media (max-width:480px){
+  .kids{padding:0 22px 12px 38px}
+  .kids .row::before,.kids .row::after{left:-24px}
+  .kids .row::after{width:22px}
+}
+.from{white-space:nowrap;font-size:.7rem}
+@media (max-width:480px){.kids .row .d{padding:8px 6px 8px 8px}}
+
+/* Tableau neutre (mode singe) : sans sections, sans codes, sans étoiles, mélangé */
+.neutral{--c:var(--muted);border-color:var(--line)}
+.neutral .row .f{background:color-mix(in srgb,var(--ink) 4%,var(--bg));border-left:1px solid var(--line)}
+.neutral .row .u b{color:var(--ink)}
+.neutral .row .u [style]{color:inherit!important}
+.qbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin:0 0 10px;font-size:.85rem;color:var(--muted)}
+.qbar button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer}
+[hidden]{display:none!important}
+body.hide .meta{display:none}
+
+/* ---- Mode entraînement (singe) ---- */
+.qhead{background:var(--bg);border-radius:16px;padding:14px 16px;margin:0 0 16px;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25)}
+.qtop{display:flex;justify-content:space-between;align-items:baseline}
+.qtitle{font-weight:800;font-size:1.1rem}
+.qcount{font-size:.85rem;color:var(--muted);font-weight:600}
+.prog{height:8px;border-radius:99px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));margin:10px 0 12px;overflow:hidden}
+.prog span{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#f5c542,var(--star));transition:width .3s}
+.qbtns{display:flex;gap:8px;flex-wrap:wrap}
+.qbtns button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 13px;border-radius:999px;cursor:pointer}
+.qlist{display:flex;flex-direction:column;gap:10px;container-type:inline-size}
+.qc{display:grid;grid-template-columns:42cqw minmax(0,1fr);background:var(--bg);border-radius:14px;overflow:hidden;cursor:pointer;
+  border:1px solid var(--line);box-shadow:0 1px 2px rgba(20,30,50,.05),0 6px 16px -10px rgba(20,30,50,.3);transition:transform .15s}
+.qc:active{transform:scale(.99)}
+.qc:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.qc.star{border-color:color-mix(in srgb,var(--star) 45%,var(--line))}
+.qd{padding:12px 12px 12px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.qc.star .qd{background:linear-gradient(90deg,var(--starbg),transparent 85%)}
+.qn{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:7px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));color:var(--muted);font-size:.75rem;font-weight:800}
+.qs{color:var(--star);font-size:.85rem;letter-spacing:1px}
+.qq{flex-basis:100%;font-weight:700;font-size:.95rem}
+.qf{position:relative;padding:12px 14px;background:color-mix(in srgb,var(--ink) 3.5%,var(--bg));border-left:1px solid var(--line);display:flex;align-items:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.15rem}
+.qans{display:flex;flex-direction:column;filter:blur(8px);opacity:.6;transition:filter .25s,opacity .25s;user-select:none}
+.qans .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px}
+.qans .u b,.qans .u [style]{color:var(--ink)!important}
+.qhint{position:absolute;inset:0;display:grid;place-items:center;font-family:"Source Sans 3",system-ui,sans-serif;font-size:.8rem;font-weight:700;color:var(--muted)}
+.qc.show .qans{filter:none;opacity:1;user-select:auto}
+.qc.show .qhint{display:none}
+.qc.show .qf{background:color-mix(in srgb,#3f9a6a 7%,var(--bg))}
+.qc.show .qn{background:#3f9a6a;color:#fff}
+@media (max-width:480px){.qf{font-size:1.02rem;padding:10px 12px}.qq{font-size:.88rem}}
+body.hide .qc .ft,body.hide .qc .u{filter:none!important;user-select:auto}
+.bar{flex-wrap:wrap}
+.blink{font-size:.9rem;font-weight:600;text-decoration:none;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);padding:6px 12px;border-radius:999px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.blink:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.nw{white-space:nowrap}
+.nuc{display:inline-flex;flex-direction:column;align-items:flex-end;vertical-align:middle;font-size:.58em;line-height:1.05;margin-right:.1em}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><p class="kicker">M1 · Biophysique Appliquée</p><h1>Noyaux et rayonnements</h1><p class="meta">33 formules · <span class="s">★</span> tombées au concours · <span class="g">🔁</span> formules déduites, reliées à leur formule de base</p></header>
+<div class="bar"><button id="bHide" aria-pressed="false">🙈 Cacher les formules</button><a class="blink" href="formules.html" style="margin-left:auto">← Cours</a><a class="blink" href="formules-noyaux-explications.html">📖 Explications</a></div>
+<div class="cols"><span>Définition</span><span>Formule · unité · constante</span></div><div id="tb"></div>
+<div id="quiz" hidden>
+<div class="qhead"><div class="qtop"><span class="qtitle">Entraînement</span><span id="qcount" class="qcount"></span></div>
+<div class="prog"><span id="qbar"></span></div>
+<div class="qbtns"><button id="bShuffle">🔀 Mélanger</button><button id="bReset">🙈 Tout recacher</button></div></div>
+<div id="qrows" class="qlist"></div></div>
+</div>
+<script>
+const H=()=>'';
+const fr=(n,d)=>`<span class='frac'><span>${n}</span><span>${d}</span></span>`;
+const nuc=(a,z,s='')=>`<span class='nw'><span class='nuc'><span>${a}</span><span>${z}</span></span>${s}</span>`;
+const data = [
+ {id:"A", title:"Noyau, masses et unités", pages:"p.2-6", rows:[
+  {k:"AZN", st:0, q:"Nombre de masse", d:"Symbole "+nuc("A","Z","X")+"<sup>N</sup>",
+   f:"A = Z + N", u:"A = nombre de <b>nucléons</b> · Z = numéro atomique = nb de <b>protons</b> = nb d'électrons · N = nb de <b>neutrons</b>",
+   x:"<p>Z caractérise l'<b>élément chimique</b> ; le couple (A, Z) caractérise un <b>nucléide</b> (340 naturels, 1500 connus).</p><span class='tip'><b>A</b> en h<b>A</b>ut, <b>Z</b> en bas (Z comme « zéro étage »).</span>"},
+  {k:"N", der:["AZN"], q:"Nombre de neutrons", d:"",
+   f:"N = A − Z", u:"",
+   x:"<p>Le calcul de base de tous les exercices sur les noyaux.</p><span class='tip'>Annale 2019 : iode 123, Z = 53 → N = 70.</span>"
+   + H(["Pars de A = Z + N.","Soustrais Z des deux côtés."])},
+  {k:"e", st:0, q:"Charge élémentaire", d:"",
+   f:"e = 1,6.10<sup>−19</sup> C", u:"Électron : <b>−e</b> · proton : <b>+e</b>",
+   x:"<p>Autant de protons que d'électrons : la charge totale de l'atome est <b>nulle</b>.</p>"},
+  {k:"uma", st:0, q:"Unité de masse atomique", d:"Masse de référence (notée μ ou u.m.a)",
+   f:"1 u.m.a = "+fr("1","12")+" masse du noyau de <sup>12</sup>C = 1,6605.10<sup>−27</sup> kg", u:"Exprimée en grammes, l'u.m.a est l'<b>inverse du nombre d'Avogadro</b>",
+   x:"<p>Tous les nucléons ont une masse ≈ 1 u.m.a.</p><span class='tip'>Annale 2018 : l'u.m.a correspond au <b>douzième</b> de la masse d'un atome de carbone 12.</span>"},
+  {k:"mass", st:0, q:"Masses des particules", d:"Répartition hétérogène",
+   f:"m<sub>p</sub> = 1,6723.10<sup>−27</sup> kg · m<sub>n</sub> = 1,6747.10<sup>−27</sup> kg · m<sub>e</sub> = 9,11.10<sup>−31</sup> kg", u:"Électron <b>1840 fois</b> plus léger qu'un nucléon",
+   x:"<p>La masse d'un atome ≈ la masse de ses nucléons (<b>99,75 %</b>).</p>"},
+  {k:"M", st:0, q:"Masse du noyau", d:"Inférieure à la masse des nucléons séparés",
+   f:"M(A,Z) = Z m<sub>p</sub> + N m<sub>n</sub> − δm", u:"δm = <b>défaut de masse</b> · m<sub>p</sub>, m<sub>n</sub> = masses du proton et du neutron",
+   x:"<p>Quand le noyau se forme, une partie de la masse des nucléons est <b>transformée en énergie de liaison</b>.</p><span class='tip'>Annale 2019 : Σ nucléons de l'iode 123 = 53 × 1,008 + 70 × 1,009 = 124,054 uma.</span>"},
+  {k:"dm", der:["M"], q:"Défaut de masse", d:"",
+   f:"δm = Z m<sub>p</sub> + N m<sub>n</sub> − M(A,Z)", u:"",
+   x:"<p>C'est la masse « manquante » : elle représente l'énergie nécessaire pour séparer les nucléons.</p>"
+   + H(["Pars de M(A,Z) = Z m<sub>p</sub> + N m<sub>n</sub> − δm.","Isole δm."])}
+ ]},
+ {id:"B", title:"Énergie et liaison", pages:"p.7-10", rows:[
+  {k:"eV", st:0, q:"Électron-volt", d:"Énergie d'un électron soumis à 1 V",
+   f:"1 eV = 1,602.10<sup>−19</sup> J", u:"eV : lumière visible · keV : RX · MeV : γ et α",
+   x:"<p>Le joule est l'unité SI, mais l'électron-volt est l'unité usuelle en physique atomique.</p><span class='tip'>Origine des RX : électrons ; origine des γ et α : noyau.</span>"},
+  {k:"Emc", st:0, q:"Relation d'Einstein (1905)", d:"Équivalence masse-énergie",
+   f:"E = mc²", u:"c = <b>3.10<sup>8</sup> m/s</b>",
+   x:"<p>Une masse peut s'exprimer comme une énergie divisée par c² : d'où les masses en MeV/c².</p>"},
+  {k:"umaE", st:0, q:"Masses en MeV/c²", d:"",
+   f:"1 u.m.a = 931,502 MeV/c² · m<sub>e</sub> = 0,511 MeV/c²", u:"Proton ≈ 938 · neutron ≈ 940 · particule α ≈ 3727 MeV/c²",
+   x:"<p>Valeurs à connaître pour les QCM d'unités.</p><span class='tip'>Annale 2018 : 511 keV équivaut à la masse d'un électron.</span>"},
+  {k:"W", st:0, q:"Énergie de liaison des nucléons", d:"= énergie de cohésion",
+   f:"W = δm c²", u:"",
+   x:"<p>C'est E = mc² appliqué au défaut de masse (@dm) : l'énergie qu'il faut apporter pour « casser » le noyau.</p>"},
+  {k:"Wm", st:0, q:"Énergie moyenne de liaison par nucléon", d:"Pour comparer les noyaux entre eux",
+   f:"W̄ = "+fr("W","A"), u:"≈ <b>8 MeV/nucléon</b> pour la plupart des nucléides",
+   x:"<p>Un noyau est <b>d'autant plus stable</b> que W̄ est grande. Les noyaux légers et lourds ont une W̄ plus faible que les moyens (courbe d'Aston).</p><span class='tip'>Stables : W̄ &gt; 8 MeV/nucléon (20 &lt; A &lt; 190).</span>"},
+  {k:"A2Z", st:0, q:"Vallée de stabilité pour Z &lt; 20", d:"",
+   f:"N = Z donc A = 2 × Z", u:"Pour Z &gt; 20 : N &gt; Z et A ≈ 2,6 Z",
+   x:"<p>Ex. <sup>4</sup>He, <sup>12</sup>C, <sup>16</sup>O, <sup>40</sup>Ca.</p>"
+   + H(["Pour Z &lt; 20, N = Z.","A = Z + N = Z + Z = 2Z."])}
+ ]},
+ {id:"C", title:"Désintégrations radioactives", pages:"p.11-19", rows:[
+  {k:"alpha", st:0, q:"Désintégration alpha (α)", d:"Noyaux lourds : Z &gt; 82",
+   f:nuc("A","Z","X")+" → "+nuc("A<sub>1</sub>","Z−2","Y")+" + "+nuc("4","2","He"), u:"A = N + Z · A<sub>1</sub> = (N − 2) + (Z − 2) · émission d'un noyau d'hélium · <b>non isobarique</b>",
+   x:"<p>Le noyau trop « gros » se débarrasse de 2 protons et 2 neutrons. Spectre <b>discret</b> (raies, 3 à 9 MeV). Peu d'intérêt en imagerie (★★) : utilisé en <b>thérapie</b>.</p><span class='trap'>Alpha n'est pas isobarique : A change.</span>"},
+  {k:"A4", der:["alpha","AZN"], q:"Nombre de masse après une émission α", d:"",
+   f:"A<sub>1</sub> = A − 4", u:"",
+   x:"<p>Le noyau fils perd 4 nucléons et 2 protons.</p>"
+   + H(["A<sub>1</sub> = (N − 2) + (Z − 2).","= (N + Z) − 4 = A − 4."])},
+  {k:"bm", st:1, q:"Désintégration bêta moins (β<sup>−</sup>)", d:"Excès de neutrons · généralement naturelle",
+   f:"n → p + e<sup>−</sup> + ν̄<sub>e</sub> · "+nuc("A","Z","X")+" → "+nuc("A","Z+1","Y")+"<sup>N−1</sup> + β<sup>−</sup> + ν̄<sub>e</sub>", u:"A constant : <b>isobarique</b> · émet un électron + un antineutrino",
+   x:"<p>Un neutron se transforme en proton : Z augmente de 1, A ne change pas. Ex. <sup>14</sup>C → <sup>14</sup>N.</p><span class='tip'>β<b>−</b> : on émet une charge −, donc Z <b>+</b>1.</span>"},
+  {k:"bp", st:1, q:"Désintégration bêta plus (β<sup>+</sup>)", d:"Excès de protons · énergie en excès ≥ 1,022 MeV",
+   f:"p → n + β<sup>+</sup> + ν<sub>e</sub> · "+nuc("A","Z","X")+" → "+nuc("A","Z−1","Y")+"<sup>N+1</sup> + β<sup>+</sup> + ν<sub>e</sub>", u:"<b>Isobarique</b> · émet un positon + un neutrino · généralement artificielle",
+   x:"<p>Un proton se transforme en neutron : Z diminue de 1. Intérêt médical : <b>TEP</b> (★), glucose marqué au <sup>18</sup>F.</p><span class='trap'>β<sup>−</sup> → <b>anti</b>neutrino ; β<sup>+</sup> → neutrino.</span>"},
+  {k:"Ebeta", st:0, q:"Partage de l'énergie bêta", d:"Répartition aléatoire",
+   f:"E = E<sub>β</sub> + E<sub>ν</sub>", u:"E<sub>β</sub> = 0 si tout part au (anti)neutrino · E<sub>β</sub> = E<sub>max</sub> si tout part au β",
+   x:"<p>Comme l'énergie se partage au hasard entre 2 particules, le spectre β est <b>continu</b> (contrairement à α et γ).</p>"},
+  {k:"Emoy", der:["Ebeta"], q:"Énergie moyenne des β", d:"Spectre continu",
+   f:"E<sub>moy</sub> = "+fr("E<sub>max</sub>","3"), u:"0 ≤ E<sub>β</sub> ≤ E<sub>max</sub> · E<sub>max</sub> : 10 keV à 3 MeV",
+   x:"<p>En moyenne, la particule β n'emporte qu'un tiers de l'énergie maximale.</p>"
+   + H(["E<sub>β</sub> varie de 0 à E<sub>max</sub> (@Ebeta).","Le spectre donne une valeur moyenne à E<sub>max</sub>/3."])},
+  {k:"ce", st:1, q:"Capture électronique (CE)", d:"Excès de protons · électron des couches K ou L",
+   f:"p + e<sup>−</sup> → n + ν<sub>e</sub> · "+nuc("A","Z","X")+" + e<sup>−</sup> → "+nuc("A","Z−1","Y")+"<sup>N+1</sup> + ν<sub>e</sub>", u:"<b>Isobarique</b> · une seule particule émise : le neutrino",
+   x:"<p>Le noyau « avale » un électron profond. La place vacante est comblée par un électron périphérique : émission de <b>RX</b> ou d'<b>électron Auger</b> (★).</p><span class='tip'>En compétition avec β<sup>+</sup> (★) : les lourds préfèrent la CE, les légers le β<sup>+</sup>. Fluor 18 : 97 % β<sup>+</sup>, 3 % CE.</span>"},
+  {k:"RX", der:["ce"], q:"Énergie du photon X après CE", d:"",
+   f:"E = hν = E<sub>K</sub> − E<sub>L</sub>", u:"Spectre de raies",
+   x:"<p>Un électron descend de la couche L vers la place vacante en K : la différence d'énergie part en photon X.</p><span class='trap'>Électron Auger : électron <b>périphérique</b> éjecté par ce photon X (annale 2025).</span>"
+   + H(["Après la CE, un électron L comble la place en K.","L'énergie libérée = différence entre les deux niveaux : E<sub>K</sub> − E<sub>L</sub>."])},
+  {k:"annih", st:0, q:"Annihilation du positon", d:"Avec un électron, après quelques mm",
+   f:"2 photons γ de 511 keV à 180°", u:"Base de la <b>TEP</b>",
+   x:"<p>Le positon épuise son énergie (durée de vie &lt; 10<sup>−9</sup> s) puis s'annihile : l'énergie totale = somme des masses de l'électron et du positon.</p>"},
+  {k:"seuil", der:["annih","umaE"], q:"Pourquoi 511 keV et 1,022 MeV", d:"",
+   f:"2 × 0,511 MeV = 1,022 MeV", u:"",
+   x:"<p>Chaque photon emporte l'énergie de masse d'un électron ; et un β<sup>+</sup> nécessite au moins l'énergie de 2 électrons.</p>"
+   + H(["m<sub>e</sub> = 0,511 MeV/c² = 511 keV.","Électron + positon = 2 × 511 keV = 1,022 MeV."])},
+  {k:"gam", st:1, q:"Énergie du photon γ (désexcitation)", d:"Sans modification de la structure du noyau",
+   f:"E<sub>γ</sub> = ΔE = E<sub>n</sub> − E<sub>f</sub>", u:"Spectre de raies · <b>60 keV à 3 MeV</b>",
+   x:"<p>Le photon γ vient du <b>noyau</b> (le X vient du cortège). En compétition avec la <b>conversion interne</b> (★) : l'énergie est alors transmise à un électron K éjecté.</p><span class='tip'>Désintégration = avec modification du noyau ; désexcitation = sans (annale 2023).</span>"}
+ ]},
+ {id:"D", title:"Décroissance et activité", pages:"p.20-21", rows:[
+  {k:"v", st:0, q:"Vitesse de désintégration", d:"Caractéristique du noyau",
+   f:"v(t) = λ.N(t) = −"+fr("dN","dt"), u:"N(t) = nombre de noyaux radioactifs · λ = constante radioactive en <b>s<sup>−1</sup></b> (probabilité de désintégration par unité de temps)",
+   x:"<p>Indépendante de l'état physique, de l'état chimique et de l'âge.</p>"},
+  {k:"Nt", st:0, q:"Décroissance exponentielle", d:"Nombre de noyaux au bout d'un temps t",
+   f:"N(t) = N<sub>0</sub>.e<sup>−λt</sup>", u:"N<sub>0</sub> = nombre initial de noyaux",
+   x:"<p>Le nombre de noyaux radioactifs diminue de façon exponentielle : la transformation est <b>inéluctable</b>.</p>"},
+  {k:"NT", der:["Nt"], q:"Au bout d'une période", d:"",
+   f:"N(T) = "+fr("N<sub>0</sub>","2"), u:"",
+   x:"<p>C'est la définition même de la période.</p>"
+   + H(["Pars de N(t) = N<sub>0</sub> e<sup>−λt</sup>.","À t = T : e<sup>−λT</sup> = e<sup>−ln2</sup> = 1/2."])},
+  {k:"T", st:2, q:"Période radioactive (demi-vie)", d:"Temps pour que le nombre de noyaux soit divisé par 2",
+   f:"T = "+fr("ln 2","λ")+" = "+fr("0,693","λ"), u:"Oxygène 15 : 2,05 min · uranium 238 : 4,5 milliards d'années",
+   x:"<p>T est <b>caractéristique du noyau</b> : de la fraction de seconde à des milliards d'années.</p><span class='trap'>Période physique = moitié des <b>noyaux désintégrés</b> (pas éliminés par l'organisme).</span>"},
+  {k:"A", st:1, q:"Activité", d:"Nombre de désintégrations par unité de temps",
+   f:"A(t) = λ.N(t) = "+fr("ln 2","T")+".N(t)", u:"<b>1 Bq = 1 désintégration/s</b> · 1 Ci = 37 GBq",
+   x:"<p>L'activité est <b>proportionnelle à N</b> et <b>inversement proportionnelle à T</b>.</p><span class='trap'>Becquerel = par <b>seconde</b>, pas par minute.</span>"},
+  {k:"At", der:["A","Nt"], q:"Décroissance de l'activité", d:"",
+   f:"A(t) = A<sub>0</sub>.e<sup>−λt</sup> = A<sub>0</sub>.e<sup>−("+fr("t","T")+")×ln 2</sup>", u:"A<sub>0</sub> = activité initiale",
+   x:"<p>L'activité suit la même exponentielle que le nombre de noyaux.</p><span class='tip'>Annale 2020 : 200 × e<sup>−(60/110)×ln2</sup> = 200 × 0,7 = 140 MBq.</span>"
+   + H(["A = λN et N = N<sub>0</sub> e<sup>−λt</sup>.","Donc A = λN<sub>0</sub> e<sup>−λt</sup> = A<sub>0</sub> e<sup>−λt</sup>.","Remplace λ par ln2/T."])},
+  {k:"AnT", st:2, q:"Activité après n périodes", d:"",
+   f:"A(nT) = "+fr("A<sub>0</sub>","2<sup>n</sup>"), u:"",
+   x:"<p>La plus utile en QCM : si l'activité est divisée par 2<sup>n</sup>, il s'est écoulé <b>n périodes</b>.</p><span class='tip'>÷ 8 = 2³ → 3 T ; ÷ 16 = 2⁴ → 4 T (annales 2024, 2025).</span>"},
+  {k:"Te", st:2, q:"Période effective", d:"Radionucléide introduit dans le corps",
+   f:fr("1","T<sub>e</sub>")+" = "+fr("1","T<sub>bio</sub>")+" + "+fr("1","T<sub>phy</sub>"), u:"T<sub>bio</sub> = élimination biologique · T<sub>phy</sub> = période physique",
+   x:"<p>L'activité dans l'organisme baisse pour deux raisons à la fois : désintégration <b>et</b> élimination. T<sub>e</sub> est donc <b>plus courte</b> que chacune des deux.</p><span class='trap'>On additionne les <b>inverses</b>, pas les périodes (annale 2020).</span>"},
+  {k:"Te2", der:["Te"], q:"Période effective calculée directement", d:"",
+   f:"T<sub>e</sub> = "+fr("T<sub>bio</sub> × T<sub>phy</sub>","T<sub>bio</sub> + T<sub>phy</sub>"), u:"",
+   x:"<p>« Produit sur somme » : plus rapide en QCM.</p><span class='tip'>Annale 2022 : (4,8 × 8) / (4,8 + 8) = 38,4 / 12,8 = <b>3 jours</b>.</span>"
+   + H(["Réduis au même dénominateur : 1/T<sub>e</sub> = (T<sub>phy</sub> + T<sub>bio</sub>) / (T<sub>bio</sub> × T<sub>phy</sub>).","Prends l'inverse des deux côtés."])}
+ ]}
+];
+
+
+
+const tb=document.getElementById('tb');let h='';
+const rowHTML=(r,code,par)=>`<div class="row${r.der?' der':''}${r.st?' star':''}" tabindex="0">
+      <div class="d"><span class="code">${code}</span>${par?`<span class="from">🔁 Déduite de <b>${par}</b></span>`:''}<span class="name">${r.q}</span>${r.st?`<span class="s">${'★'.repeat(r.st)}</span>`:''}</div>
+      <div class="f"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div></div>`;
+data.forEach(sec=>{
+  h+=`<section class="blk" style="--c:var(--${sec.id})"><header><span class="letter">${sec.id}</span>${sec.title}</header><div class="rows">`;
+  const groups=[];
+  sec.rows.forEach((r,i)=>{const c=sec.id+(i+1); if(r.der&&groups.length) groups[groups.length-1].kids.push([r,c]); else groups.push({r,c,kids:[]});});
+  groups.forEach(g=>{
+    h+=`<div class="grp">`+rowHTML(g.r,g.c);
+    if(g.kids.length) h+=`<div class="kids">`+g.kids.map(([r,c])=>rowHTML(r,c,g.c)).join('')+`</div>`;
+    h+=`</div>`;
+  });
+  h+=`</div></section>`;
+});
+tb.innerHTML=h;
+const b=document.getElementById('bHide'),quiz=document.getElementById('quiz'),qrows=document.getElementById('qrows');
+const all=[];data.forEach(sec=>sec.rows.forEach(r=>all.push(r)));
+const upd=()=>{const n=qrows.querySelectorAll('.qc.show').length,t=all.length;
+  document.getElementById('qcount').textContent=`${n} / ${t} révélées`;document.getElementById('qbar').style.width=(100*n/t)+'%';};
+const shuffle=()=>{
+  const a=all.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  qrows.innerHTML=a.map((r,i)=>`<div class="qc${r.st?' star':''}" tabindex="0">
+    <div class="qd"><span class="qn">${i+1}</span>${r.st?`<span class="qs">${'★'.repeat(r.st)}</span>`:''}<span class="qq">${r.q}</span></div>
+    <div class="qf"><div class="qans"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div><span class="qhint">👁 Révéler</span></div></div>`).join('');
+  upd();
+};
+document.getElementById('bShuffle').onclick=()=>{shuffle();window.scrollTo({top:0});};
+document.getElementById('bReset').onclick=()=>{qrows.querySelectorAll('.qc.show').forEach(c=>c.classList.remove('show'));upd();};
+b.onclick=()=>{
+  const on=document.body.classList.toggle('hide');b.setAttribute('aria-pressed',on);
+  b.textContent=on?'↩ Revenir à la page de référence':'🙈 Cacher les formules';
+  if(on)shuffle();
+  quiz.hidden=!on;tb.hidden=on;document.querySelector('.cols').hidden=on;
+  window.scrollTo({top:0});
+};
+const flip=e=>{const t=e.target.closest('.qc');if(t){t.classList.toggle('show');upd();}};
+qrows.addEventListener('click',flip);
+qrows.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip(e);}});
+</script>
+</body>
+</html>
