@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules — Énergie et équilibre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#ffffff; --ink:#1d2330; --muted:#5b6474; --line:#e3e6ec;
+  --star:#e8a900; --starbg:#fff6d6; --fbg:#f4f6fb; --ded:#3f9a6a; --dedbg:#eef6f1;
+  --A:#2f86a8; --B:#d0632e; --C:#c9971c; --D:#6f5aa8; --E:#a64b4b;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.4}
+.wrap{max-width:860px;margin:0 auto;padding:18px 14px 40px}
+h1{font-size:1.6rem;font-weight:800;margin:0}
+.sub{color:var(--muted);font-size:.9rem;margin:2px 0 0}
+.s{color:var(--star);letter-spacing:1px;white-space:nowrap}
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 0;margin:12px 0 4px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.toolbar button{font:inherit;font-size:.88rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 11px;border-radius:999px;cursor:pointer}
+.toolbar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.toolbar button:focus-visible,.card:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.count{margin-left:auto;color:var(--muted);font-size:.82rem}
+section{margin-top:22px}
+h2{font-size:1rem;margin:0 0 8px;padding:6px 12px;color:#fff;border-radius:6px}
+.card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:stretch;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.def{padding:10px 12px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.def .top{display:flex;gap:8px;align-items:baseline;font-size:.8rem;font-weight:800}
+.def .q{font-weight:700;font-size:1rem}
+.def .d{color:var(--muted);font-size:.86rem}
+.fm{background:var(--fbg);border-left:5px solid var(--sec);padding:12px 14px;display:flex;flex-direction:column;justify-content:center}
+.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.35rem;line-height:1.25}
+.f sub{font-size:.62em}
+.u{margin-top:6px;font-size:.9rem;font-weight:600;color:var(--ink)}
+.u b{color:var(--sec)}
+.card.starred .def{background:linear-gradient(90deg,var(--starbg),transparent 70%)}
+.card.derived{border-style:dashed}
+.card.derived .fm{border-left-color:var(--ded)}
+.card.derived .top .tag{color:var(--ded)}
+#A{--sec:var(--A)} #B{--sec:var(--B)} #C{--sec:var(--C)} #D{--sec:var(--D)} #E{--sec:var(--E)}
+#A h2{background:var(--A)} #B h2{background:var(--B)} #C h2{background:var(--C)} #D h2{background:var(--D)} #E h2{background:var(--E)}
+section .top .code{color:var(--sec)}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+body.hide .card{cursor:pointer}
+body.stars .card:not(.starred){display:none}
+body.base .card.derived{display:none}
+.hint{display:none;color:var(--muted);font-size:.85rem;margin:6px 0 0}
+body.hide .hint{display:block}
+@media (max-width:600px){
+  .card{grid-template-columns:1fr}
+  .fm{border-left:0;border-top:4px solid var(--sec)}
+  .card.derived .fm{border-top-color:var(--ded)}
+}
+@media (prefers-reduced-motion:no-preference){.f,.u{transition:filter .2s}}
+@media print{.toolbar,.hint{display:none}body.hide .fm .f,body.hide .fm .u{filter:none}.card{break-inside:avoid}}
+
+/* Cartes plus isolées */
+section{margin-top:34px}
+h2{margin-bottom:14px}
+.card{margin-bottom:18px;border:1.5px solid var(--line);border-radius:12px;box-shadow:0 2px 0 var(--line),0 6px 14px -8px rgba(29,35,48,.25)}
+.def{padding:14px 16px}
+.fm{padding:16px 18px}
+.card.derived{border-width:1.5px}
+@media (max-width:600px){.card{margin-bottom:16px}}
+
+/* Couple définition/formule plus serré, séparation légère */
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.def{padding:14px 12px 14px 16px}
+.fm{padding:14px 16px 14px 14px}
+.card{margin-bottom:28px}
+section{margin-top:40px}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px dashed var(--line)!important}
+  .def{padding:14px 16px 8px}
+  .fm{padding:10px 16px 14px}
+  .card{margin-bottom:26px}
+}
+
+.wrap{max-width:980px}
+.legend{margin-top:6px;font-size:.88rem;color:var(--muted)}
+.chain{margin:14px 0 4px;padding:12px 14px;border-left:4px solid var(--star);background:var(--starbg);border-radius:0 8px 8px 0;font-size:.95rem}
+.mnemo{margin:12px 0 4px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:.92rem}
+.mnemo strong{display:block;margin-bottom:6px}
+.mnemo ul{margin:0;padding-left:18px;columns:2;column-gap:28px}
+.mnemo li{margin-bottom:4px;break-inside:avoid}
+.chain .f,.mnemo .f{font-size:1rem}
+.card{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
+.x{grid-column:1 / -1;border-top:1px dashed var(--line);padding:12px 16px 14px;font-size:.9rem;color:var(--muted)}
+.x p{margin:0 0 5px}
+.x b,.x .tip,.x .trap{color:var(--ink)}
+.tip,.trap{display:block;margin-top:5px}
+.tip::before{content:"💡 "}
+.trap::before{content:"⚠️ "}
+.ded{margin-top:8px;padding:8px 10px;background:var(--dedbg);border-left:3px solid var(--ded);border-radius:0 6px 6px 0;font-size:.86rem;color:var(--ink)}
+.ded strong{display:block;margin-bottom:3px}
+.ded ol{margin:0;padding-left:20px}
+.from{display:block;margin-top:4px;font-size:.84rem;color:var(--ded);font-weight:600}
+.gives{display:block;margin-top:8px;font-size:.86rem;color:var(--ded);font-weight:600}
+.chip{display:inline-block;text-decoration:none;font-size:.78rem;font-weight:700;border:1px solid var(--line);border-radius:5px;padding:0 5px;background:var(--bg);color:var(--ink)}
+.card{scroll-margin-top:70px}
+.card:target{box-shadow:0 0 0 3px var(--star)}
+/* mode test : seul le titre reste visible */
+body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:blur(8px);user-select:none}
+body.hide .card.show .def .d,body.hide .card.show .def .from,body.hide .card.show .fm,body.hide .card.show .x{filter:none;user-select:auto}
+@media (max-width:600px){.mnemo ul{columns:1}.x{padding:10px 16px 14px}}
+@media print{body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:none}}
+
+/* Traits pleins fins à l'intérieur, cadre plus marqué */
+:root{--frame:#b9c0cc}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--frame:#4a5263}}
+:root[data-theme="dark"]{--frame:#4a5263}
+.card{border:2px solid var(--frame)!important}
+.card.derived{border:2px solid var(--ded)!important}
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.x{border-top:1px solid var(--line)!important}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px solid var(--line)!important}
+}
+
+/* Traits intérieurs un peu plus épais */
+.fm,.card.derived .fm{border-left:1.5px solid var(--frame)!important;border-top:0!important}
+.x{border-top:1.5px solid var(--frame)!important}
+@media (max-width:600px){.fm,.card.derived .fm{border-left:0!important;border-top:1.5px solid var(--frame)!important}}
+
+/* Cadre d'épaisseur identique sur les 4 côtés */
+.card{box-shadow:0 6px 14px -10px rgba(29,35,48,.28)!important}
+
+/* Mobile : carte empilée comme la page épurée (évite le trait doublé en haut de la formule) */
+@media (max-width:600px){.card{grid-template-columns:1fr!important}}
+
+/* Fractions : numérateur au-dessus du dénominateur */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor;padding-bottom:.08em}
+.frac>span:last-child{padding-top:.08em}
+
+/* Arbre : formule de base → formules déduites (comme la page arbre) */
+.grp{margin-bottom:28px}
+.grp .card{margin-bottom:0}
+.tree{list-style:none;margin:0 0 0 26px;padding:0}
+.tree > li{position:relative;padding:12px 0 0 30px}
+.tree > li::before{content:"";position:absolute;left:0;top:0;bottom:0;border-left:2px solid var(--ded)}
+.tree > li:last-child::before{bottom:auto;height:36px}
+.tree > li::after{content:"";position:absolute;left:0;top:36px;width:24px;border-top:2px solid var(--ded)}
+.tree .card{box-shadow:none!important}
+.tree .card .f{font-size:1.18rem}
+body.stars .grp:not(.gstar){display:none}
+body.stars .tree{display:none}
+body.base .tree{display:none}
+@media (max-width:600px){
+  .tree{margin-left:12px}
+  .tree > li{padding-left:22px}
+  .tree > li::after{width:18px}
+}
+
+/* Singe = bascule vers la vue épurée floutée (définition → formule) */
+body.hide .x,body.hide .chain,body.hide .mnemo,body.hide .legend,body.hide .from{display:none}
+body.hide .def .d{filter:none!important;user-select:auto}
+body.hide .fm{filter:none!important}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+@media (prefers-reduced-motion:no-preference){.fm .f,.fm .u{transition:filter .2s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Énergie et équilibre : les formules</h1>
+<p class="sub">M2 · Biophysique du milieu intérieur · formules expliquées</p>
+<div class="legend"><span class="s">★</span> = tombée au concours, d'après la fiche de cours · <span class="s">★★★</span> = la plus fréquente · <span style="color:var(--ded);font-weight:700">🔁</span> = formule déduite d'une autre (cadre vert)</div>
+<div class="toolbar" role="toolbar" aria-label="Options">
+  <a href="formules-energie.html" style="font-size:.88rem;font-weight:600;text-decoration:none;color:var(--ink);border:1.5px solid var(--line);padding:6px 11px;border-radius:999px">← Tableau des formules</a>
+  <button id="bHide" aria-pressed="false">🙈 Réviser (vue épurée)</button>
+  <button id="bStars" aria-pressed="false"><span class="s">★</span> Concours</button>
+  <button id="bBase" aria-pressed="false">Sans les déduites</button>
+  <span class="count" id="count"></span>
+</div>
+<p class="hint">Vue épurée : touche une carte pour révéler la formule. Retouche 🙈 pour revenir aux explications.</p>
+<div class="chain">Le fil qui relie tout : <span class='f'>W = F.l.cos θ</span> → <span class='f'>ΔE<sub>c</sub> = Σ W</span> et <span class='f'>ΔE<sub>p</sub> = −W</span> → <span class='f'>E<sub>M</sub> = E<sub>c</sub> + E<sub>p</sub></span> constante sans frottement → <span class='f'>v = √(2gh)</span>.</div>
+
+<div class="mnemo">
+  <strong>Moyens mnémotechniques</strong>
+  <ul>
+    <li>E<sub>c</sub> = ½mv² : « un demi m v deux ».</li>
+    <li>km/h → m/s : × 1000 / 3600, soit ÷ 3,6.</li>
+    <li>W &gt; 0 <b>moteur</b>, W &lt; 0 <b>résistant</b>, W = 0 si force ⊥ déplacement.</li>
+    <li>ΔE<sub>p</sub> = −W : quand le poids travaille (descente), E<sub>p</sub> baisse.</li>
+    <li>Équilibre <b>stable</b> = bille au fond d'un <b>puits</b> (dérivée seconde &gt; 0).</li>
+    <li>Chute libre : ½mv² = mgh → v = √(2gh), la <b>masse disparaît</b>.</li>
+    <li>Coulomb et gravitation : même forme en <b>1/r²</b>, mais la gravitation est toujours attractive.</li>
+    <li>Photon : E = hc/λ → petite longueur d'onde = grande énergie.</li>
+  </ul>
+</div>
+
+<main id="main"></main>
+<footer style="margin-top:30px;color:var(--muted);font-size:.8rem;text-align:center">Source : fiche de cours Médisup Tours/Orléans 2026-2027 (actualisation).</footer>
+</div>
+<script>
+const S = n => n ? '<span class="s">' + '★'.repeat(n) + '</span>' : '';
+const H = steps => `<div class="ded"><strong>🔁 Comment la retrouver</strong><ol>${steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>`;
+const data = [
+ {
+  "id": "A",
+  "title": "Énergie, travail et puissance",
+  "pages": "p.2-3",
+  "rows": [
+   {
+    "k": "joule",
+    "st": 0,
+    "q": "Le joule",
+    "d": "",
+    "f": "J = kg.m².s⁻²",
+    "u": "Dimension de l'énergie : <b>M.L².T⁻²</b>",
+    "x": "<p>L'énergie quantifie la capacité d'un système à produire du mouvement, de la chaleur, de l'électricité, de la lumière… Le joule est l'unité SI commune à toutes ses formes.</p>"
+   },
+   {
+    "k": "ev",
+    "st": 0,
+    "q": "Électronvolt",
+    "d": "",
+    "f": "1 eV = 1,6.10⁻¹⁹ J",
+    "u": "",
+    "x": "<p>Unité usuelle d'énergie à l'échelle des particules.</p>"
+   },
+   {
+    "k": "scal",
+    "st": 0,
+    "q": "Produit scalaire",
+    "d": "",
+    "f": "u⃗.v⃗ = ‖u⃗‖ × ‖v⃗‖ × cos(u⃗, v⃗)",
+    "u": "Si ‖v⃗‖ = 1 : longueur de la projection de u⃗ sur la direction de v⃗",
+    "x": "<p>Le produit scalaire mesure « combien » un vecteur va dans la direction de l'autre : c'est la base du calcul du travail.</p>"
+   },
+   {
+    "k": "trav",
+    "st": 0,
+    "q": "Travail d'une force constante (déplacement rectiligne)",
+    "d": "",
+    "f": "W = F⃗.l⃗ = ‖F⃗‖ × ‖l⃗‖ × cos θ",
+    "u": "",
+    "x": "<p>Le travail est l'énergie <b>utile</b>, par opposition aux pertes (chaleur, frottements) ; il intervient quand la force déplace le corps.</p>"
+   },
+   {
+    "k": "signe",
+    "st": 0,
+    "q": "Signe du travail",
+    "d": "",
+    "f": "F⃗ ⊥ l⃗ → W = 0<br>W &gt; 0 : travail moteur<br>W &lt; 0 : travail résistant",
+    "u": "",
+    "x": "<p>Exemples : la réaction du sol ne travaille pas (W = 0) ; le poids est moteur en descente ; les frottements, opposés au déplacement, sont résistants.</p>"
+   },
+   {
+    "k": "puiss",
+    "st": 0,
+    "q": "Puissance",
+    "d": "",
+    "f": "P = <span class='frac'><span>dW</span><span>dt</span></span>",
+    "u": "",
+    "x": "<p>La puissance est le travail fourni par unité de temps.</p>"
+   }
+  ]
+ },
+ {
+  "id": "B",
+  "title": "Énergie cinétique",
+  "pages": "p.3",
+  "rows": [
+   {
+    "k": "ec",
+    "st": 1,
+    "q": "Énergie cinétique",
+    "d": "",
+    "f": "E<sub>c</sub> = <span class='frac'><span>1</span><span>2</span></span>mv²",
+    "u": "m en <b>kg</b> (1 tonne = 1000 kg) · v en <b>m.s⁻¹</b>",
+    "x": "<p>Énergie liée au mouvement : un objet immobile n'en a pas ; à vitesse égale, plus l'objet est lourd, plus Ec est élevée.</p><span class='trap'>La vitesse est <b>au carré</b> : doubler v multiplie Ec par 4.</span>"
+   },
+   {
+    "k": "kmh",
+    "st": 0,
+    "q": "Conversion km.h⁻¹ → m.s⁻¹",
+    "d": "",
+    "f": "1 km.h⁻¹ = <span class='frac'><span>1000</span><span>3600</span></span> m.s⁻¹",
+    "u": "",
+    "x": "<p>Indispensable avant de calculer Ec : la vitesse doit être en m.s⁻¹.</p><span class='tip'>Soit diviser par 3,6.</span>"
+   },
+   {
+    "k": "tec",
+    "st": 0,
+    "q": "Théorème de l'énergie cinétique",
+    "d": "",
+    "f": "ΔE<sub>c</sub> = E<sub>c</sub>(B) − E<sub>c</sub>(A) = Σ W<sub>AB</sub>(F⃗)",
+    "u": "",
+    "x": "<p>Le travail des forces extérieures fait varier l'énergie cinétique : le travail mécanique est un mode de <b>transfert de l'énergie</b>.</p>"
+   },
+   {
+    "k": "tecp",
+    "der": [
+     "tec"
+    ],
+    "q": "Système soumis à son seul poids (chute libre)",
+    "d": "",
+    "f": "ΔE<sub>c</sub> = W<sub>AB</sub>(P⃗)",
+    "u": "",
+    "x": "<p>Une seule force travaille : le poids.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de ΔEc = Σ W(F).</li><li>Seul le poids agit : la somme se réduit à W(P).</li></ol></div>"
+   },
+   {
+    "k": "varec",
+    "der": [
+     "tec"
+    ],
+    "q": "Sens de variation de l'énergie cinétique",
+    "d": "",
+    "f": "Σ W<sub>AB</sub> &gt; 0 → E<sub>c</sub> ↑ (v ↑)<br>Σ W<sub>AB</sub> &lt; 0 → E<sub>c</sub> ↓ (v ↓)",
+    "u": "",
+    "x": "<p>Travail moteur : le corps accélère ; travail résistant : il ralentit.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de ΔEc = Σ W.</li><li>Si Σ W &gt; 0, ΔEc &gt; 0 : Ec et donc v augmentent.</li><li>Si Σ W &lt; 0, elles diminuent.</li></ol></div>"
+   }
+  ]
+ },
+ {
+  "id": "C",
+  "title": "Énergie potentielle et équilibre",
+  "pages": "p.4-5",
+  "rows": [
+   {
+    "k": "epc",
+    "st": 0,
+    "q": "Énergie potentielle de pesanteur (cas général)",
+    "d": "",
+    "f": "E<sub>p</sub> = mgz + constante",
+    "u": "m en kg · g en m.s⁻² · z = altitude en m · constante = choix de l'état de référence (où Ep = 0 J)",
+    "x": "<p>Énergie que possède un solide du fait de sa position par rapport à la Terre ; elle résulte de l'interaction gravitationnelle.</p>"
+   },
+   {
+    "k": "dep",
+    "der": [
+     "epc"
+    ],
+    "q": "Variation d'énergie potentielle entre A et B",
+    "d": "",
+    "f": "ΔE<sub>p</sub> = mg(z<sub>B</sub> − z<sub>A</sub>)",
+    "u": "Ne dépend <b>pas</b> de l'état de référence",
+    "x": "<p>Seuls l'état initial et l'état final comptent.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Écris Ep(B) − Ep(A) = (mgz_B + cte) − (mgz_A + cte).</li><li>La constante s'élimine.</li></ol></div>"
+   },
+   {
+    "k": "ep",
+    "st": 1,
+    "q": "Énergie potentielle avec z = 0 comme référence",
+    "d": "",
+    "f": "E<sub>p</sub> = mgz",
+    "u": "",
+    "x": "<p>Par convention, on choisit le plan horizontal z = 0 comme référence : la constante vaut 0 J.</p><span class='tip'>Se retrouve à partir de @epc en posant constante = 0.</span>"
+   },
+   {
+    "k": "poids",
+    "st": 0,
+    "q": "Poids",
+    "d": "",
+    "f": "P⃗ = mg⃗",
+    "u": "",
+    "x": "<p>Force exercée par la Terre sur un objet de masse m.</p>"
+   },
+   {
+    "k": "wp",
+    "st": 0,
+    "q": "Travail du poids entre A et B",
+    "d": "",
+    "f": "W<sub>AB</sub>(P⃗) = mg(z<sub>A</sub> − z<sub>B</sub>)",
+    "u": "",
+    "x": "<p>Positif quand l'objet descend (z<sub>A</sub> &gt; z<sub>B</sub>) : le poids est moteur.</p>"
+   },
+   {
+    "k": "depw",
+    "der": [
+     "wp",
+     "dep"
+    ],
+    "q": "Lien énergie potentielle / travail du poids",
+    "d": "",
+    "f": "ΔE<sub>p</sub> = −W<sub>AB</sub>(P⃗)",
+    "u": "",
+    "x": "<p>Quand le poids travaille positivement, l'énergie potentielle diminue d'autant.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>ΔEp = mg(z_B − z_A).</li><li>W(P) = mg(z_A − z_B) = −mg(z_B − z_A).</li><li>Donc ΔEp = −W(P).</li></ol></div>"
+   },
+   {
+    "k": "grav",
+    "st": 0,
+    "q": "Loi de la gravitation universelle",
+    "d": "",
+    "f": "F<sub>A/B</sub> = F<sub>B/A</sub> = G × <span class='frac'><span>m<sub>A</sub> × m<sub>B</sub></span><span>d²</span></span>",
+    "u": "G = constante de gravitation universelle",
+    "x": "<p>Deux corps s'attirent avec des forces de même direction, même intensité, sens opposés.</p>"
+   },
+   {
+    "k": "pg",
+    "der": [
+     "grav",
+     "poids"
+    ],
+    "q": "Poids et gravitation",
+    "d": "",
+    "f": "P = G × <span class='frac'><span>m<sub>Terre</sub> × m<sub>objet</sub></span><span>R<sub>Terre</sub>²</span></span> = g × m<sub>objet</sub>",
+    "u": "",
+    "x": "<p>Le poids est la force de gravitation exercée par la Terre sur l'objet posé à sa surface.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Applique la gravitation avec A = Terre, B = objet, d = R_Terre.</li><li>Identifie avec P = m.g.</li></ol></div>"
+   },
+   {
+    "k": "g",
+    "der": [
+     "pg"
+    ],
+    "q": "Intensité de la pesanteur",
+    "d": "",
+    "f": "g = G × <span class='frac'><span>m<sub>Terre</sub></span><span>R²</span></span>",
+    "u": "",
+    "x": "<p>g ne dépend que de la Terre, pas de l'objet.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de G × m_Terre × m_objet / R² = g × m_objet.</li><li>Divise par m_objet.</li></ol></div>"
+   },
+   {
+    "k": "cons",
+    "st": 0,
+    "q": "Travail d'une force conservative",
+    "d": "",
+    "f": "ΔE<sub>p</sub> = −W<sub>AB</sub>(F⃗)",
+    "u": "Ne dépend <b>pas du chemin suivi</b>",
+    "x": "<p>Toute force conservative dérive d'une énergie potentielle : son travail ne dépend que de l'état initial et de l'état final.</p>"
+   },
+   {
+    "k": "consS",
+    "der": [
+     "cons"
+    ],
+    "q": "Système soumis uniquement à des forces conservatives",
+    "d": "",
+    "f": "ΔE<sub>p</sub> = −Σ W(F⃗)",
+    "u": "",
+    "x": "<p>On additionne les contributions de chaque force.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pour chaque force : ΔEp = −W(F).</li><li>Somme sur toutes les forces.</li></ol></div>"
+   },
+   {
+    "k": "eqF",
+    "st": 0,
+    "q": "Condition d'équilibre",
+    "d": "",
+    "f": "Σ F⃗ = 0⃗",
+    "u": "",
+    "x": "<p>À l'équilibre, la résultante des forces est nulle et l'énergie potentielle passe par un extremum. Position d'équilibre : un système initialement sans vitesse y reste immobile.</p>"
+   },
+   {
+    "k": "eqnat",
+    "st": 0,
+    "q": "Nature de l'équilibre (système à une dimension)",
+    "d": "",
+    "f": "<span class='frac'><span>∂²E<sub>p</sub></span><span>∂x²</span></span> &gt; 0 : stable (minimum = puits)<br><span class='frac'><span>∂²E<sub>p</sub></span><span>∂x²</span></span> &lt; 0 : instable (maximum = barrière)<br><span class='frac'><span>∂²E<sub>p</sub></span><span>∂x²</span></span> = 0 : métastable",
+    "u": "",
+    "x": "<p>On regarde la courbure de Ep : au fond d'un puits, la bille revient ; au sommet d'une barrière, elle tombe.</p>"
+   }
+  ]
+ },
+ {
+  "id": "D",
+  "title": "Énergie mécanique",
+  "pages": "p.5-6",
+  "rows": [
+   {
+    "k": "em",
+    "st": 1,
+    "q": "Énergie mécanique",
+    "d": "",
+    "f": "E<sub>M</sub> = E<sub>c</sub> + E<sub>p</sub>",
+    "u": "",
+    "x": "<p>À chaque instant, somme de l'énergie cinétique et de l'énergie potentielle de pesanteur. Deux types de systèmes : conservatifs et non conservatifs.</p>"
+   },
+   {
+    "k": "emcons",
+    "st": 0,
+    "q": "Système conservatif",
+    "d": "",
+    "f": "E<sub>M</sub> = E<sub>c</sub> + E<sub>p</sub> = constante",
+    "u": "",
+    "x": "<p>Quand seules des forces conservatives travaillent (ex. glissement sans frottement sur un plan incliné), l'énergie mécanique se conserve : si Ec augmente, Ep diminue, et inversement.</p>"
+   },
+   {
+    "k": "emab",
+    "st": 1,
+    "q": "Conservation entre deux points A et B",
+    "d": "",
+    "f": "E<sub>c</sub>(A) + E<sub>p</sub>(A) = E<sub>c</sub>(B) + E<sub>p</sub>(B)",
+    "u": "E<sub>M</sub>(A) = E<sub>M</sub>(B)",
+    "x": "<p>La forme la plus utile en exercice : on écrit l'énergie au départ et à l'arrivée.</p><span class='tip'>Se retrouve directement à partir de @emcons.</span>"
+   },
+   {
+    "k": "emchute",
+    "der": [
+     "emcons",
+     "ec",
+     "ep"
+    ],
+    "q": "Énergie mécanique en chute libre",
+    "d": "",
+    "f": "E<sub>M</sub> = <span class='frac'><span>1</span><span>2</span></span>mv² + mgz = constante",
+    "u": "",
+    "x": "<p>Le système n'est soumis qu'au poids, force conservative.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de EM = Ec + Ep = constante.</li><li>Remplace Ec par ½mv² et Ep par mgz.</li></ol></div>"
+   },
+   {
+    "k": "vchute",
+    "der": [
+     "emchute"
+    ],
+    "q": "Vitesse après une chute de hauteur h (vitesse initiale nulle)",
+    "d": "",
+    "f": "v = √(2gh)",
+    "u": "",
+    "x": "<p>Au cours de la chute, Ep diminue et Ec augmente d'autant.</p><span class='tip'>La masse ne compte pas.</span><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Départ : v = 0, toute l'énergie est potentielle (mgh de plus qu'à l'arrivée).</li><li>Arrivée : ½mv² = mgh.</li><li>Simplifie par m : v² = 2gh.</li></ol></div>"
+   },
+   {
+    "k": "frott",
+    "st": 0,
+    "q": "Système avec frottements",
+    "d": "",
+    "f": "ΔE<sub>m</sub> = W(F⃗<sub>f</sub>) = −Q",
+    "u": "Q = énergie calorifique (échauffement du système et de l'air)",
+    "x": "<p>Les frottements (non conservatifs, proportionnels à la vitesse et opposés à elle) font diminuer l'énergie mécanique, qui se transforme en chaleur.</p><span class='tip'>Balançoire : les oscillations périodiques deviennent pseudo-périodiques.</span>"
+   }
+  ]
+ },
+ {
+  "id": "E",
+  "title": "Énergie électrostatique, chimique et autres formes",
+  "pages": "p.7-8",
+  "rows": [
+   {
+    "k": "fqe",
+    "st": 0,
+    "q": "Force électrique sur une charge",
+    "d": "",
+    "f": "F⃗ = qE⃗",
+    "u": "q en C · E en V.m⁻¹",
+    "x": "<p>Une charge placée dans un champ électrique subit une force.</p>"
+   },
+   {
+    "k": "epq",
+    "st": 0,
+    "q": "Énergie potentielle électrostatique",
+    "d": "",
+    "f": "E<sub>p</sub> = qU",
+    "u": "U = potentiel électrique en V",
+    "x": "<p>Le champ électrique dérive du potentiel électrique U.</p>"
+   },
+   {
+    "k": "courant",
+    "st": 0,
+    "q": "Courant électrique",
+    "d": "",
+    "f": "I = <span class='frac'><span>dq</span><span>dt</span></span>",
+    "u": "I en A",
+    "x": "<p>Mouvement de charges = courant électrique : charge qui passe par unité de temps.</p>"
+   },
+   {
+    "k": "dwq",
+    "st": 0,
+    "q": "Énergie reçue par des charges allant de A à B",
+    "d": "",
+    "f": "ΔW = q(U<sub>A</sub> − U<sub>B</sub>)",
+    "u": "",
+    "x": "<p>Des charges qui se déplacent le long d'un conducteur reçoivent une énergie proportionnelle à la différence de potentiel.</p>"
+   },
+   {
+    "k": "pel",
+    "der": [
+     "dwq",
+     "courant",
+     "puiss"
+    ],
+    "q": "Puissance électrique",
+    "d": "",
+    "f": "P = <span class='frac'><span>dW</span><span>dt</span></span> = I.(U<sub>A</sub> − U<sub>B</sub>)",
+    "u": "",
+    "x": "<p>Puissance = énergie par unité de temps, appliquée aux charges.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de P = dW/dt.</li><li>dW = dq.(U_A − U_B).</li><li>dq/dt = I.</li></ol></div>"
+   },
+   {
+    "k": "coulomb",
+    "st": 0,
+    "q": "Loi de Coulomb",
+    "d": "",
+    "f": "F<sub>A/B</sub> = <span class='frac'><span>1</span><span>4πε₀</span></span> × <span class='frac'><span>|q<sub>A</sub> × q<sub>B</sub>|</span><span>r²</span></span>",
+    "u": "",
+    "x": "<p>Même forme que la gravitation (force ∝ grandeur propre, ∝ 1/distance², constante, champ, force conservative).</p><span class='trap'>Différence : la masse est toujours positive (gravitation toujours attractive), la charge peut être + ou − (attractive si signes différents, répulsive si même signe).</span>"
+   },
+   {
+    "k": "fmg",
+    "st": 0,
+    "q": "Force sur une masse dans un champ de gravitation",
+    "d": "",
+    "f": "F⃗ = mG⃗",
+    "u": "",
+    "x": "<p>Pendant de F = qE : la masse joue le rôle de la charge.</p>"
+   },
+   {
+    "k": "ediss",
+    "st": 0,
+    "q": "Énergie de dissociation d'une liaison A-B",
+    "d": "",
+    "f": "E<sub>diss</sub> = (E<sub>A</sub> + E<sub>B</sub>) − E<sub>A-B</sub>",
+    "u": "Liaison formée si E<sub>A-B</sub> &lt; E<sub>A</sub> + E<sub>B</sub> · longueur de liaison r₀ ≈ 100 pm",
+    "x": "<p>Une liaison se forme si le système obtenu est plus stable (énergie plus basse). r₀ correspond au minimum d'énergie : l'attraction domine à grande distance, la répulsion à courte distance.</p>"
+   },
+   {
+    "k": "photon",
+    "st": 0,
+    "q": "Énergie d'un photon",
+    "d": "",
+    "f": "E = hν = h × <span class='frac'><span>c</span><span>λ</span></span>",
+    "u": "",
+    "x": "<p>Un photon est un quantum d'énergie électromagnétique : l'énergie lumineuse est transportée par la lumière.</p>"
+   },
+   {
+    "k": "liaison",
+    "st": 0,
+    "q": "Énergie de liaison des nucléons",
+    "d": "",
+    "f": "E = Δm.c²",
+    "u": "Δm = défaut de masse = masse des nucléons − masse du noyau",
+    "x": "<p>La masse du noyau est inférieure à celle des nucléons séparés : la différence correspond à l'énergie de liaison. La stabilité du noyau dépend de l'équilibre protons / neutrons.</p>"
+   }
+  ]
+ }
+];
+
+
+const code={}, gives={};
+data.forEach(sec=>sec.rows.forEach((r,i)=>{code[r.k]=sec.id+(i+1);}));
+data.forEach(sec=>sec.rows.forEach(r=>(r.der||[]).forEach(p=>{(gives[p]=gives[p]||[]).push(r.k);})));
+const chip=k=>`<a class="chip" href="#r-${code[k]}">${code[k]}</a>`;
+const refs=t=>t.replace(/@(\w+)/g,(m,k)=>code[k]?chip(k):m);
+const main=document.getElementById('main');
+let total=0,starred=0,derived=0;
+const cardHTML=(r,extra='')=>{
+  const from=r.der?`<span class="from">🔁 Déduite de ${r.der.map(chip).join(' ')}</span>`:'';
+  return `<div class="card${r.st?' starred':''}${r.der?' derived':''}" id="r-${code[r.k]}" tabindex="0">
+      <div class="def"><div class="top"><span class="code">${code[r.k]}</span>${S(r.st)}${r.der?'<span class="tag">🔁</span>':''}</div>
+      <div class="q">${r.q}</div>${r.d?`<div class="d">${r.d}</div>`:''}${from}</div>
+      <div class="fm"><span class="f">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div>
+      <div class="x">${refs(r.x)}</div></div>`;
+};
+data.forEach(sec=>{
+  let h=`<section id="${sec.id}"><h2>${sec.id} · ${sec.title} <small style="opacity:.85;font-weight:600">${sec.pages}</small></h2>`;
+  const groups=[];
+  sec.rows.forEach(r=>{ if(r.der&&groups.length) groups[groups.length-1].kids.push(r); else groups.push({r,kids:[]}); });
+  groups.forEach(({r,kids})=>{
+    total++; if(r.st)starred++;
+    h+=`<div class="grp${r.st?' gstar':''}">`+cardHTML(r);
+    if(kids.length){ h+=`<ul class="tree">`+kids.map(k=>{total++;derived++;return `<li>${cardHTML(k)}</li>`;}).join('')+`</ul>`; }
+    h+=`</div>`;
+  });
+  main.insertAdjacentHTML('beforeend',h+'</section>');
+});
+const B=document.body.classList,count=document.getElementById('count');
+const upd=()=>{count.textContent=B.contains('stars')?`${starred} ★`:B.contains('base')?`${total-derived} formules`:`${total} formules`;};
+upd();
+const tog=(id,c)=>{const b=document.getElementById(id);b.addEventListener('click',()=>{const on=B.toggle(c);b.setAttribute('aria-pressed',on);upd();if(c==='hide')document.querySelectorAll('.card.show').forEach(x=>x.classList.remove('show'));});};
+tog('bHide','hide');document.getElementById('bHide').addEventListener('click',()=>window.scrollTo({top:0}));tog('bStars','stars');tog('bBase','base');
+const flip=ev=>{if(ev.target.closest('a'))return;const c=ev.target.closest('.card');if(c&&B.contains('hide'))c.classList.toggle('show');};
+main.addEventListener('click',flip);
+main.addEventListener('keydown',ev=>{if(ev.target.classList.contains('card')&&(ev.key==='Enter'||ev.key===' ')){ev.preventDefault();flip(ev);}});
+
+</script>
+</body>
+</html>

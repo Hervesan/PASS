@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules — Les acides aminés</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#ffffff; --ink:#1d2330; --muted:#5b6474; --line:#e3e6ec;
+  --star:#e8a900; --starbg:#fff6d6; --fbg:#f4f6fb; --ded:#3f9a6a; --dedbg:#eef6f1;
+  --A:#2f86a8; --B:#d0632e; --C:#c9971c; --D:#6f5aa8; --E:#a64b4b;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.4}
+.wrap{max-width:860px;margin:0 auto;padding:18px 14px 40px}
+h1{font-size:1.6rem;font-weight:800;margin:0}
+.sub{color:var(--muted);font-size:.9rem;margin:2px 0 0}
+.s{color:var(--star);letter-spacing:1px;white-space:nowrap}
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 0;margin:12px 0 4px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.toolbar button{font:inherit;font-size:.88rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 11px;border-radius:999px;cursor:pointer}
+.toolbar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.toolbar button:focus-visible,.card:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.count{margin-left:auto;color:var(--muted);font-size:.82rem}
+section{margin-top:22px}
+h2{font-size:1rem;margin:0 0 8px;padding:6px 12px;color:#fff;border-radius:6px}
+.card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:stretch;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.def{padding:10px 12px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.def .top{display:flex;gap:8px;align-items:baseline;font-size:.8rem;font-weight:800}
+.def .q{font-weight:700;font-size:1rem}
+.def .d{color:var(--muted);font-size:.86rem}
+.fm{background:var(--fbg);border-left:5px solid var(--sec);padding:12px 14px;display:flex;flex-direction:column;justify-content:center}
+.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.35rem;line-height:1.25}
+.f sub{font-size:.62em}
+.u{margin-top:6px;font-size:.9rem;font-weight:600;color:var(--ink)}
+.u b{color:var(--sec)}
+.card.starred .def{background:linear-gradient(90deg,var(--starbg),transparent 70%)}
+.card.derived{border-style:dashed}
+.card.derived .fm{border-left-color:var(--ded)}
+.card.derived .top .tag{color:var(--ded)}
+#A{--sec:var(--A)} #B{--sec:var(--B)} #C{--sec:var(--C)} #D{--sec:var(--D)} #E{--sec:var(--E)}
+#A h2{background:var(--A)} #B h2{background:var(--B)} #C h2{background:var(--C)} #D h2{background:var(--D)} #E h2{background:var(--E)}
+section .top .code{color:var(--sec)}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+body.hide .card{cursor:pointer}
+body.stars .card:not(.starred){display:none}
+body.base .card.derived{display:none}
+.hint{display:none;color:var(--muted);font-size:.85rem;margin:6px 0 0}
+body.hide .hint{display:block}
+@media (max-width:600px){
+  .card{grid-template-columns:1fr}
+  .fm{border-left:0;border-top:4px solid var(--sec)}
+  .card.derived .fm{border-top-color:var(--ded)}
+}
+@media (prefers-reduced-motion:no-preference){.f,.u{transition:filter .2s}}
+@media print{.toolbar,.hint{display:none}body.hide .fm .f,body.hide .fm .u{filter:none}.card{break-inside:avoid}}
+
+/* Cartes plus isolées */
+section{margin-top:34px}
+h2{margin-bottom:14px}
+.card{margin-bottom:18px;border:1.5px solid var(--line);border-radius:12px;box-shadow:0 2px 0 var(--line),0 6px 14px -8px rgba(29,35,48,.25)}
+.def{padding:14px 16px}
+.fm{padding:16px 18px}
+.card.derived{border-width:1.5px}
+@media (max-width:600px){.card{margin-bottom:16px}}
+
+/* Couple définition/formule plus serré, séparation légère */
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.def{padding:14px 12px 14px 16px}
+.fm{padding:14px 16px 14px 14px}
+.card{margin-bottom:28px}
+section{margin-top:40px}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px dashed var(--line)!important}
+  .def{padding:14px 16px 8px}
+  .fm{padding:10px 16px 14px}
+  .card{margin-bottom:26px}
+}
+
+.wrap{max-width:980px}
+.legend{margin-top:6px;font-size:.88rem;color:var(--muted)}
+.chain{margin:14px 0 4px;padding:12px 14px;border-left:4px solid var(--star);background:var(--starbg);border-radius:0 8px 8px 0;font-size:.95rem}
+.mnemo{margin:12px 0 4px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:.92rem}
+.mnemo strong{display:block;margin-bottom:6px}
+.mnemo ul{margin:0;padding-left:18px;columns:2;column-gap:28px}
+.mnemo li{margin-bottom:4px;break-inside:avoid}
+.chain .f,.mnemo .f{font-size:1rem}
+.card{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
+.x{grid-column:1 / -1;border-top:1px dashed var(--line);padding:12px 16px 14px;font-size:.9rem;color:var(--muted)}
+.x p{margin:0 0 5px}
+.x b,.x .tip,.x .trap{color:var(--ink)}
+.tip,.trap{display:block;margin-top:5px}
+.tip::before{content:"💡 "}
+.trap::before{content:"⚠️ "}
+.ded{margin-top:8px;padding:8px 10px;background:var(--dedbg);border-left:3px solid var(--ded);border-radius:0 6px 6px 0;font-size:.86rem;color:var(--ink)}
+.ded strong{display:block;margin-bottom:3px}
+.ded ol{margin:0;padding-left:20px}
+.from{display:block;margin-top:4px;font-size:.84rem;color:var(--ded);font-weight:600}
+.gives{display:block;margin-top:8px;font-size:.86rem;color:var(--ded);font-weight:600}
+.chip{display:inline-block;text-decoration:none;font-size:.78rem;font-weight:700;border:1px solid var(--line);border-radius:5px;padding:0 5px;background:var(--bg);color:var(--ink)}
+.card{scroll-margin-top:70px}
+.card:target{box-shadow:0 0 0 3px var(--star)}
+/* mode test : seul le titre reste visible */
+body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:blur(8px);user-select:none}
+body.hide .card.show .def .d,body.hide .card.show .def .from,body.hide .card.show .fm,body.hide .card.show .x{filter:none;user-select:auto}
+@media (max-width:600px){.mnemo ul{columns:1}.x{padding:10px 16px 14px}}
+@media print{body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:none}}
+
+/* Traits pleins fins à l'intérieur, cadre plus marqué */
+:root{--frame:#b9c0cc}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--frame:#4a5263}}
+:root[data-theme="dark"]{--frame:#4a5263}
+.card{border:2px solid var(--frame)!important}
+.card.derived{border:2px solid var(--ded)!important}
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.x{border-top:1px solid var(--line)!important}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px solid var(--line)!important}
+}
+
+/* Traits intérieurs un peu plus épais */
+.fm,.card.derived .fm{border-left:1.5px solid var(--frame)!important;border-top:0!important}
+.x{border-top:1.5px solid var(--frame)!important}
+@media (max-width:600px){.fm,.card.derived .fm{border-left:0!important;border-top:1.5px solid var(--frame)!important}}
+
+/* Cadre d'épaisseur identique sur les 4 côtés */
+.card{box-shadow:0 6px 14px -10px rgba(29,35,48,.28)!important}
+
+/* Mobile : carte empilée comme la page épurée (évite le trait doublé en haut de la formule) */
+@media (max-width:600px){.card{grid-template-columns:1fr!important}}
+
+/* Fractions : numérateur au-dessus du dénominateur */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor;padding-bottom:.08em}
+.frac>span:last-child{padding-top:.08em}
+
+/* Arbre : formule de base → formules déduites (comme la page arbre) */
+.grp{margin-bottom:28px}
+.grp .card{margin-bottom:0}
+.tree{list-style:none;margin:0 0 0 26px;padding:0}
+.tree > li{position:relative;padding:12px 0 0 30px}
+.tree > li::before{content:"";position:absolute;left:0;top:0;bottom:0;border-left:2px solid var(--ded)}
+.tree > li:last-child::before{bottom:auto;height:36px}
+.tree > li::after{content:"";position:absolute;left:0;top:36px;width:24px;border-top:2px solid var(--ded)}
+.tree .card{box-shadow:none!important}
+.tree .card .f{font-size:1.18rem}
+body.stars .grp:not(.gstar){display:none}
+body.stars .tree{display:none}
+body.base .tree{display:none}
+@media (max-width:600px){
+  .tree{margin-left:12px}
+  .tree > li{padding-left:22px}
+  .tree > li::after{width:18px}
+}
+
+/* Singe = bascule vers la vue épurée floutée (définition → formule) */
+body.hide .x,body.hide .chain,body.hide .mnemo,body.hide .legend,body.hide .from{display:none}
+body.hide .def .d{filter:none!important;user-select:auto}
+body.hide .fm{filter:none!important}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+@media (prefers-reduced-motion:no-preference){.fm .f,.fm .u{transition:filter .2s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Les acides aminés : les formules</h1>
+<p class="sub">M2 · Biochimie · formules expliquées</p>
+<div class="legend"><span class="s">★</span> = tombée au concours, d'après la fiche de cours · <span class="s">★★★</span> = la plus fréquente · <span style="color:var(--ded);font-weight:700">🔁</span> = formule déduite d'une autre (cadre vert)</div>
+<div class="toolbar" role="toolbar" aria-label="Options">
+  <a href="formules-acides-amines.html" style="font-size:.88rem;font-weight:600;text-decoration:none;color:var(--ink);border:1.5px solid var(--line);padding:6px 11px;border-radius:999px">← Tableau des formules</a>
+  <button id="bHide" aria-pressed="false">🙈 Réviser (vue épurée)</button>
+  <button id="bStars" aria-pressed="false"><span class="s">★</span> Concours</button>
+  <button id="bBase" aria-pressed="false">Sans les déduites</button>
+  <span class="count" id="count"></span>
+</div>
+<p class="hint">Vue épurée : touche une carte pour révéler la formule. Retouche 🙈 pour revenir aux explications.</p>
+<div class="chain">Le fil qui relie tout : charges selon le pH → <span class="f">pH = pKa</span> : demi-dissociation → <span class="f">pHi = (pKa₁ + pKa₂) / 2</span> → glycine : <span class="f">pHi = 6</span> → chromatographie : <span class="f">pH &lt; pHi → élution</span> → chaînes latérales : <span class="f">pH = pKa + log(dissociée / protonée)</span>.</div>
+
+<div class="mnemo">
+  <strong>Moyens mnémotechniques</strong>
+  <ul>
+    <li>pH <b>&lt;</b> pKa → forme <b>protonée</b> ; pH <b>&gt;</b> pKa → forme <b>dissociée</b>.</li>
+    <li>Le pH monte → l'acide aminé perd ses H⁺ : <b>+1 → 0 → −1</b>.</li>
+    <li>pHi = <b>moyenne</b> des 2 pKa qui entourent le zwitterion.</li>
+    <li>Glycine : <b>2 – 6 – 10</b> (pKa COOH, pHi, pKa NH₂).</li>
+    <li>Échange d'anions : pH <b>&gt;</b> pHi → accroché ; pH <b>&lt;</b> pHi → élué.</li>
+    <li>Sortie par pHi décroissant : Arg et Lys d'abord, Glu et Asp à la fin.</li>
+    <li>Acides aminés <b>280</b> nm, acides nucléiques <b>260</b> nm.</li>
+    <li>1 unité de pH d'écart = facteur <b>10</b> : Cys 0,1 ; His 10.</li>
+    <li>Tyr et Lys : même pKa <b>10,5</b>, mais seule Lys est chargée.</li>
+    <li>Masse moyenne d'un acide aminé : <b>110 Da</b>.</li>
+  </ul>
+</div>
+
+<main id="main"></main>
+<footer style="margin-top:30px;color:var(--muted);font-size:.8rem;text-align:center">Source : fiche de cours Médisup Tours/Orléans 2026-2027 (actualisation).</footer>
+</div>
+<script>
+const S = n => n ? '<span class="s">' + '★'.repeat(n) + '</span>' : '';
+const H = steps => `<div class="ded"><strong>🔁 Comment la retrouver</strong><ol>${steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>`;
+const fr=(a,b)=>`<span class='frac'><span>${a}</span><span>${b}</span></span>`;
+const data = [
+ {id:"A", title:"Structure et ionisation", pages:"p.2-5", rows:[
+  {k:"masse", st:2, q:"Masse moyenne d'un acide aminé protéinogène", d:"Valeur moyenne",
+   f:"≈ 110 Da", u:"<b>1 Da = 1 g/mol</b>",
+   x:"<p>Un acide aminé protéinogène pèse en moyenne 110 daltons. Le dalton (Da) correspond au g/mol.</p><span class='tip'>110 Da = 110 g/mol.</span>"},
+  {k:"ph7", st:2, q:"État des fonctions à pH = 7", d:"Ionisation des fonctions acide et amine",
+   f:"COOH → COO<sup>−</sup> · NH<sub>2</sub> → NH<sub>3</sub><sup>+</sup>", u:"L'acide <b>perd</b> un proton (−1) · l'amine en <b>capte</b> un (+1)",
+   x:"<p>À pH 7, les deux fonctions sont ionisées ★ : l'acide carboxylique perd un proton et porte une charge négative ★★, l'amine capture un proton et porte une charge positive ★★.</p><span class='tip'>Avec une chaîne latérale non chargée : −1 + 1 = 0, c'est la forme zwitterion.</span><span class='trap'>C'est l'acide qui perd H<sup>+</sup> (COO<sup>−</sup>) et l'amine qui le gagne (NH<sub>3</sub><sup>+</sup>), pas l'inverse.</span>"},
+  {k:"chph", st:2, q:"Charge d'un acide aminé selon le pH", d:"Molécule amphotère : une fonction acide, une fonction basique",
+   f:"pH &lt; 2 : COOH, NH<sub>3</sub><sup>+</sup> → +1<br>2 &lt; pH &lt; 9 : COO<sup>−</sup>, NH<sub>3</sub><sup>+</sup> → 0<br>pH &gt; 9 : COO<sup>−</sup>, NH<sub>2</sub> → −1", u:"Charge globale pour une chaîne latérale <b>non chargée</b>",
+   x:"<p>En milieu très acide (beaucoup de H<sup>+</sup>), tout est protoné. Quand le pH monte, la fonction la plus acide (COOH) perd son proton la première, puis l'amine perd le sien.</p><span class='tip'>Plus le pH monte, plus l'acide aminé perd de protons : +1 → 0 → −1.</span><span class='trap'>Incohérence de la fiche : le seuil de l'amine est « 9 » dans ce tableau, alors que le pKa de l'amine de la glycine vaut 10 (@glypk).</span>"},
+  {k:"pka", st:0, q:"Signification du pKa", d:"pH de demi-dissociation d'une fonction",
+   f:"pH = pKa ⇔ [forme dissociée] = [forme non dissociée]", u:"La <b>moitié</b> de la fonction est dissociée",
+   x:"<p>Le pKa est le pH pour lequel la moitié de la fonction acide ou de la fonction amine est dissociée. Glycine : à pH = pKa<sub>COOH</sub> = 2, [COO<sup>−</sup>, NH<sub>3</sub><sup>+</sup>] = [COOH, NH<sub>3</sub><sup>+</sup>].</p><span class='tip'>Autour du pKa, le pH varie peu : c'est la zone tampon (@tampon).</span>"},
+  {k:"phi", st:2, q:"Point isoélectrique (chaîne latérale non chargée)", d:"pH auquel la somme des charges est nulle",
+   f:"pHi = "+fr("pKa<sub>COOH</sub> + pKa<sub>NH₂</sub>","2"), u:"Moyenne des pKa des fonctions <b>acide carboxylique</b> et <b>amine</b>",
+   x:"<p>Au pHi, l'acide aminé est sous forme <b>zwitterion</b> (une charge + et une charge −) : la somme des charges est nulle ★★. Quand R n'est pas chargé, le pHi est la moyenne des 2 pKa.</p><span class='tip'>Glycine : (2 + 10) / 2 = 6 (@glyphi).</span><span class='trap'>Moyenne = somme ÷ 2, pas la somme des pKa.</span>"},
+  {k:"phiR", st:0, q:"Point isoélectrique (chaîne latérale chargée)", d:"R porte une fonction ionisable de plus",
+   f:"pHi = "+fr("pKa<sub>1</sub> + pKa<sub>2</sub>","2"), u:"pKa des 2 fonctions qui <b>entourent</b> la forme zwitterion",
+   x:"<p>Quand R est chargé, on ne prend pas n'importe quels pKa : on garde les 2 fonctions dont les pKa encadrent la forme zwitterion (charge nulle), et on en fait la moyenne.</p><span class='trap'>Ne pas faire la moyenne de tous les pKa de la molécule.</span>"}
+ ]},
+ {id:"B", title:"Glycine, pouvoir tampon et absorption", pages:"p.6", rows:[
+  {k:"glypk", st:1, q:"pKa de la glycine", d:"Lus sur la courbe de titration par la soude",
+   f:"pKa<sub>COOH</sub> = 2 · pKa<sub>NH₂</sub> = 10", u:"Départ à pH &lt; 2 : COOH, NH<sub>3</sub><sup>+</sup>",
+   x:"<p>On part d'une solution acide (pH &lt; 2 : COOH, NH<sub>3</sub><sup>+</sup>) et on ajoute de la soude NaOH. À pH = 2, la moitié des COOH est dissociée ; à pH = 10, la moitié des NH<sub>3</sub><sup>+</sup>. Au-delà de 10 : COO<sup>−</sup>, NH<sub>2</sub>.</p><span class='tip'>Les 2 paliers de la courbe = les 2 pKa ; le point entre les deux = le pHi.</span>"},
+  {k:"glyphi", der:["glypk","phi"], q:"pHi de la glycine", d:"Forme zwitterion",
+   f:"pHi = "+fr("2 + 10","2")+" = 6", u:"COO<sup>−</sup>, NH<sub>3</sub><sup>+</sup>",
+   x:"<p>La chaîne latérale de la glycine est réduite à un H (non chargée) : on fait la moyenne des 2 pKa.</p>"
+   + H(["Relève les pKa de la glycine : 2 et 10 (@glypk).","Applique pHi = (pKa<sub>COOH</sub> + pKa<sub>NH₂</sub>) / 2 (@phi).","(2 + 10) / 2 = 6."])},
+  {k:"tampon", st:1, q:"Pouvoir tampon", d:"Zone où le pH résiste à l'ajout de base",
+   f:"pH ≈ pKa → pas de variation de pH", u:"Vivant : maintien d'un pH = <b>7,4</b>",
+   x:"<p>Autour de pH = pKa, ajouter de la soude ne fait presque pas varier le pH ★ : c'est le pouvoir tampon. Il est important pour le vivant, qui maintient un pH de 7,4.</p><span class='tip'>Tampon = partie plate de la courbe de titration, centrée sur le pKa.</span>"},
+  {k:"abs", st:0, q:"Absorption de la lumière", d:"Acides aminés aromatiques : tyrosine, tryptophane",
+   f:"λ = 280 nm (UV)", u:"Acides nucléiques : <b>260 nm</b>",
+   x:"<p>La tyrosine et le tryptophane portent des cycles aromatiques qui absorbent dans l'UV à 280 nm. Les acides nucléiques absorbent à 260 nm : comparer les deux permet de connaître la composition d'une solution.</p><span class='tip'>Tryptophane : c'est le noyau indole de la chaîne latérale qui absorbe (lié aux doubles liaisons).</span><span class='trap'>Acides aminés 280 nm, acides nucléiques 260 nm : ne pas inverser.</span>"}
+ ]},
+ {id:"C", title:"Chromatographie d'échange d'anions", pages:"p.7", rows:[
+  {k:"fix", st:1, q:"Fixation sur la colonne", d:"Dépôt à pH élevé",
+   f:"pH<sub>phase mobile</sub> &gt; pHi → fixation", u:"Acide aminé chargé <b>négativement</b>",
+   x:"<p>La résine échangeuse d'anions (polymères à amines NH<sub>3</sub><sup>+</sup>) retient les acides aminés chargés négativement. On dépose donc à <b>pH élevé</b> ★, au-dessus du pHi des acides aminés.</p><span class='tip'>Force de rétention ★ = force électrostatique entre la résine et l'acide aminé.</span>"},
+  {k:"elu", st:3, q:"Élution des acides aminés", d:"Diminution du pH (gradient linéaire)",
+   f:"pH<sub>phase mobile</sub> &lt; pHi → élution", u:"Détachement de la colonne",
+   x:"<p>On baisse progressivement le pH de la phase mobile. Dès qu'il passe <b>sous le pHi</b> d'un acide aminé, celui-ci se détache de la colonne : il est élué ★★★.</p><span class='tip'>Fixation : pH &gt; pHi ; élution : pH &lt; pHi. Même comparaison, sens inversé.</span><span class='trap'>On compare le pH de la <b>phase mobile</b> au pHi de l'<b>acide aminé</b>.</span>"},
+  {k:"ordre", der:["elu"], q:"Ordre de sortie des acides aminés", d:"Gradient de pH décroissant",
+   f:"pHi le plus élevé → élué en premier", u:"Figure de la fiche : Arg, Lys, His, Glu, Asp",
+   x:"<p>Le pH descend peu à peu : il passe d'abord sous le pHi le plus élevé, puis sous les suivants. Les acides aminés sortent donc par pHi décroissant.</p>"
+   + H(["Élution quand pH<sub>phase mobile</sub> &lt; pHi (@elu).","Le pH diminue : le premier pHi franchi est le plus élevé.","Ordre d'élution = pHi décroissant."])}
+ ]},
+ {id:"D", title:"Chaînes latérales : isomères et pKa", pages:"p.8-11", rows:[
+  {k:"isom", st:1, q:"Isomères de l'isoleucine et de la thréonine", d:"Deux carbones asymétriques (α et β)",
+   f:"2 C* → 4 isomères", u:"Un seul des 4 est <b>protéinogène</b>",
+   x:"<p>Avec 2 carbones asymétriques, on obtient 4 isomères ★ ; un seul est un acide aminé protéinogène.</p><span class='tip'>Même règle que pour les oses (fiche Glucides) : 2<sup>n</sup> stéréoisomères pour n C*, ici 2<sup>2</sup> = 4.</span><span class='trap'>La glycine, elle, a un carbone α <b>non asymétrique</b> ★★ : pas de déviation de la lumière polarisée ★★★.</span>"},
+  {k:"tyr", st:0, q:"pKa de la tyrosine", d:"Fonction phénol : cycle aromatique lié à un hydroxyle",
+   f:"pKa<sub>phénol</sub> = 10,5", u:"Chaîne latérale <b>non chargée</b> à pH 7,4",
+   x:"<p>Le pKa du phénol (10,5) est bien au-dessus du pH physiologique (7,4) : l'OH garde son proton, la chaîne latérale reste non chargée.</p><span class='trap'>Même pKa que l'amine ε de la lysine (@lys), mais le résultat est opposé : le phénol protoné (OH) est neutre, l'amine protonée (NH<sub>3</sub><sup>+</sup>) est chargée.</span>"},
+  {k:"hh", st:0, q:"Relation pH / pKa d'une fonction ionisable", d:"Dissociation d'une fonction de la chaîne latérale",
+   f:"pH = pKa + log "+fr("forme dissociée","forme protonée"), u:"À pH = pKa, le rapport vaut <b>1</b>",
+   x:"<p>La relation relie le pH du milieu au rapport entre la forme qui a perdu son H<sup>+</sup> et celle qui l'a gardé.</p><span class='tip'>pH &gt; pKa → forme dissociée majoritaire ; pH &lt; pKa → forme protonée majoritaire ; 1 unité de pH d'écart = facteur 10.</span><span class='trap'>La fiche n'écrit pas cette relation sous forme générale : elle n'apparaît qu'appliquée à la cystéine (@cys) et à l'histidine (@his).</span>"},
+  {k:"cys", der:["hh"], q:"Cystéine à pH 7", d:"Fonction thiol : R–SH ⇌ R–S<sup>−</sup> + H<sup>+</sup>",
+   f:"7 = 8 + log "+fr("S<sup>−</sup>","SH")+" → "+fr("S<sup>−</sup>","SH")+" = 0,1", u:"pKa du thiol = <b>8</b>",
+   x:"<p>À pH 7, on est 1 unité sous le pKa (8) : la forme SH domine, avec 10 fois moins de S<sup>−</sup> que de SH.</p><span class='tip'>Structure de la cystéine ★★ : fonction thiol –SH sur la chaîne latérale.</span>"
+   + H(["pH = pKa + log(S<sup>−</sup>/SH), avec pH = 7 et pKa = 8.","log(S<sup>−</sup>/SH) = 7 − 8 = −1.","S<sup>−</sup>/SH = 10<sup>−1</sup> = 0,1."])},
+  {k:"his", der:["hh"], q:"Histidine à pH 7", d:"Azote du cycle imidazole : R=N–H<sup>+</sup> ⇌ R=N + H<sup>+</sup>",
+   f:"7 = 6 + log "+fr("N","NH<sup>+</sup>")+" → "+fr("N","NH<sup>+</sup>")+" = 10", u:"pKa de l'imidazole = <b>6</b>",
+   x:"<p>À pH 7, on est 1 unité au-dessus du pKa (6) : la forme N domine, 10 fois plus abondante que NH<sup>+</sup>. L'histidine est très sensible aux variations de pH et fréquente dans les enzymes.</p><span class='tip'>Rapports inverses : cystéine 0,1, histidine 10.</span>"
+   + H(["pH = pKa + log(N/NH<sup>+</sup>), avec pH = 7 et pKa = 6.","log(N/NH<sup>+</sup>) = 7 − 6 = 1.","N/NH<sup>+</sup> = 10<sup>1</sup> = 10."])},
+  {k:"lys", st:1, q:"pKa de la lysine", d:"Fonction amine ε de la chaîne latérale",
+   f:"pKa<sub>amine ε</sub> = 10,5", u:"Chaîne latérale <b>toujours chargée</b> en conditions physiologiques",
+   x:"<p>pKa très élevé ★ : au pH physiologique, l'amine ε garde son proton (NH<sub>3</sub><sup>+</sup>), la chaîne latérale reste chargée. La lysine est un acide aminé essentiel ★.</p><span class='tip'>ε = 5<sup>e</sup> lettre (α, β, γ, δ, ε) : l'amine est au bout de la chaîne.</span>"}
+ ]},
+ {id:"E", title:"Réactions et phénylcétonurie", pages:"p.13-14", rows:[
+  {k:"cystine", st:2, q:"Formation de la cystine", d:"Oxydation de deux cystéines",
+   f:"2 cystéines ⇌ cystine", u:"Pont <b>disulfure</b> (S–S) · retour par réduction (β-mercaptoéthanol)",
+   x:"<p>L'oxydation relie les fonctions thiol de deux cystéines par une <b>liaison disulfure</b> ★★ : on obtient la cystine. La réduction par le β-mercaptoéthanol coupe le pont et redonne deux cystéines.</p><span class='tip'>Cyst<b>é</b>ine = 1 acide aminé ; cyst<b>i</b>ne = 2 cystéines reliées.</span><span class='trap'>Oxydation → cystine ; réduction → cystéines.</span>"},
+  {k:"pser", st:3, q:"Phosphorylation de la sérine", d:"Sur la fonction alcool primaire",
+   f:"–CH<sub>2</sub>–OH + PO<sub>4</sub>H<sub>3</sub> → –CH<sub>2</sub>–O–PO<sub>3</sub>H<sub>2</sub> + H<sub>2</sub>O", u:"Par des <b>kinases</b> · produit : phosphosérine (phosphoester)",
+   x:"<p>La phosphorylation est la modification post-traductionnelle la plus tombée pour la sérine ★★★ (et la thréonine ★★★). Des kinases ajoutent l'acide phosphorique sur l'alcool primaire ; une molécule d'eau est libérée. Les kinases sont les cibles de nombreux médicaments (ex. traitements anticancéreux).</p><span class='tip'>Bilan : + PO<sub>4</sub>H<sub>3</sub>, − H<sub>2</sub>O.</span>"},
+  {k:"gaba", st:0, q:"Synthèse du GABA", d:"Décarboxylation du glutamate",
+   f:"Glu → GABA + CO<sub>2</sub>", u:"Glutamate décarboxylase",
+   x:"<p>Le glutamate (neuromédiateur <b>excitateur</b>) perd le carboxyle de son carbone α sous forme de CO<sub>2</sub> : on obtient le GABA (acide γ-aminobutyrique), neuromédiateur <b>inhibiteur</b> qui bloque la dépolarisation des neurones post-synaptiques.</p><span class='tip'>Dé-carboxyl-ase = enlève un CO<sub>2</sub>.</span><span class='trap'>Glutamate excite, GABA inhibe.</span>"},
+  {k:"pah", st:0, q:"Dégradation de la phénylalanine", d:"Phénylalanine hydroxylase",
+   f:"Phénylalanine + O<sub>2</sub> → Tyrosine + H<sub>2</sub>O", u:"Cofacteur H<sub>4</sub> → H<sub>2</sub> · voie de <b>75 %</b> de la Phe alimentaire",
+   x:"<p>Voie physiologique de dégradation de la phénylalanine. Dans la phénylcétonurie, le déficit de cette enzyme ★ (mutation de son gène ★) bloque la réaction : pas de production de tyrosine, et production d'acide phénylpyruvique, toxique pour les neurones.</p>"},
+  {k:"pcuphe", st:1, q:"Phénylalanine plasmatique dans la phénylcétonurie", d:"Conséquence de l'absence d'enzyme",
+   f:"60 µmol/L → plus de 1000", u:"Troubles quand l'activité enzymatique est &lt; <b>20 %</b>",
+   x:"<p>Quand l'activité de la phénylalanine hydroxylase tombe sous 20 %, la phénylalanine plasmatique augmente ★. Autres conséquences : métabolites anormaux dans les urines (normaux à la naissance), retard mental profond et épilepsie, qui s'installent au cours du développement.</p><span class='tip'>Dépistage obligatoire à la naissance ★ : goutte de sang au talon sur buvard, dosage de la phénylalanine.</span><span class='trap'>La fiche ne précise pas l'unité de « 1000 » (on suppose µmol/L, comme pour 60).</span>"},
+  {k:"pcufreq", st:0, q:"Fréquence de la phénylcétonurie", d:"Europe occidentale",
+   f:"1 / 10 000", u:"Maladie autosomale <b>récessive</b>",
+   x:"<p>Une naissance sur 10 000 en Europe occidentale. Traitement préventif ★ : régime pauvre en phénylalanine jusqu'à la fin de l'adolescence (bénéfique aussi chez l'adulte selon de nouvelles études), sans viande, poisson ni œuf, avec supplémentation en acides aminés.</p>"}
+ ]}
+];
+
+
+const code={}, gives={};
+data.forEach(sec=>sec.rows.forEach((r,i)=>{code[r.k]=sec.id+(i+1);}));
+data.forEach(sec=>sec.rows.forEach(r=>(r.der||[]).forEach(p=>{(gives[p]=gives[p]||[]).push(r.k);})));
+const chip=k=>`<a class="chip" href="#r-${code[k]}">${code[k]}</a>`;
+const refs=t=>t.replace(/@(\w+)/g,(m,k)=>code[k]?chip(k):m);
+const main=document.getElementById('main');
+let total=0,starred=0,derived=0;
+const cardHTML=(r,extra='')=>{
+  const from=r.der?`<span class="from">🔁 Déduite de ${r.der.map(chip).join(' ')}</span>`:'';
+  return `<div class="card${r.st?' starred':''}${r.der?' derived':''}" id="r-${code[r.k]}" tabindex="0">
+      <div class="def"><div class="top"><span class="code">${code[r.k]}</span>${S(r.st)}${r.der?'<span class="tag">🔁</span>':''}</div>
+      <div class="q">${r.q}</div>${r.d?`<div class="d">${r.d}</div>`:''}${from}</div>
+      <div class="fm"><span class="f">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div>
+      <div class="x">${refs(r.x)}</div></div>`;
+};
+data.forEach(sec=>{
+  let h=`<section id="${sec.id}"><h2>${sec.id} · ${sec.title} <small style="opacity:.85;font-weight:600">${sec.pages}</small></h2>`;
+  const groups=[];
+  sec.rows.forEach(r=>{ if(r.der&&groups.length) groups[groups.length-1].kids.push(r); else groups.push({r,kids:[]}); });
+  groups.forEach(({r,kids})=>{
+    total++; if(r.st)starred++;
+    h+=`<div class="grp${r.st?' gstar':''}">`+cardHTML(r);
+    if(kids.length){ h+=`<ul class="tree">`+kids.map(k=>{total++;derived++;return `<li>${cardHTML(k)}</li>`;}).join('')+`</ul>`; }
+    h+=`</div>`;
+  });
+  main.insertAdjacentHTML('beforeend',h+'</section>');
+});
+const B=document.body.classList,count=document.getElementById('count');
+const upd=()=>{count.textContent=B.contains('stars')?`${starred} ★`:B.contains('base')?`${total-derived} formules`:`${total} formules`;};
+upd();
+const tog=(id,c)=>{const b=document.getElementById(id);b.addEventListener('click',()=>{const on=B.toggle(c);b.setAttribute('aria-pressed',on);upd();if(c==='hide')document.querySelectorAll('.card.show').forEach(x=>x.classList.remove('show'));});};
+tog('bHide','hide');document.getElementById('bHide').addEventListener('click',()=>window.scrollTo({top:0}));tog('bStars','stars');tog('bBase','base');
+const flip=ev=>{if(ev.target.closest('a'))return;const c=ev.target.closest('.card');if(c&&B.contains('hide'))c.classList.toggle('show');};
+main.addEventListener('click',flip);
+main.addEventListener('keydown',ev=>{if(ev.target.classList.contains('card')&&(ev.key==='Enter'||ev.key===' ')){ev.preventDefault();flip(ev);}});
+
+</script>
+</body>
+</html>

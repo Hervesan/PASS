@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules — Glucides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#ffffff; --ink:#1d2330; --muted:#5b6474; --line:#e3e6ec;
+  --star:#e8a900; --starbg:#fff6d6; --fbg:#f4f6fb; --ded:#3f9a6a; --dedbg:#eef6f1;
+  --A:#2f86a8; --B:#d0632e; --C:#c9971c; --D:#6f5aa8; --E:#a64b4b;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.4}
+.wrap{max-width:860px;margin:0 auto;padding:18px 14px 40px}
+h1{font-size:1.6rem;font-weight:800;margin:0}
+.sub{color:var(--muted);font-size:.9rem;margin:2px 0 0}
+.s{color:var(--star);letter-spacing:1px;white-space:nowrap}
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 0;margin:12px 0 4px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.toolbar button{font:inherit;font-size:.88rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 11px;border-radius:999px;cursor:pointer}
+.toolbar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.toolbar button:focus-visible,.card:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.count{margin-left:auto;color:var(--muted);font-size:.82rem}
+section{margin-top:22px}
+h2{font-size:1rem;margin:0 0 8px;padding:6px 12px;color:#fff;border-radius:6px}
+.card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:stretch;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.def{padding:10px 12px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.def .top{display:flex;gap:8px;align-items:baseline;font-size:.8rem;font-weight:800}
+.def .q{font-weight:700;font-size:1rem}
+.def .d{color:var(--muted);font-size:.86rem}
+.fm{background:var(--fbg);border-left:5px solid var(--sec);padding:12px 14px;display:flex;flex-direction:column;justify-content:center}
+.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.35rem;line-height:1.25}
+.f sub{font-size:.62em}
+.u{margin-top:6px;font-size:.9rem;font-weight:600;color:var(--ink)}
+.u b{color:var(--sec)}
+.card.starred .def{background:linear-gradient(90deg,var(--starbg),transparent 70%)}
+.card.derived{border-style:dashed}
+.card.derived .fm{border-left-color:var(--ded)}
+.card.derived .top .tag{color:var(--ded)}
+#A{--sec:var(--A)} #B{--sec:var(--B)} #C{--sec:var(--C)} #D{--sec:var(--D)} #E{--sec:var(--E)}
+#A h2{background:var(--A)} #B h2{background:var(--B)} #C h2{background:var(--C)} #D h2{background:var(--D)} #E h2{background:var(--E)}
+section .top .code{color:var(--sec)}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+body.hide .card{cursor:pointer}
+body.stars .card:not(.starred){display:none}
+body.base .card.derived{display:none}
+.hint{display:none;color:var(--muted);font-size:.85rem;margin:6px 0 0}
+body.hide .hint{display:block}
+@media (max-width:600px){
+  .card{grid-template-columns:1fr}
+  .fm{border-left:0;border-top:4px solid var(--sec)}
+  .card.derived .fm{border-top-color:var(--ded)}
+}
+@media (prefers-reduced-motion:no-preference){.f,.u{transition:filter .2s}}
+@media print{.toolbar,.hint{display:none}body.hide .fm .f,body.hide .fm .u{filter:none}.card{break-inside:avoid}}
+
+/* Cartes plus isolées */
+section{margin-top:34px}
+h2{margin-bottom:14px}
+.card{margin-bottom:18px;border:1.5px solid var(--line);border-radius:12px;box-shadow:0 2px 0 var(--line),0 6px 14px -8px rgba(29,35,48,.25)}
+.def{padding:14px 16px}
+.fm{padding:16px 18px}
+.card.derived{border-width:1.5px}
+@media (max-width:600px){.card{margin-bottom:16px}}
+
+/* Couple définition/formule plus serré, séparation légère */
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.def{padding:14px 12px 14px 16px}
+.fm{padding:14px 16px 14px 14px}
+.card{margin-bottom:28px}
+section{margin-top:40px}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px dashed var(--line)!important}
+  .def{padding:14px 16px 8px}
+  .fm{padding:10px 16px 14px}
+  .card{margin-bottom:26px}
+}
+
+.wrap{max-width:980px}
+.legend{margin-top:6px;font-size:.88rem;color:var(--muted)}
+.chain{margin:14px 0 4px;padding:12px 14px;border-left:4px solid var(--star);background:var(--starbg);border-radius:0 8px 8px 0;font-size:.95rem}
+.mnemo{margin:12px 0 4px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:.92rem}
+.mnemo strong{display:block;margin-bottom:6px}
+.mnemo ul{margin:0;padding-left:18px;columns:2;column-gap:28px}
+.mnemo li{margin-bottom:4px;break-inside:avoid}
+.chain .f,.mnemo .f{font-size:1rem}
+.card{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
+.x{grid-column:1 / -1;border-top:1px dashed var(--line);padding:12px 16px 14px;font-size:.9rem;color:var(--muted)}
+.x p{margin:0 0 5px}
+.x b,.x .tip,.x .trap{color:var(--ink)}
+.tip,.trap{display:block;margin-top:5px}
+.tip::before{content:"💡 "}
+.trap::before{content:"⚠️ "}
+.ded{margin-top:8px;padding:8px 10px;background:var(--dedbg);border-left:3px solid var(--ded);border-radius:0 6px 6px 0;font-size:.86rem;color:var(--ink)}
+.ded strong{display:block;margin-bottom:3px}
+.ded ol{margin:0;padding-left:20px}
+.from{display:block;margin-top:4px;font-size:.84rem;color:var(--ded);font-weight:600}
+.gives{display:block;margin-top:8px;font-size:.86rem;color:var(--ded);font-weight:600}
+.chip{display:inline-block;text-decoration:none;font-size:.78rem;font-weight:700;border:1px solid var(--line);border-radius:5px;padding:0 5px;background:var(--bg);color:var(--ink)}
+.card{scroll-margin-top:70px}
+.card:target{box-shadow:0 0 0 3px var(--star)}
+/* mode test : seul le titre reste visible */
+body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:blur(8px);user-select:none}
+body.hide .card.show .def .d,body.hide .card.show .def .from,body.hide .card.show .fm,body.hide .card.show .x{filter:none;user-select:auto}
+@media (max-width:600px){.mnemo ul{columns:1}.x{padding:10px 16px 14px}}
+@media print{body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:none}}
+
+/* Traits pleins fins à l'intérieur, cadre plus marqué */
+:root{--frame:#b9c0cc}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--frame:#4a5263}}
+:root[data-theme="dark"]{--frame:#4a5263}
+.card{border:2px solid var(--frame)!important}
+.card.derived{border:2px solid var(--ded)!important}
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.x{border-top:1px solid var(--line)!important}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px solid var(--line)!important}
+}
+
+/* Traits intérieurs un peu plus épais */
+.fm,.card.derived .fm{border-left:1.5px solid var(--frame)!important;border-top:0!important}
+.x{border-top:1.5px solid var(--frame)!important}
+@media (max-width:600px){.fm,.card.derived .fm{border-left:0!important;border-top:1.5px solid var(--frame)!important}}
+
+/* Cadre d'épaisseur identique sur les 4 côtés */
+.card{box-shadow:0 6px 14px -10px rgba(29,35,48,.28)!important}
+
+/* Mobile : carte empilée comme la page épurée (évite le trait doublé en haut de la formule) */
+@media (max-width:600px){.card{grid-template-columns:1fr!important}}
+
+/* Fractions : numérateur au-dessus du dénominateur */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor;padding-bottom:.08em}
+.frac>span:last-child{padding-top:.08em}
+
+/* Arbre : formule de base → formules déduites (comme la page arbre) */
+.grp{margin-bottom:28px}
+.grp .card{margin-bottom:0}
+.tree{list-style:none;margin:0 0 0 26px;padding:0}
+.tree > li{position:relative;padding:12px 0 0 30px}
+.tree > li::before{content:"";position:absolute;left:0;top:0;bottom:0;border-left:2px solid var(--ded)}
+.tree > li:last-child::before{bottom:auto;height:36px}
+.tree > li::after{content:"";position:absolute;left:0;top:36px;width:24px;border-top:2px solid var(--ded)}
+.tree .card{box-shadow:none!important}
+.tree .card .f{font-size:1.18rem}
+body.stars .grp:not(.gstar){display:none}
+body.stars .tree{display:none}
+body.base .tree{display:none}
+@media (max-width:600px){
+  .tree{margin-left:12px}
+  .tree > li{padding-left:22px}
+  .tree > li::after{width:18px}
+}
+
+/* Singe = bascule vers la vue épurée floutée (définition → formule) */
+body.hide .x,body.hide .chain,body.hide .mnemo,body.hide .legend,body.hide .from{display:none}
+body.hide .def .d{filter:none!important;user-select:auto}
+body.hide .fm{filter:none!important}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+@media (prefers-reduced-motion:no-preference){.fm .f,.fm .u{transition:filter .2s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Glucides : les formules</h1>
+<p class="sub">M2 · Biochimie · formules expliquées</p>
+<div class="legend"><span class="s">★</span> = tombée au concours, d'après la fiche de cours · <span class="s">★★★</span> = la plus fréquente · <span style="color:var(--ded);font-weight:700">🔁</span> = formule déduite d'une autre (cadre vert)</div>
+<div class="toolbar" role="toolbar" aria-label="Options">
+  <a href="formules-glucides.html" style="font-size:.88rem;font-weight:600;text-decoration:none;color:var(--ink);border:1.5px solid var(--line);padding:6px 11px;border-radius:999px">← Tableau des formules</a>
+  <button id="bHide" aria-pressed="false">🙈 Réviser (vue épurée)</button>
+  <button id="bStars" aria-pressed="false"><span class="s">★</span> Concours</button>
+  <button id="bBase" aria-pressed="false">Sans les déduites</button>
+  <span class="count" id="count"></span>
+</div>
+<p class="hint">Vue épurée : touche une carte pour révéler la formule. Retouche 🙈 pour revenir aux explications.</p>
+<div class="chain">Le fil qui relie tout : <span class="f">C<sub>n</sub>(H<sub>2</sub>O)<sub>n</sub></span> → aldose : <span class="f">n − 2</span> C* → <span class="f">2<sup>n</sup></span> stéréoisomères → pont C1–C5 : cycle à <span class="f">6 atomes</span> (pyranose) → mutarotation <span class="f">+113° → +53°</span> (β 64 % · α 36 %).</div>
+
+<div class="mnemo">
+  <strong>Moyens mnémotechniques</strong>
+  <ul>
+    <li>Aldose : <b>n − 2</b> C* ; cétose : <b>n − 3</b> C* (il a un alcool primaire de plus).</li>
+    <li>Stéréoisomères = 2 puissance le nombre de <b>C*</b>, pas le nombre de carbones.</li>
+    <li>Aldoses : tri <b>2</b>, tétra <b>4</b>, penta <b>8</b>, hexa <b>16</b> (on double à chaque carbone).</li>
+    <li>Toujours <b>moitié D, moitié L</b>.</li>
+    <li>Pont en <b>C5</b> → 6 atomes → <b>pyrane</b> ; pont en <b>C4</b> → 5 atomes → <b>furane</b>.</li>
+    <li><b>β</b> majoritaire (64 %) car moins encombré ; <b>α</b> a le plus grand angle (+113°).</li>
+    <li>Mutarotation : 11<b>3</b> → 5<b>3</b>, le 3 reste.</li>
+    <li>Hémiacétalisation : <b>0</b> atome perdu ; méthylation, liaison osidique, lactone : <b>1 H₂O</b> libérée.</li>
+    <li>Hexokinase → phosphate en <b>6</b> → glucose-<b>6</b>-phosphate.</li>
+  </ul>
+</div>
+
+<main id="main"></main>
+<footer style="margin-top:30px;color:var(--muted);font-size:.8rem;text-align:center">Source : fiche de cours Médisup Tours/Orléans 2026-2027 (actualisation).</footer>
+</div>
+<script>
+const S = n => n ? '<span class="s">' + '★'.repeat(n) + '</span>' : '';
+const H = steps => `<div class="ded"><strong>🔁 Comment la retrouver</strong><ol>${steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>`;
+const fr=(a,b)=>`<span class='frac'><span>${a}</span><span>${b}</span></span>`;
+const data = [
+ {id:"A", title:"Structure et numérotation des oses", pages:"p.3-4", rows:[
+  {k:"gen", st:0, q:"Formule générale des glucides", d:"Hydrates de carbone",
+   f:"C<sub>n</sub>(H<sub>2</sub>O)<sub>n</sub>", u:"avec <b>n ≥ 3</b>",
+   x:"<p>Un glucide s'écrit comme n carbones « hydratés » : autant de C que de H<sub>2</sub>O. Le minimum est n = 3, la taille du plus petit ose, le glycéraldéhyde (triose).</p><span class='tip'>n donne le nom de l'ose : 3 → triose, 4 → tétrose, 5 → pentose, 6 → hexose, 7 → heptose. Pour un hexose : C<sub>6</sub>(H<sub>2</sub>O)<sub>6</sub>.</span><span class='trap'>n ≥ 3 : le plus petit ose a 3 carbones.</span>"},
+  {k:"iso", st:2, q:"Glucose et fructose : formule brute", d:"Deux hexoses, l'un aldose, l'autre cétose",
+   f:"C<sub>6</sub>(H<sub>2</sub>O)<sub>6</sub> pour les deux", u:"Glucose : aldéhyde en <b>C1</b> · fructose : cétone en <b>C2</b>",
+   x:"<p>Le fructose est un <b>isomère</b> du glucose ★★ : <b>mêmes atomes, mais liaisons différentes</b> ★. Tous deux sont des hexoses (n = 6) ; seule la position de la fonction carbonyle change (C1 pour l'aldose, C2 pour la cétose).</p><span class='tip'>Se retrouve par calcul avec @gen et n = 6 (formule étoilée, gardée comme formule de base).</span><span class='trap'>Le fructose a <b>2</b> fonctions alcool primaire (C1 et C6), le glucose une seule (C6).</span>"},
+  {k:"cA", st:0, q:"Carbones asymétriques d'un aldose", d:"Aldose à n carbones",
+   f:"N<sub>C*</sub> = n − 2", u:"C* de <b>C2</b> à <b>C(n − 1)</b> · C1 = aldéhyde",
+   x:"<p>Dans un aldose, C1 porte l'aldéhyde (carbone le plus oxydé) et le dernier carbone un alcool primaire (lié à 2 H) : aucun des deux n'est asymétrique. Restent les carbones 2 à (n − 1), qui portent chacun un alcool secondaire ★ et sont liés à 4 constituants différents.</p><span class='tip'>Glucose (n = 6) : C2 à C5 → 4 C*. Glycéraldéhyde (n = 3) : C2 seul → 1 C*.</span><span class='trap'>On retire 2 carbones : le premier (aldéhyde) et le dernier (alcool primaire).</span>"},
+  {k:"cK", st:0, q:"Carbones asymétriques d'un cétose", d:"Cétose à n carbones",
+   f:"N<sub>C*</sub> = n − 3", u:"C* de <b>C3</b> à <b>C(n − 1)</b> · C2 = cétone",
+   x:"<p>Dans un cétose, la cétone est sur C2, et le premier et le dernier carbones portent un alcool primaire : ces 3 carbones ne sont pas asymétriques. Restent C3 à C(n − 1), qui portent un alcool secondaire ★.</p><span class='tip'>Fructose (cétohexose, n = 6) : C3, C4, C5 → 3 C*, un de moins que le glucose.</span><span class='trap'>Aldose : n − 2 ; cétose : n − 3. Le cétose perd un C* de plus car son C1 est aussi un alcool primaire.</span>"}
+ ]},
+ {id:"B", title:"Stéréoisomères des oses", pages:"p.6-7", rows:[
+  {k:"ster", st:0, q:"Nombre de stéréoisomères", d:"Ose à n carbones asymétriques",
+   f:"N = 2<sup>n</sup>", u:"n = nombre de <b>carbones asymétriques</b>",
+   x:"<p>Chaque carbone asymétrique a 2 orientations possibles : avec n C*, on obtient 2<sup>n</sup> combinaisons, donc 2<sup>n</sup> stéréoisomères.</p><span class='tip'>Ses deux applications tombées au concours : aldotrioses (@tri, ★★) et aldohexoses (@hex, ★★).</span><span class='trap'>n = nombre de <b>C*</b>, pas nombre de carbones : un aldohexose a 6 C mais 4 C* → 2<sup>4</sup>.</span>"},
+  {k:"tet", der:["ster","cA"], q:"Stéréoisomères des aldotétroses", d:"Aldoses à 4 carbones",
+   f:"2<sup>2</sup> = 4 stéréoisomères", u:"<b>2 C*</b> · 2 série D + 2 série L",
+   x:"<p>4 carbones → 2 C* → 4 stéréoisomères. Ils forment <b>2 paires d'énantiomères</b> (images l'une de l'autre dans un miroir ★) et comptent des <b>épimères</b> (une seule différence de position sur un C* ★).</p><span class='tip'>La série se lit sur le carbone n − 1 : l'avant-dernier carbone, dernier C* de la chaîne.</span>"
+   + H(["Aldose à 4 carbones : 4 − 2 = 2 C* (@cA).","Applique 2<sup>n</sup> avec n = 2 : 2<sup>2</sup> = 4."])},
+  {k:"pent", der:["ster","cA"], q:"Stéréoisomères des aldopentoses", d:"Aldoses à 5 carbones",
+   f:"2<sup>3</sup> = 8 stéréoisomères", u:"<b>3 C*</b> · dont le <b>D-ribose</b>",
+   x:"<p>5 carbones ★ → 3 C* → 8 stéréoisomères. Parmi eux, le <b>D-ribose</b> : tous ses hydroxyles sont à droite ; il entre dans la structure de l'ADN et de l'ARN.</p><span class='trap'>Dans la fiche, l'étoile ★ porte sur « 5 carbones », pas sur le nombre 8.</span>"
+   + H(["Aldose à 5 carbones : 5 − 2 = 3 C* (@cA).","2<sup>3</sup> = 8."])},
+  {k:"cetohex", der:["ster","cK"], q:"Isomères des cétohexoses", d:"Cétoses à 6 carbones",
+   f:"2<sup>3</sup> = 8 isomères", u:"<b>3 C*</b> · 4 de la série D, dont le <b>fructose</b>",
+   x:"<p>Un cétose a un C* de moins que l'aldose de même taille : 3 C* au lieu de 4, donc 8 isomères au lieu de 16.</p><span class='trap'>Cétohexoses : 8 ; aldohexoses : 16.</span>"
+   + H(["Cétose à 6 carbones : 6 − 3 = 3 C* (@cK).","2<sup>3</sup> = 8."])},
+  {k:"tri", st:2, q:"Stéréoisomères des aldotrioses", d:"Aldoses à 3 carbones",
+   f:"2<sup>1</sup> = 2 stéréoisomères", u:"<b>1 C*</b> : D- et L-glycéraldéhyde",
+   x:"<p>Le glycéraldéhyde, ose le plus simple, n'a qu'un carbone asymétrique (C2) : il existe sous 2 formes, <b>D</b> et <b>L</b>.</p><span class='tip'>Se retrouve par calcul : 3 carbones → 1 C* (@cA) → 2<sup>1</sup> = 2 (@ster).</span><span class='trap'>Le D-glycéraldéhyde dévie la lumière polarisée vers la droite, mais il n'y a <b>pas de rapport</b> entre isomère D et déviation dextrogyre.</span>"},
+  {k:"hex", st:2, q:"Stéréoisomères des aldohexoses", d:"Aldoses à 6 carbones",
+   f:"2<sup>4</sup> = 16 stéréoisomères", u:"<b>4 C*</b> · 8 D-aldohexoses + 8 L-aldohexoses",
+   x:"<p>Aldohexose : 4 C* (C2 à C5) → 16 stéréoisomères, moitié série D, moitié série L. Parmi les D-aldohexoses : le <b>D-glucose</b> ★ (principal ose du vivant ★), le D-mannose (épimère du glucose en <b>C2</b>) et le D-galactose (épimère du glucose en <b>C4</b> ★).</p><span class='tip'>Se retrouve par calcul : 6 carbones → 4 C* (@cA) → 2<sup>4</sup> = 16 (@ster).</span><span class='trap'>Glucose/mannose : épimères en C2 ; glucose/galactose : épimères en C4.</span>"},
+  {k:"DL", st:0, q:"Nombre d'oses de la série D", d:"Parmi les 2<sup>n</sup> stéréoisomères",
+   f:"N<sub>D</sub> = N<sub>L</sub> = "+fr("2<sup>n</sup>","2"), u:"Aldotétroses : 2 D · aldohexoses : 8 D · cétohexoses : 4 D",
+   x:"<p>Les stéréoisomères se répartissent à parts égales entre série D et série L. La série se lit sur l'orientation des éléments du <b>carbone n − 1</b> (dernier C*).</p><span class='tip'>Exemples de la fiche : aldotétroses 2 D + 2 L ; aldohexoses 8 D + 8 L ; cétohexoses 4 isomères série D.</span>"}
+ ]},
+ {id:"C", title:"Formes cycliques et pouvoir rotatoire", pages:"p.8-9", rows:[
+  {k:"hemi", st:2, q:"Hémiacétalisation", d:"Réaction d'un aldéhyde avec un alcool",
+   f:"R<sub>1</sub>–CHO + HO–R<sub>2</sub> ⇌ R<sub>1</sub>–CH(OH)–O–R<sub>2</sub>", u:"Réversible et spontanée · <b>aucun atome perdu</b>",
+   x:"<p>Lors de la mise en solution ★, la fonction aldéhyde réagit avec une fonction alcool de la même molécule : le cycle se forme par <b>réorganisation de la molécule, sans perte d'atomes</b> ★. La réaction est <b>réversible</b> ★★ et spontanée.</p><span class='tip'>Forme linéaire et forme cyclique ont la <b>même formule brute</b> : pas d'eau libérée.</span><span class='trap'>À l'inverse, la liaison osidique (@osid) et la lactone (@lact) libèrent une molécule d'eau.</span>"},
+  {k:"cycle", st:2, q:"Taille du cycle formé", d:"Pont hémiacétal entre C1 et un carbone C<sub>k</sub>",
+   f:"Atomes du cycle = k + 1", u:"Pont C1–C5 : <b>6 atomes (pyrane)</b> · pont C1–C4 : <b>5 atomes (furane)</b>",
+   x:"<p>Le pont hémiacétal relie la fonction aldéhyde du C1 ★ à l'oxygène d'une fonction alcool secondaire : [OH du C1] – C1 – [O du C5] – C5. Le cycle contient les carbones C1 à C<sub>k</sub> plus cet oxygène.</p><span class='tip'>Glucose : pont en <b>C5</b> ★★ → 5 C + 1 O = 6 atomes → glucopyranose. Pont en <b>C4</b> ★★ → 5 atomes → furanose (ex. β-D-ribofuranose).</span><span class='trap'>Le C6 (CH<sub>2</sub>OH) reste en dehors du cycle du glucopyranose. Le décompte « k + 1 » se lit sur les schémas de la fiche, il n'y est pas écrit.</span>"},
+  {k:"rot", st:0, q:"Pouvoir rotatoire des anomères du glucose", d:"Angle de rotation de la lumière polarisée",
+   f:"α-D-glucose : +113° · β-D-glucose : +18,7°", u:"Différent pour chaque anomère",
+   x:"<p>La cyclisation fait apparaître un nouveau carbone asymétrique ★★ en <b>C1</b> (carbone anomérique) : deux anomères, α et β, qui ne dévient pas la lumière polarisée du même angle.</p><span class='tip'>Série D, anomère α : hydroxyle du C1 <b>en bas</b> (du même côté que l'hydroxyle de la série).</span><span class='trap'>Les anomères ne sont <b>pas</b> des énantiomères : un seul carbone est en jeu.</span>"},
+  {k:"muta", st:1, q:"Mutarotation du glucose", d:"α-D-glucose mis en solution",
+   f:"+113° → +53° à l'équilibre", u:"Variation <b>au cours du temps</b>",
+   x:"<p>Quand on dissout de l'α-D-glucose, l'angle de rotation <b>varie au cours du temps</b> ★, de 113° jusqu'à 53° : c'est la <b>mutarotation</b> ★, interconversion α ↔ β ★★★ en passant par la forme linéaire ★★.</p><span class='tip'>Les chiffres de @rot et @rep sont cohérents (vérification non écrite dans la fiche) : 0,36 × 113 + 0,64 × 18,7 ≈ 40,7 + 12,0 ≈ 53°.</span><span class='trap'>53° est plus proche de 18,7° que de 113° : c'est l'anomère β qui domine à l'équilibre.</span>"},
+  {k:"rep", st:0, q:"Répartition des formes du glucose en solution", d:"À l'équilibre",
+   f:"β : 64 % · α : 36 % · linéaire : 0,003 %", u:"",
+   x:"<p>En solution, le glucose est presque entièrement cyclique. L'anomère <b>β est majoritaire</b> car son <b>encombrement stérique est moins important</b> que celui de l'anomère α. La forme ouverte est infime, mais c'est par elle que passe la mutarotation (@muta).</p><span class='trap'>Forme linéaire : 0,003 %, pas 0,03 % ni 3 %.</span>"}
+ ]},
+ {id:"D", title:"Dérivés et réactions des oses", pages:"p.10-11", rows:[
+  {k:"phos", st:1, q:"Phosphorylation du glucose", d:"Estérification d'une fonction hydroxyle",
+   f:"Glucose + ATP → Glucose-6-phosphate + ADP", u:"Hexokinase · en <b>position 6</b>",
+   x:"<p>Après transport du glucose dans la cellule ★ par des transporteurs, l'hexokinase fixe un phosphate sur l'OH du <b>C6</b>. L'ATP fournit ce phosphate (il contient 2 liaisons pyrophosphates riches en énergie). Le glucose-6-phosphate est le <b>substrat de la glycolyse</b> ★.</p><span class='tip'>La glycolyse produit de l'énergie mais nécessite d'avoir déjà de l'énergie dans la cellule : on dépense un ATP au départ.</span>"},
+  {k:"g6p", st:0, q:"Charge du glucose-6-phosphate", d:"À pH physiologique",
+   f:"Charge = −2", u:"Groupement phosphate <b>ionisé</b>",
+   x:"<p>Le groupement phosphate est ionisé à pH physiologique : le glucose-6-phosphate porte 2 charges négatives. C'est l'une de ses 2 propriétés fondamentales ; l'autre est un angle plus grand qui modifie la structure du glucose.</p><span class='tip'>Structure du glucose-6-phosphate ★★ : le phosphate (deux O<sup>−</sup>) est porté par le C6.</span>"},
+  {k:"meth", st:1, q:"Méthylation du glucose", d:"Un méthyle remplace l'hydrogène d'un OH",
+   f:"α-D-glucose + CH<sub>3</sub>OH → α-1-méthyl-D-glucoside + H<sub>2</sub>O", u:"Sur l'OH <b>anomérique</b> (C1)",
+   x:"<p>Le groupement méthyle remplace un hydrogène d'un OH ★ ; une molécule d'eau est libérée. Intérêt : <b>bloquer la réaction d'anomérisation</b> ★, ce qui permet de doser les anomères α et β.</p><span class='tip'>Bilan : + CH<sub>3</sub>OH, − H<sub>2</sub>O.</span>"},
+  {k:"osid", st:0, q:"Formation de la liaison osidique", d:"Liaison entre deux oses",
+   f:"Ose–OH + HO–Ose → Ose–O–Ose + H<sub>2</sub>O", u:"Au moins un des deux OH est <b>anomérique</b>",
+   x:"<p>La liaison osidique se forme par <b>élimination d'une molécule d'eau entre deux OH</b>, dont l'un au moins est anomérique. La méthylation (@meth) sert à la définir.</p><span class='tip'>Chaque liaison osidique formée libère 1 H<sub>2</sub>O.</span><span class='trap'>Elle se rompt en milieu acide (liaison particulièrement réversible) : ne pas la confondre avec la liaison éther, très résistante.</span>"},
+  {k:"red", st:0, q:"Réduction du glucose", d:"Retrait de la double liaison de l'aldéhyde",
+   f:"D-glucose → D-glucitol (= D-sorbitol)", u:"C1 : –CHO → –CH<sub>2</sub>OH",
+   x:"<p>La réduction de la fonction aldéhyde donne le D-sorbitol, dérivé d'ose utilisé comme additif alimentaire.</p><span class='tip'>Diabète : excès de glucose → transformation en sorbitol → accumulation dans le <b>cristallin</b> ★ de l'œil → opacification = cataracte.</span>"},
+  {k:"ox", st:1, q:"Oxydation du glucose", d:"Oxydation de l'aldéhyde en C1",
+   f:"D-glucose + O<sub>2</sub> → acide D-gluconique", u:"C1 : –CHO → –COOH (<b>acide aldonique</b>)",
+   x:"<p>C1 est le carbone qui s'oxyde le plus facilement. On forme un <b>acide aldonique</b> (acide carboxylique particulier), ici l'acide D-gluconique.</p><span class='tip'><b>Ose réducteur</b> ★★ = ose ayant une fonction aldéhyde libre. Détection par la liqueur de Fehling (tartrate cuivrique) : précipité rouge de Cu<sub>2</sub>O à la chaleur.</span>"},
+  {k:"lact", st:0, q:"Cyclisation de l'acide gluconique", d:"Estérification intramoléculaire",
+   f:"Acide D-gluconique ⇌ D-gluconolactone + H<sub>2</sub>O", u:"Spontanée et <b>réversible</b>",
+   x:"<p>La D-gluconolactone est l'<b>ester cyclique</b> de l'acide D-gluconique ; sa formation libère de l'eau. Présente dans l'alimentation (miel, jus de fruits, vins), elle donne un goût acide et se métabolise facilement sous forme de glucose.</p><span class='trap'>Lactone : libère H<sub>2</sub>O ; hémiacétalisation (@hemi) : aucun atome perdu.</span>"},
+  {k:"interc", st:0, q:"Interconversion glucose / fructose", d:"Aldose ⇌ ène-diol ⇌ cétose",
+   f:"D-glucose-6P ⇌ D-fructose-6P", u:"Glucose-6-phosphate isomérase · <b>2<sup>e</sup> réaction de la glycolyse</b>",
+   x:"<p>Liée à la polarité des atomes : l'aldose passe par un intermédiaire <b>ène-diol</b> (C=C–OH, instable) pour donner le cétose, et inversement. Glucose et fructose sont isomères (@iso).</p><span class='tip'>Sens D-fructose → ène-diol → D-glucose : synthèse du glucose par le foie = <b>néoglucogenèse</b>.</span><span class='trap'>Même principe pour D-mannose ⇌ ène-diol ⇌ D-fructose.</span>"}
+ ]}
+];
+
+
+const code={}, gives={};
+data.forEach(sec=>sec.rows.forEach((r,i)=>{code[r.k]=sec.id+(i+1);}));
+data.forEach(sec=>sec.rows.forEach(r=>(r.der||[]).forEach(p=>{(gives[p]=gives[p]||[]).push(r.k);})));
+const chip=k=>`<a class="chip" href="#r-${code[k]}">${code[k]}</a>`;
+const refs=t=>t.replace(/@(\w+)/g,(m,k)=>code[k]?chip(k):m);
+const main=document.getElementById('main');
+let total=0,starred=0,derived=0;
+const cardHTML=(r,extra='')=>{
+  const from=r.der?`<span class="from">🔁 Déduite de ${r.der.map(chip).join(' ')}</span>`:'';
+  return `<div class="card${r.st?' starred':''}${r.der?' derived':''}" id="r-${code[r.k]}" tabindex="0">
+      <div class="def"><div class="top"><span class="code">${code[r.k]}</span>${S(r.st)}${r.der?'<span class="tag">🔁</span>':''}</div>
+      <div class="q">${r.q}</div>${r.d?`<div class="d">${r.d}</div>`:''}${from}</div>
+      <div class="fm"><span class="f">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div>
+      <div class="x">${refs(r.x)}</div></div>`;
+};
+data.forEach(sec=>{
+  let h=`<section id="${sec.id}"><h2>${sec.id} · ${sec.title} <small style="opacity:.85;font-weight:600">${sec.pages}</small></h2>`;
+  const groups=[];
+  sec.rows.forEach(r=>{ if(r.der&&groups.length) groups[groups.length-1].kids.push(r); else groups.push({r,kids:[]}); });
+  groups.forEach(({r,kids})=>{
+    total++; if(r.st)starred++;
+    h+=`<div class="grp${r.st?' gstar':''}">`+cardHTML(r);
+    if(kids.length){ h+=`<ul class="tree">`+kids.map(k=>{total++;derived++;return `<li>${cardHTML(k)}</li>`;}).join('')+`</ul>`; }
+    h+=`</div>`;
+  });
+  main.insertAdjacentHTML('beforeend',h+'</section>');
+});
+const B=document.body.classList,count=document.getElementById('count');
+const upd=()=>{count.textContent=B.contains('stars')?`${starred} ★`:B.contains('base')?`${total-derived} formules`:`${total} formules`;};
+upd();
+const tog=(id,c)=>{const b=document.getElementById(id);b.addEventListener('click',()=>{const on=B.toggle(c);b.setAttribute('aria-pressed',on);upd();if(c==='hide')document.querySelectorAll('.card.show').forEach(x=>x.classList.remove('show'));});};
+tog('bHide','hide');document.getElementById('bHide').addEventListener('click',()=>window.scrollTo({top:0}));tog('bStars','stars');tog('bBase','base');
+const flip=ev=>{if(ev.target.closest('a'))return;const c=ev.target.closest('.card');if(c&&B.contains('hide'))c.classList.toggle('show');};
+main.addEventListener('click',flip);
+main.addEventListener('keydown',ev=>{if(ev.target.classList.contains('card')&&(ev.key==='Enter'||ev.key===' ')){ev.preventDefault();flip(ev);}});
+
+</script>
+</body>
+</html>

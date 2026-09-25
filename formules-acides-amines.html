@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules en 2 colonnes — Les acides aminés</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff;--ink:#1d2330;--muted:#5b6474;--line:#e3e6ec;--frame:#b9c0cc;--star:#e8a900;--starbg:#fff6d6;--ded:#3f9a6a;
+--A:#2f86a8;--B:#d0632e;--C:#c9971c;--D:#6f5aa8;--E:#a64b4b}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.35}
+.wrap{max-width:820px;margin:0 auto;padding:16px 12px 40px}
+h1{font-size:1.4rem;margin:0 0 10px;font-weight:800}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:6px 0 8px;z-index:2;display:flex;gap:8px;align-items:center}
+.bar button{font:inherit;font-size:.9rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+.bar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.bar button:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.bar span{font-size:.8rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;border:2px solid var(--frame)}
+th{text-align:left;font-size:.78rem;color:var(--muted);font-weight:700;padding:6px 10px;border-bottom:2px solid var(--frame)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+td.d{width:42%;font-weight:700;font-size:.95rem;border-right:1.5px solid var(--frame)}
+td.d .s{color:var(--star);font-size:.8rem;margin-left:4px;white-space:nowrap}
+td.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.12rem}
+td.f .u{display:block;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.82rem;color:var(--muted);margin-top:2px}
+td.f .u b{color:var(--ink)}
+tr.sec td{background:var(--c);color:#fff;font-weight:800;font-size:.95rem;padding:6px 10px;border-bottom:0}
+tr.der td.d{padding-left:24px;color:var(--ded);font-weight:600;font-size:.9rem}
+tr.der td.d::before{content:"↳ ";font-weight:800}
+tr.der td.f{font-size:1rem;color:var(--ded)}
+sub{font-size:.65em}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor}
+body.hide td.f .ft,body.hide td.f .u{filter:blur(7px)}
+body.hide tr:not(.sec){cursor:pointer}
+body.hide tr.show td.f .ft,body.hide tr.show td.f .u{filter:none}
+@media (prefers-reduced-motion:no-preference){.ft,.u{transition:filter .2s}}
+@media (max-width:480px){td{padding:8px 7px}td.d{font-size:.88rem}td.f{font-size:1rem}tr.der td.d{padding-left:16px}}
+@media print{.bar{display:none}body.hide .ft,body.hide .u{filter:none}tr{break-inside:avoid}}
+
+/* ---- Mise en page soignée ---- */
+body{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0)}
+.wrap{max-width:860px;padding:22px 14px 50px}
+.top{padding:4px 2px 6px}
+.kicker{margin:0;font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--muted)}
+.top h1{font-size:1.9rem;margin:2px 0 4px;letter-spacing:-.01em}
+.meta{margin:0;font-size:.88rem;color:var(--muted)}
+.meta .s{color:var(--star)} .meta .g{color:var(--ded);font-weight:800}
+.bar{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0);padding:10px 0}
+.bar button{background:var(--bg);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.cols{display:grid;grid-template-columns:42% 58%;font-size:.72rem;font-weight:700;letter-spacing:.03em;color:var(--muted);padding:4px 16px 6px}
+.blk{background:var(--bg);border-radius:16px;margin:0 0 22px;overflow:hidden;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25);border:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.blk header{display:flex;align-items:center;gap:10px;padding:12px 16px;font-weight:800;font-size:1.02rem;color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--bg));border-bottom:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.letter{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--c);color:#fff;font-size:.95rem}
+.row{display:grid;grid-template-columns:42% 58%;align-items:stretch;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .d{padding:12px 12px 12px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.code{font-size:.72rem;font-weight:800;color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg));border-radius:5px;padding:1px 6px}
+.name{font-weight:700;font-size:.95rem;flex-basis:100%}
+.row .d .s{color:var(--star);font-size:.82rem;letter-spacing:1px}
+.row .f{padding:12px 16px;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line));display:flex;flex-direction:column;justify-content:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.2rem}
+.row .f .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px;line-height:1.3}
+.row .f .u b{color:var(--c)}
+.row.star .d{background:linear-gradient(90deg,var(--starbg),transparent 75%)}
+.row.der .d{padding-left:30px;position:relative}
+.row.der .d::before{content:"↳";position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ded);font-weight:800}
+.row.der .name{color:var(--ded);font-weight:600;font-size:.9rem}
+.row.der .code{color:var(--ded);background:color-mix(in srgb,var(--ded) 12%,var(--bg))}
+.row.der .f{font-size:1.05rem;color:var(--ded);background:color-mix(in srgb,var(--ded) 6%,var(--bg))}
+body.hide .ft,body.hide .u{filter:blur(7px);user-select:none}
+body.hide .row{cursor:pointer}
+body.hide .row.show .ft,body.hide .row.show .u{filter:none}
+.row:focus-visible{outline:3px solid var(--star);outline-offset:-3px}
+@media (max-width:480px){
+  .cols,.row{grid-template-columns:44% 56%}
+  .row .d{padding:10px 8px 10px 12px}.row .f{padding:10px 12px;font-size:1.05rem}
+  .name{font-size:.88rem}.row.der .d{padding-left:24px}.row.der .d::before{left:8px}
+  .top h1{font-size:1.6rem}
+}
+@media print{body{background:#fff}.blk{box-shadow:none;break-inside:avoid}}
+
+
+/* Option 1 : groupe encadré (formule mère + filles dans une bande verte) */
+.grp{border-top:1px solid var(--line)}
+.grp:first-child{border-top:0}
+.grp > .row{border-top:0}
+.kids{background:color-mix(in srgb,var(--ded) 13%,var(--bg));padding:8px 10px 10px;display:flex;flex-direction:column;gap:7px;border-top:1px solid color-mix(in srgb,var(--ded) 30%,var(--line))}
+.kids .row{border:1px solid color-mix(in srgb,var(--ded) 30%,var(--line));border-radius:10px;overflow:hidden;background:var(--bg);grid-template-columns:calc(42% - 4px) auto}
+.kids .row .d{padding:9px 10px}
+.kids .row .f{background:color-mix(in srgb,var(--ded) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--ded) 25%,var(--line))}
+.row.der .d{padding-left:10px}
+.row.der .d::before{content:none}
+@media (max-width:480px){.kids{padding:7px 7px 8px}.kids .row .d{padding:8px}}
+
+/* Formules déduites : mêmes couleurs que les autres (seul le regroupement les distingue) */
+.kids{background:color-mix(in srgb,var(--ink) 5%,var(--bg));border-top:1px solid var(--line)}
+.kids .row{border-color:var(--line)}
+.row.der .name{color:var(--ink);font-weight:700;font-size:.95rem}
+.row.der .code{color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg))}
+.row.der .code::before{content:none}
+.row.der .f,.kids .row .f{color:var(--ink);font-size:1.2rem;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line))}
+@media (max-width:480px){.row.der .f,.kids .row .f{font-size:1.05rem}.row.der .name{font-size:.88rem}}
+
+/* Comme la page explication : filles décalées, reliées par un trait à leur formule mère */
+.kids{background:transparent;border-top:0;padding:0 12px 14px 38px;gap:10px;position:relative}
+.kids .row{position:relative;overflow:visible;border:1.5px solid color-mix(in srgb,var(--ded) 60%,var(--line));border-radius:10px;background:var(--bg)}
+.kids .row .d{border-radius:9px 0 0 9px}
+.kids .row .f{border-radius:0 9px 9px 0}
+.kids .row::before{content:"";position:absolute;left:-24px;top:-12px;bottom:-12px;border-left:2px solid var(--ded)}
+.kids .row:first-child::before{top:-2px}
+.kids .row:last-child::before{bottom:50%}
+.kids .row::after{content:"";position:absolute;left:-24px;top:50%;width:22px;border-top:2px solid var(--ded)}
+.grp:has(.kids) > .row{border-bottom:0}
+.from{flex-basis:100%;font-size:.76rem;font-weight:700;color:var(--ded)}
+.from b{font-weight:800}
+@media (max-width:480px){
+  .kids{padding:0 8px 12px 28px}
+  .kids .row::before,.kids .row::after{left:-18px}
+  .kids .row::after{width:16px}
+}
+
+/* Colonnes alignées partout + petit espace entre formules principales + cadres déduits plus étroits */
+.blk{container-type:inline-size}
+.row{grid-template-columns:42cqw minmax(0,1fr)!important}
+.kids .row{grid-template-columns:calc(42cqw - 39.5px) minmax(0,1fr)!important}
+.cols{grid-template-columns:42% 58%}
+.rows{display:flex;flex-direction:column;gap:6px;background:color-mix(in srgb,var(--ink) 6%,var(--bg))}
+.grp{border-top:0!important;background:var(--bg)}
+.kids{padding:0 34px 14px 38px}
+@media (max-width:480px){
+  .kids{padding:0 22px 12px 38px}
+  .kids .row::before,.kids .row::after{left:-24px}
+  .kids .row::after{width:22px}
+}
+.from{white-space:nowrap;font-size:.7rem}
+@media (max-width:480px){.kids .row .d{padding:8px 6px 8px 8px}}
+
+/* Tableau neutre (mode singe) : sans sections, sans codes, sans étoiles, mélangé */
+.neutral{--c:var(--muted);border-color:var(--line)}
+.neutral .row .f{background:color-mix(in srgb,var(--ink) 4%,var(--bg));border-left:1px solid var(--line)}
+.neutral .row .u b{color:var(--ink)}
+.neutral .row .u [style]{color:inherit!important}
+.qbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin:0 0 10px;font-size:.85rem;color:var(--muted)}
+.qbar button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer}
+[hidden]{display:none!important}
+body.hide .meta{display:none}
+
+/* ---- Mode entraînement (singe) ---- */
+.qhead{background:var(--bg);border-radius:16px;padding:14px 16px;margin:0 0 16px;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25)}
+.qtop{display:flex;justify-content:space-between;align-items:baseline}
+.qtitle{font-weight:800;font-size:1.1rem}
+.qcount{font-size:.85rem;color:var(--muted);font-weight:600}
+.prog{height:8px;border-radius:99px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));margin:10px 0 12px;overflow:hidden}
+.prog span{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#f5c542,var(--star));transition:width .3s}
+.qbtns{display:flex;gap:8px;flex-wrap:wrap}
+.qbtns button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 13px;border-radius:999px;cursor:pointer}
+.qlist{display:flex;flex-direction:column;gap:10px;container-type:inline-size}
+.qc{display:grid;grid-template-columns:42cqw minmax(0,1fr);background:var(--bg);border-radius:14px;overflow:hidden;cursor:pointer;
+  border:1px solid var(--line);box-shadow:0 1px 2px rgba(20,30,50,.05),0 6px 16px -10px rgba(20,30,50,.3);transition:transform .15s}
+.qc:active{transform:scale(.99)}
+.qc:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.qc.star{border-color:color-mix(in srgb,var(--star) 45%,var(--line))}
+.qd{padding:12px 12px 12px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.qc.star .qd{background:linear-gradient(90deg,var(--starbg),transparent 85%)}
+.qn{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:7px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));color:var(--muted);font-size:.75rem;font-weight:800}
+.qs{color:var(--star);font-size:.85rem;letter-spacing:1px}
+.qq{flex-basis:100%;font-weight:700;font-size:.95rem}
+.qf{position:relative;padding:12px 14px;background:color-mix(in srgb,var(--ink) 3.5%,var(--bg));border-left:1px solid var(--line);display:flex;align-items:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.15rem}
+.qans{display:flex;flex-direction:column;filter:blur(8px);opacity:.6;transition:filter .25s,opacity .25s;user-select:none}
+.qans .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px}
+.qans .u b,.qans .u [style]{color:var(--ink)!important}
+.qhint{position:absolute;inset:0;display:grid;place-items:center;font-family:"Source Sans 3",system-ui,sans-serif;font-size:.8rem;font-weight:700;color:var(--muted)}
+.qc.show .qans{filter:none;opacity:1;user-select:auto}
+.qc.show .qhint{display:none}
+.qc.show .qf{background:color-mix(in srgb,#3f9a6a 7%,var(--bg))}
+.qc.show .qn{background:#3f9a6a;color:#fff}
+@media (max-width:480px){.qf{font-size:1.02rem;padding:10px 12px}.qq{font-size:.88rem}}
+body.hide .qc .ft,body.hide .qc .u{filter:none!important;user-select:auto}
+.bar{flex-wrap:wrap}
+.blink{font-size:.9rem;font-weight:600;text-decoration:none;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);padding:6px 12px;border-radius:999px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.blink:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><p class="kicker">M2 · Biochimie</p><h1>Les acides aminés</h1><p class="meta">25 formules · <span class="s">★</span> tombées au concours · <span class="g">🔁</span> formules déduites, reliées à leur formule de base</p></header>
+<div class="bar"><button id="bHide" aria-pressed="false">🙈 Cacher les formules</button><a class="blink" href="formules.html" style="margin-left:auto">← Cours</a><a class="blink" href="formules-acides-amines-explications.html">📖 Explications</a></div>
+<div class="cols"><span>Définition</span><span>Formule · unité · constante</span></div><div id="tb"></div>
+<div id="quiz" hidden>
+<div class="qhead"><div class="qtop"><span class="qtitle">Entraînement</span><span id="qcount" class="qcount"></span></div>
+<div class="prog"><span id="qbar"></span></div>
+<div class="qbtns"><button id="bShuffle">🔀 Mélanger</button><button id="bReset">🙈 Tout recacher</button></div></div>
+<div id="qrows" class="qlist"></div></div>
+</div>
+<script>
+const H=()=>'';
+const fr=(a,b)=>`<span class='frac'><span>${a}</span><span>${b}</span></span>`;
+const data = [
+ {id:"A", title:"Structure et ionisation", pages:"p.2-5", rows:[
+  {k:"masse", st:2, q:"Masse moyenne d'un acide aminé protéinogène", d:"Valeur moyenne",
+   f:"≈ 110 Da", u:"<b>1 Da = 1 g/mol</b>",
+   x:"<p>Un acide aminé protéinogène pèse en moyenne 110 daltons. Le dalton (Da) correspond au g/mol.</p><span class='tip'>110 Da = 110 g/mol.</span>"},
+  {k:"ph7", st:2, q:"État des fonctions à pH = 7", d:"Ionisation des fonctions acide et amine",
+   f:"COOH → COO<sup>−</sup> · NH<sub>2</sub> → NH<sub>3</sub><sup>+</sup>", u:"L'acide <b>perd</b> un proton (−1) · l'amine en <b>capte</b> un (+1)",
+   x:"<p>À pH 7, les deux fonctions sont ionisées ★ : l'acide carboxylique perd un proton et porte une charge négative ★★, l'amine capture un proton et porte une charge positive ★★.</p><span class='tip'>Avec une chaîne latérale non chargée : −1 + 1 = 0, c'est la forme zwitterion.</span><span class='trap'>C'est l'acide qui perd H<sup>+</sup> (COO<sup>−</sup>) et l'amine qui le gagne (NH<sub>3</sub><sup>+</sup>), pas l'inverse.</span>"},
+  {k:"chph", st:2, q:"Charge d'un acide aminé selon le pH", d:"Molécule amphotère : une fonction acide, une fonction basique",
+   f:"pH &lt; 2 : COOH, NH<sub>3</sub><sup>+</sup> → +1<br>2 &lt; pH &lt; 9 : COO<sup>−</sup>, NH<sub>3</sub><sup>+</sup> → 0<br>pH &gt; 9 : COO<sup>−</sup>, NH<sub>2</sub> → −1", u:"Charge globale pour une chaîne latérale <b>non chargée</b>",
+   x:"<p>En milieu très acide (beaucoup de H<sup>+</sup>), tout est protoné. Quand le pH monte, la fonction la plus acide (COOH) perd son proton la première, puis l'amine perd le sien.</p><span class='tip'>Plus le pH monte, plus l'acide aminé perd de protons : +1 → 0 → −1.</span><span class='trap'>Incohérence de la fiche : le seuil de l'amine est « 9 » dans ce tableau, alors que le pKa de l'amine de la glycine vaut 10 (@glypk).</span>"},
+  {k:"pka", st:0, q:"Signification du pKa", d:"pH de demi-dissociation d'une fonction",
+   f:"pH = pKa ⇔ [forme dissociée] = [forme non dissociée]", u:"La <b>moitié</b> de la fonction est dissociée",
+   x:"<p>Le pKa est le pH pour lequel la moitié de la fonction acide ou de la fonction amine est dissociée. Glycine : à pH = pKa<sub>COOH</sub> = 2, [COO<sup>−</sup>, NH<sub>3</sub><sup>+</sup>] = [COOH, NH<sub>3</sub><sup>+</sup>].</p><span class='tip'>Autour du pKa, le pH varie peu : c'est la zone tampon (@tampon).</span>"},
+  {k:"phi", st:2, q:"Point isoélectrique (chaîne latérale non chargée)", d:"pH auquel la somme des charges est nulle",
+   f:"pHi = "+fr("pKa<sub>COOH</sub> + pKa<sub>NH₂</sub>","2"), u:"Moyenne des pKa des fonctions <b>acide carboxylique</b> et <b>amine</b>",
+   x:"<p>Au pHi, l'acide aminé est sous forme <b>zwitterion</b> (une charge + et une charge −) : la somme des charges est nulle ★★. Quand R n'est pas chargé, le pHi est la moyenne des 2 pKa.</p><span class='tip'>Glycine : (2 + 10) / 2 = 6 (@glyphi).</span><span class='trap'>Moyenne = somme ÷ 2, pas la somme des pKa.</span>"},
+  {k:"phiR", st:0, q:"Point isoélectrique (chaîne latérale chargée)", d:"R porte une fonction ionisable de plus",
+   f:"pHi = "+fr("pKa<sub>1</sub> + pKa<sub>2</sub>","2"), u:"pKa des 2 fonctions qui <b>entourent</b> la forme zwitterion",
+   x:"<p>Quand R est chargé, on ne prend pas n'importe quels pKa : on garde les 2 fonctions dont les pKa encadrent la forme zwitterion (charge nulle), et on en fait la moyenne.</p><span class='trap'>Ne pas faire la moyenne de tous les pKa de la molécule.</span>"}
+ ]},
+ {id:"B", title:"Glycine, pouvoir tampon et absorption", pages:"p.6", rows:[
+  {k:"glypk", st:1, q:"pKa de la glycine", d:"Lus sur la courbe de titration par la soude",
+   f:"pKa<sub>COOH</sub> = 2 · pKa<sub>NH₂</sub> = 10", u:"Départ à pH &lt; 2 : COOH, NH<sub>3</sub><sup>+</sup>",
+   x:"<p>On part d'une solution acide (pH &lt; 2 : COOH, NH<sub>3</sub><sup>+</sup>) et on ajoute de la soude NaOH. À pH = 2, la moitié des COOH est dissociée ; à pH = 10, la moitié des NH<sub>3</sub><sup>+</sup>. Au-delà de 10 : COO<sup>−</sup>, NH<sub>2</sub>.</p><span class='tip'>Les 2 paliers de la courbe = les 2 pKa ; le point entre les deux = le pHi.</span>"},
+  {k:"glyphi", der:["glypk","phi"], q:"pHi de la glycine", d:"Forme zwitterion",
+   f:"pHi = "+fr("2 + 10","2")+" = 6", u:"COO<sup>−</sup>, NH<sub>3</sub><sup>+</sup>",
+   x:"<p>La chaîne latérale de la glycine est réduite à un H (non chargée) : on fait la moyenne des 2 pKa.</p>"
+   + H(["Relève les pKa de la glycine : 2 et 10 (@glypk).","Applique pHi = (pKa<sub>COOH</sub> + pKa<sub>NH₂</sub>) / 2 (@phi).","(2 + 10) / 2 = 6."])},
+  {k:"tampon", st:1, q:"Pouvoir tampon", d:"Zone où le pH résiste à l'ajout de base",
+   f:"pH ≈ pKa → pas de variation de pH", u:"Vivant : maintien d'un pH = <b>7,4</b>",
+   x:"<p>Autour de pH = pKa, ajouter de la soude ne fait presque pas varier le pH ★ : c'est le pouvoir tampon. Il est important pour le vivant, qui maintient un pH de 7,4.</p><span class='tip'>Tampon = partie plate de la courbe de titration, centrée sur le pKa.</span>"},
+  {k:"abs", st:0, q:"Absorption de la lumière", d:"Acides aminés aromatiques : tyrosine, tryptophane",
+   f:"λ = 280 nm (UV)", u:"Acides nucléiques : <b>260 nm</b>",
+   x:"<p>La tyrosine et le tryptophane portent des cycles aromatiques qui absorbent dans l'UV à 280 nm. Les acides nucléiques absorbent à 260 nm : comparer les deux permet de connaître la composition d'une solution.</p><span class='tip'>Tryptophane : c'est le noyau indole de la chaîne latérale qui absorbe (lié aux doubles liaisons).</span><span class='trap'>Acides aminés 280 nm, acides nucléiques 260 nm : ne pas inverser.</span>"}
+ ]},
+ {id:"C", title:"Chromatographie d'échange d'anions", pages:"p.7", rows:[
+  {k:"fix", st:1, q:"Fixation sur la colonne", d:"Dépôt à pH élevé",
+   f:"pH<sub>phase mobile</sub> &gt; pHi → fixation", u:"Acide aminé chargé <b>négativement</b>",
+   x:"<p>La résine échangeuse d'anions (polymères à amines NH<sub>3</sub><sup>+</sup>) retient les acides aminés chargés négativement. On dépose donc à <b>pH élevé</b> ★, au-dessus du pHi des acides aminés.</p><span class='tip'>Force de rétention ★ = force électrostatique entre la résine et l'acide aminé.</span>"},
+  {k:"elu", st:3, q:"Élution des acides aminés", d:"Diminution du pH (gradient linéaire)",
+   f:"pH<sub>phase mobile</sub> &lt; pHi → élution", u:"Détachement de la colonne",
+   x:"<p>On baisse progressivement le pH de la phase mobile. Dès qu'il passe <b>sous le pHi</b> d'un acide aminé, celui-ci se détache de la colonne : il est élué ★★★.</p><span class='tip'>Fixation : pH &gt; pHi ; élution : pH &lt; pHi. Même comparaison, sens inversé.</span><span class='trap'>On compare le pH de la <b>phase mobile</b> au pHi de l'<b>acide aminé</b>.</span>"},
+  {k:"ordre", der:["elu"], q:"Ordre de sortie des acides aminés", d:"Gradient de pH décroissant",
+   f:"pHi le plus élevé → élué en premier", u:"Figure de la fiche : Arg, Lys, His, Glu, Asp",
+   x:"<p>Le pH descend peu à peu : il passe d'abord sous le pHi le plus élevé, puis sous les suivants. Les acides aminés sortent donc par pHi décroissant.</p>"
+   + H(["Élution quand pH<sub>phase mobile</sub> &lt; pHi (@elu).","Le pH diminue : le premier pHi franchi est le plus élevé.","Ordre d'élution = pHi décroissant."])}
+ ]},
+ {id:"D", title:"Chaînes latérales : isomères et pKa", pages:"p.8-11", rows:[
+  {k:"isom", st:1, q:"Isomères de l'isoleucine et de la thréonine", d:"Deux carbones asymétriques (α et β)",
+   f:"2 C* → 4 isomères", u:"Un seul des 4 est <b>protéinogène</b>",
+   x:"<p>Avec 2 carbones asymétriques, on obtient 4 isomères ★ ; un seul est un acide aminé protéinogène.</p><span class='tip'>Même règle que pour les oses (fiche Glucides) : 2<sup>n</sup> stéréoisomères pour n C*, ici 2<sup>2</sup> = 4.</span><span class='trap'>La glycine, elle, a un carbone α <b>non asymétrique</b> ★★ : pas de déviation de la lumière polarisée ★★★.</span>"},
+  {k:"tyr", st:0, q:"pKa de la tyrosine", d:"Fonction phénol : cycle aromatique lié à un hydroxyle",
+   f:"pKa<sub>phénol</sub> = 10,5", u:"Chaîne latérale <b>non chargée</b> à pH 7,4",
+   x:"<p>Le pKa du phénol (10,5) est bien au-dessus du pH physiologique (7,4) : l'OH garde son proton, la chaîne latérale reste non chargée.</p><span class='trap'>Même pKa que l'amine ε de la lysine (@lys), mais le résultat est opposé : le phénol protoné (OH) est neutre, l'amine protonée (NH<sub>3</sub><sup>+</sup>) est chargée.</span>"},
+  {k:"hh", st:0, q:"Relation pH / pKa d'une fonction ionisable", d:"Dissociation d'une fonction de la chaîne latérale",
+   f:"pH = pKa + log "+fr("forme dissociée","forme protonée"), u:"À pH = pKa, le rapport vaut <b>1</b>",
+   x:"<p>La relation relie le pH du milieu au rapport entre la forme qui a perdu son H<sup>+</sup> et celle qui l'a gardé.</p><span class='tip'>pH &gt; pKa → forme dissociée majoritaire ; pH &lt; pKa → forme protonée majoritaire ; 1 unité de pH d'écart = facteur 10.</span><span class='trap'>La fiche n'écrit pas cette relation sous forme générale : elle n'apparaît qu'appliquée à la cystéine (@cys) et à l'histidine (@his).</span>"},
+  {k:"cys", der:["hh"], q:"Cystéine à pH 7", d:"Fonction thiol : R–SH ⇌ R–S<sup>−</sup> + H<sup>+</sup>",
+   f:"7 = 8 + log "+fr("S<sup>−</sup>","SH")+" → "+fr("S<sup>−</sup>","SH")+" = 0,1", u:"pKa du thiol = <b>8</b>",
+   x:"<p>À pH 7, on est 1 unité sous le pKa (8) : la forme SH domine, avec 10 fois moins de S<sup>−</sup> que de SH.</p><span class='tip'>Structure de la cystéine ★★ : fonction thiol –SH sur la chaîne latérale.</span>"
+   + H(["pH = pKa + log(S<sup>−</sup>/SH), avec pH = 7 et pKa = 8.","log(S<sup>−</sup>/SH) = 7 − 8 = −1.","S<sup>−</sup>/SH = 10<sup>−1</sup> = 0,1."])},
+  {k:"his", der:["hh"], q:"Histidine à pH 7", d:"Azote du cycle imidazole : R=N–H<sup>+</sup> ⇌ R=N + H<sup>+</sup>",
+   f:"7 = 6 + log "+fr("N","NH<sup>+</sup>")+" → "+fr("N","NH<sup>+</sup>")+" = 10", u:"pKa de l'imidazole = <b>6</b>",
+   x:"<p>À pH 7, on est 1 unité au-dessus du pKa (6) : la forme N domine, 10 fois plus abondante que NH<sup>+</sup>. L'histidine est très sensible aux variations de pH et fréquente dans les enzymes.</p><span class='tip'>Rapports inverses : cystéine 0,1, histidine 10.</span>"
+   + H(["pH = pKa + log(N/NH<sup>+</sup>), avec pH = 7 et pKa = 6.","log(N/NH<sup>+</sup>) = 7 − 6 = 1.","N/NH<sup>+</sup> = 10<sup>1</sup> = 10."])},
+  {k:"lys", st:1, q:"pKa de la lysine", d:"Fonction amine ε de la chaîne latérale",
+   f:"pKa<sub>amine ε</sub> = 10,5", u:"Chaîne latérale <b>toujours chargée</b> en conditions physiologiques",
+   x:"<p>pKa très élevé ★ : au pH physiologique, l'amine ε garde son proton (NH<sub>3</sub><sup>+</sup>), la chaîne latérale reste chargée. La lysine est un acide aminé essentiel ★.</p><span class='tip'>ε = 5<sup>e</sup> lettre (α, β, γ, δ, ε) : l'amine est au bout de la chaîne.</span>"}
+ ]},
+ {id:"E", title:"Réactions et phénylcétonurie", pages:"p.13-14", rows:[
+  {k:"cystine", st:2, q:"Formation de la cystine", d:"Oxydation de deux cystéines",
+   f:"2 cystéines ⇌ cystine", u:"Pont <b>disulfure</b> (S–S) · retour par réduction (β-mercaptoéthanol)",
+   x:"<p>L'oxydation relie les fonctions thiol de deux cystéines par une <b>liaison disulfure</b> ★★ : on obtient la cystine. La réduction par le β-mercaptoéthanol coupe le pont et redonne deux cystéines.</p><span class='tip'>Cyst<b>é</b>ine = 1 acide aminé ; cyst<b>i</b>ne = 2 cystéines reliées.</span><span class='trap'>Oxydation → cystine ; réduction → cystéines.</span>"},
+  {k:"pser", st:3, q:"Phosphorylation de la sérine", d:"Sur la fonction alcool primaire",
+   f:"–CH<sub>2</sub>–OH + PO<sub>4</sub>H<sub>3</sub> → –CH<sub>2</sub>–O–PO<sub>3</sub>H<sub>2</sub> + H<sub>2</sub>O", u:"Par des <b>kinases</b> · produit : phosphosérine (phosphoester)",
+   x:"<p>La phosphorylation est la modification post-traductionnelle la plus tombée pour la sérine ★★★ (et la thréonine ★★★). Des kinases ajoutent l'acide phosphorique sur l'alcool primaire ; une molécule d'eau est libérée. Les kinases sont les cibles de nombreux médicaments (ex. traitements anticancéreux).</p><span class='tip'>Bilan : + PO<sub>4</sub>H<sub>3</sub>, − H<sub>2</sub>O.</span>"},
+  {k:"gaba", st:0, q:"Synthèse du GABA", d:"Décarboxylation du glutamate",
+   f:"Glu → GABA + CO<sub>2</sub>", u:"Glutamate décarboxylase",
+   x:"<p>Le glutamate (neuromédiateur <b>excitateur</b>) perd le carboxyle de son carbone α sous forme de CO<sub>2</sub> : on obtient le GABA (acide γ-aminobutyrique), neuromédiateur <b>inhibiteur</b> qui bloque la dépolarisation des neurones post-synaptiques.</p><span class='tip'>Dé-carboxyl-ase = enlève un CO<sub>2</sub>.</span><span class='trap'>Glutamate excite, GABA inhibe.</span>"},
+  {k:"pah", st:0, q:"Dégradation de la phénylalanine", d:"Phénylalanine hydroxylase",
+   f:"Phénylalanine + O<sub>2</sub> → Tyrosine + H<sub>2</sub>O", u:"Cofacteur H<sub>4</sub> → H<sub>2</sub> · voie de <b>75 %</b> de la Phe alimentaire",
+   x:"<p>Voie physiologique de dégradation de la phénylalanine. Dans la phénylcétonurie, le déficit de cette enzyme ★ (mutation de son gène ★) bloque la réaction : pas de production de tyrosine, et production d'acide phénylpyruvique, toxique pour les neurones.</p>"},
+  {k:"pcuphe", st:1, q:"Phénylalanine plasmatique dans la phénylcétonurie", d:"Conséquence de l'absence d'enzyme",
+   f:"60 µmol/L → plus de 1000", u:"Troubles quand l'activité enzymatique est &lt; <b>20 %</b>",
+   x:"<p>Quand l'activité de la phénylalanine hydroxylase tombe sous 20 %, la phénylalanine plasmatique augmente ★. Autres conséquences : métabolites anormaux dans les urines (normaux à la naissance), retard mental profond et épilepsie, qui s'installent au cours du développement.</p><span class='tip'>Dépistage obligatoire à la naissance ★ : goutte de sang au talon sur buvard, dosage de la phénylalanine.</span><span class='trap'>La fiche ne précise pas l'unité de « 1000 » (on suppose µmol/L, comme pour 60).</span>"},
+  {k:"pcufreq", st:0, q:"Fréquence de la phénylcétonurie", d:"Europe occidentale",
+   f:"1 / 10 000", u:"Maladie autosomale <b>récessive</b>",
+   x:"<p>Une naissance sur 10 000 en Europe occidentale. Traitement préventif ★ : régime pauvre en phénylalanine jusqu'à la fin de l'adolescence (bénéfique aussi chez l'adulte selon de nouvelles études), sans viande, poisson ni œuf, avec supplémentation en acides aminés.</p>"}
+ ]}
+];
+
+
+
+const tb=document.getElementById('tb');let h='';
+const rowHTML=(r,code,par)=>`<div class="row${r.der?' der':''}${r.st?' star':''}" tabindex="0">
+      <div class="d"><span class="code">${code}</span>${par?`<span class="from">🔁 Déduite de <b>${par}</b></span>`:''}<span class="name">${r.q}</span>${r.st?`<span class="s">${'★'.repeat(r.st)}</span>`:''}</div>
+      <div class="f"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div></div>`;
+data.forEach(sec=>{
+  h+=`<section class="blk" style="--c:var(--${sec.id})"><header><span class="letter">${sec.id}</span>${sec.title}</header><div class="rows">`;
+  const groups=[];
+  sec.rows.forEach((r,i)=>{const c=sec.id+(i+1); if(r.der&&groups.length) groups[groups.length-1].kids.push([r,c]); else groups.push({r,c,kids:[]});});
+  groups.forEach(g=>{
+    h+=`<div class="grp">`+rowHTML(g.r,g.c);
+    if(g.kids.length) h+=`<div class="kids">`+g.kids.map(([r,c])=>rowHTML(r,c,g.c)).join('')+`</div>`;
+    h+=`</div>`;
+  });
+  h+=`</div></section>`;
+});
+tb.innerHTML=h;
+const b=document.getElementById('bHide'),quiz=document.getElementById('quiz'),qrows=document.getElementById('qrows');
+const all=[];data.forEach(sec=>sec.rows.forEach(r=>all.push(r)));
+const upd=()=>{const n=qrows.querySelectorAll('.qc.show').length,t=all.length;
+  document.getElementById('qcount').textContent=`${n} / ${t} révélées`;document.getElementById('qbar').style.width=(100*n/t)+'%';};
+const shuffle=()=>{
+  const a=all.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  qrows.innerHTML=a.map((r,i)=>`<div class="qc${r.st?' star':''}" tabindex="0">
+    <div class="qd"><span class="qn">${i+1}</span>${r.st?`<span class="qs">${'★'.repeat(r.st)}</span>`:''}<span class="qq">${r.q}</span></div>
+    <div class="qf"><div class="qans"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div><span class="qhint">👁 Révéler</span></div></div>`).join('');
+  upd();
+};
+document.getElementById('bShuffle').onclick=()=>{shuffle();window.scrollTo({top:0});};
+document.getElementById('bReset').onclick=()=>{qrows.querySelectorAll('.qc.show').forEach(c=>c.classList.remove('show'));upd();};
+b.onclick=()=>{
+  const on=document.body.classList.toggle('hide');b.setAttribute('aria-pressed',on);
+  b.textContent=on?'↩ Revenir à la page de référence':'🙈 Cacher les formules';
+  if(on)shuffle();
+  quiz.hidden=!on;tb.hidden=on;document.querySelector('.cols').hidden=on;
+  window.scrollTo({top:0});
+};
+const flip=e=>{const t=e.target.closest('.qc');if(t){t.classList.toggle('show');upd();}};
+qrows.addEventListener('click',flip);
+qrows.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip(e);}});
+</script>
+</body>
+</html>

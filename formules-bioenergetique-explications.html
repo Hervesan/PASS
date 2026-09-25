@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules — Bioénergétique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#ffffff; --ink:#1d2330; --muted:#5b6474; --line:#e3e6ec;
+  --star:#e8a900; --starbg:#fff6d6; --fbg:#f4f6fb; --ded:#3f9a6a; --dedbg:#eef6f1;
+  --A:#2f86a8; --B:#d0632e; --C:#c9971c; --D:#6f5aa8; --E:#a64b4b; --F:#b0527f;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.4}
+.wrap{max-width:860px;margin:0 auto;padding:18px 14px 40px}
+h1{font-size:1.6rem;font-weight:800;margin:0}
+.sub{color:var(--muted);font-size:.9rem;margin:2px 0 0}
+.s{color:var(--star);letter-spacing:1px;white-space:nowrap}
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 0;margin:12px 0 4px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.toolbar button{font:inherit;font-size:.88rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 11px;border-radius:999px;cursor:pointer}
+.toolbar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.toolbar button:focus-visible,.card:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.count{margin-left:auto;color:var(--muted);font-size:.82rem}
+section{margin-top:22px}
+h2{font-size:1rem;margin:0 0 8px;padding:6px 12px;color:#fff;border-radius:6px}
+.card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:stretch;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.def{padding:10px 12px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.def .top{display:flex;gap:8px;align-items:baseline;font-size:.8rem;font-weight:800}
+.def .q{font-weight:700;font-size:1rem}
+.def .d{color:var(--muted);font-size:.86rem}
+.fm{background:var(--fbg);border-left:5px solid var(--sec);padding:12px 14px;display:flex;flex-direction:column;justify-content:center}
+.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.35rem;line-height:1.25}
+.f sub{font-size:.62em}
+.u{margin-top:6px;font-size:.9rem;font-weight:600;color:var(--ink)}
+.u b{color:var(--sec)}
+.card.starred .def{background:linear-gradient(90deg,var(--starbg),transparent 70%)}
+.card.derived{border-style:dashed}
+.card.derived .fm{border-left-color:var(--ded)}
+.card.derived .top .tag{color:var(--ded)}
+#A{--sec:var(--A)} #B{--sec:var(--B)} #C{--sec:var(--C)} #D{--sec:var(--D)} #E{--sec:var(--E)}
+#A h2{background:var(--A)} #B h2{background:var(--B)} #C h2{background:var(--C)} #D h2{background:var(--D)} #E h2{background:var(--E)}
+#F{--sec:var(--F)} #F h2{background:var(--F)}
+section .top .code{color:var(--sec)}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+body.hide .card{cursor:pointer}
+body.stars .card:not(.starred){display:none}
+body.base .card.derived{display:none}
+.hint{display:none;color:var(--muted);font-size:.85rem;margin:6px 0 0}
+body.hide .hint{display:block}
+@media (max-width:600px){
+  .card{grid-template-columns:1fr}
+  .fm{border-left:0;border-top:4px solid var(--sec)}
+  .card.derived .fm{border-top-color:var(--ded)}
+}
+@media (prefers-reduced-motion:no-preference){.f,.u{transition:filter .2s}}
+@media print{.toolbar,.hint{display:none}body.hide .fm .f,body.hide .fm .u{filter:none}.card{break-inside:avoid}}
+
+/* Cartes plus isolées */
+section{margin-top:34px}
+h2{margin-bottom:14px}
+.card{margin-bottom:18px;border:1.5px solid var(--line);border-radius:12px;box-shadow:0 2px 0 var(--line),0 6px 14px -8px rgba(29,35,48,.25)}
+.def{padding:14px 16px}
+.fm{padding:16px 18px}
+.card.derived{border-width:1.5px}
+@media (max-width:600px){.card{margin-bottom:16px}}
+
+/* Couple définition/formule plus serré, séparation légère */
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.def{padding:14px 12px 14px 16px}
+.fm{padding:14px 16px 14px 14px}
+.card{margin-bottom:28px}
+section{margin-top:40px}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px dashed var(--line)!important}
+  .def{padding:14px 16px 8px}
+  .fm{padding:10px 16px 14px}
+  .card{margin-bottom:26px}
+}
+
+.wrap{max-width:980px}
+.legend{margin-top:6px;font-size:.88rem;color:var(--muted)}
+.chain{margin:14px 0 4px;padding:12px 14px;border-left:4px solid var(--star);background:var(--starbg);border-radius:0 8px 8px 0;font-size:.95rem}
+.mnemo{margin:12px 0 4px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:.92rem}
+.mnemo strong{display:block;margin-bottom:6px}
+.mnemo ul{margin:0;padding-left:18px;columns:2;column-gap:28px}
+.mnemo li{margin-bottom:4px;break-inside:avoid}
+.chain .f,.mnemo .f{font-size:1rem}
+.card{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
+.x{grid-column:1 / -1;border-top:1px dashed var(--line);padding:12px 16px 14px;font-size:.9rem;color:var(--muted)}
+.x p{margin:0 0 5px}
+.x b,.x .tip,.x .trap{color:var(--ink)}
+.tip,.trap{display:block;margin-top:5px}
+.tip::before{content:"💡 "}
+.trap::before{content:"⚠️ "}
+.ded{margin-top:8px;padding:8px 10px;background:var(--dedbg);border-left:3px solid var(--ded);border-radius:0 6px 6px 0;font-size:.86rem;color:var(--ink)}
+.ded strong{display:block;margin-bottom:3px}
+.ded ol{margin:0;padding-left:20px}
+.from{display:block;margin-top:4px;font-size:.84rem;color:var(--ded);font-weight:600}
+.gives{display:block;margin-top:8px;font-size:.86rem;color:var(--ded);font-weight:600}
+.chip{display:inline-block;text-decoration:none;font-size:.78rem;font-weight:700;border:1px solid var(--line);border-radius:5px;padding:0 5px;background:var(--bg);color:var(--ink)}
+.card{scroll-margin-top:70px}
+.card:target{box-shadow:0 0 0 3px var(--star)}
+/* mode test : seul le titre reste visible */
+body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:blur(8px);user-select:none}
+body.hide .card.show .def .d,body.hide .card.show .def .from,body.hide .card.show .fm,body.hide .card.show .x{filter:none;user-select:auto}
+@media (max-width:600px){.mnemo ul{columns:1}.x{padding:10px 16px 14px}}
+@media print{body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:none}}
+
+/* Traits pleins fins à l'intérieur, cadre plus marqué */
+:root{--frame:#b9c0cc}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--frame:#4a5263}}
+:root[data-theme="dark"]{--frame:#4a5263}
+.card{border:2px solid var(--frame)!important}
+.card.derived{border:2px solid var(--ded)!important}
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.x{border-top:1px solid var(--line)!important}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px solid var(--line)!important}
+}
+
+/* Traits intérieurs un peu plus épais */
+.fm,.card.derived .fm{border-left:1.5px solid var(--frame)!important;border-top:0!important}
+.x{border-top:1.5px solid var(--frame)!important}
+@media (max-width:600px){.fm,.card.derived .fm{border-left:0!important;border-top:1.5px solid var(--frame)!important}}
+
+/* Cadre d'épaisseur identique sur les 4 côtés */
+.card{box-shadow:0 6px 14px -10px rgba(29,35,48,.28)!important}
+
+/* Mobile : carte empilée comme la page épurée (évite le trait doublé en haut de la formule) */
+@media (max-width:600px){.card{grid-template-columns:1fr!important}}
+
+/* Fractions : numérateur au-dessus du dénominateur */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor;padding-bottom:.08em}
+.frac>span:last-child{padding-top:.08em}
+
+/* Arbre : formule de base → formules déduites (comme la page arbre) */
+.grp{margin-bottom:28px}
+.grp .card{margin-bottom:0}
+.tree{list-style:none;margin:0 0 0 26px;padding:0}
+.tree > li{position:relative;padding:12px 0 0 30px}
+.tree > li::before{content:"";position:absolute;left:0;top:0;bottom:0;border-left:2px solid var(--ded)}
+.tree > li:last-child::before{bottom:auto;height:36px}
+.tree > li::after{content:"";position:absolute;left:0;top:36px;width:24px;border-top:2px solid var(--ded)}
+.tree .card{box-shadow:none!important}
+.tree .card .f{font-size:1.18rem}
+body.stars .grp:not(.gstar){display:none}
+body.stars .tree{display:none}
+body.base .tree{display:none}
+@media (max-width:600px){
+  .tree{margin-left:12px}
+  .tree > li{padding-left:22px}
+  .tree > li::after{width:18px}
+}
+
+/* Singe = bascule vers la vue épurée floutée (définition → formule) */
+body.hide .x,body.hide .chain,body.hide .mnemo,body.hide .legend,body.hide .from{display:none}
+body.hide .def .d{filter:none!important;user-select:auto}
+body.hide .fm{filter:none!important}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+@media (prefers-reduced-motion:no-preference){.fm .f,.fm .u{transition:filter .2s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Bioénergétique : les formules</h1>
+<p class="sub">M1 · Physiologie · formules expliquées</p>
+<div class="legend"><span class="s">★</span> = tombée au concours (d'après la fiche de cours) · <span class="s">★★★</span> = la plus fréquente · <span style="color:var(--ded);font-weight:700">🔁</span> = formule déduite d'une autre (cadre vert)</div>
+<div class="toolbar" role="toolbar" aria-label="Options">
+  <a href="formules-bioenergetique.html" style="font-size:.88rem;font-weight:600;text-decoration:none;color:var(--ink);border:1.5px solid var(--line);padding:6px 11px;border-radius:999px">← Tableau des formules</a>
+  <button id="bHide" aria-pressed="false">🙈 Réviser (vue épurée)</button>
+  <button id="bStars" aria-pressed="false"><span class="s">★</span> Concours</button>
+  <button id="bBase" aria-pressed="false">Sans les déduites</button>
+  <span class="count" id="count"></span>
+</div>
+<p class="hint">Vue épurée : touche une carte pour révéler la formule. Retouche 🙈 pour revenir aux explications.</p>
+<div class="chain">Le fil qui relie tout : <span class="f">ΔH = ΔG + T·ΔS</span> (20 % travail, 80 % chaleur) → substrat + O₂ → <span class="f">E<sub>totale</sub> = ATP + chaleur</span> → on la mesure par <span class="f">Q = Q<sub>S</sub> + Q<sub>L</sub></span> (directe) ou <span class="f">VO<sub>2</sub> × 20 kJ/L</span> (indirecte) → <span class="f">rendement = W / Q<sub>effort</sub></span>.</div>
+
+<div class="mnemo">
+  <strong>Moyens mnémotechniques</strong>
+  <ul>
+    <li><b>1 cal = 4,18 J</b> et c<sub>eau</sub> = 1 cal/g/K = 4,18 J/g/K : même chiffre.</li>
+    <li><b>20 / 80</b> : 20 % de travail, 80 % de chaleur.</li>
+    <li>Lipides ≈ <b>38</b> kJ/g, glucides et protides ≈ <b>15</b> kJ/g.</li>
+    <li>Glucose « <b>6-6-6-6</b> » → QR = 1 ; palmitique 16 CO₂ / 23 O₂ → QR ≈ 0,7 ; protides et repos 0,8.</li>
+    <li><b>36 ATP</b> avec O₂, <b>2 ATP</b> sans ; palmitique : 128 ATP.</li>
+    <li>ATP → ADP → AMP : <b>30,5 kJ</b> à chaque phosphate.</li>
+    <li>Voies de l'ATP : rapide = petit réservoir (PCr 40 kJ), lent = énorme (lipolyse 570 000 kJ).</li>
+    <li>Dépense : <b>60 / 15-30 / 10</b> (base / exercice / repas).</li>
+    <li>O₂ : ≈ <b>400 kJ par mole</b>, ≈ <b>20 kJ par litre</b>, quel que soit le substrat.</li>
+    <li>Soulever <b>et</b> reposer : × 2 ; rendement net : on retire le repos.</li>
+  </ul>
+</div>
+
+<main id="main"></main>
+<footer style="margin-top:30px;color:var(--muted);font-size:.8rem;text-align:center">Source : fiche de cours Médisup Tours/Orléans 2026-2027 (actualisation) + questions d'entraînement de physiologie digestive.</footer>
+</div>
+<script>
+const S = n => n ? '<span class="s">' + '★'.repeat(n) + '</span>' : '';
+const H = steps => `<div class="ded"><strong>🔁 Comment la retrouver</strong><ol>${steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>`;
+const fr=(a,b)=>`<span class='frac'><span>${a}</span><span>${b}</span></span>`;
+const data = [
+ {id:"A", title:"Énergie, unités et thermodynamique", pages:"p.2-4", rows:[
+  {k:"joule", st:0, q:"Unité d'énergie : le joule", d:"Système international",
+   f:"1 J = 1 N·m", u:"Force en <b>newton</b> (N) · distance en <b>mètre</b> (m)",
+   x:"<p>L'énergie est toujours conservée (1ᵉʳ principe) : toutes ses formes s'expriment donc dans la <b>même unité</b>.</p>"},
+  {k:"watt", st:0, q:"Unité de puissance : le watt", d:"",
+   f:"1 W = 1 J·s⁻¹", u:"",
+   x:"<p>Une puissance est une énergie <b>par seconde</b> : c'est un débit d'énergie.</p>"},
+  {k:"gibbs", st:0, q:"Équation de Gibbs", d:"2ᵉ principe de la thermodynamique",
+   f:"ΔH = ΔG + T·ΔS", u:"ΔH = enthalpie (apport d'énergie totale) · ΔG = énergie libre (travail fourni) · T = température absolue · ΔS = entropie (désordre)",
+   x:"<p>L'énergie apportée n'est <b>pas entièrement utilisable</b> pour un travail : une partie (T·ΔS) sert à augmenter le désordre et se dissipe en <b>chaleur</b>. C'est vrai pour tout processus biologique.</p>"},
+  {k:"dg", der:["gibbs"], q:"Énergie libre disponible pour un travail", d:"",
+   f:"ΔG = ΔH − T·ΔS", u:"",
+   x:"<p>Le travail récupérable est ce qu'il reste de l'apport une fois la chaleur retirée.</p>"
+   + H(["Pars de ΔH = ΔG + T·ΔS.","Fais passer T·ΔS de l'autre côté."])},
+  {k:"homme", st:0, q:"Devenir de l'énergie alimentaire chez l'homme", d:"Application de Gibbs",
+   f:"ΔH → 20&nbsp;% ΔG + 80&nbsp;% T·ΔS", u:"20&nbsp;% en énergie <b>mécanique</b> · 80&nbsp;% dissipée en énergie <b>thermique</b>",
+   x:"<p>Sur l'énergie apportée par l'alimentation, seul un cinquième sert au travail mécanique ; le reste part en chaleur.</p><span class='tip'>20 / 80 : le corps est surtout un radiateur.</span>"},
+  {k:"cal", st:0, q:"Calorie et joule", d:"Unité historique",
+   f:"1 cal = 4,18 J", u:"Grande calorie : <b>1 Cal = 1 kcal = 1000 cal = 4,18 kJ</b>",
+   x:"<p>1 calorie = énergie nécessaire pour élever de 1 K la température de 1 g d'eau.</p><span class='trap'>La « grande calorie » (Cal, kcal) vaut 1000 petites calories.</span>"},
+  {k:"ceau", st:0, q:"Chaleur massique de l'eau", d:"",
+   f:"c<sub>eau</sub> = 4,18 J·g⁻¹·K⁻¹ = 1 cal·g⁻¹·K⁻¹", u:"",
+   x:"<p>C'est la définition même de la calorie, exprimée en joules. Elle sert dans la bombe calorimétrique (@bombe).</p><span class='tip'>Même chiffre que 1 cal = 4,18 J.</span>"}
+ ]},
+ {id:"B", title:"Substrats énergétiques et ATP", pages:"p.4-6", rows:[
+  {k:"bombe", st:0, q:"Chaleur mesurée dans la bombe calorimétrique", d:"Calorimétrie directe d'un substrat",
+   f:"Q = ΔT<sub>eau</sub> × m<sub>eau</sub> × c<sub>eau</sub>", u:"c<sub>eau</sub> = <b>4,18 J·g⁻¹·K⁻¹</b>",
+   x:"<p>Le substrat brûle dans de l'O₂ pur en excès ; la cuve baigne dans de l'eau dont on mesure l'<b>élévation de température</b>. L'enceinte est adiabatique (aucun échange de chaleur avec l'extérieur).</p>"},
+  {k:"glc", st:0, q:"Combustion du glucose", d:"Réaction avec l'O₂",
+   f:"C<sub>6</sub>H<sub>12</sub>O<sub>6</sub> + 6 O<sub>2</sub> → 6 CO<sub>2</sub> + 6 H<sub>2</sub>O + Q", u:"",
+   x:"<p>Q est libéré par la rupture des liaisons covalentes et l'oxydation finale en CO₂ et H₂O.</p><span class='tip'>« 6-6-6-6 ».</span>"},
+  {k:"palm", st:0, q:"Combustion de l'acide palmitique", d:"Réaction avec l'O₂",
+   f:"CH<sub>3</sub>(CH<sub>2</sub>)<sub>14</sub>COOH + 23 O<sub>2</sub> → 16 CO<sub>2</sub> + 16 H<sub>2</sub>O + Q", u:"",
+   x:"<p>Un acide gras à 16 carbones : 16 CO₂ et 16 H₂O, pour 23 O₂ consommés.</p>"},
+  {k:"dens", st:2, q:"Densité énergétique des substrats", d:"Énergie libérée par gramme",
+   f:"Q<sub>glucose</sub> ≈ Q<sub>alanine</sub> ≈ 15 kJ/g ; Q<sub>acide palmitique</sub> ≈ 38 kJ/g", u:"Lipides &gt; glucides et protides",
+   x:"<p>La densité énergétique des <b>lipides</b> est supérieure à celle des glucides et des protides (★★ dans la fiche).</p><span class='tip'>Lipides ≈ 2,5 fois plus « caloriques » par gramme.</span>"},
+  {k:"etot", st:3, q:"Énergie totale libérée in vivo", d:"",
+   f:"E<sub>totale</sub> = ATP + chaleur", u:"= énergie dégagée lors de la <b>combustion</b> · accompagnée de production de CO₂ et de consommation d'O₂",
+   x:"<p>In vivo, la libération est <b>fractionnée</b> (transfert progressif vers des molécules de charge énergétique décroissante), mais l'énergie totale est la même que dans la bombe : une part est captée en ATP, le reste est de la chaleur.</p><span class='tip'>Étoiles de la fiche : ATP ★, chaleur ★★★, « = énergie de combustion » ★.</span>"},
+  {k:"glcatp", der:["etot","glc"], q:"Oxydation complète du glucose in vivo", d:"",
+   f:"C<sub>6</sub>H<sub>12</sub>O<sub>6</sub> + 6 O<sub>2</sub> → 6 CO<sub>2</sub> + 6 H<sub>2</sub>O + Q + 36 ATP", u:"",
+   x:"<p>Même bilan de matière que la combustion, avec en plus <b>36 ATP</b> récupérés.</p>"
+   + H(["Pars de la combustion du glucose (@glc).","Applique E<sub>totale</sub> = ATP + chaleur : ajoute les ATP formés, 36 pour le glucose."])},
+  {k:"palmatp", der:["etot","palm"], q:"Oxydation complète de l'acide palmitique in vivo", d:"",
+   f:"CH<sub>3</sub>(CH<sub>2</sub>)<sub>14</sub>COOH + 23 O<sub>2</sub> → 16 CO<sub>2</sub> + 16 H<sub>2</sub>O + Q + 128 ATP", u:"",
+   x:"<p>L'acide palmitique fournit beaucoup plus d'ATP que le glucose : <b>128</b>.</p>"
+   + H(["Pars de la combustion de l'acide palmitique (@palm).","Ajoute les ATP formés : 128."])},
+  {k:"o2", st:0, q:"Énergie libérée par mole d'O₂", d:"Quel que soit le substrat",
+   f:"≈ 400 kJ / mol d'O<sub>2</sub>", u:"Application : la consommation d'O₂ permet de calculer la <b>dépense énergétique</b>",
+   x:"<p>Comme l'énergie par O₂ consommé varie peu, mesurer l'O₂ consommé suffit pour estimer la dépense (@eqo2).</p><span class='trap'>Le titre de la fiche dit « par mole d'O₂ » mais la ligne écrit « 400 kJ pour 1 mole de <b>substrat</b> » : c'est bien par mole d'O₂.</span>"},
+  {k:"atp", st:0, q:"Hydrolyse de l'ATP en ADP", d:"Énergie immédiatement utilisable par la cellule",
+   f:"ATP → ADP + Pi + 30,5 kJ", u:"Par mole · rupture d'une liaison <b>phosphoanhydre</b>",
+   x:"<p>L'ATP = adénine + ribose + 3 phosphates. L'hydrolyse d'une liaison phosphoanhydre libère une quantité importante d'énergie.</p>"},
+  {k:"besoin", der:["atp","mb"], q:"Besoin quotidien en ATP", d:"Nécessité d'un renouvellement constant",
+   f:"n<sub>ATP</sub> = "+fr("8000 kJ/24 h","30,5 kJ/mol")+" ≈ 267 mol/24 h", u:"Métabolisme ≈ <b>8000 kJ/24 h</b>",
+   x:"<p>Le stock d'ATP est minuscule face aux besoins : il faut le régénérer en permanence.</p><span class='trap'>8000 ÷ 30,5 donne environ <b>262</b> mol, et non 267 comme l'écrit la fiche : retenir l'ordre de grandeur.</span>"
+   + H(["1 mol d'ATP fournit 30,5 kJ.","La dépense quotidienne est d'environ 8000 kJ.","Divise : 8000 / 30,5 → environ 260-270 mol d'ATP par jour."])},
+  {k:"adp", st:0, q:"Hydrolyse de l'ADP en AMP", d:"",
+   f:"ADP → AMP + Pi + 30,5 kJ", u:"",
+   x:"<p>Deuxième transformation, avec la même énergie libérée.</p><span class='tip'>ATP → ADP → AMP : 30,5 kJ à chaque phosphate.</span>"},
+  {k:"bilglc", st:1, q:"Bilan en ATP du glucose selon la voie", d:"Devenir du pyruvate",
+   f:"Aérobie (acétyl-CoA) : + 36 ATP ; anaérobie (lactate) : + 2 ATP", u:"Aérobie = en présence d'O₂ (cycle de Krebs, chaîne respiratoire)",
+   x:"<p>Avec O₂, le pyruvate devient acétyl-CoA et entre dans la mitochondrie : rendement maximal. Sans O₂, il devient lactate : 2 ATP seulement.</p><span class='tip'>36 avec O₂, 2 sans.</span>"}
+ ]},
+ {id:"C", title:"Stocks d'énergie et voies de synthèse de l'ATP", pages:"p.7-9", rows:[
+  {k:"stockatp", st:0, q:"Stock musculaire d'ATP", d:"Stock intracellulaire",
+   f:"[ATP] = 4-6 mM dans le muscle", u:"Suffit pour un effort de <b>quelques secondes</b>",
+   x:"<p>Le stock d'ATP est très faible : il doit être renouvelé en permanence (@besoin).</p>"},
+  {k:"myok", st:1, q:"Réaction de la myokinase", d:"Adénylate kinase",
+   f:"2 ADP ⇄ ATP + AMP", u:"Inertie quasi nulle = réaction <b>extrêmement rapide</b>",
+   x:"<p>Deux ADP donnent un ATP et un AMP : on récupère vite de l'ATP. Son importance quantitative est mal connue.</p>"},
+  {k:"ck", st:0, q:"Réaction de la créatine kinase", d:"",
+   f:"Créatine + ATP ⇄ phosphocréatine + ADP", u:"[Créatine] musculaire ≈ <b>35 mM</b> · effort de plusieurs secondes",
+   x:"<p>Si le stock d'ATP baisse, l'équilibre se déplace vers la <b>formation d'ATP</b> : la phosphocréatine reconstitue très vite l'ATP du muscle strié et du myocarde. La créatine est synthétisée dans le foie (arginine + glycine).</p>"},
+  {k:"glycog", st:0, q:"Stocks de glycogène", d:"Polysaccharide branché de glucose",
+   f:"Muscle : 15 g/kg de muscle (≈ 400 g) ; foie : 150 g", u:"≈ <b>60 000</b> glucoses · PM 100-1000 kDa",
+   x:"<p>Le glycogène musculaire est une réserve <b>locale</b> (effort de quelques heures) ; le glycogène hépatique sert à tout l'organisme et maintient la <b>glycémie</b>.</p>"},
+  {k:"lip", st:0, q:"Stock lipidique du tissu adipeux", d:"Triglycérides = glycérol + 3 acides gras",
+   f:"15-20&nbsp;% du poids d'un adulte", u:"Réserve énergétique <b>anhydre</b>",
+   x:"<p>Les lipides sont la <b>principale réserve d'énergie</b> de l'organisme (★ dans la fiche) : sans eau, ils stockent beaucoup d'énergie sans surcharge de poids.</p>"},
+  {k:"voies", st:0, q:"Capacité des voies de synthèse de l'ATP", d:"Quantité d'ATP produite",
+   f:"PCr/myokinase 40 kJ · glycolyse anaérobie 495 kJ · glycolyse aérobie 7200 kJ · lipolyse 570 000 kJ", u:"Puissance : PCr/myokinase <b>1000 W</b> (élevée) · moyenne (anaérobie) · faible (aérobie, lipolyse)",
+   x:"<p>Plus une voie est <b>rapide</b> (faible inertie), plus sa <b>capacité</b> est petite. À l'effort, les voies sont mobilisées dans l'ordre de leur inertie : PCr → glycolyse anaérobie → aérobie → lipolyse.</p><span class='tip'>Rapide = petit réservoir ; lent = énorme réservoir.</span>"}
+ ]},
+ {id:"D", title:"Dépense énergétique quotidienne", pages:"p.11", rows:[
+  {k:"det", st:0, q:"Répartition de la dépense énergétique totale", d:"",
+   f:"Métabolisme de base ≈ 60&nbsp;% · exercice ≈ 15-30&nbsp;% · post-prandial ≈ 10&nbsp;%", u:"",
+   x:"<p>La plus grosse part sert aux besoins incompressibles (métabolisme de base) ; l'exercice varie selon l'activité ; la digestion coûte environ 10&nbsp;%.</p><span class='trap'>Questions d'entraînement Physiologie digestive, Q1 : « le métabolisme post-prandial consomme 30&nbsp;% » → <b>faux</b>, c'est 10&nbsp;%.</span>"},
+  {k:"mb", st:0, q:"Métabolisme de base d'un sujet sain", d:"Dépense nécessaire au maintien de l'homéostasie",
+   f:"≈ 7000-8500 kJ / 24 h", u:"Part cérébrale ≈ <b>20&nbsp;%</b> · sous contrôle des hormones thyroïdiennes",
+   x:"<p>Il dépend de la <b>masse maigre</b>, qui augmente avec la surface corporelle et la température corporelle, diminue avec l'âge, et est plus élevée chez l'homme.</p>"},
+  {k:"brul", st:0, q:"Besoins d'un grand brûlé", d:"Sujet non sain",
+   f:"&gt; 12 000 kJ / 24 h", u:"Réparation, cicatrisation, défense contre les infections",
+   x:"<p>La maladie augmente la dépense : les besoins d'un grand brûlé dépassent nettement le métabolisme de base.</p>"}
+ ]},
+ {id:"E", title:"Calorimétrie directe et travail mécanique", pages:"p.13-14", rows:[
+  {k:"qs", st:1, q:"Chaleur sensible dégagée", d:"Mesurée par l'eau du serpentin",
+   f:"Q<sub>S</sub> = (T<sub>2</sub> − T<sub>1</sub>) × V × chaleur volumique du fluide", u:"T<sub>1</sub>, T<sub>2</sub> = entrée / sortie (°C ou K) · V en <b>L</b> · chaleur volumique en <b>J·L⁻¹·K⁻¹</b>",
+   x:"<p>Le sujet est dans une chambre isolée traversée par un serpentin d'eau : l'échauffement de l'eau mesure la chaleur qu'il émet.</p><span class='trap'>T<sub>2</sub> = sortie, T<sub>1</sub> = entrée : (T<sub>2</sub> − T<sub>1</sub>) est positif.</span>"},
+  {k:"ql", st:1, q:"Chaleur latente dégagée", d:"Mesurée par l'eau évaporée",
+   f:"Q<sub>L</sub> = m × chaleur latente d'évaporation de l'eau", u:"m en <b>g</b> · <b>2,42 kJ/g = 0,58 kcal/g</b>",
+   x:"<p>Un absorbeur d'eau à la sortie de la ventilation mesure la masse d'eau évaporée par le sujet ; chaque gramme évaporé a emporté 2,42 kJ.</p>"},
+  {k:"q", st:1, q:"Chaleur totale dégagée", d:"",
+   f:"Q = Q<sub>S</sub> + Q<sub>L</sub>", u:"Au repos : Q<sub>repos</sub> = dépense énergétique au repos",
+   x:"<p>On additionne la chaleur sensible et la chaleur latente.</p>"},
+  {k:"p", der:["q","watt"], q:"Puissance dégagée", d:"",
+   f:"P = "+fr("Q","temps"), u:"Au repos : P<sub>repos</sub> = puissance du <b>métabolisme de base</b>",
+   x:"<p>Diviser la chaleur par la durée donne une puissance en watts.</p>"
+   + H(["Pars de Q = Q<sub>S</sub> + Q<sub>L</sub> (énergie).","Une puissance = énergie par seconde (1 W = 1 J·s⁻¹) : divise par le temps."])},
+  {k:"dexo", st:0, q:"Dépense énergétique totale à l'exercice", d:"",
+   f:"Dépense = Q<sub>L</sub> + Q<sub>S</sub> + W", u:"W = énergie mécanique fournie",
+   x:"<p>À l'effort, le sujet produit de la chaleur <b>et</b> un travail mécanique : il faut ajouter W.</p>"},
+  {k:"pmeca", der:["dexo","watt"], q:"Puissance mécanique", d:"",
+   f:"P = "+fr("W","temps"), u:"",
+   x:"<p>Même logique que pour la chaleur, appliquée au travail.</p>"
+   + H(["Pars du travail W (énergie).","Divise par le temps pour obtenir une puissance."])},
+  {k:"w", st:1, q:"Travail linéaire", d:"",
+   f:"W = F × D", u:"F = force en <b>N</b> · D = déplacement rectiligne en <b>m</b>",
+   x:"<p>Le travail est la force multipliée par la distance parcourue dans sa direction.</p>"},
+  {k:"wang", der:["w"], q:"Travail angulaire (vélo)", d:"Sujet qui pédale",
+   f:"W = F × L × S = C × S", u:"S = déplacement angulaire (rad) · L = rayon du pédalier · C = F × L = couple (N·m)",
+   x:"<p>Sur un cercle, la distance parcourue par le point d'application est L × S : on retrouve force × distance.</p>"
+   + H(["Pars de W = F × D.","Sur un cercle de rayon L, un angle S (rad) correspond à D = L × S.","W = F × L × S, et F × L = C, donc W = C × S."])},
+  {k:"wn", st:1, q:"Travail pour soulever et reposer N fois une masse", d:"",
+   f:"W = N × m × g × H × 2", u:"m en <b>kg</b> · g = accélération de la pesanteur · H = hauteur en <b>m</b>",
+   x:"<p>Se retrouve à partir de @w : la force est le poids m × g, la distance est H, comptée <b>deux fois</b> (on soulève puis on repose), et on répète N fois.</p><span class='trap'>Ne pas oublier le <b>× 2</b>.</span>"},
+  {k:"ang", st:0, q:"Déplacement angulaire", d:"",
+   f:"S = vitesse angulaire × temps", u:"Vitesse en <b>rad·s⁻¹</b> · temps en <b>s</b> · <b>1 tour/s = 2π rad/s</b>",
+   x:"<p>Pour un pédalage donné en tours par seconde, on convertit en radians avant de calculer W.</p><span class='trap'>Toujours convertir les tours en radians : × 2π.</span>"}
+ ]},
+ {id:"F", title:"Thermochimie et rendement", pages:"p.14-16", rows:[
+  {k:"qabs", st:0, q:"Énergie chimique absorbée (thermochimie alimentaire)", d:"On pèse et on analyse les aliments",
+   f:"Q<sub>abs</sub> = m<sub>lipides</sub> × ΔG<sub>lipides</sub> + m<sub>glucides</sub> × ΔG<sub>glucides</sub> + m<sub>protides</sub> × ΔG<sub>protides</sub>", u:"ΔG<sub>substrat</sub> = énergie totale libérée par g (kJ/g)",
+   x:"<p>Valable en <b>état stable</b> (apports = dépenses, poids stable) ; sinon il faut tenir compte de la variation de masse grasse. Pour être précis, on retire l'énergie des selles (importante en cas de malabsorption).</p>"},
+  {k:"eqo2", st:0, q:"Équivalent énergétique de l'O₂", d:"Varie peu selon le nutriment",
+   f:"≈ 20 kJ / L d'O<sub>2</sub>", u:"Glucides, lipides ou protides",
+   x:"<p>La production d'ATP est liée à la chaîne respiratoire, elle-même liée à la consommation d'O₂ : la VO₂ permet d'estimer la dépense.</p>"},
+  {k:"qr", st:0, q:"Quotient respiratoire", d:"",
+   f:"QR = "+fr("VCO<sub>2</sub>","VO<sub>2</sub>"), u:"VCO₂ = production de CO₂ · VO₂ = consommation d'O₂",
+   x:"<p>Le QR dépend du substrat brûlé : il renseigne sur le carburant utilisé.</p>"},
+  {k:"qrglc", der:["qr","glc"], q:"QR du glucose", d:"",
+   f:"QR = "+fr("6","6")+" = 1", u:"",
+   x:"<p>Le glucose rejette autant de CO₂ qu'il consomme d'O₂.</p>"
+   + H(["Pars de la combustion du glucose : 6 O₂ consommés, 6 CO₂ produits.","QR = 6 / 6 = 1."])},
+  {k:"qrpalm", der:["qr","palm"], q:"QR de l'acide palmitique", d:"",
+   f:"QR = "+fr("16","23")+" ≈ 0,7", u:"",
+   x:"<p>Les lipides consomment plus d'O₂ qu'ils ne produisent de CO₂ : QR &lt; 1.</p>"
+   + H(["Pars de la combustion de l'acide palmitique : 23 O₂ consommés, 16 CO₂ produits.","QR = 16 / 23 ≈ 0,7."])},
+  {k:"qr08", st:0, q:"QR des protides et du sujet au repos", d:"Alimentation équilibrée",
+   f:"QR = 0,8", u:"",
+   x:"<p>Au repos, l'organisme utilise plusieurs substrats. La source dominante est les <b>lipides</b>, mais certains organes, notamment le <b>cerveau</b> (≈ 20&nbsp;% de la dépense), utilisent préférentiellement le glucose.</p><span class='tip'>1 (glucose) · 0,8 (protides, repos) · 0,7 (lipides).</span>"},
+  {k:"vo2sac", st:0, q:"VO₂ par recueil du gaz expiré dans un sac", d:"Valve à 3 voies",
+   f:"VO<sub>2</sub> = "+fr("V<sub>gaz</sub> × (21&nbsp;% − FeO<sub>2</sub>)","temps de l'examen"), u:"V<sub>gaz</sub> = volume expiré · FeO<sub>2</sub> = fraction d'O₂ du gaz expiré",
+   x:"<p>L'air inspiré contient 21&nbsp;% d'O₂ ; ce qui manque dans l'air expiré a été consommé.</p>"},
+  {k:"drepos", st:1, q:"Dépense énergétique au repos", d:"Méthode du sac",
+   f:"Dépense = VO<sub>2</sub> (L/24 h) × équivalent énergétique de l'O<sub>2</sub> (kJ/L)", u:"Équivalent ≈ <b>20 kJ/L</b>",
+   x:"<p>On multiplie le volume d'O₂ consommé par l'énergie libérée par litre (@eqo2).</p><span class='trap'>Unités : VO₂ en <b>L/24 h</b>, équivalent en <b>kJ/L</b> → dépense en kJ/24 h.</span>"},
+  {k:"vo2cyc", st:0, q:"VO₂ par analyse cycle à cycle", d:"À chaque cycle ventilatoire, pour l'exercice",
+   f:"VO<sub>2</sub> = V<sub>I</sub> × 21 − (V<sub>E</sub> × F<sub>E</sub>O<sub>2</sub>)", u:"V<sub>I</sub>, V<sub>E</sub> = volumes inspiré et expiré · F<sub>E</sub>O<sub>2</sub> = fraction d'O₂ expirée",
+   x:"<p>O₂ entré (V<sub>I</sub> × fraction d'O₂ de l'air) moins O₂ ressorti (V<sub>E</sub> × F<sub>E</sub>O<sub>2</sub>).</p><span class='trap'>La fiche écrit « × 21 » sans le signe % : il s'agit des 21&nbsp;% d'O₂ de l'air, comme dans la méthode du sac.</span>"},
+  {k:"rb", st:1, q:"Rendement brut", d:"",
+   f:"Rendement brut = "+fr("W","Q<sub>effort</sub>"), u:"Q<sub>effort</sub> = dépense énergétique lors de l'effort",
+   x:"<p>Part de l'énergie dépensée à l'effort qui devient du travail mécanique.</p>"},
+  {k:"rn", der:["rb"], q:"Rendement net", d:"",
+   f:"Rendement net = "+fr("W","Q<sub>effort</sub> − Q<sub>repos</sub>"), u:"Q<sub>effort</sub> &gt; Q<sub>repos</sub>",
+   x:"<p>On ne compte que l'énergie dépensée <b>en plus</b> du repos : le rendement net est plus élevé que le brut.</p>"
+   + H(["Pars de W / Q<sub>effort</sub>.","Retire du dénominateur la dépense de repos Q<sub>repos</sub>."])}
+ ]}
+];
+
+
+const code={}, gives={};
+data.forEach(sec=>sec.rows.forEach((r,i)=>{code[r.k]=sec.id+(i+1);}));
+data.forEach(sec=>sec.rows.forEach(r=>(r.der||[]).forEach(p=>{(gives[p]=gives[p]||[]).push(r.k);})));
+const chip=k=>`<a class="chip" href="#r-${code[k]}">${code[k]}</a>`;
+const refs=t=>t.replace(/@(\w+)/g,(m,k)=>code[k]?chip(k):m);
+const main=document.getElementById('main');
+let total=0,starred=0,derived=0;
+const cardHTML=(r,extra='')=>{
+  const from=r.der?`<span class="from">🔁 Déduite de ${r.der.map(chip).join(' ')}</span>`:'';
+  return `<div class="card${r.st?' starred':''}${r.der?' derived':''}" id="r-${code[r.k]}" tabindex="0">
+      <div class="def"><div class="top"><span class="code">${code[r.k]}</span>${S(r.st)}${r.der?'<span class="tag">🔁</span>':''}</div>
+      <div class="q">${r.q}</div>${r.d?`<div class="d">${r.d}</div>`:''}${from}</div>
+      <div class="fm"><span class="f">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div>
+      <div class="x">${refs(r.x)}</div></div>`;
+};
+data.forEach(sec=>{
+  let h=`<section id="${sec.id}"><h2>${sec.id} · ${sec.title} <small style="opacity:.85;font-weight:600">${sec.pages}</small></h2>`;
+  const groups=[];
+  sec.rows.forEach(r=>{ if(r.der&&groups.length) groups[groups.length-1].kids.push(r); else groups.push({r,kids:[]}); });
+  groups.forEach(({r,kids})=>{
+    total++; if(r.st)starred++;
+    h+=`<div class="grp${r.st?' gstar':''}">`+cardHTML(r);
+    if(kids.length){ h+=`<ul class="tree">`+kids.map(k=>{total++;derived++;return `<li>${cardHTML(k)}</li>`;}).join('')+`</ul>`; }
+    h+=`</div>`;
+  });
+  main.insertAdjacentHTML('beforeend',h+'</section>');
+});
+const B=document.body.classList,count=document.getElementById('count');
+const upd=()=>{count.textContent=B.contains('stars')?`${starred} ★`:B.contains('base')?`${total-derived} formules`:`${total} formules`;};
+upd();
+const tog=(id,c)=>{const b=document.getElementById(id);b.addEventListener('click',()=>{const on=B.toggle(c);b.setAttribute('aria-pressed',on);upd();if(c==='hide')document.querySelectorAll('.card.show').forEach(x=>x.classList.remove('show'));});};
+tog('bHide','hide');document.getElementById('bHide').addEventListener('click',()=>window.scrollTo({top:0}));tog('bStars','stars');tog('bBase','base');
+const flip=ev=>{if(ev.target.closest('a'))return;const c=ev.target.closest('.card');if(c&&B.contains('hide'))c.classList.toggle('show');};
+main.addEventListener('click',flip);
+main.addEventListener('keydown',ev=>{if(ev.target.classList.contains('card')&&(ev.key==='Enter'||ev.key===' ')){ev.preventDefault();flip(ev);}});
+
+</script>
+</body>
+</html>

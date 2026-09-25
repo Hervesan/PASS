@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules — 1er principe de la thermodynamique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#ffffff; --ink:#1d2330; --muted:#5b6474; --line:#e3e6ec;
+  --star:#e8a900; --starbg:#fff6d6; --fbg:#f4f6fb; --ded:#3f9a6a; --dedbg:#eef6f1;
+  --A:#2f86a8; --B:#d0632e; --C:#c9971c; --D:#6f5aa8; --E:#a64b4b;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.4}
+.wrap{max-width:860px;margin:0 auto;padding:18px 14px 40px}
+h1{font-size:1.6rem;font-weight:800;margin:0}
+.sub{color:var(--muted);font-size:.9rem;margin:2px 0 0}
+.s{color:var(--star);letter-spacing:1px;white-space:nowrap}
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 0;margin:12px 0 4px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.toolbar button{font:inherit;font-size:.88rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 11px;border-radius:999px;cursor:pointer}
+.toolbar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.toolbar button:focus-visible,.card:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.count{margin-left:auto;color:var(--muted);font-size:.82rem}
+section{margin-top:22px}
+h2{font-size:1rem;margin:0 0 8px;padding:6px 12px;color:#fff;border-radius:6px}
+.card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:stretch;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.def{padding:10px 12px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.def .top{display:flex;gap:8px;align-items:baseline;font-size:.8rem;font-weight:800}
+.def .q{font-weight:700;font-size:1rem}
+.def .d{color:var(--muted);font-size:.86rem}
+.fm{background:var(--fbg);border-left:5px solid var(--sec);padding:12px 14px;display:flex;flex-direction:column;justify-content:center}
+.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.35rem;line-height:1.25}
+.f sub{font-size:.62em}
+.u{margin-top:6px;font-size:.9rem;font-weight:600;color:var(--ink)}
+.u b{color:var(--sec)}
+.card.starred .def{background:linear-gradient(90deg,var(--starbg),transparent 70%)}
+.card.derived{border-style:dashed}
+.card.derived .fm{border-left-color:var(--ded)}
+.card.derived .top .tag{color:var(--ded)}
+#A{--sec:var(--A)} #B{--sec:var(--B)} #C{--sec:var(--C)} #D{--sec:var(--D)} #E{--sec:var(--E)}
+#A h2{background:var(--A)} #B h2{background:var(--B)} #C h2{background:var(--C)} #D h2{background:var(--D)} #E h2{background:var(--E)}
+section .top .code{color:var(--sec)}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+body.hide .card{cursor:pointer}
+body.stars .card:not(.starred){display:none}
+body.base .card.derived{display:none}
+.hint{display:none;color:var(--muted);font-size:.85rem;margin:6px 0 0}
+body.hide .hint{display:block}
+@media (max-width:600px){
+  .card{grid-template-columns:1fr}
+  .fm{border-left:0;border-top:4px solid var(--sec)}
+  .card.derived .fm{border-top-color:var(--ded)}
+}
+@media (prefers-reduced-motion:no-preference){.f,.u{transition:filter .2s}}
+@media print{.toolbar,.hint{display:none}body.hide .fm .f,body.hide .fm .u{filter:none}.card{break-inside:avoid}}
+
+/* Cartes plus isolées */
+section{margin-top:34px}
+h2{margin-bottom:14px}
+.card{margin-bottom:18px;border:1.5px solid var(--line);border-radius:12px;box-shadow:0 2px 0 var(--line),0 6px 14px -8px rgba(29,35,48,.25)}
+.def{padding:14px 16px}
+.fm{padding:16px 18px}
+.card.derived{border-width:1.5px}
+@media (max-width:600px){.card{margin-bottom:16px}}
+
+/* Couple définition/formule plus serré, séparation légère */
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.def{padding:14px 12px 14px 16px}
+.fm{padding:14px 16px 14px 14px}
+.card{margin-bottom:28px}
+section{margin-top:40px}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px dashed var(--line)!important}
+  .def{padding:14px 16px 8px}
+  .fm{padding:10px 16px 14px}
+  .card{margin-bottom:26px}
+}
+
+.wrap{max-width:980px}
+.legend{margin-top:6px;font-size:.88rem;color:var(--muted)}
+.chain{margin:14px 0 4px;padding:12px 14px;border-left:4px solid var(--star);background:var(--starbg);border-radius:0 8px 8px 0;font-size:.95rem}
+.mnemo{margin:12px 0 4px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:.92rem}
+.mnemo strong{display:block;margin-bottom:6px}
+.mnemo ul{margin:0;padding-left:18px;columns:2;column-gap:28px}
+.mnemo li{margin-bottom:4px;break-inside:avoid}
+.chain .f,.mnemo .f{font-size:1rem}
+.card{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
+.x{grid-column:1 / -1;border-top:1px dashed var(--line);padding:12px 16px 14px;font-size:.9rem;color:var(--muted)}
+.x p{margin:0 0 5px}
+.x b,.x .tip,.x .trap{color:var(--ink)}
+.tip,.trap{display:block;margin-top:5px}
+.tip::before{content:"💡 "}
+.trap::before{content:"⚠️ "}
+.ded{margin-top:8px;padding:8px 10px;background:var(--dedbg);border-left:3px solid var(--ded);border-radius:0 6px 6px 0;font-size:.86rem;color:var(--ink)}
+.ded strong{display:block;margin-bottom:3px}
+.ded ol{margin:0;padding-left:20px}
+.from{display:block;margin-top:4px;font-size:.84rem;color:var(--ded);font-weight:600}
+.gives{display:block;margin-top:8px;font-size:.86rem;color:var(--ded);font-weight:600}
+.chip{display:inline-block;text-decoration:none;font-size:.78rem;font-weight:700;border:1px solid var(--line);border-radius:5px;padding:0 5px;background:var(--bg);color:var(--ink)}
+.card{scroll-margin-top:70px}
+.card:target{box-shadow:0 0 0 3px var(--star)}
+/* mode test : seul le titre reste visible */
+body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:blur(8px);user-select:none}
+body.hide .card.show .def .d,body.hide .card.show .def .from,body.hide .card.show .fm,body.hide .card.show .x{filter:none;user-select:auto}
+@media (max-width:600px){.mnemo ul{columns:1}.x{padding:10px 16px 14px}}
+@media print{body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:none}}
+
+/* Traits pleins fins à l'intérieur, cadre plus marqué */
+:root{--frame:#b9c0cc}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--frame:#4a5263}}
+:root[data-theme="dark"]{--frame:#4a5263}
+.card{border:2px solid var(--frame)!important}
+.card.derived{border:2px solid var(--ded)!important}
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.x{border-top:1px solid var(--line)!important}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px solid var(--line)!important}
+}
+
+/* Traits intérieurs un peu plus épais */
+.fm,.card.derived .fm{border-left:1.5px solid var(--frame)!important;border-top:0!important}
+.x{border-top:1.5px solid var(--frame)!important}
+@media (max-width:600px){.fm,.card.derived .fm{border-left:0!important;border-top:1.5px solid var(--frame)!important}}
+
+/* Cadre d'épaisseur identique sur les 4 côtés */
+.card{box-shadow:0 6px 14px -10px rgba(29,35,48,.28)!important}
+
+/* Mobile : carte empilée comme la page épurée (évite le trait doublé en haut de la formule) */
+@media (max-width:600px){.card{grid-template-columns:1fr!important}}
+
+/* Fractions : numérateur au-dessus du dénominateur */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor;padding-bottom:.08em}
+.frac>span:last-child{padding-top:.08em}
+
+/* Arbre : formule de base → formules déduites (comme la page arbre) */
+.grp{margin-bottom:28px}
+.grp .card{margin-bottom:0}
+.tree{list-style:none;margin:0 0 0 26px;padding:0}
+.tree > li{position:relative;padding:12px 0 0 30px}
+.tree > li::before{content:"";position:absolute;left:0;top:0;bottom:0;border-left:2px solid var(--ded)}
+.tree > li:last-child::before{bottom:auto;height:36px}
+.tree > li::after{content:"";position:absolute;left:0;top:36px;width:24px;border-top:2px solid var(--ded)}
+.tree .card{box-shadow:none!important}
+.tree .card .f{font-size:1.18rem}
+body.stars .grp:not(.gstar){display:none}
+body.stars .tree{display:none}
+body.base .tree{display:none}
+@media (max-width:600px){
+  .tree{margin-left:12px}
+  .tree > li{padding-left:22px}
+  .tree > li::after{width:18px}
+}
+
+/* Singe = bascule vers la vue épurée floutée (définition → formule) */
+body.hide .x,body.hide .chain,body.hide .mnemo,body.hide .legend,body.hide .from{display:none}
+body.hide .def .d{filter:none!important;user-select:auto}
+body.hide .fm{filter:none!important}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+@media (prefers-reduced-motion:no-preference){.fm .f,.fm .u{transition:filter .2s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>1er principe de la thermodynamique : les formules</h1>
+<p class="sub">M2 · Chimie · formules expliquées</p>
+<div class="legend"><span class="s">★</span> = tombée au concours, d'après la fiche de cours · <span class="s">★★★</span> = la plus fréquente · <span style="color:var(--ded);font-weight:700">🔁</span> = formule déduite d'une autre (cadre vert)</div>
+<div class="toolbar" role="toolbar" aria-label="Options">
+  <a href="formules-premier-principe.html" style="font-size:.88rem;font-weight:600;text-decoration:none;color:var(--ink);border:1.5px solid var(--line);padding:6px 11px;border-radius:999px">← Tableau des formules</a>
+  <button id="bHide" aria-pressed="false">🙈 Réviser (vue épurée)</button>
+  <button id="bStars" aria-pressed="false"><span class="s">★</span> Concours</button>
+  <button id="bBase" aria-pressed="false">Sans les déduites</button>
+  <span class="count" id="count"></span>
+</div>
+<p class="hint">Vue épurée : touche une carte pour révéler la formule. Retouche 🙈 pour revenir aux explications.</p>
+<div class="chain">Le fil qui relie tout : <span class="f">PV = nRT</span> et <span class="f">U = <span class='frac'><span>3</span><span>2</span></span> RT</span> → <span class="f">Q = m.C.ΔT</span> et <span class="f">W = −P.ΔV</span> → <span class="f">ΔU = Q + W</span> → à P constante <span class="f">ΔH = Q<sub>p</sub></span> (H = U + PV) → mesure <span class="f">ΔH = m.C<sub>p</sub>.ΔT</span> ou loi de Hess.</div>
+
+<div class="mnemo">
+  <strong>Moyens mnémotechniques</strong>
+  <ul>
+    <li>T(K) = T(°C) + 273,15 : jamais de kelvins négatifs.</li>
+    <li>ΔU = Q + W : tout ce qui <b>entre</b> dans le système est <b>positif</b>.</li>
+    <li>W = −PΔV : le « − » rend W positif quand on <b>comprime</b> (ΔV &lt; 0).</li>
+    <li><b>V</b>olume constant → ΔU = Q<sub>v</sub> ; <b>P</b>ression constante → ΔH = Q<sub>p</sub>.</li>
+    <li>« H = U plus PV ».</li>
+    <li>Fonctions d'état (U, H) : ΔX = 0 sur un cycle ; Q et W dépendent du chemin.</li>
+    <li>1 cal = 4,18 J ; eau : 1 cal.g<sup>−1</sup>.K<sup>−1</sup>.</li>
+    <li>1 L d'eau : +1 °C par kcal, +0,24 °C par kJ.</li>
+    <li>Hess : on additionne les étapes comme des équations (CO : ΔH = ΔH<sub>1</sub> − ΔH<sub>2</sub>).</li>
+  </ul>
+</div>
+
+<main id="main"></main>
+<footer style="margin-top:30px;color:var(--muted);font-size:.8rem;text-align:center">Source : fiche de cours actualisée Médisup Tours/Orléans 2026-2027.</footer>
+</div>
+<script>
+const S = n => n ? '<span class="s">' + '★'.repeat(n) + '</span>' : '';
+const H = steps => `<div class="ded"><strong>🔁 Comment la retrouver</strong><ol>${steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>`;
+const fr=(n,d)=>`<span class='frac'><span>${n}</span><span>${d}</span></span>`;
+const data = [
+ {id:"A", title:"Gaz parfaits, température et énergie interne", pages:"p.2-3, 6", rows:[
+  {k:"NA", st:0, q:"Nombre d'Avogadro", d:"Nombre de molécules dans une mole",
+   f:"N<sub>A</sub> ≈ 6.10<sup>23</sup>", u:"",
+   x:"<p>La matière contient un très grand nombre de particules, comparable à N<sub>A</sub> : la thermodynamique décrit ce système avec quelques grandeurs mesurables (P, V, T) au lieu de suivre chaque molécule.</p>"},
+  {k:"ec1", st:0, q:"Énergie cinétique d'une molécule isolée", d:"Selon la mécanique de Newton",
+   f:`E<sub>c</sub> = ${fr('1','2')} m v<sup>2</sup>`, u:"m = masse de la molécule · v = vitesse de la molécule",
+   x:"<p>Énergie liée au <b>mouvement</b> de chaque molécule du gaz. C'est cette agitation qui est à l'origine de la température.</p>"},
+  {k:"ecmol", st:0, q:"Énergie cinétique d'une mole de gaz parfait", d:"",
+   f:`E<sub>c</sub> = ${fr('1','2')} N<sub>A</sub> m v<sub>m</sub><sup>2</sup> = ${fr('3','2')} N<sub>A</sub> k<sub>B</sub> T`, u:"v<sub>m</sub> = vitesse moyenne · T = température absolue en <b>K</b>",
+   x:"<p>On multiplie l'énergie d'une molécule par N<sub>A</sub>, avec la vitesse moyenne. Elle est <b>proportionnelle à T</b> : à T = 0 K, absence de mouvement, système figé.</p>"},
+  {k:"ecRT", st:0, q:"Énergie cinétique d'une mole de gaz parfait monoatomique", d:"",
+   f:`E<sub>c</sub> = ${fr('3','2')} R.T`, u:"R = constante des gaz parfaits · T en K",
+   x:"<p>La forme à retenir : l'énergie cinétique d'une mole ne dépend que de la température.</p>"},
+  {k:"RNk", der:["ecRT","ecmol"], q:"Lien entre R, N<sub>A</sub> et k<sub>B</sub>", d:"",
+   f:"R = N<sub>A</sub> × k<sub>B</sub>", u:"",
+   x:"<p>Ce lien explique pourquoi les deux écritures de E<sub>c</sub> sont équivalentes : k<sub>B</sub> est la constante « par molécule », R la constante « par mole ».</p><span class='tip'>Vérification avec les valeurs du cours : 6.10<sup>23</sup> × 1,38.10<sup>−23</sup> ≈ 8,3.</span>"
+   + H(["Écris les deux formes : E<sub>c</sub> = (3/2) R.T et E<sub>c</sub> = (3/2) N<sub>A</sub> k<sub>B</sub> T.","Identifie les deux expressions : R.T = N<sub>A</sub> k<sub>B</sub> T.","Simplifie par T."])},
+  {k:"kB", st:0, q:"Constante de Boltzmann", d:"",
+   f:"k<sub>B</sub> = 1,38.10<sup>−23</sup> J.K<sup>−1</sup>", u:"",
+   x:"<p>Constante qui relie l'énergie d'<b>une molécule</b> à la température.</p>"},
+  {k:"U", st:1, q:"Énergie interne d'une mole de gaz raréfié, rare, noble", d:"Énergie de mouvement E<sub>c</sub>",
+   f:`U = ${fr('3','2')} R.T`, u:"U ne dépend que de la température : <b>U = f(T)</b>",
+   x:"<p>L'étoile porte sur le fait que U <b>ne dépend que de T</b>. Pour un corps réel, U est essentiellement composée de vibrations et d'oscillations des atomes et des liaisons. Les gaz étudiés sont des gaz parfaits : aucune interaction entre molécules.</p><span class='tip'>Même écriture que @ecRT.</span>"},
+  {k:"TK", st:0, q:"Température absolue", d:"Unité SI, toujours utilisée en thermodynamique",
+   f:"T(K) = 273,15 + T(°C)", u:"Jamais négative · limite : <b>0 K = −273,15 °C</b>",
+   x:"<p>La température en kelvins s'obtient en ajoutant 273,15 à la température en °C.</p><span class='trap'>Toujours convertir en K avant d'utiliser PV = nRT ou E<sub>c</sub> = (3/2) RT. La fiche du 2<sup>nd</sup> principe arrondit à −273 °C.</span>"},
+  {k:"PV", st:0, q:"Équation d'état des gaz parfaits", d:"Relie les variables d'état P, V, T, n",
+   f:"PV = nRT", u:"P en <b>Pa</b> · V en <b>m³</b> · n en <b>mol</b> · T en <b>K</b>",
+   x:"<p>Les variables d'état dépendent les unes des autres : en connaître trois donne la quatrième. P et T sont <b>intensives</b> (pas de sommation), V et n <b>extensives</b> (sommation possible).</p><span class='trap'>Unités SI obligatoires : V en m³, pas en L.</span>"},
+  {k:"R", st:0, q:"Constante des gaz parfaits", d:"",
+   f:"R = 8,3145 J.K<sup>−1</sup>.mol<sup>−1</sup>", u:"= <b>1,9872 cal.K<sup>−1</sup>.mol<sup>−1</sup></b>",
+   x:"<p>8,3145 dans le système international ; 1,9872 si l'on travaille en calories.</p>"},
+  {k:"dX", st:0, q:"Variation d'une grandeur X", d:"Différence entre l'état final et l'état initial",
+   f:"ΔX = X<sub>final</sub> − X<sub>initial</sub>", u:"∫dX = ΔX · ∫δX = X pour X non fonction d'état",
+   x:"<p>Δ = variation finie ; d = petite variation (élément d'intégration) ; δ = infiniment petit d'une grandeur qui <b>n'est pas une fonction d'état</b> (comme Q et W).</p><span class='trap'>Toujours « final − initial », jamais l'inverse.</span>"},
+  {k:"dV", der:["dX"], q:"Variation de volume lors d'une dilatation", d:"Corps chauffé à pression constante",
+   f:"ΔV = V<sub>final</sub> − V<sub>initial</sub> &gt; 0", u:"",
+   x:"<p>Le corps chauffé gonfle : son volume final est plus grand. Cette dilatation s'accompagne d'un travail W (énergie thermique transformée en énergie mécanique).</p>"
+   + H(["Pars de ΔX = X<sub>final</sub> − X<sub>initial</sub> avec X = V.","Dilatation : V<sub>final</sub> &gt; V<sub>initial</sub>, donc ΔV &gt; 0."])}
+ ]},
+ {id:"B", title:"Chaleur Q et travail W", pages:"p.7-8, 10", rows:[
+  {k:"dQ", st:0, q:"Chaleur échangée (forme élémentaire)", d:"Forme d'énergie reliée à la température",
+   f:"δQ = m.C.dT", u:"δ car Q <b>n'est pas une fonction d'état</b>",
+   x:"<p>Quantité de chaleur pour une toute petite variation de température.</p>"},
+  {k:"Q", st:1, q:"Chaleur échangée si C est constante", d:"",
+   f:"Q = ∫δQ = m.C.ΔT", u:"Q en <b>J</b> (ou cal) · m en kg ou g · ΔT en <b>K</b> · C en J.kg<sup>−1</sup>.K<sup>−1</sup> (ou cal.g<sup>−1</sup>.K<sup>−1</sup>)",
+   x:"<p>La chaleur échangée est proportionnelle à la masse, à la chaleur spécifique et à l'écart de température. Elle se retrouve en intégrant @dQ.</p><span class='tip'>Convention : chaleur <b>reçue</b> par le système = <b>+</b> ; <b>perdue</b> = <b>−</b>.</span><span class='trap'>Unités cohérentes : si C est en cal.g<sup>−1</sup>.K<sup>−1</sup>, m en g et Q en cal.</span>"},
+  {k:"cal", st:0, q:"Calorie et joule", d:"1 cal : chaleur pour élever 1 g d'eau de 1 °C (entre 14 et 15 °C)",
+   f:"1 cal = 4,18 J", u:"",
+   x:"<p>Conversion à connaître pour passer d'une unité à l'autre.</p><span class='tip'>Repères du cours : 1 J élève une pomme de 100 g de 1 mètre ; 1 kJ = chaleur dégagée en 6 secondes par une personne au repos.</span>"},
+  {k:"Ceau", st:0, q:"Chaleur spécifique de l'eau liquide", d:"Chaleur à ajouter pour augmenter la température d'un degré",
+   f:"C(eau) = 1 cal.g<sup>−1</sup>.K<sup>−1</sup>", u:"",
+   x:"<p>C'est la définition même de la calorie : 1 cal par gramme d'eau et par degré.</p>"},
+  {k:"Chum", st:0, q:"Chaleur spécifique du corps humain", d:"",
+   f:"C(corps humain) = 14,6 cal.g<sup>−1</sup>.K<sup>−1</sup>", u:"",
+   x:"<p>Valeur donnée par la fiche pour le corps humain. La chaleur spécifique peut dépendre ou non de la température selon la matière.</p><span class='trap'>Valeur reprise telle quelle : elle est 14,6 fois celle de l'eau, à vérifier auprès de l'enseignant.</span>"},
+  {k:"dW", st:0, q:"Travail des forces de pression (forme élémentaire)", d:"Énergie mécanique faisant intervenir pression et volume",
+   f:"δW = −P.dV", u:"W = travail échangé · δW = infiniment petit de W",
+   x:"<p>Le signe − traduit la convention : quand le volume diminue, le système <b>reçoit</b> du travail.</p>"},
+  {k:"W", st:0, q:"Travail à pression constante", d:"",
+   f:"W = ∫δW = −P.ΔV", u:"W en J ou cal · reçu : <b>+</b> · fourni : <b>−</b>",
+   x:"<p>À pression constante, on intègre simplement : le travail vaut −P fois la variation de volume.</p><span class='trap'>Un système qui se <b>détend</b> (ΔV &gt; 0) fournit du travail : W &lt; 0.</span>"},
+  {k:"Wext", der:["W"], q:"Travail contre une pression extérieure constante", d:"Processus chimiques et biochimiques à P atmosphérique",
+   f:"W = −P<sub>ext</sub>.(V<sub>2</sub> − V<sub>1</sub>)", u:"V<sub>1</sub> = volume initial · V<sub>2</sub> = volume final",
+   x:"<p>La majorité des processus chimiques et biochimiques se font à la pression atmosphérique, supposée constante.</p>"
+   + H(["Pars de W = −P.ΔV.","P = P<sub>ext</sub> (constante) et ΔV = V<sub>2</sub> − V<sub>1</sub>."])},
+  {k:"Wcell", der:["W"], q:"Travail dans la cellule isolée", d:"Pression constante égale à P atmosphérique ; volume quasi constant",
+   f:"PΔV = 0 donc W = 0", u:"",
+   x:"<p>Le volume d'une cellule ne varie quasiment pas au cours d'un processus : pas de travail des forces de pression.</p>"
+   + H(["Pars de W = −P.ΔV.","ΔV ≈ 0, donc W = 0."])},
+  {k:"comp", st:1, q:"Signe du travail lors d'une compression", d:"Travail effectué sur le système",
+   f:"ΔV &lt; 0 (V<sub>initial</sub> &gt; V<sub>final</sub>) → W &gt; 0", u:"Détente : ΔV &gt; 0 → W &lt; 0",
+   x:"<p>Système <b>comprimé</b> (★) : il reçoit du travail, W est positif. Se retrouve avec @W : −P × (valeur négative) = positif.</p><span class='tip'>Un corps comprimé s'échauffe (gaz, pastilles de médicament).</span>"}
+ ]},
+ {id:"C", title:"Premier principe : variation d'énergie interne ΔU", pages:"p.9", rows:[
+  {k:"dU", st:2, q:"Premier principe de la thermodynamique", d:"Loi de conservation de l'énergie",
+   f:"ΔU = Q + W", u:"ΔU = énergie stockée = énergie entrée − énergie sortie",
+   x:"<p>L'énergie interne varie uniquement par les échanges de <b>chaleur</b> et de <b>travail</b> avec le milieu extérieur. On sait mesurer ΔU, contrairement à la valeur absolue de U.</p><span class='tip'>Tout ce qui <b>entre</b> dans le système compte en <b>+</b>.</span>"},
+  {k:"dUPV", st:1, q:"ΔU si P et V varient", d:"",
+   f:"ΔU = Q − PΔV − VΔP", u:"",
+   x:"<p>Forme générale donnée par la fiche quand la pression et le volume changent tous les deux.</p>"},
+  {k:"dUp", st:2, q:"ΔU à pression constante", d:"",
+   f:"ΔU = Q<sub>p</sub> − PΔV", u:"Q<sub>p</sub> = chaleur échangée à pression constante · PΔV = travail des forces de pression",
+   x:"<p>À P constante, ΔP = 0 : le terme VΔP disparaît. Se retrouve à partir de @dUPV.</p>"},
+  {k:"dUv", st:1, q:"ΔU à volume constant", d:"",
+   f:"ΔU = Q<sub>v</sub>", u:"Q<sub>v</sub> = chaleur échangée à volume constant",
+   x:"<p>Sans variation de volume, pas de travail : toute la chaleur échangée sert à changer U. Se retrouve à partir de @dUp avec ΔV = 0.</p><span class='tip'><b>V</b>olume constant ↔ U ; <b>P</b>ression constante ↔ H (@dHQp).</span>"},
+  {k:"Uet", st:1, q:"U est une fonction d'état", d:"Passage d'un état initial A à un état final B",
+   f:"ΔU<sub>BA</sub> = U<sub>B</sub> − U<sub>A</sub>", u:"<b>Indépendant du chemin suivi</b> entre A et B",
+   x:"<p>Seuls comptent l'état initial et l'état final. <b>Contrairement à Q (★) et W</b>, qui ne sont pas des fonctions d'état : leurs valeurs dépendent du chemin suivi (★★★).</p><span class='trap'>Dans cette notation de la fiche, ΔU<sub>BA</sub> désigne le passage de A vers B.</span>"},
+  {k:"Uch", der:["Uet"], q:"ΔU le long d'un chemin en plusieurs étapes", d:"",
+   f:"ΔU<sub>BA</sub> = ΔU<sub>BC</sub> + ΔU<sub>CD</sub> + ΔU<sub>DA</sub>", u:"",
+   x:"<p>Quel que soit le chemin (direct ou par des états intermédiaires C et D), la somme des variations donne la même ΔU.</p>"
+   + H(["Écris chaque terme comme une différence : U<sub>B</sub> − U<sub>C</sub>, U<sub>C</sub> − U<sub>D</sub>, U<sub>D</sub> − U<sub>A</sub>.","Additionne : U<sub>C</sub> et U<sub>D</sub> s'éliminent.","Il reste U<sub>B</sub> − U<sub>A</sub> = ΔU<sub>BA</sub>."])},
+  {k:"Ucy", st:1, q:"ΔU sur un cycle", d:"État final = état initial",
+   f:"ΔU = 0", u:"",
+   x:"<p>On revient au point de départ : une fonction d'état reprend sa valeur initiale. Se retrouve avec @Uet en prenant B = A.</p>"},
+  {k:"meta", st:0, q:"Bilan d'énergie d'un être vivant", d:"Système ouvert ; mesure en calorimètre pendant plusieurs jours",
+   f:"ΔU<sub>métabolisme</sub> = E<sub>nourriture</sub> − E<sub>excréments</sub>", u:"E = énergie de <b>combustion</b> · ΔU ≈ chaleur dépensée par l'organisme <b>&lt; 0</b>",
+   x:"<p>Le métabolisme convertit les aliments en produits de combustion et en excréments. ΔU est négatif : l'organisme perd de l'énergie thermique. L'énergie mécanique fournie est négligeable au repos absolu.</p>"}
+ ]},
+ {id:"D", title:"Enthalpie H", pages:"p.10-11", rows:[
+  {k:"H", st:0, q:"Enthalpie", d:"Unités : joules ou calories",
+   f:"H = U + PV", u:"",
+   x:"<p>L'enthalpie ajoute à l'énergie interne le terme PV. C'est la grandeur adaptée aux transformations à <b>pression constante</b>, les plus courantes en chimie et en biochimie.</p><span class='tip'>« H = U plus PV ».</span>"},
+  {k:"dHQp", st:1, q:"Variation d'enthalpie à pression constante", d:"",
+   f:"ΔH = Q<sub>p</sub>", u:"Q<sub>p</sub> = chaleur échangée à pression constante",
+   x:"<p>À pression constante, la variation d'enthalpie est la <b>chaleur échangée</b> (★). D'après le premier principe, Q<sub>p</sub> = variation de (U + PV). H étant une fonction d'état (★), Q<sub>p</sub> est lui aussi indépendant du chemin suivi.</p>"},
+  {k:"Hcy", st:1, q:"ΔH sur un cycle fermé", d:"H est une fonction d'état",
+   f:"ΔH = 0", u:"Pour toute fonction d'état X : ΔX = 0",
+   x:"<p>L'étoile porte sur « H est une fonction d'état », propriété qu'exprime cette formule : ΔH ne dépend que des états initial et final, identiques sur un cycle.</p>"},
+  {k:"dHr", st:0, q:"Variation d'enthalpie d'une réaction", d:"Réactifs → produits",
+   f:"ΔH = H<sub>produits</sub> − H<sub>réactifs</sub>", u:"",
+   x:"<p>Produits moins réactifs (final − initial). ΔH comprend une composante standard ΔH° (298 K) et une composante thermique au-delà de 298 K.</p><span class='tip'>Signe de ΔH (★) : &gt; 0 endothermique (chaleur absorbée, formation du glucose) ; &lt; 0 exothermique (chaleur dégagée, formation de l'eau, combustions) ; = 0 athermique (hydrolyse d'un ester).</span>"},
+  {k:"dHdU", st:0, q:"Relation entre ΔH et ΔU", d:"",
+   f:"ΔH = ΔU + PΔV + VΔP", u:"",
+   x:"<p>Forme générale : l'écart entre ΔH et ΔU vient des variations de P et de V.</p>"},
+  {k:"dHdUp", st:1, q:"Relation entre ΔH et ΔU à pression constante", d:"",
+   f:"ΔH = ΔU + PΔV", u:"",
+   x:"<p>À P constante, ΔP = 0 : la différence entre ΔH et ΔU dépend de la variation de volume ΔV et de la pression P. Se retrouve à partir de @dHdU.</p>"},
+  {k:"dHsol", der:["dHdUp"], q:"Réactifs tous solides ou liquides", d:"Variation de volume ΔV très faible",
+   f:"ΔU ≈ ΔH", u:"",
+   x:"<p>La différence entre ΔH et ΔU est négligeable devant l'erreur expérimentale de la mesure d'une chaleur de réaction.</p>"
+   + H(["Pars de ΔH = ΔU + PΔV.","Solides et liquides : ΔV très faible, donc PΔV ≈ 0.","Il reste ΔH ≈ ΔU."])},
+  {k:"std", st:0, q:"Conditions standard", d:"Référence pour comparer les ΔH entre elles",
+   f:"298 K et 1 atmosphère", u:"ΔH° = chaleur dégagée ou absorbée dans ces conditions · unité : J.mol<sup>−1</sup>",
+   x:"<p>ΔH° permet de comparer quantitativement les réactions entre elles, toutes ramenées aux mêmes conditions.</p>"},
+  {k:"Hf0", st:0, q:"Enthalpie standard de formation d'un corps simple", d:"Éléments et corps simples à l'état naturel",
+   f:"ΔH° de formation = 0", u:"O<sub>2</sub>, H<sub>2</sub>, C, N<sub>2</sub>…",
+   x:"<p>Les corps simples à l'état naturel servent de zéro de référence.</p>"}
+ ]},
+ {id:"E", title:"Détermination de ΔH : calorimétrie et loi de Hess", pages:"p.12", rows:[
+  {k:"calo", st:0, q:"Mesure par calorimétrie", d:"Réaction à pression constante dans un calorimètre rempli d'eau",
+   f:"ΔH = Q<sub>p</sub> = m.C<sub>p</sub>.ΔT", u:"m = masse d'eau · C<sub>p</sub> = chaleur spécifique de l'eau à P constante · ΔT = variation de température de l'eau",
+   x:"<p>La chaleur dégagée par la réaction (ex. une combustion) réchauffe l'eau : on mesure ΔT et on en déduit ΔH. C'est @Q appliquée à l'eau du calorimètre.</p>"},
+  {k:"litre", st:0, q:"Échauffement de 1 L d'eau", d:"",
+   f:"ΔH = 1 kcal → ΔT = 1 °C · ΔH = 1 kJ → ΔT = 0,24 °C", u:"",
+   x:"<p>Repères pour les exercices de calorimétrie.</p><span class='tip'>0,24 ≈ 1 / 4,18 : 1 kJ, c'est environ 0,24 kcal (voir @cal).</span>"},
+  {k:"hess", st:0, q:"Loi des additions de chaleurs de Hess", d:"Transformation A → C en passant par B",
+   f:"ΔH<sub>AC</sub> = ΔH<sub>AB</sub> + ΔH<sub>BC</sub>", u:"H est une fonction d'état",
+   x:"<p>Inutile de mesurer A → C si l'on connaît A → B et B → C : on additionne les étapes. Utile quand une mesure calorimétrique directe est impossible.</p><span class='trap'>Ici ΔH<sub>AC</sub> désigne le passage A → C, alors que la fiche note ΔU<sub>BA</sub> le passage A → B (@Uet) : lis bien l'ordre des indices.</span>"},
+  {k:"hcy", der:["hess"], q:"Loi de Hess sur un processus cyclique A → B → C → A", d:"États final et initial identiques",
+   f:"ΔH<sub>AB</sub> + ΔH<sub>BC</sub> + ΔH<sub>CA</sub> = 0", u:"",
+   x:"<p>Valeur nulle, comme pour toutes les fonctions d'état sur un cycle.</p><span class='trap'>La fiche écrit « ΔH<sub>AC</sub> = ΔH<sub>AB</sub> + ΔH<sub>BC</sub> + ΔH<sub>CA</sub> = 0 » : le terme ΔH<sub>AC</sub> placé devant est ambigu ; retiens que la somme sur le cycle vaut 0.</span>"
+   + H(["Pars de ΔH<sub>AC</sub> = ΔH<sub>AB</sub> + ΔH<sub>BC</sub>.","Ajoute le retour C → A : on revient à l'état initial.","Sur un cycle, la variation d'une fonction d'état est nulle."])},
+  {k:"graph", der:["hess"], q:"Enthalpie de C<sub>graphite</sub> + ½ O<sub>2</sub> → CO", d:"Mesure calorimétrique directe impossible",
+   f:"ΔH = ΔH<sub>1</sub> − ΔH<sub>2</sub>", u:"ΔH<sub>1</sub> : C<sub>graphite</sub> + O<sub>2</sub> → CO<sub>2</sub> · ΔH<sub>2</sub> : CO + ½ O<sub>2</sub> → CO<sub>2</sub>",
+   x:"<p>Le graphite ne donne que du CO<sub>2</sub> jusqu'à 500 °C environ : on passe par les chaleurs de combustion du graphite et du monoxyde de carbone.</p>"
+   + H(["Chemin 1 : C + O<sub>2</sub> → CO<sub>2</sub> (ΔH<sub>1</sub>). Chemin 2 : C + ½ O<sub>2</sub> → CO (ΔH), puis CO + ½ O<sub>2</sub> → CO<sub>2</sub> (ΔH<sub>2</sub>).","Mêmes états initial et final : ΔH<sub>1</sub> = ΔH + ΔH<sub>2</sub>.","Isole ΔH : ΔH = ΔH<sub>1</sub> − ΔH<sub>2</sub>."])}
+ ]}
+];
+
+
+
+const code={}, gives={};
+data.forEach(sec=>sec.rows.forEach((r,i)=>{code[r.k]=sec.id+(i+1);}));
+data.forEach(sec=>sec.rows.forEach(r=>(r.der||[]).forEach(p=>{(gives[p]=gives[p]||[]).push(r.k);})));
+const chip=k=>`<a class="chip" href="#r-${code[k]}">${code[k]}</a>`;
+const refs=t=>t.replace(/@(\w+)/g,(m,k)=>code[k]?chip(k):m);
+const main=document.getElementById('main');
+let total=0,starred=0,derived=0;
+const cardHTML=(r,extra='')=>{
+  const from=r.der?`<span class="from">🔁 Déduite de ${r.der.map(chip).join(' ')}</span>`:'';
+  return `<div class="card${r.st?' starred':''}${r.der?' derived':''}" id="r-${code[r.k]}" tabindex="0">
+      <div class="def"><div class="top"><span class="code">${code[r.k]}</span>${S(r.st)}${r.der?'<span class="tag">🔁</span>':''}</div>
+      <div class="q">${r.q}</div>${r.d?`<div class="d">${r.d}</div>`:''}${from}</div>
+      <div class="fm"><span class="f">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div>
+      <div class="x">${refs(r.x)}</div></div>`;
+};
+data.forEach(sec=>{
+  let h=`<section id="${sec.id}"><h2>${sec.id} · ${sec.title} <small style="opacity:.85;font-weight:600">${sec.pages}</small></h2>`;
+  const groups=[];
+  sec.rows.forEach(r=>{ if(r.der&&groups.length) groups[groups.length-1].kids.push(r); else groups.push({r,kids:[]}); });
+  groups.forEach(({r,kids})=>{
+    total++; if(r.st)starred++;
+    h+=`<div class="grp${r.st?' gstar':''}">`+cardHTML(r);
+    if(kids.length){ h+=`<ul class="tree">`+kids.map(k=>{total++;derived++;return `<li>${cardHTML(k)}</li>`;}).join('')+`</ul>`; }
+    h+=`</div>`;
+  });
+  main.insertAdjacentHTML('beforeend',h+'</section>');
+});
+const B=document.body.classList,count=document.getElementById('count');
+const upd=()=>{count.textContent=B.contains('stars')?`${starred} ★`:B.contains('base')?`${total-derived} formules`:`${total} formules`;};
+upd();
+const tog=(id,c)=>{const b=document.getElementById(id);b.addEventListener('click',()=>{const on=B.toggle(c);b.setAttribute('aria-pressed',on);upd();if(c==='hide')document.querySelectorAll('.card.show').forEach(x=>x.classList.remove('show'));});};
+tog('bHide','hide');document.getElementById('bHide').addEventListener('click',()=>window.scrollTo({top:0}));tog('bStars','stars');tog('bBase','base');
+const flip=ev=>{if(ev.target.closest('a'))return;const c=ev.target.closest('.card');if(c&&B.contains('hide'))c.classList.toggle('show');};
+main.addEventListener('click',flip);
+main.addEventListener('keydown',ev=>{if(ev.target.classList.contains('card')&&(ev.key==='Enter'||ev.key===' ')){ev.preventDefault();flip(ev);}});
+
+</script>
+</body>
+</html>

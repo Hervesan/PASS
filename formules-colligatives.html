@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules en 2 colonnes — Propriétés colligatives</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff;--ink:#1d2330;--muted:#5b6474;--line:#e3e6ec;--frame:#b9c0cc;--star:#e8a900;--starbg:#fff6d6;--ded:#3f9a6a;
+--A:#2f86a8;--B:#d0632e;--C:#c9971c;--D:#6f5aa8;--E:#a64b4b}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.35}
+.wrap{max-width:820px;margin:0 auto;padding:16px 12px 40px}
+h1{font-size:1.4rem;margin:0 0 10px;font-weight:800}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:6px 0 8px;z-index:2;display:flex;gap:8px;align-items:center}
+.bar button{font:inherit;font-size:.9rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+.bar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.bar button:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.bar span{font-size:.8rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;border:2px solid var(--frame)}
+th{text-align:left;font-size:.78rem;color:var(--muted);font-weight:700;padding:6px 10px;border-bottom:2px solid var(--frame)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+td.d{width:42%;font-weight:700;font-size:.95rem;border-right:1.5px solid var(--frame)}
+td.d .s{color:var(--star);font-size:.8rem;margin-left:4px;white-space:nowrap}
+td.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.12rem}
+td.f .u{display:block;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.82rem;color:var(--muted);margin-top:2px}
+td.f .u b{color:var(--ink)}
+tr.sec td{background:var(--c);color:#fff;font-weight:800;font-size:.95rem;padding:6px 10px;border-bottom:0}
+tr.der td.d{padding-left:24px;color:var(--ded);font-weight:600;font-size:.9rem}
+tr.der td.d::before{content:"↳ ";font-weight:800}
+tr.der td.f{font-size:1rem;color:var(--ded)}
+sub{font-size:.65em}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor}
+body.hide td.f .ft,body.hide td.f .u{filter:blur(7px)}
+body.hide tr:not(.sec){cursor:pointer}
+body.hide tr.show td.f .ft,body.hide tr.show td.f .u{filter:none}
+@media (prefers-reduced-motion:no-preference){.ft,.u{transition:filter .2s}}
+@media (max-width:480px){td{padding:8px 7px}td.d{font-size:.88rem}td.f{font-size:1rem}tr.der td.d{padding-left:16px}}
+@media print{.bar{display:none}body.hide .ft,body.hide .u{filter:none}tr{break-inside:avoid}}
+
+/* ---- Mise en page soignée ---- */
+body{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0)}
+.wrap{max-width:860px;padding:22px 14px 50px}
+.top{padding:4px 2px 6px}
+.kicker{margin:0;font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--muted)}
+.top h1{font-size:1.9rem;margin:2px 0 4px;letter-spacing:-.01em}
+.meta{margin:0;font-size:.88rem;color:var(--muted)}
+.meta .s{color:var(--star)} .meta .g{color:var(--ded);font-weight:800}
+.bar{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0);padding:10px 0}
+.bar button{background:var(--bg);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.cols{display:grid;grid-template-columns:42% 58%;font-size:.72rem;font-weight:700;letter-spacing:.03em;color:var(--muted);padding:4px 16px 6px}
+.blk{background:var(--bg);border-radius:16px;margin:0 0 22px;overflow:hidden;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25);border:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.blk header{display:flex;align-items:center;gap:10px;padding:12px 16px;font-weight:800;font-size:1.02rem;color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--bg));border-bottom:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.letter{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--c);color:#fff;font-size:.95rem}
+.row{display:grid;grid-template-columns:42% 58%;align-items:stretch;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .d{padding:12px 12px 12px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.code{font-size:.72rem;font-weight:800;color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg));border-radius:5px;padding:1px 6px}
+.name{font-weight:700;font-size:.95rem;flex-basis:100%}
+.row .d .s{color:var(--star);font-size:.82rem;letter-spacing:1px}
+.row .f{padding:12px 16px;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line));display:flex;flex-direction:column;justify-content:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.2rem}
+.row .f .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px;line-height:1.3}
+.row .f .u b{color:var(--c)}
+.row.star .d{background:linear-gradient(90deg,var(--starbg),transparent 75%)}
+.row.der .d{padding-left:30px;position:relative}
+.row.der .d::before{content:"↳";position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ded);font-weight:800}
+.row.der .name{color:var(--ded);font-weight:600;font-size:.9rem}
+.row.der .code{color:var(--ded);background:color-mix(in srgb,var(--ded) 12%,var(--bg))}
+.row.der .f{font-size:1.05rem;color:var(--ded);background:color-mix(in srgb,var(--ded) 6%,var(--bg))}
+body.hide .ft,body.hide .u{filter:blur(7px);user-select:none}
+body.hide .row{cursor:pointer}
+body.hide .row.show .ft,body.hide .row.show .u{filter:none}
+.row:focus-visible{outline:3px solid var(--star);outline-offset:-3px}
+@media (max-width:480px){
+  .cols,.row{grid-template-columns:44% 56%}
+  .row .d{padding:10px 8px 10px 12px}.row .f{padding:10px 12px;font-size:1.05rem}
+  .name{font-size:.88rem}.row.der .d{padding-left:24px}.row.der .d::before{left:8px}
+  .top h1{font-size:1.6rem}
+}
+@media print{body{background:#fff}.blk{box-shadow:none;break-inside:avoid}}
+
+
+/* Option 1 : groupe encadré (formule mère + filles dans une bande verte) */
+.grp{border-top:1px solid var(--line)}
+.grp:first-child{border-top:0}
+.grp > .row{border-top:0}
+.kids{background:color-mix(in srgb,var(--ded) 13%,var(--bg));padding:8px 10px 10px;display:flex;flex-direction:column;gap:7px;border-top:1px solid color-mix(in srgb,var(--ded) 30%,var(--line))}
+.kids .row{border:1px solid color-mix(in srgb,var(--ded) 30%,var(--line));border-radius:10px;overflow:hidden;background:var(--bg);grid-template-columns:calc(42% - 4px) auto}
+.kids .row .d{padding:9px 10px}
+.kids .row .f{background:color-mix(in srgb,var(--ded) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--ded) 25%,var(--line))}
+.row.der .d{padding-left:10px}
+.row.der .d::before{content:none}
+@media (max-width:480px){.kids{padding:7px 7px 8px}.kids .row .d{padding:8px}}
+
+/* Formules déduites : mêmes couleurs que les autres (seul le regroupement les distingue) */
+.kids{background:color-mix(in srgb,var(--ink) 5%,var(--bg));border-top:1px solid var(--line)}
+.kids .row{border-color:var(--line)}
+.row.der .name{color:var(--ink);font-weight:700;font-size:.95rem}
+.row.der .code{color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg))}
+.row.der .code::before{content:none}
+.row.der .f,.kids .row .f{color:var(--ink);font-size:1.2rem;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line))}
+@media (max-width:480px){.row.der .f,.kids .row .f{font-size:1.05rem}.row.der .name{font-size:.88rem}}
+
+/* Comme la page explication : filles décalées, reliées par un trait à leur formule mère */
+.kids{background:transparent;border-top:0;padding:0 12px 14px 38px;gap:10px;position:relative}
+.kids .row{position:relative;overflow:visible;border:1.5px solid color-mix(in srgb,var(--ded) 60%,var(--line));border-radius:10px;background:var(--bg)}
+.kids .row .d{border-radius:9px 0 0 9px}
+.kids .row .f{border-radius:0 9px 9px 0}
+.kids .row::before{content:"";position:absolute;left:-24px;top:-12px;bottom:-12px;border-left:2px solid var(--ded)}
+.kids .row:first-child::before{top:-2px}
+.kids .row:last-child::before{bottom:50%}
+.kids .row::after{content:"";position:absolute;left:-24px;top:50%;width:22px;border-top:2px solid var(--ded)}
+.grp:has(.kids) > .row{border-bottom:0}
+.from{flex-basis:100%;font-size:.76rem;font-weight:700;color:var(--ded)}
+.from b{font-weight:800}
+@media (max-width:480px){
+  .kids{padding:0 8px 12px 28px}
+  .kids .row::before,.kids .row::after{left:-18px}
+  .kids .row::after{width:16px}
+}
+
+/* Colonnes alignées partout + petit espace entre formules principales + cadres déduits plus étroits */
+.blk{container-type:inline-size}
+.row{grid-template-columns:42cqw minmax(0,1fr)!important}
+.kids .row{grid-template-columns:calc(42cqw - 39.5px) minmax(0,1fr)!important}
+.cols{grid-template-columns:42% 58%}
+.rows{display:flex;flex-direction:column;gap:6px;background:color-mix(in srgb,var(--ink) 6%,var(--bg))}
+.grp{border-top:0!important;background:var(--bg)}
+.kids{padding:0 34px 14px 38px}
+@media (max-width:480px){
+  .kids{padding:0 22px 12px 38px}
+  .kids .row::before,.kids .row::after{left:-24px}
+  .kids .row::after{width:22px}
+}
+.from{white-space:nowrap;font-size:.7rem}
+@media (max-width:480px){.kids .row .d{padding:8px 6px 8px 8px}}
+
+/* Tableau neutre (mode singe) : sans sections, sans codes, sans étoiles, mélangé */
+.neutral{--c:var(--muted);border-color:var(--line)}
+.neutral .row .f{background:color-mix(in srgb,var(--ink) 4%,var(--bg));border-left:1px solid var(--line)}
+.neutral .row .u b{color:var(--ink)}
+.neutral .row .u [style]{color:inherit!important}
+.qbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin:0 0 10px;font-size:.85rem;color:var(--muted)}
+.qbar button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer}
+[hidden]{display:none!important}
+body.hide .meta{display:none}
+
+/* ---- Mode entraînement (singe) ---- */
+.qhead{background:var(--bg);border-radius:16px;padding:14px 16px;margin:0 0 16px;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25)}
+.qtop{display:flex;justify-content:space-between;align-items:baseline}
+.qtitle{font-weight:800;font-size:1.1rem}
+.qcount{font-size:.85rem;color:var(--muted);font-weight:600}
+.prog{height:8px;border-radius:99px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));margin:10px 0 12px;overflow:hidden}
+.prog span{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#f5c542,var(--star));transition:width .3s}
+.qbtns{display:flex;gap:8px;flex-wrap:wrap}
+.qbtns button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 13px;border-radius:999px;cursor:pointer}
+.qlist{display:flex;flex-direction:column;gap:10px;container-type:inline-size}
+.qc{display:grid;grid-template-columns:42cqw minmax(0,1fr);background:var(--bg);border-radius:14px;overflow:hidden;cursor:pointer;
+  border:1px solid var(--line);box-shadow:0 1px 2px rgba(20,30,50,.05),0 6px 16px -10px rgba(20,30,50,.3);transition:transform .15s}
+.qc:active{transform:scale(.99)}
+.qc:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.qc.star{border-color:color-mix(in srgb,var(--star) 45%,var(--line))}
+.qd{padding:12px 12px 12px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.qc.star .qd{background:linear-gradient(90deg,var(--starbg),transparent 85%)}
+.qn{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:7px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));color:var(--muted);font-size:.75rem;font-weight:800}
+.qs{color:var(--star);font-size:.85rem;letter-spacing:1px}
+.qq{flex-basis:100%;font-weight:700;font-size:.95rem}
+.qf{position:relative;padding:12px 14px;background:color-mix(in srgb,var(--ink) 3.5%,var(--bg));border-left:1px solid var(--line);display:flex;align-items:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.15rem}
+.qans{display:flex;flex-direction:column;filter:blur(8px);opacity:.6;transition:filter .25s,opacity .25s;user-select:none}
+.qans .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px}
+.qans .u b,.qans .u [style]{color:var(--ink)!important}
+.qhint{position:absolute;inset:0;display:grid;place-items:center;font-family:"Source Sans 3",system-ui,sans-serif;font-size:.8rem;font-weight:700;color:var(--muted)}
+.qc.show .qans{filter:none;opacity:1;user-select:auto}
+.qc.show .qhint{display:none}
+.qc.show .qf{background:color-mix(in srgb,#3f9a6a 7%,var(--bg))}
+.qc.show .qn{background:#3f9a6a;color:#fff}
+@media (max-width:480px){.qf{font-size:1.02rem;padding:10px 12px}.qq{font-size:.88rem}}
+body.hide .qc .ft,body.hide .qc .u{filter:none!important;user-select:auto}
+.bar{flex-wrap:wrap}
+.blink{font-size:.9rem;font-weight:600;text-decoration:none;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);padding:6px 12px;border-radius:999px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.blink:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><p class="kicker">M2 · Biophysique du milieu intérieur</p><h1>Propriétés colligatives</h1><p class="meta">39 formules · <span class="s">★</span> tombées au concours · <span class="g">🔁</span> formules déduites, reliées à leur formule de base</p></header>
+<div class="bar"><button id="bHide" aria-pressed="false">🙈 Cacher les formules</button><a class="blink" href="formules.html" style="margin-left:auto">← Cours</a><a class="blink" href="formules-colligatives-explications.html">📖 Explications</a></div>
+<div class="cols"><span>Définition</span><span>Formule · unité · constante</span></div><div id="tb"></div>
+<div id="quiz" hidden>
+<div class="qhead"><div class="qtop"><span class="qtitle">Entraînement</span><span id="qcount" class="qcount"></span></div>
+<div class="prog"><span id="qbar"></span></div>
+<div class="qbtns"><button id="bShuffle">🔀 Mélanger</button><button id="bReset">🙈 Tout recacher</button></div></div>
+<div id="qrows" class="qlist"></div></div>
+</div>
+<script>
+const H=()=>'';
+const data = [
+ {id:"A", title:"Exprimer une concentration", pages:"p.3", rows:[
+  {k:"cm", st:2, q:"Concentration massique (pondérale)", d:"Masse de soluté par volume de solution",
+   f:"C<sub>i</sub> = <span class='frac'><span>m<sub>i</sub></span><span>V</span></span>", u:"Unité SI : <b>kg/m³</b> (1 kg/m³ = 1 g/L)",
+   x:"<p>On <b>pèse</b> le soluté et on divise par le <b>volume de la solution</b> : « combien de grammes dans un litre ». Très utilisée, mais V dépend de la température et elle ne dit rien du nombre de moles disponibles pour une réaction.</p><span class='tip'><b>Massique = masse.</b> Médicaments : glucose 5 % = 50 g/L.</span><span class='trap'>kg/m³ et g/L, c'est la même valeur : 1 kg/m³ = 1 g/L.</span>"},
+  {k:"c", st:1, q:"Concentration molaire (molarité)", d:"Moles de soluté par volume de solution",
+   f:"C<sub>i</sub> = <span class='frac'><span>n<sub>i</sub></span><span>V</span></span>", u:"Unité SI : <b>mol/m³</b> (1 mol/m³ = 1 mmol/L = 1 mM)",
+   x:"<p>Même principe que la concentration massique, mais on compte des <b>moles</b> au lieu de peser des grammes. Aussi exprimée en µmol/L, nmol/L, pmol/L.</p><span class='tip'><b>Molaire = moles.</b> Suffixe « -émie » = molarité par litre de plasma (natrémie = 145 mM).</span><span class='trap'>1 mol/m³ = 1 <b>m</b>mol/L, pas 1 mol/L.</span>"},
+  {k:"molal", st:0, q:"Concentration molale (molalité)", d:"Moles de soluté par masse de solvant",
+   f:"C<sub>i</sub> = <span class='frac'><span>n<sub>i</sub></span><span>m<sub>solvant</sub></span></span>", u:"Unité SI : <b>mol/kg</b>",
+   x:"<p>On divise par la <b>masse du solvant seul</b>, pas par le volume de la solution. Une masse ne change pas avec la température : la molalité <b>s'affranchit des variations de V</b>.</p><span class='tip'>« -ale » = ÷ kg de solvant.</span><span class='trap'>Molaire (÷ volume de solution) ≠ molale (÷ masse de solvant).</span>"}
+ ]},
+ {id:"B", title:"Osmoles, osmolarité, osmolalité", pages:"p.4-5", rows:[
+  {k:"nosm", st:0, q:"Nombre d'osmoles", d:"Moles d'entités cinétiques dans la solution",
+   f:"n<sub>osm</sub> = n × i<sub>osm</sub>", u:"",
+   x:"<p>Une fois dissoute, une molécule peut se couper en plusieurs <b>entités</b>. Les propriétés colligatives dépendent du <b>nombre</b> d'entités (plus d'entités = plus de collisions sur les parois = pression ↑), donc on compte les entités, pas les molécules.</p><span class='tip'>NaCl → n<sub>osm</sub> = 2n ; glucose → n<sub>osm</sub> = n.</span>"},
+  {k:"iosm", st:0, q:"Coefficient d'ionisation i<sub>osm</sub>", d:"α = coefficient de dissociation ; p = nombre d'entités issues d'une molécule",
+   f:"i<sub>osm</sub> = 1 + α(p − 1)", u:"α entre <b>0</b> (pas de dissociation) et <b>1</b> (complète)",
+   x:"<p>On part de <b>1</b> (la molécule entière), puis on ajoute les entités <b>en plus</b> (p − 1), seulement pour la fraction α qui se dissocie. Si 0 &lt; α &lt; 1 (acide ascorbique), i<sub>osm</sub> est entre 1 et p.</p><span class='tip'>NaCl → p = 2 ; MgCl₂ → p = 3.</span><span class='trap'>p et i<sub>osm</sub> ne sont égaux que si α = 1.</span>"},
+  {k:"i1", der:["iosm"], q:"i<sub>osm</sub> sans dissociation", d:"Soluté qui ne se dissocie pas",
+   f:"α = 0 → i<sub>osm</sub> = 1", u:"",
+   x:"<p>La molécule reste entière : <b>1 molécule = 1 particule</b>, donc n<sub>osm</sub> = n.</p><span class='tip'>Exemple du cours : glucose.</span>"
+   + H(["Pars de i<sub>osm</sub> = 1 + α(p − 1).","Remplace α par 0 : 1 + 0 × (p − 1) = 1."])},
+  {k:"ip", der:["iosm"], q:"i<sub>osm</sub> avec dissociation complète", d:"Toutes les molécules se dissocient",
+   f:"α = 1 → i<sub>osm</sub> = p", u:"",
+   x:"<p>Chaque molécule donne ses p entités : <b>i<sub>osm</sub> = nombre d'entités par molécule</b>.</p><span class='tip'>NaCl (non saturé) : α = 1, p = 2 → i<sub>osm</sub> = 2.</span>"
+   + H(["Pars de i<sub>osm</sub> = 1 + α(p − 1).","Remplace α par 1 : 1 + (p − 1) = p."])},
+  {k:"w", st:2, q:"Concentration osmolaire (osmolarité)", d:"Osmoles par volume de solution",
+   f:"ω<sub>i</sub> = <span class='frac'><span>n<sub>osm</sub></span><span>V</span></span>", u:"Unité : <b>osmol/L</b> ; dépend de la température",
+   x:"<p>C'est la molarité, mais en comptant les <b>particules</b>. Comme tout ce qui est ÷ V, elle dépend de la température.</p><span class='tip'>« Osm- » + « -aire » = particules ÷ volume.</span>"},
+  {k:"wC", der:["w","nosm","c"], q:"Osmolarité à partir de la molarité", d:"Lien osmolarité / molarité",
+   f:"ω<sub>i</sub> = C<sub>i</sub> × i<sub>osm</sub>", u:"",
+   x:"<p><b>Osmolarité = molarité × i<sub>osm</sub>.</b> C'est la formule la plus pratique en exercice : on part de la molarité et on multiplie par le nombre de particules par molécule.</p>"
+   + H(["Pars de ω<sub>i</sub> = n<sub>osm</sub> / V.","Remplace n<sub>osm</sub> par n × i<sub>osm</sub> : ω<sub>i</sub> = (n × i<sub>osm</sub>) / V.","Or n / V = C<sub>i</sub> (molarité)."])},
+  {k:"wT", st:1, q:"Osmolarité totale", d:"Solution à plusieurs solutés",
+   f:"ω<sub>T</sub> = Σ ω<sub>i</sub>", u:"",
+   x:"<p>Chaque soluté apporte ses propres particules : on <b>additionne</b> les osmolarités. Colligatif = on compte tout, sans distinguer ions, petites molécules et macromolécules.</p>"},
+  {k:"wTC", der:["wT","wC"], q:"Osmolarité totale à partir des molarités", d:"",
+   f:"ω<sub>T</sub> = Σ (C<sub>i</sub> × i<sub>osm,i</sub>)", u:"",
+   x:"<p>Pour chaque soluté : molarité × i<sub>osm</sub>, puis on fait la somme.</p>"
+   + H(["Pars de ω<sub>T</sub> = Σ ω<sub>i</sub>.","Remplace chaque ω<sub>i</sub> par C<sub>i</sub> × i<sub>osm,i</sub>."])},
+  {k:"cosm", st:0, q:"Concentration osmolale (osmolalité)", d:"Osmoles par masse de solvant",
+   f:"C<sub>osm</sub> = <span class='frac'><span>n<sub>osm</sub></span><span>m<sub>solvant</sub></span></span>", u:"Unité : <b>osmol/kg</b>",
+   x:"<p>C'est la molalité, mais en comptant les particules. En solution aqueuse diluée, <b>osmolalité ≈ osmolarité</b>.</p><span class='tip'>« Osm- » + « -ale » = particules ÷ kg de solvant.</span>"},
+  {k:"cosmM", der:["cosm","nosm","molal"], q:"Osmolalité à partir de la molalité", d:"",
+   f:"C<sub>osm</sub> = molalité × i<sub>osm</sub>", u:"",
+   x:"<p>Même raisonnement que pour l'osmolarité, mais avec ÷ kg de solvant.</p>"
+   + H(["Pars de C<sub>osm</sub> = n<sub>osm</sub> / m<sub>solvant</sub>.","Remplace n<sub>osm</sub> par n × i<sub>osm</sub>.","Or n / m<sub>solvant</sub> = molalité."])},
+  {k:"cosmT", st:0, q:"Osmolalité totale", d:"Solution à plusieurs solutés",
+   f:"C<sub>osm totale</sub> = Σ C<sub>osm</sub>", u:"",
+   x:"<p>Même logique que l'osmolarité totale : on additionne les osmolalités de chaque soluté.</p>"},
+  {k:"sang", st:1, q:"Osmolalité du sang", d:"Valeur de référence",
+   f:"≈ 300 mosm/kg ± 2,5 %", u:"Solutés <b>finement régulés</b>",
+   x:"<p>Le sang garde une osmolalité <b>très stable</b>. Une anomalie vient souvent du <b>Na⁺</b> (ion majoritaire), du <b>glucose</b> (peut ↑ beaucoup sans être mortel) ou d'une <b>substance accumulée</b>.</p><span class='tip'>Se <b>mesure par cryoscopie</b> (voir @cosmR).</span>"},
+  {k:"calc", st:0, q:"Osmolalité calculée", d:"Estimation rapide",
+   f:"2 × sodium + glucose + urée", u:"",
+   x:"<p>Trois dosages sanguins suffisent pour avoir un ordre de grandeur de l'osmolalité, sans passer par la mesure par cryoscopie.</p><span class='tip'>Le <b>2</b> est devant le <b>sodium</b> : c'est le seul terme doublé.</span>"}
+ ]},
+ {id:"C", title:"Températures de changement d'état", pages:"p.5", rows:[
+  {k:"dt", st:1, q:"Delta cryoscopique Δθ", d:"Abaissement de la température de congélation",
+   f:"Δθ = T<sub>solvant</sub> − T<sub>solution</sub>", u:"",
+   x:"<p><b>★ La température de congélation diminue en présence de soluté</b> (T° de solidification, passage liquide ↔ solide). Δθ mesure de <b>combien de degrés</b> la solution congèle plus bas que le solvant pur.</p><span class='trap'>L'ordre : <b>solvant − solution</b>. Comme T<sub>solvant</sub> &gt; T<sub>solution</sub>, Δθ est positif.</span>"},
+  {k:"raoult", st:3, q:"Loi de Raoult (cryoscopie)", d:"Relie Δθ au nombre de particules",
+   f:"Δθ = K<sub>c</sub> × C<sub>osm</sub>", u:"K<sub>c</sub> = constante cryoscopique du solvant pur (K·kg/mol ou °C·kg/mol)<br><b>Eau : K<sub>c</sub> = 1,86 K·kg/mol</b>",
+   x:"<p><b>La plus tombée au concours.</b> L'abaissement de congélation est <b>proportionnel au nombre de particules</b> par kg de solvant. K<sub>c</sub> dépend uniquement du solvant.</p><span class='trap'>On utilise l'<b>osmolalité</b> (÷ kg), pas l'osmolarité.</span>"},
+  {k:"cosmR", der:["raoult"], q:"Mesurer l'osmolalité par cryoscopie", d:"",
+   f:"C<sub>osm</sub> = <span class='frac'><span>Δθ</span><span>K<sub>c</sub></span></span>", u:"",
+   x:"<p>On mesure l'abaissement de congélation, on divise par K<sub>c</sub> : on obtient l'osmolalité. C'est ainsi qu'on <b>mesure l'osmolalité du sang</b>.</p>"
+   + H(["Pars de Δθ = K<sub>c</sub> × C<sub>osm</sub>.","Divise les deux côtés par K<sub>c</sub>."])},
+  {k:"tsol", der:["raoult","dt"], q:"Température de congélation de la solution", d:"",
+   f:"T<sub>solution</sub> = T<sub>solvant</sub> − K<sub>c</sub> × C<sub>osm</sub>", u:"",
+   x:"<p>Donne directement la température à laquelle la solution congèle : celle du solvant pur, <b>moins</b> l'abaissement.</p>"
+   + H(["Pars de Δθ = T<sub>solvant</sub> − T<sub>solution</sub>.","Remplace Δθ par K<sub>c</sub> × C<sub>osm</sub>.","Isole T<sub>solution</sub>."])},
+  {k:"raoultM", der:["raoult","cosmM"], q:"Raoult à partir de la molalité", d:"",
+   f:"Δθ = K<sub>c</sub> × molalité × i<sub>osm</sub>", u:"",
+   x:"<p>Utile quand l'énoncé donne une <b>molalité</b> et un soluté qui se dissocie.</p>"
+   + H(["Pars de Δθ = K<sub>c</sub> × C<sub>osm</sub>.","Remplace C<sub>osm</sub> par molalité × i<sub>osm</sub>."])},
+  {k:"eb", st:1, q:"Loi de Raoult (ébulliométrie)", d:"",
+   f:"T<sub>ébullition</sub> ↑ avec le soluté", u:"",
+   x:"<p>Le soluté fait aussi <b>monter</b> la température d'ébullition.</p><span class='tip'><b>Effet miroir</b> : congélation ↓, ébullition ↑.</span>"}
+ ]},
+ {id:"D", title:"Pression osmotique et osmose", pages:"p.6", rows:[
+  {k:"vh", st:1, q:"Loi de Van't Hoff", d:"Analogie solution diluée / gaz parfait",
+   f:"π = ω R T", u:"ω en <b>osm·m⁻³</b> · R = constante des gaz parfaits · T en <b>K</b> · π en <b>Pa</b>",
+   x:"<p>La pression osmotique vient des <b>collisions des particules de soluté sur les parois</b>. Plus elles sont nombreuses (ω) et agitées (T), plus π est forte : π est <b>proportionnelle à ω et à T</b>.</p><span class='trap'>ω en <b>osm/m³</b> (pas osm/L) et T en <b>kelvins</b>.</span>"},
+  {k:"piC", der:["vh","wC"], q:"Pression osmotique à partir de la molarité", d:"",
+   f:"π = C × i<sub>osm</sub> × R × T", u:"",
+   x:"<p>La forme la plus utile en exercice : l'énoncé donne souvent une <b>molarité</b> et un soluté.</p>"
+   + H(["Pars de π = ω R T.","Remplace ω par C × i<sub>osm</sub>."])},
+  {k:"wpi", der:["vh"], q:"Osmolarité à partir d'une pression", d:"",
+   f:"ω = <span class='frac'><span>π</span><span>R T</span></span>", u:"",
+   x:"<p>Si on connaît la pression osmotique, on retrouve l'osmolarité.</p>"
+   + H(["Pars de π = ω R T.","Divise les deux côtés par R T."])},
+  {k:"dpi", der:["vh"], q:"Différence de pression entre 2 compartiments", d:"À la même température",
+   f:"Δπ = Δω × R × T", u:"",
+   x:"<p>La différence de pression osmotique entre deux compartiments dépend de leur <b>différence d'osmolarité</b>.</p>"
+   + H(["Écris π<sub>1</sub> = ω<sub>1</sub> R T et π<sub>2</sub> = ω<sub>2</sub> R T.","Soustrais : π<sub>1</sub> − π<sub>2</sub> = (ω<sub>1</sub> − ω<sub>2</sub>) R T."])},
+  {k:"osm", st:0, q:"Équilibre de l'osmose", d:"2 compartiments séparés par une membrane semi-perméable",
+   f:"Δπ = ρ g Δh", u:"ρ = masse volumique du liquide · g = pesanteur · Δh = différence de hauteur",
+   x:"<p>La membrane laisse passer le <b>solvant</b>, pas les solutés. Le solvant passe du milieu <b>le moins concentré vers le plus concentré</b> (phénomène passif). Il s'arrête quand la pression due à la différence de hauteur de liquide compense la différence de pression osmotique.</p><span class='tip'>L'eau va vers le plus concentré pour le diluer.</span>"},
+  {k:"dh", der:["osm","dpi"], q:"Hauteur de liquide à l'équilibre", d:"",
+   f:"Δh = <span class='frac'><span>Δω × R × T</span><span>ρ g</span></span>", u:"",
+   x:"<p>Plus l'écart d'osmolarité est grand, plus le liquide monte du côté concentré.</p>"
+   + H(["Pars de Δπ = ρ g Δh.","Remplace Δπ par Δω × R × T.","Divise par ρ g pour isoler Δh."])}
+ ]},
+ {id:"E", title:"Cellules, plasma et compartiments", pages:"p.7-8", rows:[
+  {k:"eff", st:1, q:"Osmolarité efficace (tonicité)", d:"Pour les cellules",
+   f:"ω<sub>eff</sub> = ω − ω<sub>urée</sub>", u:"",
+   x:"<p>La membrane cellulaire se comporte comme une membrane semi-perméable. Seules les <b>osmoles efficaces</b> font bouger l'eau : ce sont les solutés qui ne traversent pas librement la membrane (<b>Na⁺, Cl⁻, glucose, protéines, K⁺</b>).</p><span class='trap'>L'urée n'est pas une osmole efficace : elle s'équilibre de part et d'autre.</span>"},
+  {k:"effS", der:["eff","wT"], q:"Osmolarité efficace comme somme", d:"",
+   f:"ω<sub>eff</sub> = Σ ω des solutés efficaces", u:"",
+   x:"<p>Au lieu de retirer l'urée, on peut additionner directement les osmolarités des <b>seuls solutés efficaces</b>.</p>"
+   + H(["ω = ω<sub>T</sub> = Σ de tous les solutés.","Retirer ω<sub>urée</sub> revient à ne garder que les solutés efficaces."])},
+  {k:"eq", st:0, q:"Équilibre osmolaire", d:"",
+   f:"ω<sub>eff, extra</sub> = ω<sub>eff, intra</sub>", u:"",
+   x:"<p>Si les osmolarités efficaces sont <b>égales</b> dedans et dehors, l'eau ne bouge pas.</p>"},
+  {k:"eqpi", der:["eq","dpi"], q:"Pas de pression osmotique à l'équilibre", d:"",
+   f:"Δπ<sub>eff</sub> = 0", u:"",
+   x:"<p>C'est pour ça que l'eau ne bouge pas : <b>aucune force</b> ne la pousse. Tout le raisonnement sur l'hémolyse et la plasmolyse revient à comparer ω<sub>eff</sub> dedans et dehors.</p>"
+   + H(["À l'équilibre, Δω<sub>eff</sub> = 0.","Avec Δπ = Δω × R × T : Δπ = 0."])},
+  {k:"iso", st:1, q:"Solution iso-osmolaire", d:"",
+   f:"ω<sub>T solution</sub> = ω<sub>T plasma</sub>", u:"",
+   x:"<p>Même osmolarité <b>totale</b> que le plasma, urée comprise.</p>"},
+  {k:"isoT", st:2, q:"Solution isotonique", d:"",
+   f:"ω<sub>eff solution</sub> = ω<sub>eff plasma</sub>", u:"",
+   x:"<p>Même osmolarité <b>efficace</b> que le plasma : c'est ce qui compte pour les cellules. Les solutions injectables sont <b>toujours isotoniques</b> au plasma, sauf pour justement corriger l'osmolalité du sang.</p><span class='tip'>Iso<b>TON</b>ique = même <b>TON</b>icité.</span><span class='trap'>Iso-osmolaire ≠ isotonique.</span>"},
+  {k:"uree", der:["eff","iso","isoT"], q:"Différence iso-osmolaire / isotonique", d:"",
+   f:"ω<sub>T</sub> − ω<sub>eff</sub> = ω<sub>urée</sub>", u:"",
+   x:"<p>La <b>seule différence</b> entre les deux notions, c'est l'<b>urée</b> : elle compte dans ω totale mais pas dans ω efficace.</p>"
+   + H(["Pars de ω<sub>eff</sub> = ω − ω<sub>urée</sub>.","Fais passer ω<sub>eff</sub> et ω<sub>urée</sub> de l'autre côté."])},
+  {k:"lic", st:1, q:"Osmolarité du LIC et du LEC", d:"",
+   f:"ω ≈ 300 mosm/L", u:"Équilibre <b>finement régulé</b>",
+   x:"<p>Dedans comme dehors, environ 300 mosm/L : c'est le garant du fonctionnement cellulaire. Un déséquilibre vient de <b>pathologies</b> ou de l'<b>administration de solutés</b>.</p><span class='tip'>LEC : <b>Na⁺ et Cl⁻</b> (« la cellule baigne dans une eau salée »). LIC : <b>K⁺ et protéines chargées</b>.</span>"},
+  {k:"hemo", st:2, q:"LEC moins concentré que le LIC", d:"",
+   f:"ω<sub>eff LEC</sub> &lt; ω<sub>eff LIC</sub> → hémolyse", u:"Résistance membranaire ≈ <b>260-340 mosm/kg</b>",
+   x:"<p>L'eau va vers le plus concentré, donc <b>elle entre</b> dans la cellule : <b>gain net d'eau</b>, la cellule gonfle (turgescence). Si l'entrée d'eau dépasse la résistance membranaire : <b>hémolyse</b>.</p><span class='tip'>LEC dilué → eau entre → hémolyse. Ex. injection d'<b>eau pure</b>.</span>"},
+  {k:"plasmo", st:2, q:"LEC plus concentré que le LIC", d:"",
+   f:"ω<sub>eff LEC</sub> &gt; ω<sub>eff LIC</sub> → plasmolyse", u:"",
+   x:"<p>L'eau va vers le plus concentré, donc <b>elle sort</b> de la cellule : <b>perte nette d'eau</b>, la cellule se contracte : <b>plasmolyse</b>.</p><span class='tip'>LEC concentré → eau sort → plasmolyse.</span>"},
+  {k:"egal", st:0, q:"LEC égal au LIC", d:"",
+   f:"ω<sub>eff LEC</sub> = ω<sub>eff LIC</sub>", u:"",
+   x:"<p>Pas de différence, donc <b>flux net d'eau nul</b> : l'intégrité des cellules est conservée.</p>"}
+ ]}
+];
+
+
+
+const tb=document.getElementById('tb');let h='';
+const rowHTML=(r,code,par)=>`<div class="row${r.der?' der':''}${r.st?' star':''}" tabindex="0">
+      <div class="d"><span class="code">${code}</span>${par?`<span class="from">🔁 Déduite de <b>${par}</b></span>`:''}<span class="name">${r.q}</span>${r.st?`<span class="s">${'★'.repeat(r.st)}</span>`:''}</div>
+      <div class="f"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div></div>`;
+data.forEach(sec=>{
+  h+=`<section class="blk" style="--c:var(--${sec.id})"><header><span class="letter">${sec.id}</span>${sec.title}</header><div class="rows">`;
+  const groups=[];
+  sec.rows.forEach((r,i)=>{const c=sec.id+(i+1); if(r.der&&groups.length) groups[groups.length-1].kids.push([r,c]); else groups.push({r,c,kids:[]});});
+  groups.forEach(g=>{
+    h+=`<div class="grp">`+rowHTML(g.r,g.c);
+    if(g.kids.length) h+=`<div class="kids">`+g.kids.map(([r,c])=>rowHTML(r,c,g.c)).join('')+`</div>`;
+    h+=`</div>`;
+  });
+  h+=`</div></section>`;
+});
+tb.innerHTML=h;
+const b=document.getElementById('bHide'),quiz=document.getElementById('quiz'),qrows=document.getElementById('qrows');
+const all=[];data.forEach(sec=>sec.rows.forEach(r=>all.push(r)));
+const upd=()=>{const n=qrows.querySelectorAll('.qc.show').length,t=all.length;
+  document.getElementById('qcount').textContent=`${n} / ${t} révélées`;document.getElementById('qbar').style.width=(100*n/t)+'%';};
+const shuffle=()=>{
+  const a=all.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  qrows.innerHTML=a.map((r,i)=>`<div class="qc${r.st?' star':''}" tabindex="0">
+    <div class="qd"><span class="qn">${i+1}</span>${r.st?`<span class="qs">${'★'.repeat(r.st)}</span>`:''}<span class="qq">${r.q}</span></div>
+    <div class="qf"><div class="qans"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div><span class="qhint">👁 Révéler</span></div></div>`).join('');
+  upd();
+};
+document.getElementById('bShuffle').onclick=()=>{shuffle();window.scrollTo({top:0});};
+document.getElementById('bReset').onclick=()=>{qrows.querySelectorAll('.qc.show').forEach(c=>c.classList.remove('show'));upd();};
+b.onclick=()=>{
+  const on=document.body.classList.toggle('hide');b.setAttribute('aria-pressed',on);
+  b.textContent=on?'↩ Revenir à la page de référence':'🙈 Cacher les formules';
+  if(on)shuffle();
+  quiz.hidden=!on;tb.hidden=on;document.querySelector('.cols').hidden=on;
+  window.scrollTo({top:0});
+};
+const flip=e=>{const t=e.target.closest('.qc');if(t){t.classList.toggle('show');upd();}};
+qrows.addEventListener('click',flip);
+qrows.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip(e);}});
+</script>
+</body>
+</html>

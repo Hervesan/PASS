@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules — pH et équilibre acido-basique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#ffffff; --ink:#1d2330; --muted:#5b6474; --line:#e3e6ec;
+  --star:#e8a900; --starbg:#fff6d6; --fbg:#f4f6fb; --ded:#3f9a6a; --dedbg:#eef6f1;
+  --A:#2f86a8; --B:#d0632e; --C:#c9971c; --D:#6f5aa8; --E:#a64b4b; --F:#b0527f;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.4}
+.wrap{max-width:860px;margin:0 auto;padding:18px 14px 40px}
+h1{font-size:1.6rem;font-weight:800;margin:0}
+.sub{color:var(--muted);font-size:.9rem;margin:2px 0 0}
+.s{color:var(--star);letter-spacing:1px;white-space:nowrap}
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 0;margin:12px 0 4px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.toolbar button{font:inherit;font-size:.88rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 11px;border-radius:999px;cursor:pointer}
+.toolbar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.toolbar button:focus-visible,.card:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.count{margin-left:auto;color:var(--muted);font-size:.82rem}
+section{margin-top:22px}
+h2{font-size:1rem;margin:0 0 8px;padding:6px 12px;color:#fff;border-radius:6px}
+.card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:stretch;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.def{padding:10px 12px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.def .top{display:flex;gap:8px;align-items:baseline;font-size:.8rem;font-weight:800}
+.def .q{font-weight:700;font-size:1rem}
+.def .d{color:var(--muted);font-size:.86rem}
+.fm{background:var(--fbg);border-left:5px solid var(--sec);padding:12px 14px;display:flex;flex-direction:column;justify-content:center}
+.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.35rem;line-height:1.25}
+.f sub{font-size:.62em}
+.u{margin-top:6px;font-size:.9rem;font-weight:600;color:var(--ink)}
+.u b{color:var(--sec)}
+.card.starred .def{background:linear-gradient(90deg,var(--starbg),transparent 70%)}
+.card.derived{border-style:dashed}
+.card.derived .fm{border-left-color:var(--ded)}
+.card.derived .top .tag{color:var(--ded)}
+#A{--sec:var(--A)} #B{--sec:var(--B)} #C{--sec:var(--C)} #D{--sec:var(--D)} #E{--sec:var(--E)} #F{--sec:var(--F)}
+#A h2{background:var(--A)} #B h2{background:var(--B)} #C h2{background:var(--C)} #D h2{background:var(--D)} #E h2{background:var(--E)} #F h2{background:var(--F)}
+section .top .code{color:var(--sec)}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+body.hide .card{cursor:pointer}
+body.stars .card:not(.starred){display:none}
+body.base .card.derived{display:none}
+.hint{display:none;color:var(--muted);font-size:.85rem;margin:6px 0 0}
+body.hide .hint{display:block}
+@media (max-width:600px){
+  .card{grid-template-columns:1fr}
+  .fm{border-left:0;border-top:4px solid var(--sec)}
+  .card.derived .fm{border-top-color:var(--ded)}
+}
+@media (prefers-reduced-motion:no-preference){.f,.u{transition:filter .2s}}
+@media print{.toolbar,.hint{display:none}body.hide .fm .f,body.hide .fm .u{filter:none}.card{break-inside:avoid}}
+
+/* Cartes plus isolées */
+section{margin-top:34px}
+h2{margin-bottom:14px}
+.card{margin-bottom:18px;border:1.5px solid var(--line);border-radius:12px;box-shadow:0 2px 0 var(--line),0 6px 14px -8px rgba(29,35,48,.25)}
+.def{padding:14px 16px}
+.fm{padding:16px 18px}
+.card.derived{border-width:1.5px}
+@media (max-width:600px){.card{margin-bottom:16px}}
+
+/* Couple définition/formule plus serré, séparation légère */
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.def{padding:14px 12px 14px 16px}
+.fm{padding:14px 16px 14px 14px}
+.card{margin-bottom:28px}
+section{margin-top:40px}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px dashed var(--line)!important}
+  .def{padding:14px 16px 8px}
+  .fm{padding:10px 16px 14px}
+  .card{margin-bottom:26px}
+}
+
+.wrap{max-width:980px}
+.legend{margin-top:6px;font-size:.88rem;color:var(--muted)}
+.chain{margin:14px 0 4px;padding:12px 14px;border-left:4px solid var(--star);background:var(--starbg);border-radius:0 8px 8px 0;font-size:.95rem}
+.mnemo{margin:12px 0 4px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:.92rem}
+.mnemo strong{display:block;margin-bottom:6px}
+.mnemo ul{margin:0;padding-left:18px;columns:2;column-gap:28px}
+.mnemo li{margin-bottom:4px;break-inside:avoid}
+.chain .f,.mnemo .f{font-size:1rem}
+.card{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
+.x{grid-column:1 / -1;border-top:1px dashed var(--line);padding:12px 16px 14px;font-size:.9rem;color:var(--muted)}
+.x p{margin:0 0 5px}
+.x b,.x .tip,.x .trap{color:var(--ink)}
+.tip,.trap{display:block;margin-top:5px}
+.tip::before{content:"💡 "}
+.trap::before{content:"⚠️ "}
+.ded{margin-top:8px;padding:8px 10px;background:var(--dedbg);border-left:3px solid var(--ded);border-radius:0 6px 6px 0;font-size:.86rem;color:var(--ink)}
+.ded strong{display:block;margin-bottom:3px}
+.ded ol{margin:0;padding-left:20px}
+.from{display:block;margin-top:4px;font-size:.84rem;color:var(--ded);font-weight:600}
+.gives{display:block;margin-top:8px;font-size:.86rem;color:var(--ded);font-weight:600}
+.chip{display:inline-block;text-decoration:none;font-size:.78rem;font-weight:700;border:1px solid var(--line);border-radius:5px;padding:0 5px;background:var(--bg);color:var(--ink)}
+.card{scroll-margin-top:70px}
+.card:target{box-shadow:0 0 0 3px var(--star)}
+/* mode test : seul le titre reste visible */
+body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:blur(8px);user-select:none}
+body.hide .card.show .def .d,body.hide .card.show .def .from,body.hide .card.show .fm,body.hide .card.show .x{filter:none;user-select:auto}
+@media (max-width:600px){.mnemo ul{columns:1}.x{padding:10px 16px 14px}}
+@media print{body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:none}}
+
+/* Traits pleins fins à l'intérieur, cadre plus marqué */
+:root{--frame:#b9c0cc}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--frame:#4a5263}}
+:root[data-theme="dark"]{--frame:#4a5263}
+.card{border:2px solid var(--frame)!important}
+.card.derived{border:2px solid var(--ded)!important}
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.x{border-top:1px solid var(--line)!important}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px solid var(--line)!important}
+}
+
+/* Traits intérieurs un peu plus épais */
+.fm,.card.derived .fm{border-left:1.5px solid var(--frame)!important;border-top:0!important}
+.x{border-top:1.5px solid var(--frame)!important}
+@media (max-width:600px){.fm,.card.derived .fm{border-left:0!important;border-top:1.5px solid var(--frame)!important}}
+
+/* Cadre d'épaisseur identique sur les 4 côtés */
+.card{box-shadow:0 6px 14px -10px rgba(29,35,48,.28)!important}
+
+/* Mobile : carte empilée comme la page épurée (évite le trait doublé en haut de la formule) */
+@media (max-width:600px){.card{grid-template-columns:1fr!important}}
+
+/* Fractions : numérateur au-dessus du dénominateur */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor;padding-bottom:.08em}
+.frac>span:last-child{padding-top:.08em}
+
+/* Arbre : formule de base → formules déduites (comme la page arbre) */
+.grp{margin-bottom:28px}
+.grp .card{margin-bottom:0}
+.tree{list-style:none;margin:0 0 0 26px;padding:0}
+.tree > li{position:relative;padding:12px 0 0 30px}
+.tree > li::before{content:"";position:absolute;left:0;top:0;bottom:0;border-left:2px solid var(--ded)}
+.tree > li:last-child::before{bottom:auto;height:36px}
+.tree > li::after{content:"";position:absolute;left:0;top:36px;width:24px;border-top:2px solid var(--ded)}
+.tree .card{box-shadow:none!important}
+.tree .card .f{font-size:1.18rem}
+body.stars .grp:not(.gstar){display:none}
+body.stars .tree{display:none}
+body.base .tree{display:none}
+@media (max-width:600px){
+  .tree{margin-left:12px}
+  .tree > li{padding-left:22px}
+  .tree > li::after{width:18px}
+}
+
+/* Singe = bascule vers la vue épurée floutée (définition → formule) */
+body.hide .x,body.hide .chain,body.hide .mnemo,body.hide .legend,body.hide .from{display:none}
+body.hide .def .d{filter:none!important;user-select:auto}
+body.hide .fm{filter:none!important}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+@media (prefers-reduced-motion:no-preference){.fm .f,.fm .u{transition:filter .2s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>pH et équilibre acido-basique : les formules</h1>
+<p class="sub">M2 · Biophysique du milieu intérieur · formules expliquées</p>
+<div class="legend"><span class="s">★</span> = tombée au concours, d'après la fiche de cours · <span class="s">★★★</span> = la plus fréquente · <span style="color:var(--ded);font-weight:700">🔁</span> = formule déduite d'une autre (cadre vert)</div>
+<div class="toolbar" role="toolbar" aria-label="Options">
+  <a href="formules-ph.html" style="font-size:.88rem;font-weight:600;text-decoration:none;color:var(--ink);border:1.5px solid var(--line);padding:6px 11px;border-radius:999px">← Tableau des formules</a>
+  <button id="bHide" aria-pressed="false">🙈 Réviser (vue épurée)</button>
+  <button id="bStars" aria-pressed="false"><span class="s">★</span> Concours</button>
+  <button id="bBase" aria-pressed="false">Sans les déduites</button>
+  <span class="count" id="count"></span>
+</div>
+<p class="hint">Vue épurée : touche une carte pour révéler la formule. Retouche 🙈 pour revenir aux explications.</p>
+<div class="chain">Le fil qui relie tout : <span class='f'>pH = −log[H<sub>3</sub>O⁺]</span> → <span class='f'>K<sub>a</sub> / pK<sub>a</sub></span> → tampon <span class='f'>pH = pK<sub>a</sub> + log <span class='frac'><span>[A⁻]</span><span>[AH]</span></span></span> → sang <span class='f'>pH = pK + log <span class='frac'><span>[HCO₃⁻]</span><span>0,03 × P<sub>CO₂</sub></span></span></span>.</div>
+
+<div class="mnemo">
+  <strong>Moyens mnémotechniques</strong>
+  <ul>
+    <li><b>K<sub>e</sub> = 10⁻¹⁴</b> → pH + pOH = 14 → eau pure à 25 °C : 10⁻⁷ mol/L.</li>
+    <li>Acide fort : <b>−log c</b> ; base forte : <b>14 + log c</b> (effet miroir).</li>
+    <li>Acide faible : <b>½(pK<sub>a</sub> − log c)</b> ; base faible : <b>7 + ½(pK<sub>a</sub> + log c)</b> (signe inversé et + 7).</li>
+    <li><b>En dessous</b> du pK<sub>a</sub>, c'est l'<b>acide</b> AH qui domine.</li>
+    <li>Tampon : la <b>base</b> en haut, l'<b>acide</b> en bas : log [A⁻]/[AH].</li>
+    <li><b>Demi</b>-équivalence = <b>moitié</b> transformée = pH = pK<sub>a</sub>.</li>
+    <li>Sang : pH <b>7,35-7,45</b> et P<sub>CO₂</sub> <b>35-45</b> mmHg : mêmes chiffres 35/45 !</li>
+    <li>Respiratoire = CO₂ = <b>poumons</b> ; métabolique = HCO₃⁻ = <b>reins</b> ; la compensation vient toujours de l'<b>autre</b> organe.</li>
+    <li>Hypo<b>ventilation</b> → CO₂ retenu → P<sub>CO₂</sub> ↑ → pH ↓.</li>
+  </ul>
+</div>
+
+<main id="main"></main>
+<footer style="margin-top:30px;color:var(--muted);font-size:.8rem;text-align:center">Source : fiche de cours Médisup Tours/Orléans 2026-2027 (actualisation).</footer>
+</div>
+<script>
+const S = n => n ? '<span class="s">' + '★'.repeat(n) + '</span>' : '';
+const H = steps => `<div class="ded"><strong>🔁 Comment la retrouver</strong><ol>${steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>`;
+const data = [
+ {
+  "id": "A",
+  "title": "L'eau et le pH",
+  "pages": "p.2-3",
+  "rows": [
+   {
+    "k": "vit",
+    "st": 0,
+    "q": "Vitesses de dissociation et de recombinaison de l'eau",
+    "d": "Théorie : H<sub>2</sub>O ⇄ H⁺ + OH⁻",
+    "f": "v<sub>1</sub> = k<sub>1</sub>.[H<sub>2</sub>O]<br>v<sub>2</sub> = k<sub>2</sub>.[H⁺].[OH⁻]",
+    "u": "À l'équilibre : <b>v<sub>1</sub> = v<sub>2</sub></b>",
+    "x": "<p>L'eau se dissocie (v₁, proportionnelle à [H₂O]) et les ions se recombinent (v₂, proportionnelle au produit [H⁺].[OH⁻]). À l'équilibre, les deux vitesses sont égales.</p>"
+   },
+   {
+    "k": "K",
+    "der": [
+     "vit"
+    ],
+    "q": "Loi d'action de masse de l'eau",
+    "d": "",
+    "f": "K = <span class='frac'><span>k₁</span><span>k₂</span></span> = <span class='frac'><span>[H⁺].[OH⁻]</span><span>[H<sub>2</sub>O]</span></span> = constante",
+    "u": "",
+    "x": "<p>Le rapport des deux constantes de vitesse donne une constante d'équilibre qui relie les concentrations des ions à celle de l'eau.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de v₁ = v₂ à l'équilibre.</li><li>Remplace : k₁.[H₂O] = k₂.[H⁺].[OH⁻].</li><li>Divise par k₂.[H₂O] : k₁/k₂ = [H⁺].[OH⁻]/[H₂O].</li></ol></div>"
+   },
+   {
+    "k": "ke",
+    "st": 1,
+    "q": "Produit ionique de l'eau",
+    "d": "Autoprotolyse de l'eau",
+    "f": "K<sub>e</sub> = [H<sub>3</sub>O⁺].[OH⁻] = 10⁻¹⁴",
+    "u": "Réalité : 2H₂O ⇄ H₃O⁺ + OH⁻ · l'équilibre <b>dépend de la température</b>",
+    "x": "<p>En réalité le proton se fixe sur une molécule d'eau (ion oxonium H₃O⁺). Le produit des deux concentrations d'ions reste constant : <b>10⁻¹⁴</b>.</p><span class='trap'>Cette valeur est donnée pour 25 °C : l'équilibre dépend de la température.</span>"
+   },
+   {
+    "k": "neutre",
+    "der": [
+     "ke"
+    ],
+    "q": "Eau pure à 25 °C",
+    "d": "",
+    "f": "[H<sub>3</sub>O⁺] = [OH⁻] = 10⁻⁷ mol/L",
+    "u": "",
+    "x": "<p>Dans l'eau pure, chaque H₃O⁺ formé s'accompagne d'un OH⁻ : les deux concentrations sont égales.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Dans l'eau pure, [H₃O⁺] = [OH⁻].</li><li>Donc [H₃O⁺]² = 10⁻¹⁴.</li><li>D'où [H₃O⁺] = 10⁻⁷ mol/L.</li></ol></div>"
+   },
+   {
+    "k": "poh",
+    "der": [
+     "ke"
+    ],
+    "q": "pH et pOH",
+    "d": "",
+    "f": "pH + pOH = 14",
+    "u": "",
+    "x": "<p>Écrit en logarithmes, le produit ionique devient une <b>somme</b> : connaître le pH donne le pOH, et inversement.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de [H₃O⁺].[OH⁻] = 10⁻¹⁴.</li><li>Prends −log des deux côtés : −log[H₃O⁺] − log[OH⁻] = 14.</li><li>Avec pH = −log[H₃O⁺] et pOH = −log[OH⁻] (même écriture).</li></ol></div>"
+   },
+   {
+    "k": "act",
+    "st": 0,
+    "q": "Activité d'un soluté",
+    "d": "« Fraction effective » = « molarité apparente » du soluté",
+    "f": "a = γ.<span class='frac'><span>C<sub>i</sub></span><span>C<sub>0</sub></span></span>",
+    "u": "γ = coefficient d'activité · <b>C<sub>0</sub> = 1 mol/L</b> (référence) · C<sub>i</sub> = concentration du soluté",
+    "x": "<p>En solution réelle, les ions interagissent entre eux : ils ne « voient » pas tout leur environnement chimique et leur potentiel chimique baisse. L'activité corrige la concentration par γ.</p>"
+   },
+   {
+    "k": "phact",
+    "st": 0,
+    "q": "pH en solution réelle",
+    "d": "",
+    "f": "pH = −log(H<sub>3</sub>O⁺)",
+    "u": "(H<sub>3</sub>O⁺) = <b>activité</b> des ions H<sub>3</sub>O⁺",
+    "x": "<p>La vraie définition du pH utilise l'<b>activité</b> (notée entre parenthèses), pas la concentration.</p><span class='trap'>Parenthèses ( ) = activité ; crochets [ ] = concentration.</span>"
+   },
+   {
+    "k": "phdil",
+    "der": [
+     "phact",
+     "act"
+    ],
+    "q": "pH en solution diluée",
+    "d": "",
+    "f": "pH = −log[H<sub>3</sub>O⁺]",
+    "u": "Condition : [H<sub>3</sub>O⁺] &lt; 10⁻² mol/L",
+    "x": "<p>En solution diluée, les interactions soluté-soluté sont faibles : γ ≈ 1 et l'activité se confond avec la concentration molaire.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de pH = −log(H₃O⁺) avec a = γ.C/C₀.</li><li>Solution diluée : γ ≈ 1, et C₀ = 1 mol/L.</li><li>Donc activité ≈ concentration : pH = −log[H₃O⁺].</li></ol></div>"
+   },
+   {
+    "k": "h10",
+    "st": 1,
+    "q": "Concentration en H<sub>3</sub>O⁺ à partir du pH",
+    "d": "",
+    "f": "[H<sub>3</sub>O⁺] = 10<sup>−pH</sup>",
+    "u": "",
+    "x": "<p>C'est la même relation que pH = −log[H₃O⁺], lue dans l'autre sens.</p><span class='tip'>pH 3 → [H₃O⁺] = 10⁻³ mol/L : le pH est l'exposant changé de signe.</span>"
+   },
+   {
+    "k": "acid",
+    "st": 0,
+    "q": "Classer une solution selon son pH",
+    "d": "",
+    "f": "pH &lt; 7 : acide<br>pH = 7 : neutre<br>pH &gt; 7 : basique",
+    "u": "Acide : [H<sub>3</sub>O⁺] &gt; [OH⁻] · neutre : [H<sub>3</sub>O⁺] = [OH⁻] · basique : [H<sub>3</sub>O⁺] &lt; [OH⁻]",
+    "x": "<p>L'acidité se mesure par [H₃O⁺], donc par le pH. Une solution est acide quand les H₃O⁺ l'emportent sur les OH⁻.</p><span class='trap'>Le seuil 7 correspond à l'eau pure à 25 °C (@neutre).</span>"
+   }
+  ]
+ },
+ {
+  "id": "B",
+  "title": "Dissociation et couples acide/base",
+  "pages": "p.3-6",
+  "rows": [
+   {
+    "k": "alpha",
+    "st": 0,
+    "q": "Coefficient de dissociation α",
+    "d": "",
+    "f": "α = <span class='frac'><span>nombre de molécules dissociées</span><span>nombre total de molécules</span></span>",
+    "u": "Électrolyte fort : <b>α = 1</b> · électrolyte faible : <b>α &lt; 1</b>",
+    "x": "<p>α mesure la force de l'électrolyte. HCl se dissocie totalement (α = 1) ; CH₃COOH seulement en partie (α &lt; 1).</p><span class='tip'><b>Loi de dilution d'Ostwald</b> : plus on dilue, plus un électrolyte faible se dissocie (ions éloignés, liaison covalente moins probable).</span>"
+   },
+   {
+    "k": "conc",
+    "der": [
+     "alpha"
+    ],
+    "q": "Concentrations finales d'un électrolyte faible AH",
+    "d": "",
+    "f": "[AH] = C(1 − α)<br>[A⁻] = [H⁺] = C.α",
+    "u": "AH ⇄ A⁻ + H⁺ · concentration initiale C",
+    "x": "<p>Une fraction α des molécules se coupe : elle donne autant de A⁻ que de H⁺ ; le reste (1 − α) reste sous forme AH.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Au départ : [AH] = C, [A⁻] = [H⁺] = 0.</li><li>La fraction α se dissocie : C.α de A⁻ et C.α de H⁺.</li><li>Il reste C − C.α = C(1 − α) de AH.</li></ol></div>"
+   },
+   {
+    "k": "ka",
+    "st": 1,
+    "q": "Constante d'acidité",
+    "d": "Réaction AH + H<sub>2</sub>O ⇄ A⁻ + H<sub>3</sub>O⁺",
+    "f": "K<sub>a</sub> = <span class='frac'><span>[H<sub>3</sub>O⁺].[A⁻]</span><span>[HA]</span></span>",
+    "u": "Dépend de la température",
+    "x": "<p>Constante d'équilibre de la dissociation d'un acide dans l'eau : plus Ka est grand, plus l'acide cède facilement son H⁺.</p>"
+   },
+   {
+    "k": "pka",
+    "st": 0,
+    "q": "pK<sub>a</sub>",
+    "d": "",
+    "f": "pK<sub>a</sub> = −log K<sub>a</sub>",
+    "u": "Mesure la <b>force</b> d'un couple acide/base",
+    "x": "<p>Même logique que le pH : on passe en logarithme. Un Ka grand donne un pKa petit.</p><span class='trap'>Plus le pKa est <b>petit</b>, plus l'acide est <b>fort</b>.</span>"
+   },
+   {
+    "k": "kapka",
+    "der": [
+     "pka"
+    ],
+    "q": "K<sub>a</sub> à partir du pK<sub>a</sub>",
+    "d": "",
+    "f": "K<sub>a</sub> = 10<sup>−pKa</sup>",
+    "u": "",
+    "x": "<p>Utile dans les calculs quand l'énoncé donne le pKa.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de pKa = −log Ka.</li><li>Donc log Ka = −pKa.</li><li>D'où Ka = 10^(−pKa).</li></ol></div>"
+   },
+   {
+    "k": "force",
+    "st": 1,
+    "q": "Force d'un couple selon son pK<sub>a</sub>",
+    "d": "",
+    "f": "pK<sub>a</sub> &lt; 0 : acide fort<br>0 &lt; pK<sub>a</sub> &lt; 14 : acide faible<br>pK<sub>a</sub> &gt; 14 : acide très faible",
+    "u": "Base conjuguée : très faible / faible / forte",
+    "x": "<p>Le pKa situe le couple : plus l'acide est fort, plus sa base conjuguée est faible, et inversement.</p><span class='tip'>★ tombé : pKa &lt; 0 → acide fort et base conjuguée très faible.</span>"
+   },
+   {
+    "k": "kb",
+    "st": 0,
+    "q": "Constante de basicité",
+    "d": "Réaction B⁻ + H<sub>2</sub>O ⇄ BH + OH⁻",
+    "f": "K<sub>b</sub> = <span class='frac'><span>[OH⁻].[BH]</span><span>[B⁻]</span></span>",
+    "u": "",
+    "x": "<p>Même idée que Ka, pour une base qui capte un H⁺ de l'eau et libère un OH⁻.</p>"
+   },
+   {
+    "k": "kakb",
+    "der": [
+     "kb",
+     "ka",
+     "ke"
+    ],
+    "q": "Lien K<sub>a</sub> / K<sub>b</sub> d'un couple conjugué",
+    "d": "",
+    "f": "K<sub>a</sub>.K<sub>b</sub> = K<sub>e</sub>",
+    "u": "",
+    "x": "<p>Pour un couple acide/base conjugué, Ka et Kb ne sont pas indépendants : leur produit vaut le produit ionique de l'eau.</p><span class='trap'>La fiche dit que Kb est « l'inverse » de Ka : il faut comprendre Kb = Ke/Ka, pas Kb = 1/Ka.</span><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Multiplie Ka = [H₃O⁺].[A⁻]/[HA] par Kb = [OH⁻].[HA]/[A⁻] (B⁻ = A⁻, BH = HA).</li><li>[A⁻] et [HA] se simplifient.</li><li>Il reste [H₃O⁺].[OH⁻] = Ke.</li></ol></div>"
+   },
+   {
+    "k": "kbke",
+    "der": [
+     "kakb",
+     "ke"
+    ],
+    "q": "K<sub>b</sub> à partir de K<sub>a</sub>",
+    "d": "",
+    "f": "K<sub>b</sub> = <span class='frac'><span>K<sub>e</sub></span><span>K<sub>a</sub></span></span> = <span class='frac'><span>10⁻¹⁴</span><span>K<sub>a</sub></span></span>",
+    "u": "",
+    "x": "<p>Pratique pour passer d'une constante à l'autre.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de Ka.Kb = Ke.</li><li>Divise par Ka.</li><li>Remplace Ke par 10⁻¹⁴.</li></ol></div>"
+   }
+  ]
+ },
+ {
+  "id": "C",
+  "title": "pH des solutions d'acides et de bases",
+  "pages": "p.5-6",
+  "rows": [
+   {
+    "k": "fort",
+    "st": 0,
+    "q": "pH d'un acide fort (solution suffisamment concentrée)",
+    "d": "Concentration C (mol/L)",
+    "f": "pH = −log c",
+    "u": "Condition : 10⁻⁵ M &lt; [H⁺]<sub>acide</sub> &lt; 10⁻² M",
+    "x": "<p>L'acide fort est entièrement dissocié : [H⁺]acide ≈ C, et les H⁺ venant de l'eau sont négligeables.</p>"
+   },
+   {
+    "k": "diac",
+    "der": [
+     "fort"
+    ],
+    "q": "pH d'un diacide fort",
+    "d": "",
+    "f": "pH = −log 2c",
+    "u": "Condition : 10⁻⁵ M &lt; [H⁺]<sub>acide</sub> &lt; 10⁻² M",
+    "x": "<p>Un diacide fort libère <b>deux</b> H⁺ par molécule.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Chaque molécule libère 2 H⁺ : [H⁺] = 2c.</li><li>Remplace c par 2c dans pH = −log c.</li></ol></div>"
+   },
+   {
+    "k": "fortdil",
+    "st": 0,
+    "q": "pH d'un acide fort (solution diluée)",
+    "d": "",
+    "f": "pH = −log([H⁺]<sub>acide</sub> + [H⁺]<sub>eau</sub>)",
+    "u": "Si [H⁺]<sub>acide</sub> &lt; 10⁻⁵ M",
+    "x": "<p>Quand l'acide est très dilué, les H⁺ apportés par l'eau ne sont plus négligeables : on additionne les deux sources.</p>"
+   },
+   {
+    "k": "faible",
+    "st": 1,
+    "q": "pH d'un acide faible",
+    "d": "",
+    "f": "pH = <span class='frac'><span>1</span><span>2</span></span>(pK<sub>a</sub> − log c)",
+    "u": "Condition : 10⁻⁵ M &lt; [H⁺]<sub>acide</sub> &lt; 10⁻² M",
+    "x": "<p>Solution suffisamment concentrée : [H⁺]eau négligeable. Sinon, la dissociation de l'acide <b>et</b> de l'eau doivent être prises en compte.</p><span class='trap'>Moitié de (pKa <b>moins</b> log c).</span>"
+   },
+   {
+    "k": "bforte",
+    "st": 0,
+    "q": "pH d'une base forte",
+    "d": "",
+    "f": "pH = 14 + log c",
+    "u": "Condition : 10⁻⁵ M &lt; [OH⁻]<sub>base</sub> &lt; 10⁻² M",
+    "x": "<p>Sinon ([OH⁻]base &lt; 10⁻⁵ M), la protonation de la base et la dissociation de l'eau doivent être prises en compte.</p><span class='tip'>Miroir de l'acide fort : −log c devient 14 + log c.</span>"
+   },
+   {
+    "k": "bfaible",
+    "st": 0,
+    "q": "pH d'une base faible",
+    "d": "",
+    "f": "pH = 7 + <span class='frac'><span>1</span><span>2</span></span>(pK<sub>a</sub> + log c)",
+    "u": "Condition : 10⁻⁵ M &lt; [OH⁻]<sub>base</sub> &lt; 10⁻² M",
+    "x": "<p>Même forme que l'acide faible, mais avec <b>+ 7</b> devant et un <b>+</b> devant log c.</p><span class='trap'>Le pKa utilisé est celui du couple acide/base.</span>"
+   }
+  ]
+ },
+ {
+  "id": "D",
+  "title": "Domaines de prédominance",
+  "pages": "p.6-7",
+  "rows": [
+   {
+    "k": "pred",
+    "st": 1,
+    "q": "Espèce prédominante d'un monoacide faible AH",
+    "d": "",
+    "f": "pH &lt; pK<sub>a</sub> : AH<br>pH = pK<sub>a</sub> : [A⁻] = [AH]<br>pH &gt; pK<sub>a</sub> : A⁻",
+    "u": "",
+    "x": "<p>On compare le pH au pKa : en milieu plus acide que le pKa, la forme acide garde son H⁺ ; en milieu plus basique, elle l'a perdu.</p><span class='tip'>En dessous du pKa → l'Acide domine.</span>"
+   },
+   {
+    "k": "ind",
+    "der": [
+     "pred"
+    ],
+    "q": "Teinte sensible d'un indicateur coloré",
+    "d": "",
+    "f": "pH = pK<sub>a</sub> → [acide] = [base] → couleur mélangée",
+    "u": "",
+    "x": "<p>Un indicateur coloré est un couple acide/base dont les deux formes ont des couleurs différentes.</p><span class='tip'>Vert de bromocrésol : base bleue + acide jaune = <b>vert</b> à pH = pKa.</span><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>À pH = pKa, [A⁻] = [AH] (@pred).</li><li>Les deux formes sont présentes à parts égales.</li><li>La couleur est le mélange des deux.</li></ol></div>"
+   },
+   {
+    "k": "diacpred",
+    "st": 0,
+    "q": "Espèces prédominantes d'un diacide faible AH₂",
+    "d": "",
+    "f": "pH &lt; pK<sub>a</sub>₁ : AH₂<br>pK<sub>a</sub>₁ &lt; pH &lt; pK<sub>a</sub>₂ : AH⁻<br>pH &gt; pK<sub>a</sub>₂ : A²⁻",
+    "u": "pH = pK<sub>a</sub>₁ : [AH₂] = [AH⁻] · pH = pK<sub>a</sub>₂ : [AH⁻] = [A²⁻]",
+    "x": "<p>Un polyacide a plusieurs pKa, un par H⁺ cédé. Exemple : H₂CO₃ ⇄ H⁺ + HCO₃⁻ ⇄ H⁺ + CO₃²⁻ (pKa₁ puis pKa₂).</p>"
+   },
+   {
+    "k": "aa",
+    "der": [
+     "diacpred"
+    ],
+    "q": "Forme prédominante d'un acide aminé selon le pH",
+    "d": "",
+    "f": "pH &lt; pK<sub>a</sub>₁ : ⁺H₃N-CH(R)-COOH<br>pK<sub>a</sub>₁ &lt; pH &lt; pK<sub>a</sub>₂ : ⁺H₃N-CH(R)-COO⁻<br>pH &gt; pK<sub>a</sub>₂ : H₂N-CH(R)-COO⁻",
+    "u": "",
+    "x": "<p>Un acide aminé porte deux fonctions acido-basiques : il se comporte comme un diacide et libère ses H⁺ progressivement quand le pH monte.</p><span class='trap'>Incohérence de la fiche : elle attribue pKa₁ à la fonction amine et pKa₂ à COOH, mais le tableau de prédominance montre que c'est <b>COOH qui perd son H⁺ en premier</b> (à pKa₁). Fie-toi à la séquence des formes.</span><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Deux fonctions acido-basiques = deux pKa, comme un diacide.</li><li>Sous pKa₁ : forme la plus protonée (⁺H₃N…COOH).</li><li>Au-dessus de pKa₂ : forme la plus déprotonée (H₂N…COO⁻).</li></ol></div>"
+   }
+  ]
+ },
+ {
+  "id": "E",
+  "title": "Solutions tampons et dosage",
+  "pages": "p.8-9",
+  "rows": [
+   {
+    "k": "hh",
+    "st": 1,
+    "q": "pH d'une solution tampon",
+    "d": "Mélange d'un acide faible AH et de sa base conjuguée A⁻ en proportions proches",
+    "f": "pH = pK<sub>a</sub> + log <span class='frac'><span>[A⁻]</span><span>[AH]</span></span>",
+    "u": "",
+    "x": "<p>Le pH varie peu lors de l'ajout de petites quantités d'acide ou de base : A⁻ « absorbe » les H₃O⁺ (→ AH), AH « absorbe » les OH⁻ (→ A⁻). Il varie peu aussi lors d'une dilution : le rapport [A⁻]/[AH] ne change pas.</p><span class='tip'>La base en haut, l'acide en bas.</span><span class='trap'>Le pouvoir tampon diminue quand on dilue, mais la zone tampon n'est pas modifiée.</span>"
+   },
+   {
+    "k": "hheq",
+    "der": [
+     "hh"
+    ],
+    "q": "Mélange équimoléculaire",
+    "d": "",
+    "f": "[AH] = [A⁻] → pH = pK<sub>a</sub>",
+    "u": "Pouvoir tampon <b>maximal</b>",
+    "x": "<p>Le pouvoir tampon (capacité à maintenir le pH constant) est maximal quand acide et base sont en quantités égales ; il augmente avec la quantité globale de tampon.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de pH = pKa + log([A⁻]/[AH]).</li><li>Si [A⁻] = [AH], le rapport vaut 1.</li><li>log 1 = 0, donc pH = pKa.</li></ol></div>"
+   },
+   {
+    "k": "xav",
+    "st": 0,
+    "q": "Avancement du dosage d'un acide faible par une base forte",
+    "d": "Réaction AH + HO⁻ → H₂O + A⁻",
+    "f": "x = <span class='frac'><span>n<sub>OH⁻ versé</sub></span><span>n<sub>AH initial</sub></span></span>",
+    "u": "",
+    "x": "<p>x compare la quantité de base versée à la quantité d'acide de départ : c'est une façon de fabriquer une solution tampon.</p>"
+   },
+   {
+    "k": "demi",
+    "der": [
+     "xav",
+     "hh"
+    ],
+    "q": "Demi-équivalence",
+    "d": "",
+    "f": "x = 0,5 → [AH] = [A⁻] → pH = pK<sub>a</sub>",
+    "u": "Pouvoir tampon maximal · zone tampon autour de x = 0,5",
+    "x": "<p>Sur la courbe de dosage, c'est le point d'inflexion du plateau : le pH y varie le moins.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>x = 0,5 : 50 % de AH a été transformé en A⁻.</li><li>Donc [AH] = [A⁻].</li><li>Dans pH = pKa + log([A⁻]/[AH]) : pH = pKa.</li></ol></div>"
+   },
+   {
+    "k": "equiv",
+    "der": [
+     "xav"
+    ],
+    "q": "Équivalence",
+    "d": "",
+    "f": "x = 1",
+    "u": "Tout l'acide AH a été consommé",
+    "x": "<p>Après l'équivalence, A⁻ domine et le pH monte brusquement.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>À l'équivalence, n(OH⁻ versé) = n(AH initial).</li><li>Le rapport vaut 1 : x = 1.</li></ol></div>"
+   }
+  ]
+ },
+ {
+  "id": "F",
+  "title": "Tampon bicarbonate et équilibre du sang",
+  "pages": "p.9-11",
+  "rows": [
+   {
+    "k": "henry",
+    "st": 0,
+    "q": "Loi de Henry (CO₂ dissous)",
+    "d": "",
+    "f": "[CO₂]<sub>dissous</sub> = P<sub>CO₂</sub> × s<sub>CO₂</sub>",
+    "u": "P<sub>CO₂</sub> en mmHg · <b>s<sub>CO₂</sub> = 0,03 mmol/L/mmHg</b> (plasma, 37 °C)",
+    "x": "<p>H₂CO₃ = CO₂ hydraté = CO₂ dissous. Sa concentration est proportionnelle à la pression partielle en CO₂, via le coefficient de solubilité s.</p><span class='tip'>Tampon bicarbonate = tampon <b>ouvert</b>, principal tampon extracellulaire (sang). Phosphates (intracellulaire) et protéines = tampons fermés.</span>"
+   },
+   {
+    "k": "kac",
+    "st": 0,
+    "q": "Constante d'acidité du couple CO₂ / HCO₃⁻",
+    "d": "CO₂ + H₂O ⇄ H₂CO₃ ⇄ HCO₃⁻ + H⁺",
+    "f": "K<sub>a</sub> = <span class='frac'><span>[H⁺].[HCO₃⁻]</span><span>[CO₂]<sub>dissous</sub></span></span>",
+    "u": "K<sub>a</sub> = 10<sup>−6,1</sup> → <b>pK<sub>a</sub> = 6,1</b> à 37 °C",
+    "x": "<p>C'est le Ka du tampon bicarbonate, écrit avec le CO₂ dissous à la place de H₂CO₃.</p>"
+   },
+   {
+    "k": "hhs",
+    "st": 0,
+    "q": "Relation d'Henderson-Hasselbalch",
+    "d": "",
+    "f": "pH = pK + log <span class='frac'><span>[HCO₃⁻]</span><span>[CO₂]<sub>dissous</sub></span></span>",
+    "u": "",
+    "x": "<p>La formule du tampon appliquée au couple CO₂ dissous / HCO₃⁻.</p><span class='trap'>La fiche écrit « Henderson-Hasselbach » : c'est la même relation.</span>"
+   },
+   {
+    "k": "phsang",
+    "der": [
+     "hhs",
+     "henry"
+    ],
+    "q": "pH sanguin à partir de la pression partielle en CO₂",
+    "d": "",
+    "f": "pH = pK + log <span class='frac'><span>[HCO₃⁻]</span><span>0,03 × P<sub>CO₂</sub></span></span>",
+    "u": "[HCO₃⁻] en <b>mmol/L</b> · P<sub>CO₂</sub> en <b>mmHg</b>",
+    "x": "<p>La forme utilisée en exercice : il suffit de [HCO₃⁻] et de la PCO₂ (pK = 6,1).</p><span class='trap'>Respecte les unités : mmol/L et mmHg, sinon le 0,03 n'est plus valable.</span><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de pH = pK + log([HCO₃⁻]/[CO₂]dissous).</li><li>Loi de Henry : [CO₂]dissous = PCO₂ × 0,03.</li><li>Remplace au dénominateur.</li></ol></div>"
+   },
+   {
+    "k": "normes",
+    "st": 0,
+    "q": "Valeurs normales du sang artériel",
+    "d": "",
+    "f": "pH : 7,35 – 7,45<br>P<sub>CO₂</sub> : 35 – 45 mmHg<br>[HCO₃⁻] : 22 – 26 mmol/L",
+    "u": "",
+    "x": "<p>En dehors de ces limites : trouble acido-basique (variation de [H⁺] ou de [HCO₃⁻] supérieure aux capacités de l'organisme). Acidose = pH &lt; 7,35 ; alcalose = pH &gt; 7,45.</p><span class='tip'>Désordre de PCO₂ = trouble <b>respiratoire</b> (poumons) ; désordre de HCO₃⁻ = trouble <b>métabolique</b> (reins).</span>"
+   },
+   {
+    "k": "vent",
+    "st": 1,
+    "q": "Effet de la ventilation sur le pH",
+    "d": "",
+    "f": "Hyperventilation : P<sub>CO₂</sub> ↓ → pH ↑<br>Hypoventilation : P<sub>CO₂</sub> ↑ → pH ↓",
+    "u": "",
+    "x": "<p>La PCO₂ est au dénominateur de @phsang : plus il y a de CO₂, plus le pH baisse.</p><span class='tip'>★ tombé : hypoventilation → pH ↓.</span>"
+   },
+   {
+    "k": "acmet",
+    "st": 1,
+    "q": "Acidose métabolique",
+    "d": "",
+    "f": "pH &lt; 7,35 · cause : [HCO₃⁻] ↓",
+    "u": "Compensation respiratoire : <b>P<sub>CO₂</sub> ↓</b> par <b>hyperventilation</b>",
+    "x": "<p>Origines : production d'acide (ex. diabète) ou perte de bicarbonates (ex. diarrhée). Les poumons compensent vite, mais de façon limitée (la ventilation doit rester compatible avec l'oxygénation).</p>"
+   },
+   {
+    "k": "acresp",
+    "st": 2,
+    "q": "Acidose respiratoire",
+    "d": "",
+    "f": "pH &lt; 7,35 · cause : P<sub>CO₂</sub> ↑",
+    "u": "Compensation métabolique : <b>[HCO₃⁻] ↑</b> par <b>réabsorption rénale</b>",
+    "x": "<p>Origines : maladies pulmonaires (ex. pneumonie sévère). La compensation rénale est lente (heures/jours) mais importante en capacité.</p>"
+   },
+   {
+    "k": "almet",
+    "st": 0,
+    "q": "Alcalose métabolique",
+    "d": "",
+    "f": "pH &gt; 7,45 · cause : [HCO₃⁻] ↑",
+    "u": "Compensation respiratoire : P<sub>CO₂</sub> ↑ par hypoventilation",
+    "x": "<p>Origines : pertes d'acides (ex. vomissements, pertes rénales).</p>"
+   },
+   {
+    "k": "alresp",
+    "st": 0,
+    "q": "Alcalose respiratoire",
+    "d": "",
+    "f": "pH &gt; 7,45 · cause : P<sub>CO₂</sub> ↓",
+    "u": "Compensation métabolique : [HCO₃⁻] ↓ par élimination rénale",
+    "x": "<p>Origines : hypoxie (faible taux d'oxygène dans le sang), stress…</p><span class='trap'>Compensation ≠ guérison. pH redevenu normal = désordre compensé ; pH encore anormal = partiellement compensé ; pas de compensation = désordre pur.</span>"
+   }
+  ]
+ }
+];
+
+
+const code={}, gives={};
+data.forEach(sec=>sec.rows.forEach((r,i)=>{code[r.k]=sec.id+(i+1);}));
+data.forEach(sec=>sec.rows.forEach(r=>(r.der||[]).forEach(p=>{(gives[p]=gives[p]||[]).push(r.k);})));
+const chip=k=>`<a class="chip" href="#r-${code[k]}">${code[k]}</a>`;
+const refs=t=>t.replace(/@(\w+)/g,(m,k)=>code[k]?chip(k):m);
+const main=document.getElementById('main');
+let total=0,starred=0,derived=0;
+const cardHTML=(r,extra='')=>{
+  const from=r.der?`<span class="from">🔁 Déduite de ${r.der.map(chip).join(' ')}</span>`:'';
+  return `<div class="card${r.st?' starred':''}${r.der?' derived':''}" id="r-${code[r.k]}" tabindex="0">
+      <div class="def"><div class="top"><span class="code">${code[r.k]}</span>${S(r.st)}${r.der?'<span class="tag">🔁</span>':''}</div>
+      <div class="q">${r.q}</div>${r.d?`<div class="d">${r.d}</div>`:''}${from}</div>
+      <div class="fm"><span class="f">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div>
+      <div class="x">${refs(r.x)}</div></div>`;
+};
+data.forEach(sec=>{
+  let h=`<section id="${sec.id}"><h2>${sec.id} · ${sec.title} <small style="opacity:.85;font-weight:600">${sec.pages}</small></h2>`;
+  const groups=[];
+  sec.rows.forEach(r=>{ if(r.der&&groups.length) groups[groups.length-1].kids.push(r); else groups.push({r,kids:[]}); });
+  groups.forEach(({r,kids})=>{
+    total++; if(r.st)starred++;
+    h+=`<div class="grp${r.st?' gstar':''}">`+cardHTML(r);
+    if(kids.length){ h+=`<ul class="tree">`+kids.map(k=>{total++;derived++;return `<li>${cardHTML(k)}</li>`;}).join('')+`</ul>`; }
+    h+=`</div>`;
+  });
+  main.insertAdjacentHTML('beforeend',h+'</section>');
+});
+const B=document.body.classList,count=document.getElementById('count');
+const upd=()=>{count.textContent=B.contains('stars')?`${starred} ★`:B.contains('base')?`${total-derived} formules`:`${total} formules`;};
+upd();
+const tog=(id,c)=>{const b=document.getElementById(id);b.addEventListener('click',()=>{const on=B.toggle(c);b.setAttribute('aria-pressed',on);upd();if(c==='hide')document.querySelectorAll('.card.show').forEach(x=>x.classList.remove('show'));});};
+tog('bHide','hide');document.getElementById('bHide').addEventListener('click',()=>window.scrollTo({top:0}));tog('bStars','stars');tog('bBase','base');
+const flip=ev=>{if(ev.target.closest('a'))return;const c=ev.target.closest('.card');if(c&&B.contains('hide'))c.classList.toggle('show');};
+main.addEventListener('click',flip);
+main.addEventListener('keydown',ev=>{if(ev.target.classList.contains('card')&&(ev.key==='Enter'||ev.key===' ')){ev.preventDefault();flip(ev);}});
+
+</script>
+</body>
+</html>

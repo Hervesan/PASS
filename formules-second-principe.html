@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules en 2 colonnes — 2nd principe de la thermodynamique et équilibres</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff;--ink:#1d2330;--muted:#5b6474;--line:#e3e6ec;--frame:#b9c0cc;--star:#e8a900;--starbg:#fff6d6;--ded:#3f9a6a;
+--A:#2f86a8;--B:#d0632e;--C:#c9971c;--D:#6f5aa8;--E:#a64b4b}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.35}
+.wrap{max-width:820px;margin:0 auto;padding:16px 12px 40px}
+h1{font-size:1.4rem;margin:0 0 10px;font-weight:800}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:6px 0 8px;z-index:2;display:flex;gap:8px;align-items:center}
+.bar button{font:inherit;font-size:.9rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+.bar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.bar button:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.bar span{font-size:.8rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;border:2px solid var(--frame)}
+th{text-align:left;font-size:.78rem;color:var(--muted);font-weight:700;padding:6px 10px;border-bottom:2px solid var(--frame)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+td.d{width:42%;font-weight:700;font-size:.95rem;border-right:1.5px solid var(--frame)}
+td.d .s{color:var(--star);font-size:.8rem;margin-left:4px;white-space:nowrap}
+td.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.12rem}
+td.f .u{display:block;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.82rem;color:var(--muted);margin-top:2px}
+td.f .u b{color:var(--ink)}
+tr.sec td{background:var(--c);color:#fff;font-weight:800;font-size:.95rem;padding:6px 10px;border-bottom:0}
+tr.der td.d{padding-left:24px;color:var(--ded);font-weight:600;font-size:.9rem}
+tr.der td.d::before{content:"↳ ";font-weight:800}
+tr.der td.f{font-size:1rem;color:var(--ded)}
+sub{font-size:.65em}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor}
+body.hide td.f .ft,body.hide td.f .u{filter:blur(7px)}
+body.hide tr:not(.sec){cursor:pointer}
+body.hide tr.show td.f .ft,body.hide tr.show td.f .u{filter:none}
+@media (prefers-reduced-motion:no-preference){.ft,.u{transition:filter .2s}}
+@media (max-width:480px){td{padding:8px 7px}td.d{font-size:.88rem}td.f{font-size:1rem}tr.der td.d{padding-left:16px}}
+@media print{.bar{display:none}body.hide .ft,body.hide .u{filter:none}tr{break-inside:avoid}}
+
+/* ---- Mise en page soignée ---- */
+body{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0)}
+.wrap{max-width:860px;padding:22px 14px 50px}
+.top{padding:4px 2px 6px}
+.kicker{margin:0;font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--muted)}
+.top h1{font-size:1.9rem;margin:2px 0 4px;letter-spacing:-.01em}
+.meta{margin:0;font-size:.88rem;color:var(--muted)}
+.meta .s{color:var(--star)} .meta .g{color:var(--ded);font-weight:800}
+.bar{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0);padding:10px 0}
+.bar button{background:var(--bg);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.cols{display:grid;grid-template-columns:42% 58%;font-size:.72rem;font-weight:700;letter-spacing:.03em;color:var(--muted);padding:4px 16px 6px}
+.blk{background:var(--bg);border-radius:16px;margin:0 0 22px;overflow:hidden;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25);border:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.blk header{display:flex;align-items:center;gap:10px;padding:12px 16px;font-weight:800;font-size:1.02rem;color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--bg));border-bottom:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.letter{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--c);color:#fff;font-size:.95rem}
+.row{display:grid;grid-template-columns:42% 58%;align-items:stretch;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .d{padding:12px 12px 12px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.code{font-size:.72rem;font-weight:800;color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg));border-radius:5px;padding:1px 6px}
+.name{font-weight:700;font-size:.95rem;flex-basis:100%}
+.row .d .s{color:var(--star);font-size:.82rem;letter-spacing:1px}
+.row .f{padding:12px 16px;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line));display:flex;flex-direction:column;justify-content:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.2rem}
+.row .f .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px;line-height:1.3}
+.row .f .u b{color:var(--c)}
+.row.star .d{background:linear-gradient(90deg,var(--starbg),transparent 75%)}
+.row.der .d{padding-left:30px;position:relative}
+.row.der .d::before{content:"↳";position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ded);font-weight:800}
+.row.der .name{color:var(--ded);font-weight:600;font-size:.9rem}
+.row.der .code{color:var(--ded);background:color-mix(in srgb,var(--ded) 12%,var(--bg))}
+.row.der .f{font-size:1.05rem;color:var(--ded);background:color-mix(in srgb,var(--ded) 6%,var(--bg))}
+body.hide .ft,body.hide .u{filter:blur(7px);user-select:none}
+body.hide .row{cursor:pointer}
+body.hide .row.show .ft,body.hide .row.show .u{filter:none}
+.row:focus-visible{outline:3px solid var(--star);outline-offset:-3px}
+@media (max-width:480px){
+  .cols,.row{grid-template-columns:44% 56%}
+  .row .d{padding:10px 8px 10px 12px}.row .f{padding:10px 12px;font-size:1.05rem}
+  .name{font-size:.88rem}.row.der .d{padding-left:24px}.row.der .d::before{left:8px}
+  .top h1{font-size:1.6rem}
+}
+@media print{body{background:#fff}.blk{box-shadow:none;break-inside:avoid}}
+
+
+/* Option 1 : groupe encadré (formule mère + filles dans une bande verte) */
+.grp{border-top:1px solid var(--line)}
+.grp:first-child{border-top:0}
+.grp > .row{border-top:0}
+.kids{background:color-mix(in srgb,var(--ded) 13%,var(--bg));padding:8px 10px 10px;display:flex;flex-direction:column;gap:7px;border-top:1px solid color-mix(in srgb,var(--ded) 30%,var(--line))}
+.kids .row{border:1px solid color-mix(in srgb,var(--ded) 30%,var(--line));border-radius:10px;overflow:hidden;background:var(--bg);grid-template-columns:calc(42% - 4px) auto}
+.kids .row .d{padding:9px 10px}
+.kids .row .f{background:color-mix(in srgb,var(--ded) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--ded) 25%,var(--line))}
+.row.der .d{padding-left:10px}
+.row.der .d::before{content:none}
+@media (max-width:480px){.kids{padding:7px 7px 8px}.kids .row .d{padding:8px}}
+
+/* Formules déduites : mêmes couleurs que les autres (seul le regroupement les distingue) */
+.kids{background:color-mix(in srgb,var(--ink) 5%,var(--bg));border-top:1px solid var(--line)}
+.kids .row{border-color:var(--line)}
+.row.der .name{color:var(--ink);font-weight:700;font-size:.95rem}
+.row.der .code{color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg))}
+.row.der .code::before{content:none}
+.row.der .f,.kids .row .f{color:var(--ink);font-size:1.2rem;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line))}
+@media (max-width:480px){.row.der .f,.kids .row .f{font-size:1.05rem}.row.der .name{font-size:.88rem}}
+
+/* Comme la page explication : filles décalées, reliées par un trait à leur formule mère */
+.kids{background:transparent;border-top:0;padding:0 12px 14px 38px;gap:10px;position:relative}
+.kids .row{position:relative;overflow:visible;border:1.5px solid color-mix(in srgb,var(--ded) 60%,var(--line));border-radius:10px;background:var(--bg)}
+.kids .row .d{border-radius:9px 0 0 9px}
+.kids .row .f{border-radius:0 9px 9px 0}
+.kids .row::before{content:"";position:absolute;left:-24px;top:-12px;bottom:-12px;border-left:2px solid var(--ded)}
+.kids .row:first-child::before{top:-2px}
+.kids .row:last-child::before{bottom:50%}
+.kids .row::after{content:"";position:absolute;left:-24px;top:50%;width:22px;border-top:2px solid var(--ded)}
+.grp:has(.kids) > .row{border-bottom:0}
+.from{flex-basis:100%;font-size:.76rem;font-weight:700;color:var(--ded)}
+.from b{font-weight:800}
+@media (max-width:480px){
+  .kids{padding:0 8px 12px 28px}
+  .kids .row::before,.kids .row::after{left:-18px}
+  .kids .row::after{width:16px}
+}
+
+/* Colonnes alignées partout + petit espace entre formules principales + cadres déduits plus étroits */
+.blk{container-type:inline-size}
+.row{grid-template-columns:42cqw minmax(0,1fr)!important}
+.kids .row{grid-template-columns:calc(42cqw - 39.5px) minmax(0,1fr)!important}
+.cols{grid-template-columns:42% 58%}
+.rows{display:flex;flex-direction:column;gap:6px;background:color-mix(in srgb,var(--ink) 6%,var(--bg))}
+.grp{border-top:0!important;background:var(--bg)}
+.kids{padding:0 34px 14px 38px}
+@media (max-width:480px){
+  .kids{padding:0 22px 12px 38px}
+  .kids .row::before,.kids .row::after{left:-24px}
+  .kids .row::after{width:22px}
+}
+.from{white-space:nowrap;font-size:.7rem}
+@media (max-width:480px){.kids .row .d{padding:8px 6px 8px 8px}}
+
+/* Tableau neutre (mode singe) : sans sections, sans codes, sans étoiles, mélangé */
+.neutral{--c:var(--muted);border-color:var(--line)}
+.neutral .row .f{background:color-mix(in srgb,var(--ink) 4%,var(--bg));border-left:1px solid var(--line)}
+.neutral .row .u b{color:var(--ink)}
+.neutral .row .u [style]{color:inherit!important}
+.qbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin:0 0 10px;font-size:.85rem;color:var(--muted)}
+.qbar button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer}
+[hidden]{display:none!important}
+body.hide .meta{display:none}
+
+/* ---- Mode entraînement (singe) ---- */
+.qhead{background:var(--bg);border-radius:16px;padding:14px 16px;margin:0 0 16px;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25)}
+.qtop{display:flex;justify-content:space-between;align-items:baseline}
+.qtitle{font-weight:800;font-size:1.1rem}
+.qcount{font-size:.85rem;color:var(--muted);font-weight:600}
+.prog{height:8px;border-radius:99px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));margin:10px 0 12px;overflow:hidden}
+.prog span{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#f5c542,var(--star));transition:width .3s}
+.qbtns{display:flex;gap:8px;flex-wrap:wrap}
+.qbtns button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 13px;border-radius:999px;cursor:pointer}
+.qlist{display:flex;flex-direction:column;gap:10px;container-type:inline-size}
+.qc{display:grid;grid-template-columns:42cqw minmax(0,1fr);background:var(--bg);border-radius:14px;overflow:hidden;cursor:pointer;
+  border:1px solid var(--line);box-shadow:0 1px 2px rgba(20,30,50,.05),0 6px 16px -10px rgba(20,30,50,.3);transition:transform .15s}
+.qc:active{transform:scale(.99)}
+.qc:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.qc.star{border-color:color-mix(in srgb,var(--star) 45%,var(--line))}
+.qd{padding:12px 12px 12px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.qc.star .qd{background:linear-gradient(90deg,var(--starbg),transparent 85%)}
+.qn{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:7px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));color:var(--muted);font-size:.75rem;font-weight:800}
+.qs{color:var(--star);font-size:.85rem;letter-spacing:1px}
+.qq{flex-basis:100%;font-weight:700;font-size:.95rem}
+.qf{position:relative;padding:12px 14px;background:color-mix(in srgb,var(--ink) 3.5%,var(--bg));border-left:1px solid var(--line);display:flex;align-items:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.15rem}
+.qans{display:flex;flex-direction:column;filter:blur(8px);opacity:.6;transition:filter .25s,opacity .25s;user-select:none}
+.qans .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px}
+.qans .u b,.qans .u [style]{color:var(--ink)!important}
+.qhint{position:absolute;inset:0;display:grid;place-items:center;font-family:"Source Sans 3",system-ui,sans-serif;font-size:.8rem;font-weight:700;color:var(--muted)}
+.qc.show .qans{filter:none;opacity:1;user-select:auto}
+.qc.show .qhint{display:none}
+.qc.show .qf{background:color-mix(in srgb,#3f9a6a 7%,var(--bg))}
+.qc.show .qn{background:#3f9a6a;color:#fff}
+@media (max-width:480px){.qf{font-size:1.02rem;padding:10px 12px}.qq{font-size:.88rem}}
+body.hide .qc .ft,body.hide .qc .u{filter:none!important;user-select:auto}
+.bar{flex-wrap:wrap}
+.blink{font-size:.9rem;font-weight:600;text-decoration:none;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);padding:6px 12px;border-radius:999px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.blink:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><p class="kicker">M2 · Chimie</p><h1>2nd principe de la thermodynamique et équilibres</h1><p class="meta">20 formules · <span class="s">★</span> tombées au concours · <span class="g">🔁</span> formules déduites, reliées à leur formule de base</p></header>
+<div class="bar"><button id="bHide" aria-pressed="false">🙈 Cacher les formules</button><a class="blink" href="formules.html" style="margin-left:auto">← Cours</a><a class="blink" href="formules-second-principe-explications.html">📖 Explications</a></div>
+<div class="cols"><span>Définition</span><span>Formule · unité · constante</span></div><div id="tb"></div>
+<div id="quiz" hidden>
+<div class="qhead"><div class="qtop"><span class="qtitle">Entraînement</span><span id="qcount" class="qcount"></span></div>
+<div class="prog"><span id="qbar"></span></div>
+<div class="qbtns"><button id="bShuffle">🔀 Mélanger</button><button id="bReset">🙈 Tout recacher</button></div></div>
+<div id="qrows" class="qlist"></div></div>
+</div>
+<script>
+const H=()=>'';
+const fr=(n,d)=>`<span class='frac'><span>${n}</span><span>${d}</span></span>`;
+const data = [
+ {id:"A", title:"Insuffisance du premier principe et désordre", pages:"p.1-2", rows:[
+  {k:"iso", st:0, q:"Premier principe pour deux corps en contact dans un système isolé", d:"Corps A et B de températures T<sub>A</sub> &gt; T<sub>B</sub>",
+   f:"ΔU = W + Q = 0", u:"W = 0 (système isolé)",
+   x:"<p>Le système est isolé : l'énergie totale se conserve. Mais le premier principe ne dit rien du <b>sens</b> du transfert de chaleur : il ne s'oppose pas au passage de chaleur d'un corps froid vers un corps chaud. D'où la nécessité d'un deuxième principe.</p>"},
+  {k:"QAB", der:["iso"], q:"Chaleurs échangées entre A et B", d:"",
+   f:"Q = Q<sub>A</sub> + Q<sub>B</sub> = 0 → Q<sub>A</sub> = −Q<sub>B</sub>", u:"Signes de Q<sub>A</sub> et Q<sub>B</sub> indéterminés",
+   x:"<p>Ce que A perd, B le gagne, mais la formule ne permet pas de savoir lequel des deux cède la chaleur.</p>"
+   + H(["Pars de ΔU = W + Q = 0 avec W = 0 : Q = 0.","Q est la somme des chaleurs de A et B : Q<sub>A</sub> + Q<sub>B</sub> = 0.","Isole Q<sub>A</sub>."])},
+  {k:"comb", st:0, q:"Nombre de possibilités de répartition", d:"X états d'énergie à conserver parmi Y positions possibles (Y &gt; X)",
+   f:`C<sub>Y</sub><sup>X</sup> = ${fr('Y!','(Y − X)! X!')}`, u:"= nombreux états désordonnés possibles",
+   x:"<p>L'état ordonné ne correspond qu'à une seule répartition, alors que les états désordonnés sont très nombreux. Le retour à l'état ordonné reste possible mais <b>hautement improbable</b> : c'est l'origine de l'irréversibilité.</p><span class='tip'>Sens d'évolution spontanée : vers le <b>désordre</b>.</span>"},
+  {k:"conv", st:0, q:"Conversion totale du travail en chaleur", d:"En conditions isothermes (température constante)",
+   f:"Q + W = 0", u:"Cas des pompes à chaleur",
+   x:"<p>Transformer du travail W en chaleur Q est possible et peut être total. L'inverse (chaleur → travail) est <b>impossible à une seule température</b> selon le second principe, même si ΔU = Q + W = 0 ne l'interdit pas ; il faut plusieurs sources de températures (machine thermique, rendement assez faible).</p>"}
+ ]},
+ {id:"B", title:"Entropie S : définition et valeurs", pages:"p.3, 5", rows:[
+  {k:"boltz", st:3, q:"Entropie : formule de Boltzmann", d:"Définition statistique ; S caractérise l'ordre et le désordre",
+   f:"S = k<sub>B</sub>.ln(Ω)", u:"Ω = nombre d'états microscopiques formant l'état macroscopique · S = entropie",
+   x:"<p>Plus il y a de façons microscopiques de réaliser un même état (Ω grand), plus le système est désordonné et plus S est grande. L'étoile porte sur « <b>augmentation d'entropie si le système devient plus désordonné</b> » (★★★), ce qu'exprime cette formule.</p><span class='tip'>Entropie croissante : solide &lt; liquide &lt; gaz (★) ; fusion (★), évaporation (★) et sublimation augmentent S.</span><span class='trap'>S est une fonction d'état (★) : ΔS ne dépend que des états initial et final.</span>"},
+  {k:"S0", der:["boltz"], q:"Entropie d'un état parfaitement ordonné", d:"",
+   f:"Ω = 1 → S = 0", u:"",
+   x:"<p>Un seul état microscopique possible : aucun désordre.</p>"
+   + H(["Pars de S = k<sub>B</sub>.ln(Ω).","Ω = 1 et ln(1) = 0, donc S = 0."])},
+  {k:"kB", st:0, q:"Constante de Boltzmann", d:"",
+   f:"k<sub>B</sub> = 1,38.10<sup>−23</sup> J/K", u:"",
+   x:"<p>Elle donne à S son unité (J/K) dans la formule de Boltzmann.</p>"},
+  {k:"unit", st:1, q:"Unité de l'entropie", d:"Grandeur extensive, proportionnelle à la quantité de matière",
+   f:"J.K<sup>−1</sup>.mol<sup>−1</sup>", u:"Unité <b>SI</b> · non molaire : <b>J.K<sup>−1</sup></b> · en physiologie : <b>cal.K<sup>−1</sup>.g<sup>−1</sup></b>",
+   x:"<p>Unité SI (★) ; en non molaire, J.K<sup>−1</sup> (★). L'entropie d'un système est la somme de celles de ses sous-systèmes, comme le volume, la masse ou l'énergie interne (à l'inverse de T et P, intensives). Pas de mesure directe : S est <b>calculée</b> à partir de mesures de C<sub>p</sub> jusqu'à la température la plus basse possible.</p>"},
+  {k:"S0K", st:2, q:"Entropie d'un corps parfaitement ordonné à 0 K", d:"Troisième principe de la thermodynamique (★)",
+   f:"S = 0 à T = 0 K", u:"0 K = −273 °C",
+   x:"<p>L'entropie est nulle (★★) <b>uniquement</b> à 0 K (★) et pour un système parfaitement ordonné.</p><span class='trap'>La fiche arrondit ici à −273 °C ; la fiche du 1<sup>er</sup> principe donne −273,15 °C.</span>"}
+ ]},
+ {id:"C", title:"Variation d'entropie ΔS", pages:"p.3-4", rows:[
+  {k:"dS", st:0, q:"Variation d'entropie entre deux états successifs", d:"Somme d'une entropie échangée et d'une entropie créée",
+   f:"dS<sub>système</sub> = δS<sup>e</sup> + δS<sup>c</sup>", u:"S<sup>e</sup> = entropie <b>échangée</b> avec le milieu extérieur · S<sup>c</sup> = entropie <b>créée</b> à l'intérieur du système",
+   x:"<p>L'entropie d'un système change pour deux raisons : les échanges de chaleur avec l'extérieur et la création interne de désordre.</p><span class='tip'>« e » comme échangée, « c » comme créée.</span>"},
+  {k:"dSfin", der:["dS"], q:"Variation d'entropie pour une transformation finie", d:"",
+   f:"ΔS<sub>système</sub> = S<sup>e</sup> + S<sup>c</sup>", u:"",
+   x:"<p>Même décomposition, sur toute la transformation.</p>"
+   + H(["Pars de dS<sub>système</sub> = δS<sup>e</sup> + δS<sup>c</sup>.","Intègre entre l'état initial et l'état final."])},
+  {k:"dSe", st:0, q:"Entropie échangée", d:"",
+   f:`δS<sup>e</sup> = ${fr('δQ','T')}`, u:"δQ = chaleur échangée, reçue par le système · T = température",
+   x:"<p>La chaleur reçue apporte de l'entropie, d'autant plus que la température est basse.</p>"},
+  {k:"Sc", st:0, q:"Valeur de l'entropie créée", d:"Selon le type de transformation",
+   f:"réversible : δS<sup>c</sup> = 0 · irréversible : δS<sup>c</sup> &gt; 0", u:"",
+   x:"<p>Une transformation réversible (infiniment lente, suite d'états d'équilibre) ne crée pas d'entropie. Une transformation irréversible (rapide, spontanée) en crée toujours.</p><span class='trap'>δS<sup>c</sup> n'est jamais négative.</span>"},
+  {k:"dSiso", st:0, q:"Variation d'entropie d'un système isolé", d:"Aucun échange de chaleur",
+   f:"δQ = 0 → dS<sub>système</sub> = δS<sup>c</sup>", u:"Variation d'entropie <b>maximale</b> dans ce cas",
+   x:"<p>Sans échange de chaleur, l'entropie échangée est nulle (voir @dSe) : il ne reste que l'entropie créée (voir @dS).</p>"},
+  {k:"rev", st:2, q:"Variation d'entropie lors d'une transformation réversible", d:"",
+   f:`dS = ${fr('δQ<sub>rév</sub>','T')}`, u:"δQ<sub>rév</sub> = chaleur fournie ou absorbée de façon réversible à T · T en <b>K</b>",
+   x:"<p>δQ<sub>rév</sub> &gt; 0 : le système absorbe de la chaleur → <b>création de désordre</b>. δQ<sub>rév</sub> &lt; 0 : il en dégage → <b>diminution du désordre</b>.</p><span class='tip'>Réversible : δS<sup>c</sup> = 0, donc dS = δS<sup>e</sup> = δQ/T.</span>"},
+  {k:"revT", der:["rev"], q:"Transformation finie isotherme", d:"",
+   f:`ΔS = ${fr('Q<sub>rév</sub>','T')}`, u:"",
+   x:"<p>À température constante, on divise simplement la chaleur échangée par T.</p>"
+   + H(["Pars de dS = δQ<sub>rév</sub> / T.","T constante : intègre, T sort de l'intégrale."])},
+  {k:"revP", der:["rev"], q:"Transformation isotherme à pression constante", d:"Cas de la fusion et de l'évaporation",
+   f:`ΔS = ${fr('ΔH','T')}`, u:"ΔH = Q<sub>p</sub> &gt; 0 pour la fusion et l'évaporation",
+   x:"<p>Fusion et évaporation absorbent de la chaleur : ΔH &gt; 0, donc ΔS &gt; 0 (plus de désordre).</p>"
+   + H(["Pars de ΔS = Q<sub>rév</sub> / T (isotherme).","À pression constante, la chaleur échangée est Q<sub>p</sub> = ΔH.","Remplace : ΔS = ΔH / T."])},
+  {k:"gibbs", st:0, q:"Relation entre ΔS et ΔU", d:"Relation fondamentale de Gibbs",
+   f:"ΔU = TΔS − PΔV", u:"",
+   x:"<p>ΔU s'écrit comme la somme d'un terme de chaleur réversible (TΔS) et du travail des forces de pression (−PΔV).</p>"},
+  {k:"cyc", st:1, q:"ΔS sur un cycle réversible", d:"Changement d'état réalisé dans un sens puis dans l'autre",
+   f:"ΔS = S<sub>finale</sub> − S<sub>initiale</sub> = 0", u:"Ni perte ni gain d'entropie",
+   x:"<p>Le désordre créé en fournissant la chaleur (δQ<sub>rév</sub> &gt; 0) disparaît quand on la retire (−δQ<sub>rév</sub> &lt; 0). S est une fonction d'état : même état initial et final → ΔS = 0.</p>"},
+  {k:"sec", st:1, q:"Second principe pour un système isolé", d:"L'entropie d'un système isolé ne peut que croître ou rester constante",
+   f:"ΔS ≥ 0", u:"Irréversible : <b>ΔS &gt; 0</b> (augmentation) · réversible : ΔS = 0",
+   x:"<p>C'est une formulation du second principe : dans un système isolé, S augmente lors d'une transformation irréversible et reste constante lors d'une transformation réversible. Avec des processus irréversibles, l'entropie créée est positive.</p><span class='tip'>Isolé → dS = δS<sup>c</sup> (@dSiso) et δS<sup>c</sup> ≥ 0 (@Sc).</span>"}
+ ]}
+];
+
+
+
+const tb=document.getElementById('tb');let h='';
+const rowHTML=(r,code,par)=>`<div class="row${r.der?' der':''}${r.st?' star':''}" tabindex="0">
+      <div class="d"><span class="code">${code}</span>${par?`<span class="from">🔁 Déduite de <b>${par}</b></span>`:''}<span class="name">${r.q}</span>${r.st?`<span class="s">${'★'.repeat(r.st)}</span>`:''}</div>
+      <div class="f"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div></div>`;
+data.forEach(sec=>{
+  h+=`<section class="blk" style="--c:var(--${sec.id})"><header><span class="letter">${sec.id}</span>${sec.title}</header><div class="rows">`;
+  const groups=[];
+  sec.rows.forEach((r,i)=>{const c=sec.id+(i+1); if(r.der&&groups.length) groups[groups.length-1].kids.push([r,c]); else groups.push({r,c,kids:[]});});
+  groups.forEach(g=>{
+    h+=`<div class="grp">`+rowHTML(g.r,g.c);
+    if(g.kids.length) h+=`<div class="kids">`+g.kids.map(([r,c])=>rowHTML(r,c,g.c)).join('')+`</div>`;
+    h+=`</div>`;
+  });
+  h+=`</div></section>`;
+});
+tb.innerHTML=h;
+const b=document.getElementById('bHide'),quiz=document.getElementById('quiz'),qrows=document.getElementById('qrows');
+const all=[];data.forEach(sec=>sec.rows.forEach(r=>all.push(r)));
+const upd=()=>{const n=qrows.querySelectorAll('.qc.show').length,t=all.length;
+  document.getElementById('qcount').textContent=`${n} / ${t} révélées`;document.getElementById('qbar').style.width=(100*n/t)+'%';};
+const shuffle=()=>{
+  const a=all.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  qrows.innerHTML=a.map((r,i)=>`<div class="qc${r.st?' star':''}" tabindex="0">
+    <div class="qd"><span class="qn">${i+1}</span>${r.st?`<span class="qs">${'★'.repeat(r.st)}</span>`:''}<span class="qq">${r.q}</span></div>
+    <div class="qf"><div class="qans"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div><span class="qhint">👁 Révéler</span></div></div>`).join('');
+  upd();
+};
+document.getElementById('bShuffle').onclick=()=>{shuffle();window.scrollTo({top:0});};
+document.getElementById('bReset').onclick=()=>{qrows.querySelectorAll('.qc.show').forEach(c=>c.classList.remove('show'));upd();};
+b.onclick=()=>{
+  const on=document.body.classList.toggle('hide');b.setAttribute('aria-pressed',on);
+  b.textContent=on?'↩ Revenir à la page de référence':'🙈 Cacher les formules';
+  if(on)shuffle();
+  quiz.hidden=!on;tb.hidden=on;document.querySelector('.cols').hidden=on;
+  window.scrollTo({top:0});
+};
+const flip=e=>{const t=e.target.closest('.qc');if(t){t.classList.toggle('show');upd();}};
+qrows.addEventListener('click',flip);
+qrows.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip(e);}});
+</script>
+</body>
+</html>

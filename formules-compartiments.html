@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules en 2 colonnes — Compartiments liquidiens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff;--ink:#1d2330;--muted:#5b6474;--line:#e3e6ec;--frame:#b9c0cc;--star:#e8a900;--starbg:#fff6d6;--ded:#3f9a6a;
+--A:#2f86a8;--B:#d0632e;--C:#c9971c;--D:#6f5aa8;--E:#a64b4b;--F:#b0527f}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.35}
+.wrap{max-width:820px;margin:0 auto;padding:16px 12px 40px}
+h1{font-size:1.4rem;margin:0 0 10px;font-weight:800}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:6px 0 8px;z-index:2;display:flex;gap:8px;align-items:center}
+.bar button{font:inherit;font-size:.9rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+.bar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.bar button:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.bar span{font-size:.8rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;border:2px solid var(--frame)}
+th{text-align:left;font-size:.78rem;color:var(--muted);font-weight:700;padding:6px 10px;border-bottom:2px solid var(--frame)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+td.d{width:42%;font-weight:700;font-size:.95rem;border-right:1.5px solid var(--frame)}
+td.d .s{color:var(--star);font-size:.8rem;margin-left:4px;white-space:nowrap}
+td.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.12rem}
+td.f .u{display:block;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.82rem;color:var(--muted);margin-top:2px}
+td.f .u b{color:var(--ink)}
+tr.sec td{background:var(--c);color:#fff;font-weight:800;font-size:.95rem;padding:6px 10px;border-bottom:0}
+tr.der td.d{padding-left:24px;color:var(--ded);font-weight:600;font-size:.9rem}
+tr.der td.d::before{content:"↳ ";font-weight:800}
+tr.der td.f{font-size:1rem;color:var(--ded)}
+sub{font-size:.65em}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor}
+body.hide td.f .ft,body.hide td.f .u{filter:blur(7px)}
+body.hide tr:not(.sec){cursor:pointer}
+body.hide tr.show td.f .ft,body.hide tr.show td.f .u{filter:none}
+@media (prefers-reduced-motion:no-preference){.ft,.u{transition:filter .2s}}
+@media (max-width:480px){td{padding:8px 7px}td.d{font-size:.88rem}td.f{font-size:1rem}tr.der td.d{padding-left:16px}}
+@media print{.bar{display:none}body.hide .ft,body.hide .u{filter:none}tr{break-inside:avoid}}
+
+/* ---- Mise en page soignée ---- */
+body{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0)}
+.wrap{max-width:860px;padding:22px 14px 50px}
+.top{padding:4px 2px 6px}
+.kicker{margin:0;font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--muted)}
+.top h1{font-size:1.9rem;margin:2px 0 4px;letter-spacing:-.01em}
+.meta{margin:0;font-size:.88rem;color:var(--muted)}
+.meta .s{color:var(--star)} .meta .g{color:var(--ded);font-weight:800}
+.bar{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0);padding:10px 0}
+.bar button{background:var(--bg);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.cols{display:grid;grid-template-columns:42% 58%;font-size:.72rem;font-weight:700;letter-spacing:.03em;color:var(--muted);padding:4px 16px 6px}
+.blk{background:var(--bg);border-radius:16px;margin:0 0 22px;overflow:hidden;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25);border:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.blk header{display:flex;align-items:center;gap:10px;padding:12px 16px;font-weight:800;font-size:1.02rem;color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--bg));border-bottom:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.letter{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--c);color:#fff;font-size:.95rem}
+.row{display:grid;grid-template-columns:42% 58%;align-items:stretch;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .d{padding:12px 12px 12px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.code{font-size:.72rem;font-weight:800;color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg));border-radius:5px;padding:1px 6px}
+.name{font-weight:700;font-size:.95rem;flex-basis:100%}
+.row .d .s{color:var(--star);font-size:.82rem;letter-spacing:1px}
+.row .f{padding:12px 16px;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line));display:flex;flex-direction:column;justify-content:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.2rem}
+.row .f .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px;line-height:1.3}
+.row .f .u b{color:var(--c)}
+.row.star .d{background:linear-gradient(90deg,var(--starbg),transparent 75%)}
+.row.der .d{padding-left:30px;position:relative}
+.row.der .d::before{content:"↳";position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ded);font-weight:800}
+.row.der .name{color:var(--ded);font-weight:600;font-size:.9rem}
+.row.der .code{color:var(--ded);background:color-mix(in srgb,var(--ded) 12%,var(--bg))}
+.row.der .f{font-size:1.05rem;color:var(--ded);background:color-mix(in srgb,var(--ded) 6%,var(--bg))}
+body.hide .ft,body.hide .u{filter:blur(7px);user-select:none}
+body.hide .row{cursor:pointer}
+body.hide .row.show .ft,body.hide .row.show .u{filter:none}
+.row:focus-visible{outline:3px solid var(--star);outline-offset:-3px}
+@media (max-width:480px){
+  .cols,.row{grid-template-columns:44% 56%}
+  .row .d{padding:10px 8px 10px 12px}.row .f{padding:10px 12px;font-size:1.05rem}
+  .name{font-size:.88rem}.row.der .d{padding-left:24px}.row.der .d::before{left:8px}
+  .top h1{font-size:1.6rem}
+}
+@media print{body{background:#fff}.blk{box-shadow:none;break-inside:avoid}}
+
+
+/* Option 1 : groupe encadré (formule mère + filles dans une bande verte) */
+.grp{border-top:1px solid var(--line)}
+.grp:first-child{border-top:0}
+.grp > .row{border-top:0}
+.kids{background:color-mix(in srgb,var(--ded) 13%,var(--bg));padding:8px 10px 10px;display:flex;flex-direction:column;gap:7px;border-top:1px solid color-mix(in srgb,var(--ded) 30%,var(--line))}
+.kids .row{border:1px solid color-mix(in srgb,var(--ded) 30%,var(--line));border-radius:10px;overflow:hidden;background:var(--bg);grid-template-columns:calc(42% - 4px) auto}
+.kids .row .d{padding:9px 10px}
+.kids .row .f{background:color-mix(in srgb,var(--ded) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--ded) 25%,var(--line))}
+.row.der .d{padding-left:10px}
+.row.der .d::before{content:none}
+@media (max-width:480px){.kids{padding:7px 7px 8px}.kids .row .d{padding:8px}}
+
+/* Formules déduites : mêmes couleurs que les autres (seul le regroupement les distingue) */
+.kids{background:color-mix(in srgb,var(--ink) 5%,var(--bg));border-top:1px solid var(--line)}
+.kids .row{border-color:var(--line)}
+.row.der .name{color:var(--ink);font-weight:700;font-size:.95rem}
+.row.der .code{color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg))}
+.row.der .code::before{content:none}
+.row.der .f,.kids .row .f{color:var(--ink);font-size:1.2rem;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line))}
+@media (max-width:480px){.row.der .f,.kids .row .f{font-size:1.05rem}.row.der .name{font-size:.88rem}}
+
+/* Comme la page explication : filles décalées, reliées par un trait à leur formule mère */
+.kids{background:transparent;border-top:0;padding:0 12px 14px 38px;gap:10px;position:relative}
+.kids .row{position:relative;overflow:visible;border:1.5px solid color-mix(in srgb,var(--ded) 60%,var(--line));border-radius:10px;background:var(--bg)}
+.kids .row .d{border-radius:9px 0 0 9px}
+.kids .row .f{border-radius:0 9px 9px 0}
+.kids .row::before{content:"";position:absolute;left:-24px;top:-12px;bottom:-12px;border-left:2px solid var(--ded)}
+.kids .row:first-child::before{top:-2px}
+.kids .row:last-child::before{bottom:50%}
+.kids .row::after{content:"";position:absolute;left:-24px;top:50%;width:22px;border-top:2px solid var(--ded)}
+.grp:has(.kids) > .row{border-bottom:0}
+.from{flex-basis:100%;font-size:.76rem;font-weight:700;color:var(--ded)}
+.from b{font-weight:800}
+@media (max-width:480px){
+  .kids{padding:0 8px 12px 28px}
+  .kids .row::before,.kids .row::after{left:-18px}
+  .kids .row::after{width:16px}
+}
+
+/* Colonnes alignées partout + petit espace entre formules principales + cadres déduits plus étroits */
+.blk{container-type:inline-size}
+.row{grid-template-columns:42cqw minmax(0,1fr)!important}
+.kids .row{grid-template-columns:calc(42cqw - 39.5px) minmax(0,1fr)!important}
+.cols{grid-template-columns:42% 58%}
+.rows{display:flex;flex-direction:column;gap:6px;background:color-mix(in srgb,var(--ink) 6%,var(--bg))}
+.grp{border-top:0!important;background:var(--bg)}
+.kids{padding:0 34px 14px 38px}
+@media (max-width:480px){
+  .kids{padding:0 22px 12px 38px}
+  .kids .row::before,.kids .row::after{left:-24px}
+  .kids .row::after{width:22px}
+}
+.from{white-space:nowrap;font-size:.7rem}
+@media (max-width:480px){.kids .row .d{padding:8px 6px 8px 8px}}
+
+/* Tableau neutre (mode singe) : sans sections, sans codes, sans étoiles, mélangé */
+.neutral{--c:var(--muted);border-color:var(--line)}
+.neutral .row .f{background:color-mix(in srgb,var(--ink) 4%,var(--bg));border-left:1px solid var(--line)}
+.neutral .row .u b{color:var(--ink)}
+.neutral .row .u [style]{color:inherit!important}
+.qbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin:0 0 10px;font-size:.85rem;color:var(--muted)}
+.qbar button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer}
+[hidden]{display:none!important}
+body.hide .meta{display:none}
+
+/* ---- Mode entraînement (singe) ---- */
+.qhead{background:var(--bg);border-radius:16px;padding:14px 16px;margin:0 0 16px;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25)}
+.qtop{display:flex;justify-content:space-between;align-items:baseline}
+.qtitle{font-weight:800;font-size:1.1rem}
+.qcount{font-size:.85rem;color:var(--muted);font-weight:600}
+.prog{height:8px;border-radius:99px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));margin:10px 0 12px;overflow:hidden}
+.prog span{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#f5c542,var(--star));transition:width .3s}
+.qbtns{display:flex;gap:8px;flex-wrap:wrap}
+.qbtns button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 13px;border-radius:999px;cursor:pointer}
+.qlist{display:flex;flex-direction:column;gap:10px;container-type:inline-size}
+.qc{display:grid;grid-template-columns:42cqw minmax(0,1fr);background:var(--bg);border-radius:14px;overflow:hidden;cursor:pointer;
+  border:1px solid var(--line);box-shadow:0 1px 2px rgba(20,30,50,.05),0 6px 16px -10px rgba(20,30,50,.3);transition:transform .15s}
+.qc:active{transform:scale(.99)}
+.qc:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.qc.star{border-color:color-mix(in srgb,var(--star) 45%,var(--line))}
+.qd{padding:12px 12px 12px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.qc.star .qd{background:linear-gradient(90deg,var(--starbg),transparent 85%)}
+.qn{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:7px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));color:var(--muted);font-size:.75rem;font-weight:800}
+.qs{color:var(--star);font-size:.85rem;letter-spacing:1px}
+.qq{flex-basis:100%;font-weight:700;font-size:.95rem}
+.qf{position:relative;padding:12px 14px;background:color-mix(in srgb,var(--ink) 3.5%,var(--bg));border-left:1px solid var(--line);display:flex;align-items:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.15rem}
+.qans{display:flex;flex-direction:column;filter:blur(8px);opacity:.6;transition:filter .25s,opacity .25s;user-select:none}
+.qans .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px}
+.qans .u b,.qans .u [style]{color:var(--ink)!important}
+.qhint{position:absolute;inset:0;display:grid;place-items:center;font-family:"Source Sans 3",system-ui,sans-serif;font-size:.8rem;font-weight:700;color:var(--muted)}
+.qc.show .qans{filter:none;opacity:1;user-select:auto}
+.qc.show .qhint{display:none}
+.qc.show .qf{background:color-mix(in srgb,#3f9a6a 7%,var(--bg))}
+.qc.show .qn{background:#3f9a6a;color:#fff}
+@media (max-width:480px){.qf{font-size:1.02rem;padding:10px 12px}.qq{font-size:.88rem}}
+body.hide .qc .ft,body.hide .qc .u{filter:none!important;user-select:auto}
+.bar{flex-wrap:wrap}
+.blink{font-size:.9rem;font-weight:600;text-decoration:none;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);padding:6px 12px;border-radius:999px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.blink:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><p class="kicker">M1 · Physiologie</p><h1>Compartiments liquidiens</h1><p class="meta">55 formules · <span class="s">★</span> tombées au concours · <span class="g">🔁</span> formules déduites, reliées à leur formule de base</p></header>
+<div class="bar"><button id="bHide" aria-pressed="false">🙈 Cacher les formules</button><a class="blink" href="formules.html" style="margin-left:auto">← Cours</a><a class="blink" href="formules-compartiments-explications.html">📖 Explications</a></div>
+<div class="cols"><span>Définition</span><span>Formule · unité · constante</span></div><div id="tb"></div>
+<div id="quiz" hidden>
+<div class="qhead"><div class="qtop"><span class="qtitle">Entraînement</span><span id="qcount" class="qcount"></span></div>
+<div class="prog"><span id="qbar"></span></div>
+<div class="qbtns"><button id="bShuffle">🔀 Mélanger</button><button id="bReset">🙈 Tout recacher</button></div></div>
+<div id="qrows" class="qlist"></div></div>
+</div>
+<script>
+const H=()=>'';
+const fr=(a,b)=>`<span class='frac'><span>${a}</span><span>${b}</span></span>`;
+const data = [
+ {id:"A", title:"Concentrations des solutés", pages:"p.2-3", rows:[
+  {k:"mol", st:0, q:"Molarité (concentration molaire)", d:"Nombre de moles de soluté par litre",
+   f:"Molarité = "+fr("n","V"), u:"Unité : <b>mol/L</b> (en pratique <b>mmol/L</b>) · tient compte du poids moléculaire (PM)",
+   x:"<p>On compte les <b>moles</b> de soluté dans un litre de solution. Pour passer d'une masse à un nombre de moles, on divise par le <b>poids moléculaire</b>.</p><span class='tip'>Les liquides de l'organisme sont des solutions <b>très diluées</b> : on les exprime en mmol/L, mEq/L ou mosmol/L.</span>"},
+  {k:"pm", st:0, q:"Poids moléculaire du NaCl", d:"Exemple du cours",
+   f:"PM<sub>NaCl</sub> = 23 + 35,5 = 58,5 ≈ 60 g/mol", u:"Na = <b>23</b> · Cl = <b>35,5</b> · valeur arrondie <b>60 g/mol</b> utilisée pour les perfusions (p.12)",
+   x:"<p>Le poids moléculaire d'un sel est la somme de celui de ses atomes. Dans les calculs de perfusion, le cours arrondit à <b>M<sub>NaCl</sub> = 60 g/mol</b>.</p><span class='trap'>La fiche écrit « 1 mole de NaCl = 58,5 g/L ». Une mole de NaCl pèse 58,5 g ; c'est une solution à <b>1 mol/L</b> qui contient 58,5 g/L.</span>"},
+  {k:"osm", st:0, q:"Osmolarité", d:"Nombre de particules à activité osmotique par litre",
+   f:"Osmolarité = "+fr("n<sub>particules</sub>","V"), u:"Unité : <b>osmol/L</b> (en pratique <b>mosmol/L</b>)",
+   x:"<p>L'activité osmotique est la capacité d'une particule à <b>attirer l'eau</b>. On compte donc les particules présentes une fois le soluté dissous, pas les molécules de départ.</p><span class='tip'>Un sel qui se dissocie donne plusieurs particules : son osmolarité dépasse sa molarité.</span>"},
+  {k:"osmsel", der:["osm","mol"], q:"Osmolarité d'un sel qui se dissocie", d:"Exemples du cours",
+   f:"NaCl 1 M → 2 osmol/L ; CaCl<sub>2</sub> 1 M → 3 osmol/L", u:"",
+   x:"<p>NaCl donne 2 particules (Na⁺ et Cl⁻), CaCl₂ en donne 3 (Ca²⁺ et 2 Cl⁻) : l'osmolarité vaut la molarité multipliée par le nombre de particules.</p><span class='trap'>La fiche écrit « CaCl₂ = 3 osmoles/L » sans préciser la concentration : c'est pour une solution à 1 M.</span>"
+   + H(["Pars d'une solution à 1 mol/L de sel.","Compte les particules libérées par molécule : NaCl → 2 ; CaCl₂ → 3.","Multiplie : 1 × 2 = 2 osmol/L ; 1 × 3 = 3 osmol/L."])},
+  {k:"osmnd", der:["osm","mol"], q:"Osmolarité d'un soluté qui ne se dissocie pas", d:"Glucose, protéines",
+   f:"Osmolarité = molarité", u:"",
+   x:"<p>Une molécule qui reste entière ne donne qu'<b>une seule particule</b> : on retrouve exactement la molarité.</p><span class='tip'>Exemples du cours : <b>glucose</b> et <b>protéines</b>.</span>"
+   + H(["Une molécule non dissociée = 1 particule.","Le nombre de particules est donc égal au nombre de moles : osmolarité = molarité."])},
+  {k:"eq", st:0, q:"Concentration équivalente", d:"Nombre de moles de charges électriques par litre",
+   f:"C<sub>éq</sub> = "+fr("n<sub>charges</sub>","V"), u:"Unité : <b>Eq/L</b> (en pratique <b>mEq/L</b>)",
+   x:"<p>On ne compte plus les particules mais les <b>charges électriques</b> qu'elles portent. Un soluté neutre ne compte pas.</p>"},
+  {k:"eqex", der:["eq"], q:"Concentration équivalente du NaCl et du glucose", d:"Exemples du cours",
+   f:"NaCl = Na⁺ + Cl⁻ = 2 Eq/L ; glucose = 0 Eq/L", u:"",
+   x:"<p>NaCl apporte une charge + et une charge − : 2 moles de charges. Le glucose est neutre : 0.</p><span class='trap'>Comme pour l'osmolarité, la valeur « 2 Eq/L » correspond à du NaCl à 1 M.</span>"
+   + H(["NaCl libère Na⁺ (1 charge) et Cl⁻ (1 charge).","1 + 1 = 2 moles de charges par mole de NaCl, donc 2 Eq/L pour 1 M.","Le glucose ne porte aucune charge : 0 Eq/L."])},
+  {k:"osmol", st:0, q:"Osmolalité et osmolarité", d:"Densité de l'eau ≈ 1",
+   f:"Osmolalité (osmol/kg) ≈ osmolarité (osmol/L)", u:"",
+   x:"<p>1 L d'eau pèse environ 1 kg : diviser par des kilogrammes ou par des litres donne pratiquement le même résultat dans les liquides de l'organisme.</p>"}
+ ]},
+ {id:"B", title:"Liquide total et bilan hydrique", pages:"p.4-6", rows:[
+  {k:"app", st:0, q:"Apports hydriques quotidiens", d:"Individu de poids moyen consommant 2500 kcal",
+   f:"2600 mL = 1300 + 1000 + 300", u:"Boissons <b>1300 mL</b> · aliments <b>1000 mL</b> · métabolisme <b>300 mL</b>",
+   x:"<p>L'eau entre par trois voies : ce qu'on <b>boit</b>, l'eau contenue dans les <b>aliments</b>, et l'eau fabriquée par le <b>métabolisme</b> (@meta).</p><span class='tip'>Boissons ≈ la moitié des apports.</span>"},
+  {k:"meta", st:1, q:"Eau d'origine métabolique", d:"Eau endogène = eau d'oxydation du glucose",
+   f:"≈ 300 mL / jour", u:"C<sub>6</sub>H<sub>12</sub>O<sub>6</sub> + 6 O<sub>2</sub> → 6 CO<sub>2</sub> + <b>6 H<sub>2</sub>O</b>",
+   x:"<p>L'oxydation du glucose <b>produit de l'eau</b> (6 H₂O par glucose) : c'est l'eau métabolique, ou endogène.</p><span class='trap'>La fiche actualisée remplace « obligatoire » par « métabolique » : on parle d'eau <b>métabolique</b>.</span>"},
+  {k:"pert", st:1, q:"Pertes hydriques quotidiennes", d:"",
+   f:"2600 mL = 1500 + 200 + 900", u:"Urines <b>1500 mL</b> · selles <b>200 mL</b> · pertes insensibles <b>900 mL</b>",
+   x:"<p>L'eau sort surtout par les <b>urines</b>, un peu par les <b>selles</b>, et par des <b>pertes insensibles</b> (@ins) qu'on ne remarque pas.</p><span class='tip'>★ Les selles (200 mL) et les pertes insensibles (900 mL) sont les valeurs marquées tombées.</span>"},
+  {k:"ins", st:1, q:"Pertes insensibles", d:"Peau et respiration",
+   f:"900 mL = 600 + 300", u:"Peau <b>600 mL</b> · respiration <b>300 mL</b>",
+   x:"<p>La peau est relativement imperméable, mais laisse <b>évaporer 600 mL/jour</b> normalement ; la respiration en fait perdre 300 mL. L'évaporation augmente en cas de <b>fièvre</b>, de travail musculaire ou de stress.</p><span class='tip'>La peau et ses 600 mL portent aussi une ★ dans la fiche.</span>"},
+  {k:"bil", st:0, q:"Bilan hydrique normal", d:"",
+   f:"Apports = pertes = 2600 mL/j", u:"Aliments (1000) ≈ pertes insensibles (900) · métabolisme (300) ≈ selles (200)",
+   x:"<p>Le bilan est équilibré quand tout ce qui entre ressort. Le cours apparie deux postes d'entrée à deux postes de sortie.</p><span class='tip'>Aliments ↔ pertes insensibles ; métabolisme ↔ selles.</span>"},
+  {k:"fievre", st:1, q:"Pertes supplémentaires en cas de fièvre", d:"Par évaporation",
+   f:"200 mL / °C / m² / j", u:"Par <b>degré</b> de fièvre et par <b>m²</b> de surface corporelle",
+   x:"<p>Chaque degré de fièvre fait perdre de l'eau en plus, proportionnellement à la surface de peau.</p><span class='trap'>Bien lire les unités : par °C, par m² <b>et</b> par jour.</span>"},
+  {k:"fievre2", der:["fievre"], q:"Pertes par fièvre chez l'adulte de 1,75 m²", d:"",
+   f:"200 × 1,75 = 350 mL / °C / j", u:"",
+   x:"<p>C'est la valeur donnée par le cours pour un adulte de surface corporelle standard.</p><span class='tip'>Fièvre à 39 °C (2 °C de plus) : 2 × 350 = 700 mL/j de pertes en plus.</span>"
+   + H(["Pars de 200 mL/°C/m²/j.","Multiplie par la surface corporelle : 200 × 1,75 = 350 mL/°C/j."])}
+ ]},
+ {id:"C", title:"Capital hydrique", pages:"p.6-8", rows:[
+  {k:"genre", st:0, q:"Teneur en eau selon le genre", d:"En % du poids corporel",
+   f:"Homme : 60&nbsp;% ; femme : 50&nbsp;%", u:"",
+   x:"<p>À corpulence identique, les femmes ont <b>moins de muscle</b> et <b>plus de tissu adipeux</b>, qui contient peu d'eau.</p><span class='trap'>La fiche « Introduction à la physiologie » donne <b>55&nbsp;%</b> pour la femme : les deux fiches ne concordent pas.</span>"},
+  {k:"age", st:1, q:"Teneur en eau selon l'âge", d:"En % du poids corporel",
+   f:"Nouveau-né 80&nbsp;% · enfant 70&nbsp;% · personne âgée 45&nbsp;%", u:"Personne âgée = <b>85-90 ans</b>",
+   x:"<p>La part d'eau <b>diminue avec l'âge</b>. Chez le nouveau-né, le moindre problème (gastro-entérite) a d'importantes conséquences.</p><span class='tip'>★ La valeur tombée est celle de l'<b>enfant (70&nbsp;%)</b>.</span><span class='trap'>La fiche « Introduction à la physiologie » donne <b>75&nbsp;%</b> pour les nourrissons.</span>"},
+  {k:"corp", st:0, q:"Teneur en eau selon la corpulence", d:"Écart par rapport à la normale",
+   f:"Obèse : − 10&nbsp;% ; maigre : + 10&nbsp;%", u:"Obèse : H <b>50&nbsp;%</b>, F <b>40&nbsp;%</b> · maigre : H <b>70&nbsp;%</b>, F <b>60&nbsp;%</b>",
+   x:"<p>Plus il y a de tissu adipeux, moins le capital hydrique est élevé. On retire ou on ajoute 10 points à la valeur normale du genre.</p>"},
+  {k:"chh", st:2, q:"Capital hydrique habituel", d:"",
+   f:"CH<sub>habituel</sub> = poids habituel × % eau", u:"Poids en kg → capital en L (densité de l'eau ≈ 1)",
+   x:"<p>On prend le poids habituel du patient et la teneur en eau qui lui correspond (@genre, @age, @corp). D'où l'importance de demander le <b>poids habituel</b> à l'interrogatoire.</p><span class='trap'>Choisir le bon % : genre, âge <b>et</b> corpulence.</span>"},
+  {k:"ch70", der:["chh","genre"], q:"Capital hydrique de l'homme adulte moyen", d:"Corpulence moyenne, 70 kg",
+   f:"70 kg × 60&nbsp;% = 42 L", u:"",
+   x:"<p>C'est la valeur de référence du cours, qui sert ensuite à répartir LEC et LIC (@lec70).</p>"
+   + H(["Pars de CH = poids × % eau.","Homme adulte : 60&nbsp;%.","70 × 0,60 = 42 L."])},
+  {k:"cha", st:1, q:"Capital hydrique actuel", d:"Après une variation de poids",
+   f:"CH<sub>actuel</sub> = CH<sub>habituel</sub> + (poids actuel − poids habituel)", u:"",
+   x:"<p>La variation de poids est comptée comme de l'<b>eau</b> gagnée ou perdue. Un poids actuel plus faible donne une différence négative : le capital baisse.</p><span class='tip'>Perdre 3 kg = perdre 3 L de capital hydrique.</span><span class='trap'>On part du capital <b>habituel</b>, pas du poids × % eau actuel.</span>"},
+  {k:"rep", st:0, q:"Répartition du capital hydrique", d:"Entre les deux compartiments",
+   f:"V<sub>IC</sub> = "+fr("2","3")+" CH ; V<sub>EC</sub> = "+fr("1","3")+" CH", u:"LIC = <b>2/3</b> du liquide total · LEC = <b>1/3</b>",
+   x:"<p>Les deux tiers de l'eau sont <b>dans les cellules</b>, un tiers autour (interstitiel, plasma, lymphe).</p>"},
+  {k:"lec70", der:["rep","ch70"], q:"Volumes des compartiments de l'homme de 70 kg", d:"",
+   f:"LEC = 14 L ; LIC = 28 L", u:"",
+   x:"<p>Valeurs du cours, obtenues à partir des 42 L de capital hydrique.</p>"
+   + H(["Pars de CH = 42 L.","LEC = 42 × 1/3 = 14 L.","LIC = 42 × 2/3 = 28 L."])},
+  {k:"sang", st:0, q:"Volume sanguin de l'homme de 70 kg", d:"",
+   f:"Sang 5 L = plasma 3 L + cellules 2 L", u:"Plasma = composante <b>EC</b> · globules rouges et blancs = composante <b>IC</b>",
+   x:"<p>Le sang est à cheval sur les deux compartiments : le plasma appartient au LEC, l'intérieur des globules au LIC.</p>"}
+ ]},
+ {id:"D", title:"Osmolarité, ionogramme et sodium", pages:"p.8-10, 14", rows:[
+  {k:"osmeq", st:0, q:"Osmolarité à l'état d'équilibre", d:"De part et d'autre de la membrane cellulaire",
+   f:"Osm<sub>Tot</sub> = Osm<sub>IC</sub> = Osm<sub>EC</sub> = 300 mosm/L", u:"Osmolarité plasmatique = Osm<sub>EC</sub>",
+   x:"<p>Les osmolarités sont <b>égales</b>, donc les pressions osmotiques aussi. Le Na⁺ reste essentiellement dehors : c'est l'<b>eau</b> qui circule à travers la membrane.</p>"},
+  {k:"osmcap", st:0, q:"Osmolarité d'un compartiment", d:"Concentration identique dans tous les compartiments",
+   f:"Osmolarité = "+fr("capital osmolaire","capital hydrique"), u:"",
+   x:"<p>Le capital osmolaire est la <b>quantité</b> d'osmoles ; le capital hydrique est le <b>volume</b> d'eau. Quantité ÷ volume = concentration.</p>"},
+  {k:"cap", der:["osmcap"], q:"Capital osmolaire", d:"Total : V<sub>Tot</sub> = capital hydrique",
+   f:"Capital osmolaire = capital hydrique × osmolarité", u:"Total : Cap<sub>Tot</sub> = Osm<sub>Tot</sub> × V<sub>Tot</sub>",
+   x:"<p>C'est la forme la plus utilisée en exercice, pour chaque compartiment comme pour le total.</p>"
+   + H(["Pars de Osmolarité = capital osmolaire / capital hydrique.","Multiplie les deux côtés par le capital hydrique."])},
+  {k:"capic", der:["osmcap","rep"], q:"Capital osmolaire intracellulaire", d:"",
+   f:"Cap<sub>IC</sub> = Osm<sub>IC</sub> × V<sub>IC</sub>", u:"V<sub>IC</sub> = 2/3 × capital hydrique",
+   x:"<p>Même calcul, appliqué au seul compartiment intracellulaire.</p>"
+   + H(["Applique Capital osmolaire = volume × osmolarité au LIC.","Remplace V<sub>IC</sub> par 2/3 du capital hydrique."])},
+  {k:"capec", st:3, q:"Capital osmolaire extracellulaire", d:"",
+   f:"Cap<sub>EC</sub> = Osm<sub>EC</sub> × V<sub>EC</sub>", u:"V<sub>EC</sub> = 1/3 × capital hydrique",
+   x:"<p><b>La plus tombée du cours.</b> Le capital osmolaire EC est évalué par un <b>ionogramme plasmatique</b>, qui renseigne sur l'état d'hydratation de tout l'organisme (plasma ≈ interstitiel).</p><span class='tip'>Elle se retrouve à partir de @cap, appliquée au LEC.</span><span class='trap'>V<sub>EC</sub> = <b>1/3</b> du capital hydrique, pas du poids.</span>"},
+  {k:"cap70", der:["capec","capic","lec70"], q:"Capitaux osmolaires de l'homme de 70 kg", d:"",
+   f:"EC : 14 × 300 = 4200 mOsm ; IC : 28 × 300 = 8400 mOsm", u:"Valeurs données par le cours (p.6)",
+   x:"<p>On multiplie chaque volume par 300 mosm/L.</p><span class='tip'>Total : 4200 + 8400 = 12 600 mOsm = 42 × 300.</span>"
+   + H(["Pars de LEC = 14 L et LIC = 28 L.","Osmolarité = 300 mosm/L des deux côtés.","14 × 300 = 4200 ; 28 × 300 = 8400."])},
+  {k:"na", st:2, q:"Na⁺ : concentrations EC et IC", d:"Ionogramme normal",
+   f:"EC 140 ; IC 5 mosm/L", u:"[Na⁺] plasmatique = <b>natrémie</b>",
+   x:"<p>Le sodium est l'ion <b>extracellulaire</b> : le LEC est riche en Na⁺, le LIC pauvre.</p><span class='tip'>Na⁺ dehors 140, K⁺ dedans 140 : les deux ions échangent leur place.</span>"},
+  {k:"k", st:1, q:"K⁺ : concentrations EC et IC", d:"Ionogramme normal",
+   f:"EC 4,5 ; IC 140 mosm/L", u:"[K⁺] sanguin = <b>kaliémie</b>",
+   x:"<p>Le potassium est l'ion <b>intracellulaire</b>.</p><span class='tip'>★ sur les deux valeurs (4,5 et 140).</span>"},
+  {k:"ions", st:0, q:"Ca²⁺, Cl⁻, HCO₃⁻ : concentrations EC et IC", d:"Ionogramme normal",
+   f:"Ca²⁺ 2,5 / 0,5 · Cl⁻ 105 / 4 · HCO₃⁻ 21-30 / 10", u:"Extracellulaire / intracellulaire, en mosm/L",
+   x:"<p>Comme Na⁺, le Cl⁻ est surtout extracellulaire.</p><span class='trap'>Le tableau de la p.17 donne Cl⁻ <b>105</b> dans l'interstitium mais <b>95</b> dans le plasma, et HCO₃⁻ = 30 : le Cl⁻ plasmatique diffère de l'ionogramme p.9.</span>"},
+  {k:"hypona", st:0, q:"Seuil de l'hyponatrémie", d:"",
+   f:"[Na⁺] &lt; 135 mmol/L", u:"",
+   x:"<p>Deux formes : <b>vraie</b> (déshydratation, perte de poids, V<sub>EC</sub> ↓, traitement sel + réhydratation) ou <b>de dilution</b> (hyperhydratation, prise de poids, V<sub>EC</sub> ↑, traitement diurétique).</p>"},
+  {k:"seuil", st:0, q:"Variations mal supportées de l'osmolarité plasmatique", d:"Même faibles",
+   f:"&lt; 300 hypotonie · &lt; 280 symptômes · &gt; 320 hypertonie", u:"En <b>mosm/L</b>",
+   x:"<p>En dessous de 280 mosm/L apparaissent nausées et céphalées ; au-dessus de 320, hypertonie avec soif et fièvre.</p>"},
+  {k:"naapp", st:0, q:"Apports quotidiens en sel", d:"Entrée de NaCl par les aliments",
+   f:"9-12 g/j ≈ 150-200 mmol/j", u:"",
+   x:"<p>Les sorties sont surtout <b>rénales</b> ; selles et sueurs sont négligeables en conditions basales.</p><span class='tip'>9 g ÷ 58,5 g/mol ≈ 154 mmol : on retrouve l'ordre de grandeur.</span>"},
+  {k:"filt", st:0, q:"Sodium filtré par le rein", d:"Filtration glomérulaire",
+   f:"25 000 mmol Na⁺ / j", u:"<b>180 L</b> de plasma filtré par jour",
+   x:"<p>Le rein filtre énormément de sodium, puis en réabsorbe presque tout (@reab).</p><span class='tip'>180 L × 140 mmol/L ≈ 25 000 mmol.</span>"},
+  {k:"reab", st:0, q:"Réabsorption du sodium filtré", d:"Tout le long du néphron",
+   f:"99&nbsp;% : TCP 65&nbsp;% · AH 25&nbsp;% · TDC 5&nbsp;% · TC 3&nbsp;%", u:"TCP = tube contourné proximal · AH = anse de Henlé · TDC = tube contourné distal · TC = tube collecteur",
+   x:"<p>Le tube proximal fait l'essentiel du travail.</p><span class='trap'>La somme des segments donne 65 + 25 + 5 + 3 = <b>98&nbsp;%</b>, alors que la fiche annonce 99&nbsp;%.</span>"}
+ ]},
+ {id:"E", title:"Adjonction d'eau ou de sel au LEC", pages:"p.11-13, 16", rows:[
+  {k:"eqfin", st:0, q:"Osmolarités à l'équilibre final", d:"Même en pathologie, après les échanges",
+   f:"Osm<sub>EC</sub> = Osm<sub>IC</sub> = Osm<sub>Tot</sub>", u:"Seule l'<b>eau</b> traverse la membrane : Cap<sub>IC</sub> ne change pas",
+   x:"<p>Après une perturbation, l'eau se déplace jusqu'à ce que l'osmolarité soit <b>la même de chaque côté</b>. Le Na⁺ restant dehors, le capital osmolaire IC est toujours <b>inchangé</b>.</p>"},
+  {k:"vic", der:["eqfin","osmcap"], q:"Volume IC final", d:"",
+   f:"V<sub>IC</sub> = "+fr("Cap<sub>IC</sub>","Osm<sub>IC</sub>"), u:"Cap<sub>IC</sub> <b>inchangé</b> · Osm<sub>IC</sub> = Osm<sub>Tot</sub>",
+   x:"<p>Eau ajoutée : V<sub>IC</sub> <b>augmente</b>. Sel ajouté : V<sub>IC</sub> <b>diminue</b> (l'eau sort des cellules).</p>"
+   + H(["Pars de Osmolarité = capital osmolaire / volume, appliqué au LIC.","Isole V<sub>IC</sub> = Cap<sub>IC</sub> / Osm<sub>IC</sub>.","À l'équilibre, Osm<sub>IC</sub> = Osm<sub>Tot</sub>."])},
+  {k:"vec", der:["eqfin","osmcap"], q:"Volume EC final", d:"",
+   f:"V<sub>EC</sub> = "+fr("Cap<sub>EC</sub>","Osm<sub>EC</sub>"), u:"Cap<sub>EC</sub> inchangé (eau) ou augmenté de N<sub>osm NaCl</sub> (sel)",
+   x:"<p>Dans les deux cas, V<sub>EC</sub> <b>augmente</b> par rapport à l'état initial.</p><span class='trap'>Eau : V<sub>EC</sub> final est <b>plus bas</b> que pendant l'état transitoire. Sel : il est <b>plus élevé</b>.</span>"
+   + H(["Pars de Osmolarité = capital osmolaire / volume, appliqué au LEC.","Isole V<sub>EC</sub> = Cap<sub>EC</sub> / Osm<sub>EC</sub>.","À l'équilibre, Osm<sub>EC</sub> = Osm<sub>Tot</sub>."])},
+  {k:"eau", st:0, q:"Adjonction d'eau : volume total", d:"Ex. sujet potomane",
+   f:"V<sub>Tot</sub> = V<sub>initial</sub> + V<sub>ajout</sub>", u:"Capital osmolaire total <b>inchangé</b>",
+   x:"<p>Boire beaucoup d'eau d'un coup augmente le volume du LEC puis, après les échanges, celui des deux compartiments. Résultat : <b>hyperhydratation hypotonique</b> (poids ↑, risque d'œdème, dont cérébral).</p><span class='tip'>L'hyperhydratation hypotonique est marquée ★★ dans la fiche (tableau p.14).</span>"},
+  {k:"osmeau", der:["eau","osmcap"], q:"Osmolarité totale finale (eau ajoutée)", d:"",
+   f:"Osm<sub>Tot</sub> = "+fr("Cap<sub>Tot</sub>","V<sub>initial</sub> + V<sub>ajout</sub>"), u:"",
+   x:"<p>Même quantité d'osmoles dans plus d'eau : l'osmolarité <b>baisse</b>.</p>"
+   + H(["Pars de Osm<sub>Tot</sub> = Cap<sub>Tot</sub> / V<sub>Tot</sub>.","Cap<sub>Tot</sub> ne change pas.","Remplace V<sub>Tot</sub> par V<sub>initial</sub> + V<sub>ajout</sub>."])},
+  {k:"sel", st:0, q:"Perfusion de NaCl : capital osmolaire", d:"Le sel reste dans le LEC",
+   f:"Cap<sub>Tot final</sub> = Cap<sub>Tot initial</sub> + N<sub>osm NaCl</sub>", u:"Cap<sub>EC</sub> augmente aussi de N<sub>osm NaCl</sub> · Cap<sub>IC</sub> inchangé",
+   x:"<p>Les osmoles du NaCl s'ajoutent au capital total et au capital EC, jamais au capital IC. Résultat : <b>hyperhydratation hypertonique</b> (poids ↑, œdèmes périphériques, pression artérielle élevée).</p>"},
+  {k:"osmsel2", der:["sel","osmcap","eau"], q:"Osmolarité totale finale (NaCl perfusé)", d:"",
+   f:"Osm<sub>Tot</sub> = "+fr("Cap<sub>Tot initial</sub> + N<sub>osm NaCl</sub>","V<sub>initial</sub> + V<sub>ajout</sub>"), u:"",
+   x:"<p>Le numérateur et le dénominateur augmentent. Avec une perfusion hypertonique, l'osmolarité finale <b>monte</b>.</p>"
+   + H(["Pars de Osm<sub>Tot</sub> = Cap<sub>Tot</sub> / V<sub>Tot</sub>.","Ajoute N<sub>osm NaCl</sub> au capital.","Ajoute le volume perfusé au volume."])},
+  {k:"perf", st:0, q:"Concentration de la perfusion de l'exemple", d:"Perfusion hypertonique par erreur : 2 L en réanimation",
+   f:"NaCl 4,5&nbsp;% = 45 g/L", u:"M<sub>NaCl</sub> = <b>60 g/mol</b> · sérum salé isotonique = NaCl <b>0,9&nbsp;%</b>",
+   x:"<p>La fiche traduit 4,5&nbsp;% en 45 g de NaCl par litre. Le sérum salé <b>isotonique</b> (0,9&nbsp;%) sert à traiter la déshydratation hypotonique.</p><span class='tip'>Plasma et LCR contiennent environ 7 g de NaCl/L (p.5).</span>"},
+  {k:"nosm", der:["perf","pm","osmsel"], q:"Osmoles apportées par la perfusion de l'exemple", d:"",
+   f:"2 L × 45 g/L = 90 g → "+fr("90","60")+" = 1,5 mol → 3 osmol", u:"N<sub>osm NaCl</sub> = <b>3 osmol</b> = 3000 mosm",
+   x:"<p>C'est ce N<sub>osm NaCl</sub> qu'on ajoute au capital osmolaire total et EC (@sel).</p><span class='trap'>Ne pas oublier le <b>× 2</b> : chaque NaCl donne 2 particules.</span>"
+   + H(["Masse perfusée : 2 L × 45 g/L = 90 g.","Moles : 90 / 60 = 1,5 mol.","Osmoles : 1,5 × 2 = 3 osmol."])}
+ ]},
+ {id:"F", title:"Échanges plasma / interstitium et œdèmes", pages:"p.17-19", rows:[
+  {k:"prot", st:1, q:"Protéines : plasma et milieu interstitiel", d:"Répartition hétérogène",
+   f:"Plasma 75 g/L ; interstitium 2 g/L", u:"La paroi capillaire est <b>imperméable aux protéines</b>",
+   x:"<p>Le plasma est très riche en protéines, l'interstitium très pauvre. C'est cette différence qui crée la pression oncotique (@po).</p>"},
+  {k:"protpl", st:0, q:"Composition des protéines plasmatiques", d:"",
+   f:"75 = 45 + 25 + 5 g/L", u:"Albumine <b>45</b> (PM 70 000) · globulines <b>25</b> (PM 160 000) · fibrinogène <b>5</b> (PM 400 000)",
+   x:"<p>L'albumine est majoritaire ; il y a 1,5 à 2,5 fois moins de globulines. Le fibrinogène sert à la coagulation.</p>"},
+  {k:"po", st:2, q:"Pression oncotique", d:"Force qui attire l'eau vers les protéines",
+   f:"PO = 25-30 mmHg", u:"Générée surtout par l'<b>albumine</b> (et les petites molécules)",
+   x:"<p>Elle aspire les liquides <b>vers l'intérieur</b> des capillaires et reste <b>stable</b> le long du capillaire (★★★ dans la fiche).</p>"},
+  {k:"part", st:0, q:"Bilan PH − PO au pôle artériel", d:"",
+   f:"PH − PO = + 10 mmHg", u:"PH &gt; PO : <b>sortie</b> de liquide et de nutriments vers l'interstitium",
+   x:"<p>La pression hydrostatique pousse le liquide hors du vaisseau ; elle est <b>forte au pôle artériel</b> (★★★ dans la fiche) et l'emporte sur la PO.</p>"},
+  {k:"pven", st:0, q:"Bilan PH − PO au pôle veineux", d:"",
+   f:"PH − PO = − 8 mmHg", u:"PH &lt; PO : <b>entrée</b> de liquide et de déchets dans le capillaire",
+   x:"<p>La PH est <b>faible au pôle veineux</b> (★★★ dans la fiche) : la PO, restée stable, l'emporte et le liquide revient.</p><span class='tip'>Artériel + 10 : ça sort ; veineux − 8 : ça rentre.</span>"},
+  {k:"reabs", st:0, q:"Devenir du liquide sorti des capillaires", d:"",
+   f:"90&nbsp;% réabsorbé au pôle veineux · 10&nbsp;% → circuit lymphatique", u:"",
+   x:"<p>La petite partie non réabsorbée est drainée par les lymphatiques ; si ce drainage est bloqué, un œdème se forme.</p>"},
+  {k:"uree", st:0, q:"Production d'urée à partir des protides", d:"Urée = forme terminale du catabolisme des protides",
+   f:"3 g de protides → 1 g d'urée = 16 mOsm", u:"Apport normal : <b>80-100 g</b> de protides / 24 h",
+   x:"<p>L'urée diffuse librement et se répartit de façon <b>homogène</b> entre IC et EC. Sa quantité totale varie avec les protides ingérés.</p><span class='tip'>Le rapport est de 3 pour 1.</span>"},
+  {k:"oed", st:0, q:"Stades de rétention hydrosodée", d:"Œdèmes généralisés",
+   f:"&lt; 5&nbsp;% · 5-10&nbsp;% · &gt; 10-15&nbsp;% du poids du corps", u:"5-10&nbsp;% : à partir de <b>2-3 L</b> d'eau retenue",
+   x:"<p>&lt; 5&nbsp;% : simple prise de poids ; 5-10&nbsp;% : gonflement aux points déclives ; &gt; 10-15&nbsp;% : rétention massive, jusqu'aux séreuses (ascite, hydrothorax, hydropéricarde).</p>"}
+ ]}
+];
+
+
+
+const tb=document.getElementById('tb');let h='';
+const rowHTML=(r,code,par)=>`<div class="row${r.der?' der':''}${r.st?' star':''}" tabindex="0">
+      <div class="d"><span class="code">${code}</span>${par?`<span class="from">🔁 Déduite de <b>${par}</b></span>`:''}<span class="name">${r.q}</span>${r.st?`<span class="s">${'★'.repeat(r.st)}</span>`:''}</div>
+      <div class="f"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div></div>`;
+data.forEach(sec=>{
+  h+=`<section class="blk" style="--c:var(--${sec.id})"><header><span class="letter">${sec.id}</span>${sec.title}</header><div class="rows">`;
+  const groups=[];
+  sec.rows.forEach((r,i)=>{const c=sec.id+(i+1); if(r.der&&groups.length) groups[groups.length-1].kids.push([r,c]); else groups.push({r,c,kids:[]});});
+  groups.forEach(g=>{
+    h+=`<div class="grp">`+rowHTML(g.r,g.c);
+    if(g.kids.length) h+=`<div class="kids">`+g.kids.map(([r,c])=>rowHTML(r,c,g.c)).join('')+`</div>`;
+    h+=`</div>`;
+  });
+  h+=`</div></section>`;
+});
+tb.innerHTML=h;
+const b=document.getElementById('bHide'),quiz=document.getElementById('quiz'),qrows=document.getElementById('qrows');
+const all=[];data.forEach(sec=>sec.rows.forEach(r=>all.push(r)));
+const upd=()=>{const n=qrows.querySelectorAll('.qc.show').length,t=all.length;
+  document.getElementById('qcount').textContent=`${n} / ${t} révélées`;document.getElementById('qbar').style.width=(100*n/t)+'%';};
+const shuffle=()=>{
+  const a=all.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  qrows.innerHTML=a.map((r,i)=>`<div class="qc${r.st?' star':''}" tabindex="0">
+    <div class="qd"><span class="qn">${i+1}</span>${r.st?`<span class="qs">${'★'.repeat(r.st)}</span>`:''}<span class="qq">${r.q}</span></div>
+    <div class="qf"><div class="qans"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div><span class="qhint">👁 Révéler</span></div></div>`).join('');
+  upd();
+};
+document.getElementById('bShuffle').onclick=()=>{shuffle();window.scrollTo({top:0});};
+document.getElementById('bReset').onclick=()=>{qrows.querySelectorAll('.qc.show').forEach(c=>c.classList.remove('show'));upd();};
+b.onclick=()=>{
+  const on=document.body.classList.toggle('hide');b.setAttribute('aria-pressed',on);
+  b.textContent=on?'↩ Revenir à la page de référence':'🙈 Cacher les formules';
+  if(on)shuffle();
+  quiz.hidden=!on;tb.hidden=on;document.querySelector('.cols').hidden=on;
+  window.scrollTo({top:0});
+};
+const flip=e=>{const t=e.target.closest('.qc');if(t){t.classList.toggle('show');upd();}};
+qrows.addEventListener('click',flip);
+qrows.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip(e);}});
+</script>
+</body>
+</html>

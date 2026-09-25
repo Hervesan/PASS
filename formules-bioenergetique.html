@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules en 2 colonnes — Bioénergétique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff;--ink:#1d2330;--muted:#5b6474;--line:#e3e6ec;--frame:#b9c0cc;--star:#e8a900;--starbg:#fff6d6;--ded:#3f9a6a;
+--A:#2f86a8;--B:#d0632e;--C:#c9971c;--D:#6f5aa8;--E:#a64b4b;--F:#b0527f}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.35}
+.wrap{max-width:820px;margin:0 auto;padding:16px 12px 40px}
+h1{font-size:1.4rem;margin:0 0 10px;font-weight:800}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:6px 0 8px;z-index:2;display:flex;gap:8px;align-items:center}
+.bar button{font:inherit;font-size:.9rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+.bar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.bar button:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.bar span{font-size:.8rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;border:2px solid var(--frame)}
+th{text-align:left;font-size:.78rem;color:var(--muted);font-weight:700;padding:6px 10px;border-bottom:2px solid var(--frame)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+td.d{width:42%;font-weight:700;font-size:.95rem;border-right:1.5px solid var(--frame)}
+td.d .s{color:var(--star);font-size:.8rem;margin-left:4px;white-space:nowrap}
+td.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.12rem}
+td.f .u{display:block;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.82rem;color:var(--muted);margin-top:2px}
+td.f .u b{color:var(--ink)}
+tr.sec td{background:var(--c);color:#fff;font-weight:800;font-size:.95rem;padding:6px 10px;border-bottom:0}
+tr.der td.d{padding-left:24px;color:var(--ded);font-weight:600;font-size:.9rem}
+tr.der td.d::before{content:"↳ ";font-weight:800}
+tr.der td.f{font-size:1rem;color:var(--ded)}
+sub{font-size:.65em}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor}
+body.hide td.f .ft,body.hide td.f .u{filter:blur(7px)}
+body.hide tr:not(.sec){cursor:pointer}
+body.hide tr.show td.f .ft,body.hide tr.show td.f .u{filter:none}
+@media (prefers-reduced-motion:no-preference){.ft,.u{transition:filter .2s}}
+@media (max-width:480px){td{padding:8px 7px}td.d{font-size:.88rem}td.f{font-size:1rem}tr.der td.d{padding-left:16px}}
+@media print{.bar{display:none}body.hide .ft,body.hide .u{filter:none}tr{break-inside:avoid}}
+
+/* ---- Mise en page soignée ---- */
+body{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0)}
+.wrap{max-width:860px;padding:22px 14px 50px}
+.top{padding:4px 2px 6px}
+.kicker{margin:0;font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--muted)}
+.top h1{font-size:1.9rem;margin:2px 0 4px;letter-spacing:-.01em}
+.meta{margin:0;font-size:.88rem;color:var(--muted)}
+.meta .s{color:var(--star)} .meta .g{color:var(--ded);font-weight:800}
+.bar{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0);padding:10px 0}
+.bar button{background:var(--bg);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.cols{display:grid;grid-template-columns:42% 58%;font-size:.72rem;font-weight:700;letter-spacing:.03em;color:var(--muted);padding:4px 16px 6px}
+.blk{background:var(--bg);border-radius:16px;margin:0 0 22px;overflow:hidden;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25);border:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.blk header{display:flex;align-items:center;gap:10px;padding:12px 16px;font-weight:800;font-size:1.02rem;color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--bg));border-bottom:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.letter{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--c);color:#fff;font-size:.95rem}
+.row{display:grid;grid-template-columns:42% 58%;align-items:stretch;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .d{padding:12px 12px 12px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.code{font-size:.72rem;font-weight:800;color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg));border-radius:5px;padding:1px 6px}
+.name{font-weight:700;font-size:.95rem;flex-basis:100%}
+.row .d .s{color:var(--star);font-size:.82rem;letter-spacing:1px}
+.row .f{padding:12px 16px;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line));display:flex;flex-direction:column;justify-content:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.2rem}
+.row .f .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px;line-height:1.3}
+.row .f .u b{color:var(--c)}
+.row.star .d{background:linear-gradient(90deg,var(--starbg),transparent 75%)}
+.row.der .d{padding-left:30px;position:relative}
+.row.der .d::before{content:"↳";position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ded);font-weight:800}
+.row.der .name{color:var(--ded);font-weight:600;font-size:.9rem}
+.row.der .code{color:var(--ded);background:color-mix(in srgb,var(--ded) 12%,var(--bg))}
+.row.der .f{font-size:1.05rem;color:var(--ded);background:color-mix(in srgb,var(--ded) 6%,var(--bg))}
+body.hide .ft,body.hide .u{filter:blur(7px);user-select:none}
+body.hide .row{cursor:pointer}
+body.hide .row.show .ft,body.hide .row.show .u{filter:none}
+.row:focus-visible{outline:3px solid var(--star);outline-offset:-3px}
+@media (max-width:480px){
+  .cols,.row{grid-template-columns:44% 56%}
+  .row .d{padding:10px 8px 10px 12px}.row .f{padding:10px 12px;font-size:1.05rem}
+  .name{font-size:.88rem}.row.der .d{padding-left:24px}.row.der .d::before{left:8px}
+  .top h1{font-size:1.6rem}
+}
+@media print{body{background:#fff}.blk{box-shadow:none;break-inside:avoid}}
+
+
+/* Option 1 : groupe encadré (formule mère + filles dans une bande verte) */
+.grp{border-top:1px solid var(--line)}
+.grp:first-child{border-top:0}
+.grp > .row{border-top:0}
+.kids{background:color-mix(in srgb,var(--ded) 13%,var(--bg));padding:8px 10px 10px;display:flex;flex-direction:column;gap:7px;border-top:1px solid color-mix(in srgb,var(--ded) 30%,var(--line))}
+.kids .row{border:1px solid color-mix(in srgb,var(--ded) 30%,var(--line));border-radius:10px;overflow:hidden;background:var(--bg);grid-template-columns:calc(42% - 4px) auto}
+.kids .row .d{padding:9px 10px}
+.kids .row .f{background:color-mix(in srgb,var(--ded) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--ded) 25%,var(--line))}
+.row.der .d{padding-left:10px}
+.row.der .d::before{content:none}
+@media (max-width:480px){.kids{padding:7px 7px 8px}.kids .row .d{padding:8px}}
+
+/* Formules déduites : mêmes couleurs que les autres (seul le regroupement les distingue) */
+.kids{background:color-mix(in srgb,var(--ink) 5%,var(--bg));border-top:1px solid var(--line)}
+.kids .row{border-color:var(--line)}
+.row.der .name{color:var(--ink);font-weight:700;font-size:.95rem}
+.row.der .code{color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg))}
+.row.der .code::before{content:none}
+.row.der .f,.kids .row .f{color:var(--ink);font-size:1.2rem;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line))}
+@media (max-width:480px){.row.der .f,.kids .row .f{font-size:1.05rem}.row.der .name{font-size:.88rem}}
+
+/* Comme la page explication : filles décalées, reliées par un trait à leur formule mère */
+.kids{background:transparent;border-top:0;padding:0 12px 14px 38px;gap:10px;position:relative}
+.kids .row{position:relative;overflow:visible;border:1.5px solid color-mix(in srgb,var(--ded) 60%,var(--line));border-radius:10px;background:var(--bg)}
+.kids .row .d{border-radius:9px 0 0 9px}
+.kids .row .f{border-radius:0 9px 9px 0}
+.kids .row::before{content:"";position:absolute;left:-24px;top:-12px;bottom:-12px;border-left:2px solid var(--ded)}
+.kids .row:first-child::before{top:-2px}
+.kids .row:last-child::before{bottom:50%}
+.kids .row::after{content:"";position:absolute;left:-24px;top:50%;width:22px;border-top:2px solid var(--ded)}
+.grp:has(.kids) > .row{border-bottom:0}
+.from{flex-basis:100%;font-size:.76rem;font-weight:700;color:var(--ded)}
+.from b{font-weight:800}
+@media (max-width:480px){
+  .kids{padding:0 8px 12px 28px}
+  .kids .row::before,.kids .row::after{left:-18px}
+  .kids .row::after{width:16px}
+}
+
+/* Colonnes alignées partout + petit espace entre formules principales + cadres déduits plus étroits */
+.blk{container-type:inline-size}
+.row{grid-template-columns:42cqw minmax(0,1fr)!important}
+.kids .row{grid-template-columns:calc(42cqw - 39.5px) minmax(0,1fr)!important}
+.cols{grid-template-columns:42% 58%}
+.rows{display:flex;flex-direction:column;gap:6px;background:color-mix(in srgb,var(--ink) 6%,var(--bg))}
+.grp{border-top:0!important;background:var(--bg)}
+.kids{padding:0 34px 14px 38px}
+@media (max-width:480px){
+  .kids{padding:0 22px 12px 38px}
+  .kids .row::before,.kids .row::after{left:-24px}
+  .kids .row::after{width:22px}
+}
+.from{white-space:nowrap;font-size:.7rem}
+@media (max-width:480px){.kids .row .d{padding:8px 6px 8px 8px}}
+
+/* Tableau neutre (mode singe) : sans sections, sans codes, sans étoiles, mélangé */
+.neutral{--c:var(--muted);border-color:var(--line)}
+.neutral .row .f{background:color-mix(in srgb,var(--ink) 4%,var(--bg));border-left:1px solid var(--line)}
+.neutral .row .u b{color:var(--ink)}
+.neutral .row .u [style]{color:inherit!important}
+.qbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin:0 0 10px;font-size:.85rem;color:var(--muted)}
+.qbar button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer}
+[hidden]{display:none!important}
+body.hide .meta{display:none}
+
+/* ---- Mode entraînement (singe) ---- */
+.qhead{background:var(--bg);border-radius:16px;padding:14px 16px;margin:0 0 16px;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25)}
+.qtop{display:flex;justify-content:space-between;align-items:baseline}
+.qtitle{font-weight:800;font-size:1.1rem}
+.qcount{font-size:.85rem;color:var(--muted);font-weight:600}
+.prog{height:8px;border-radius:99px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));margin:10px 0 12px;overflow:hidden}
+.prog span{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#f5c542,var(--star));transition:width .3s}
+.qbtns{display:flex;gap:8px;flex-wrap:wrap}
+.qbtns button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 13px;border-radius:999px;cursor:pointer}
+.qlist{display:flex;flex-direction:column;gap:10px;container-type:inline-size}
+.qc{display:grid;grid-template-columns:42cqw minmax(0,1fr);background:var(--bg);border-radius:14px;overflow:hidden;cursor:pointer;
+  border:1px solid var(--line);box-shadow:0 1px 2px rgba(20,30,50,.05),0 6px 16px -10px rgba(20,30,50,.3);transition:transform .15s}
+.qc:active{transform:scale(.99)}
+.qc:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.qc.star{border-color:color-mix(in srgb,var(--star) 45%,var(--line))}
+.qd{padding:12px 12px 12px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.qc.star .qd{background:linear-gradient(90deg,var(--starbg),transparent 85%)}
+.qn{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:7px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));color:var(--muted);font-size:.75rem;font-weight:800}
+.qs{color:var(--star);font-size:.85rem;letter-spacing:1px}
+.qq{flex-basis:100%;font-weight:700;font-size:.95rem}
+.qf{position:relative;padding:12px 14px;background:color-mix(in srgb,var(--ink) 3.5%,var(--bg));border-left:1px solid var(--line);display:flex;align-items:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.15rem}
+.qans{display:flex;flex-direction:column;filter:blur(8px);opacity:.6;transition:filter .25s,opacity .25s;user-select:none}
+.qans .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px}
+.qans .u b,.qans .u [style]{color:var(--ink)!important}
+.qhint{position:absolute;inset:0;display:grid;place-items:center;font-family:"Source Sans 3",system-ui,sans-serif;font-size:.8rem;font-weight:700;color:var(--muted)}
+.qc.show .qans{filter:none;opacity:1;user-select:auto}
+.qc.show .qhint{display:none}
+.qc.show .qf{background:color-mix(in srgb,#3f9a6a 7%,var(--bg))}
+.qc.show .qn{background:#3f9a6a;color:#fff}
+@media (max-width:480px){.qf{font-size:1.02rem;padding:10px 12px}.qq{font-size:.88rem}}
+body.hide .qc .ft,body.hide .qc .u{filter:none!important;user-select:auto}
+.bar{flex-wrap:wrap}
+.blink{font-size:.9rem;font-weight:600;text-decoration:none;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);padding:6px 12px;border-radius:999px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.blink:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><p class="kicker">M1 · Physiologie</p><h1>Bioénergétique</h1><p class="meta">49 formules · <span class="s">★</span> tombées au concours · <span class="g">🔁</span> formules déduites, reliées à leur formule de base</p></header>
+<div class="bar"><button id="bHide" aria-pressed="false">🙈 Cacher les formules</button><a class="blink" href="formules.html" style="margin-left:auto">← Cours</a><a class="blink" href="formules-bioenergetique-explications.html">📖 Explications</a></div>
+<div class="cols"><span>Définition</span><span>Formule · unité · constante</span></div><div id="tb"></div>
+<div id="quiz" hidden>
+<div class="qhead"><div class="qtop"><span class="qtitle">Entraînement</span><span id="qcount" class="qcount"></span></div>
+<div class="prog"><span id="qbar"></span></div>
+<div class="qbtns"><button id="bShuffle">🔀 Mélanger</button><button id="bReset">🙈 Tout recacher</button></div></div>
+<div id="qrows" class="qlist"></div></div>
+</div>
+<script>
+const H=()=>'';
+const fr=(a,b)=>`<span class='frac'><span>${a}</span><span>${b}</span></span>`;
+const data = [
+ {id:"A", title:"Énergie, unités et thermodynamique", pages:"p.2-4", rows:[
+  {k:"joule", st:0, q:"Unité d'énergie : le joule", d:"Système international",
+   f:"1 J = 1 N·m", u:"Force en <b>newton</b> (N) · distance en <b>mètre</b> (m)",
+   x:"<p>L'énergie est toujours conservée (1ᵉʳ principe) : toutes ses formes s'expriment donc dans la <b>même unité</b>.</p>"},
+  {k:"watt", st:0, q:"Unité de puissance : le watt", d:"",
+   f:"1 W = 1 J·s⁻¹", u:"",
+   x:"<p>Une puissance est une énergie <b>par seconde</b> : c'est un débit d'énergie.</p>"},
+  {k:"gibbs", st:0, q:"Équation de Gibbs", d:"2ᵉ principe de la thermodynamique",
+   f:"ΔH = ΔG + T·ΔS", u:"ΔH = enthalpie (apport d'énergie totale) · ΔG = énergie libre (travail fourni) · T = température absolue · ΔS = entropie (désordre)",
+   x:"<p>L'énergie apportée n'est <b>pas entièrement utilisable</b> pour un travail : une partie (T·ΔS) sert à augmenter le désordre et se dissipe en <b>chaleur</b>. C'est vrai pour tout processus biologique.</p>"},
+  {k:"dg", der:["gibbs"], q:"Énergie libre disponible pour un travail", d:"",
+   f:"ΔG = ΔH − T·ΔS", u:"",
+   x:"<p>Le travail récupérable est ce qu'il reste de l'apport une fois la chaleur retirée.</p>"
+   + H(["Pars de ΔH = ΔG + T·ΔS.","Fais passer T·ΔS de l'autre côté."])},
+  {k:"homme", st:0, q:"Devenir de l'énergie alimentaire chez l'homme", d:"Application de Gibbs",
+   f:"ΔH → 20&nbsp;% ΔG + 80&nbsp;% T·ΔS", u:"20&nbsp;% en énergie <b>mécanique</b> · 80&nbsp;% dissipée en énergie <b>thermique</b>",
+   x:"<p>Sur l'énergie apportée par l'alimentation, seul un cinquième sert au travail mécanique ; le reste part en chaleur.</p><span class='tip'>20 / 80 : le corps est surtout un radiateur.</span>"},
+  {k:"cal", st:0, q:"Calorie et joule", d:"Unité historique",
+   f:"1 cal = 4,18 J", u:"Grande calorie : <b>1 Cal = 1 kcal = 1000 cal = 4,18 kJ</b>",
+   x:"<p>1 calorie = énergie nécessaire pour élever de 1 K la température de 1 g d'eau.</p><span class='trap'>La « grande calorie » (Cal, kcal) vaut 1000 petites calories.</span>"},
+  {k:"ceau", st:0, q:"Chaleur massique de l'eau", d:"",
+   f:"c<sub>eau</sub> = 4,18 J·g⁻¹·K⁻¹ = 1 cal·g⁻¹·K⁻¹", u:"",
+   x:"<p>C'est la définition même de la calorie, exprimée en joules. Elle sert dans la bombe calorimétrique (@bombe).</p><span class='tip'>Même chiffre que 1 cal = 4,18 J.</span>"}
+ ]},
+ {id:"B", title:"Substrats énergétiques et ATP", pages:"p.4-6", rows:[
+  {k:"bombe", st:0, q:"Chaleur mesurée dans la bombe calorimétrique", d:"Calorimétrie directe d'un substrat",
+   f:"Q = ΔT<sub>eau</sub> × m<sub>eau</sub> × c<sub>eau</sub>", u:"c<sub>eau</sub> = <b>4,18 J·g⁻¹·K⁻¹</b>",
+   x:"<p>Le substrat brûle dans de l'O₂ pur en excès ; la cuve baigne dans de l'eau dont on mesure l'<b>élévation de température</b>. L'enceinte est adiabatique (aucun échange de chaleur avec l'extérieur).</p>"},
+  {k:"glc", st:0, q:"Combustion du glucose", d:"Réaction avec l'O₂",
+   f:"C<sub>6</sub>H<sub>12</sub>O<sub>6</sub> + 6 O<sub>2</sub> → 6 CO<sub>2</sub> + 6 H<sub>2</sub>O + Q", u:"",
+   x:"<p>Q est libéré par la rupture des liaisons covalentes et l'oxydation finale en CO₂ et H₂O.</p><span class='tip'>« 6-6-6-6 ».</span>"},
+  {k:"palm", st:0, q:"Combustion de l'acide palmitique", d:"Réaction avec l'O₂",
+   f:"CH<sub>3</sub>(CH<sub>2</sub>)<sub>14</sub>COOH + 23 O<sub>2</sub> → 16 CO<sub>2</sub> + 16 H<sub>2</sub>O + Q", u:"",
+   x:"<p>Un acide gras à 16 carbones : 16 CO₂ et 16 H₂O, pour 23 O₂ consommés.</p>"},
+  {k:"dens", st:2, q:"Densité énergétique des substrats", d:"Énergie libérée par gramme",
+   f:"Q<sub>glucose</sub> ≈ Q<sub>alanine</sub> ≈ 15 kJ/g ; Q<sub>acide palmitique</sub> ≈ 38 kJ/g", u:"Lipides &gt; glucides et protides",
+   x:"<p>La densité énergétique des <b>lipides</b> est supérieure à celle des glucides et des protides (★★ dans la fiche).</p><span class='tip'>Lipides ≈ 2,5 fois plus « caloriques » par gramme.</span>"},
+  {k:"etot", st:3, q:"Énergie totale libérée in vivo", d:"",
+   f:"E<sub>totale</sub> = ATP + chaleur", u:"= énergie dégagée lors de la <b>combustion</b> · accompagnée de production de CO₂ et de consommation d'O₂",
+   x:"<p>In vivo, la libération est <b>fractionnée</b> (transfert progressif vers des molécules de charge énergétique décroissante), mais l'énergie totale est la même que dans la bombe : une part est captée en ATP, le reste est de la chaleur.</p><span class='tip'>Étoiles de la fiche : ATP ★, chaleur ★★★, « = énergie de combustion » ★.</span>"},
+  {k:"glcatp", der:["etot","glc"], q:"Oxydation complète du glucose in vivo", d:"",
+   f:"C<sub>6</sub>H<sub>12</sub>O<sub>6</sub> + 6 O<sub>2</sub> → 6 CO<sub>2</sub> + 6 H<sub>2</sub>O + Q + 36 ATP", u:"",
+   x:"<p>Même bilan de matière que la combustion, avec en plus <b>36 ATP</b> récupérés.</p>"
+   + H(["Pars de la combustion du glucose (@glc).","Applique E<sub>totale</sub> = ATP + chaleur : ajoute les ATP formés, 36 pour le glucose."])},
+  {k:"palmatp", der:["etot","palm"], q:"Oxydation complète de l'acide palmitique in vivo", d:"",
+   f:"CH<sub>3</sub>(CH<sub>2</sub>)<sub>14</sub>COOH + 23 O<sub>2</sub> → 16 CO<sub>2</sub> + 16 H<sub>2</sub>O + Q + 128 ATP", u:"",
+   x:"<p>L'acide palmitique fournit beaucoup plus d'ATP que le glucose : <b>128</b>.</p>"
+   + H(["Pars de la combustion de l'acide palmitique (@palm).","Ajoute les ATP formés : 128."])},
+  {k:"o2", st:0, q:"Énergie libérée par mole d'O₂", d:"Quel que soit le substrat",
+   f:"≈ 400 kJ / mol d'O<sub>2</sub>", u:"Application : la consommation d'O₂ permet de calculer la <b>dépense énergétique</b>",
+   x:"<p>Comme l'énergie par O₂ consommé varie peu, mesurer l'O₂ consommé suffit pour estimer la dépense (@eqo2).</p><span class='trap'>Le titre de la fiche dit « par mole d'O₂ » mais la ligne écrit « 400 kJ pour 1 mole de <b>substrat</b> » : c'est bien par mole d'O₂.</span>"},
+  {k:"atp", st:0, q:"Hydrolyse de l'ATP en ADP", d:"Énergie immédiatement utilisable par la cellule",
+   f:"ATP → ADP + Pi + 30,5 kJ", u:"Par mole · rupture d'une liaison <b>phosphoanhydre</b>",
+   x:"<p>L'ATP = adénine + ribose + 3 phosphates. L'hydrolyse d'une liaison phosphoanhydre libère une quantité importante d'énergie.</p>"},
+  {k:"besoin", der:["atp","mb"], q:"Besoin quotidien en ATP", d:"Nécessité d'un renouvellement constant",
+   f:"n<sub>ATP</sub> = "+fr("8000 kJ/24 h","30,5 kJ/mol")+" ≈ 267 mol/24 h", u:"Métabolisme ≈ <b>8000 kJ/24 h</b>",
+   x:"<p>Le stock d'ATP est minuscule face aux besoins : il faut le régénérer en permanence.</p><span class='trap'>8000 ÷ 30,5 donne environ <b>262</b> mol, et non 267 comme l'écrit la fiche : retenir l'ordre de grandeur.</span>"
+   + H(["1 mol d'ATP fournit 30,5 kJ.","La dépense quotidienne est d'environ 8000 kJ.","Divise : 8000 / 30,5 → environ 260-270 mol d'ATP par jour."])},
+  {k:"adp", st:0, q:"Hydrolyse de l'ADP en AMP", d:"",
+   f:"ADP → AMP + Pi + 30,5 kJ", u:"",
+   x:"<p>Deuxième transformation, avec la même énergie libérée.</p><span class='tip'>ATP → ADP → AMP : 30,5 kJ à chaque phosphate.</span>"},
+  {k:"bilglc", st:1, q:"Bilan en ATP du glucose selon la voie", d:"Devenir du pyruvate",
+   f:"Aérobie (acétyl-CoA) : + 36 ATP ; anaérobie (lactate) : + 2 ATP", u:"Aérobie = en présence d'O₂ (cycle de Krebs, chaîne respiratoire)",
+   x:"<p>Avec O₂, le pyruvate devient acétyl-CoA et entre dans la mitochondrie : rendement maximal. Sans O₂, il devient lactate : 2 ATP seulement.</p><span class='tip'>36 avec O₂, 2 sans.</span>"}
+ ]},
+ {id:"C", title:"Stocks d'énergie et voies de synthèse de l'ATP", pages:"p.7-9", rows:[
+  {k:"stockatp", st:0, q:"Stock musculaire d'ATP", d:"Stock intracellulaire",
+   f:"[ATP] = 4-6 mM dans le muscle", u:"Suffit pour un effort de <b>quelques secondes</b>",
+   x:"<p>Le stock d'ATP est très faible : il doit être renouvelé en permanence (@besoin).</p>"},
+  {k:"myok", st:1, q:"Réaction de la myokinase", d:"Adénylate kinase",
+   f:"2 ADP ⇄ ATP + AMP", u:"Inertie quasi nulle = réaction <b>extrêmement rapide</b>",
+   x:"<p>Deux ADP donnent un ATP et un AMP : on récupère vite de l'ATP. Son importance quantitative est mal connue.</p>"},
+  {k:"ck", st:0, q:"Réaction de la créatine kinase", d:"",
+   f:"Créatine + ATP ⇄ phosphocréatine + ADP", u:"[Créatine] musculaire ≈ <b>35 mM</b> · effort de plusieurs secondes",
+   x:"<p>Si le stock d'ATP baisse, l'équilibre se déplace vers la <b>formation d'ATP</b> : la phosphocréatine reconstitue très vite l'ATP du muscle strié et du myocarde. La créatine est synthétisée dans le foie (arginine + glycine).</p>"},
+  {k:"glycog", st:0, q:"Stocks de glycogène", d:"Polysaccharide branché de glucose",
+   f:"Muscle : 15 g/kg de muscle (≈ 400 g) ; foie : 150 g", u:"≈ <b>60 000</b> glucoses · PM 100-1000 kDa",
+   x:"<p>Le glycogène musculaire est une réserve <b>locale</b> (effort de quelques heures) ; le glycogène hépatique sert à tout l'organisme et maintient la <b>glycémie</b>.</p>"},
+  {k:"lip", st:0, q:"Stock lipidique du tissu adipeux", d:"Triglycérides = glycérol + 3 acides gras",
+   f:"15-20&nbsp;% du poids d'un adulte", u:"Réserve énergétique <b>anhydre</b>",
+   x:"<p>Les lipides sont la <b>principale réserve d'énergie</b> de l'organisme (★ dans la fiche) : sans eau, ils stockent beaucoup d'énergie sans surcharge de poids.</p>"},
+  {k:"voies", st:0, q:"Capacité des voies de synthèse de l'ATP", d:"Quantité d'ATP produite",
+   f:"PCr/myokinase 40 kJ · glycolyse anaérobie 495 kJ · glycolyse aérobie 7200 kJ · lipolyse 570 000 kJ", u:"Puissance : PCr/myokinase <b>1000 W</b> (élevée) · moyenne (anaérobie) · faible (aérobie, lipolyse)",
+   x:"<p>Plus une voie est <b>rapide</b> (faible inertie), plus sa <b>capacité</b> est petite. À l'effort, les voies sont mobilisées dans l'ordre de leur inertie : PCr → glycolyse anaérobie → aérobie → lipolyse.</p><span class='tip'>Rapide = petit réservoir ; lent = énorme réservoir.</span>"}
+ ]},
+ {id:"D", title:"Dépense énergétique quotidienne", pages:"p.11", rows:[
+  {k:"det", st:0, q:"Répartition de la dépense énergétique totale", d:"",
+   f:"Métabolisme de base ≈ 60&nbsp;% · exercice ≈ 15-30&nbsp;% · post-prandial ≈ 10&nbsp;%", u:"",
+   x:"<p>La plus grosse part sert aux besoins incompressibles (métabolisme de base) ; l'exercice varie selon l'activité ; la digestion coûte environ 10&nbsp;%.</p><span class='trap'>Questions d'entraînement Physiologie digestive, Q1 : « le métabolisme post-prandial consomme 30&nbsp;% » → <b>faux</b>, c'est 10&nbsp;%.</span>"},
+  {k:"mb", st:0, q:"Métabolisme de base d'un sujet sain", d:"Dépense nécessaire au maintien de l'homéostasie",
+   f:"≈ 7000-8500 kJ / 24 h", u:"Part cérébrale ≈ <b>20&nbsp;%</b> · sous contrôle des hormones thyroïdiennes",
+   x:"<p>Il dépend de la <b>masse maigre</b>, qui augmente avec la surface corporelle et la température corporelle, diminue avec l'âge, et est plus élevée chez l'homme.</p>"},
+  {k:"brul", st:0, q:"Besoins d'un grand brûlé", d:"Sujet non sain",
+   f:"&gt; 12 000 kJ / 24 h", u:"Réparation, cicatrisation, défense contre les infections",
+   x:"<p>La maladie augmente la dépense : les besoins d'un grand brûlé dépassent nettement le métabolisme de base.</p>"}
+ ]},
+ {id:"E", title:"Calorimétrie directe et travail mécanique", pages:"p.13-14", rows:[
+  {k:"qs", st:1, q:"Chaleur sensible dégagée", d:"Mesurée par l'eau du serpentin",
+   f:"Q<sub>S</sub> = (T<sub>2</sub> − T<sub>1</sub>) × V × chaleur volumique du fluide", u:"T<sub>1</sub>, T<sub>2</sub> = entrée / sortie (°C ou K) · V en <b>L</b> · chaleur volumique en <b>J·L⁻¹·K⁻¹</b>",
+   x:"<p>Le sujet est dans une chambre isolée traversée par un serpentin d'eau : l'échauffement de l'eau mesure la chaleur qu'il émet.</p><span class='trap'>T<sub>2</sub> = sortie, T<sub>1</sub> = entrée : (T<sub>2</sub> − T<sub>1</sub>) est positif.</span>"},
+  {k:"ql", st:1, q:"Chaleur latente dégagée", d:"Mesurée par l'eau évaporée",
+   f:"Q<sub>L</sub> = m × chaleur latente d'évaporation de l'eau", u:"m en <b>g</b> · <b>2,42 kJ/g = 0,58 kcal/g</b>",
+   x:"<p>Un absorbeur d'eau à la sortie de la ventilation mesure la masse d'eau évaporée par le sujet ; chaque gramme évaporé a emporté 2,42 kJ.</p>"},
+  {k:"q", st:1, q:"Chaleur totale dégagée", d:"",
+   f:"Q = Q<sub>S</sub> + Q<sub>L</sub>", u:"Au repos : Q<sub>repos</sub> = dépense énergétique au repos",
+   x:"<p>On additionne la chaleur sensible et la chaleur latente.</p>"},
+  {k:"p", der:["q","watt"], q:"Puissance dégagée", d:"",
+   f:"P = "+fr("Q","temps"), u:"Au repos : P<sub>repos</sub> = puissance du <b>métabolisme de base</b>",
+   x:"<p>Diviser la chaleur par la durée donne une puissance en watts.</p>"
+   + H(["Pars de Q = Q<sub>S</sub> + Q<sub>L</sub> (énergie).","Une puissance = énergie par seconde (1 W = 1 J·s⁻¹) : divise par le temps."])},
+  {k:"dexo", st:0, q:"Dépense énergétique totale à l'exercice", d:"",
+   f:"Dépense = Q<sub>L</sub> + Q<sub>S</sub> + W", u:"W = énergie mécanique fournie",
+   x:"<p>À l'effort, le sujet produit de la chaleur <b>et</b> un travail mécanique : il faut ajouter W.</p>"},
+  {k:"pmeca", der:["dexo","watt"], q:"Puissance mécanique", d:"",
+   f:"P = "+fr("W","temps"), u:"",
+   x:"<p>Même logique que pour la chaleur, appliquée au travail.</p>"
+   + H(["Pars du travail W (énergie).","Divise par le temps pour obtenir une puissance."])},
+  {k:"w", st:1, q:"Travail linéaire", d:"",
+   f:"W = F × D", u:"F = force en <b>N</b> · D = déplacement rectiligne en <b>m</b>",
+   x:"<p>Le travail est la force multipliée par la distance parcourue dans sa direction.</p>"},
+  {k:"wang", der:["w"], q:"Travail angulaire (vélo)", d:"Sujet qui pédale",
+   f:"W = F × L × S = C × S", u:"S = déplacement angulaire (rad) · L = rayon du pédalier · C = F × L = couple (N·m)",
+   x:"<p>Sur un cercle, la distance parcourue par le point d'application est L × S : on retrouve force × distance.</p>"
+   + H(["Pars de W = F × D.","Sur un cercle de rayon L, un angle S (rad) correspond à D = L × S.","W = F × L × S, et F × L = C, donc W = C × S."])},
+  {k:"wn", st:1, q:"Travail pour soulever et reposer N fois une masse", d:"",
+   f:"W = N × m × g × H × 2", u:"m en <b>kg</b> · g = accélération de la pesanteur · H = hauteur en <b>m</b>",
+   x:"<p>Se retrouve à partir de @w : la force est le poids m × g, la distance est H, comptée <b>deux fois</b> (on soulève puis on repose), et on répète N fois.</p><span class='trap'>Ne pas oublier le <b>× 2</b>.</span>"},
+  {k:"ang", st:0, q:"Déplacement angulaire", d:"",
+   f:"S = vitesse angulaire × temps", u:"Vitesse en <b>rad·s⁻¹</b> · temps en <b>s</b> · <b>1 tour/s = 2π rad/s</b>",
+   x:"<p>Pour un pédalage donné en tours par seconde, on convertit en radians avant de calculer W.</p><span class='trap'>Toujours convertir les tours en radians : × 2π.</span>"}
+ ]},
+ {id:"F", title:"Thermochimie et rendement", pages:"p.14-16", rows:[
+  {k:"qabs", st:0, q:"Énergie chimique absorbée (thermochimie alimentaire)", d:"On pèse et on analyse les aliments",
+   f:"Q<sub>abs</sub> = m<sub>lipides</sub> × ΔG<sub>lipides</sub> + m<sub>glucides</sub> × ΔG<sub>glucides</sub> + m<sub>protides</sub> × ΔG<sub>protides</sub>", u:"ΔG<sub>substrat</sub> = énergie totale libérée par g (kJ/g)",
+   x:"<p>Valable en <b>état stable</b> (apports = dépenses, poids stable) ; sinon il faut tenir compte de la variation de masse grasse. Pour être précis, on retire l'énergie des selles (importante en cas de malabsorption).</p>"},
+  {k:"eqo2", st:0, q:"Équivalent énergétique de l'O₂", d:"Varie peu selon le nutriment",
+   f:"≈ 20 kJ / L d'O<sub>2</sub>", u:"Glucides, lipides ou protides",
+   x:"<p>La production d'ATP est liée à la chaîne respiratoire, elle-même liée à la consommation d'O₂ : la VO₂ permet d'estimer la dépense.</p>"},
+  {k:"qr", st:0, q:"Quotient respiratoire", d:"",
+   f:"QR = "+fr("VCO<sub>2</sub>","VO<sub>2</sub>"), u:"VCO₂ = production de CO₂ · VO₂ = consommation d'O₂",
+   x:"<p>Le QR dépend du substrat brûlé : il renseigne sur le carburant utilisé.</p>"},
+  {k:"qrglc", der:["qr","glc"], q:"QR du glucose", d:"",
+   f:"QR = "+fr("6","6")+" = 1", u:"",
+   x:"<p>Le glucose rejette autant de CO₂ qu'il consomme d'O₂.</p>"
+   + H(["Pars de la combustion du glucose : 6 O₂ consommés, 6 CO₂ produits.","QR = 6 / 6 = 1."])},
+  {k:"qrpalm", der:["qr","palm"], q:"QR de l'acide palmitique", d:"",
+   f:"QR = "+fr("16","23")+" ≈ 0,7", u:"",
+   x:"<p>Les lipides consomment plus d'O₂ qu'ils ne produisent de CO₂ : QR &lt; 1.</p>"
+   + H(["Pars de la combustion de l'acide palmitique : 23 O₂ consommés, 16 CO₂ produits.","QR = 16 / 23 ≈ 0,7."])},
+  {k:"qr08", st:0, q:"QR des protides et du sujet au repos", d:"Alimentation équilibrée",
+   f:"QR = 0,8", u:"",
+   x:"<p>Au repos, l'organisme utilise plusieurs substrats. La source dominante est les <b>lipides</b>, mais certains organes, notamment le <b>cerveau</b> (≈ 20&nbsp;% de la dépense), utilisent préférentiellement le glucose.</p><span class='tip'>1 (glucose) · 0,8 (protides, repos) · 0,7 (lipides).</span>"},
+  {k:"vo2sac", st:0, q:"VO₂ par recueil du gaz expiré dans un sac", d:"Valve à 3 voies",
+   f:"VO<sub>2</sub> = "+fr("V<sub>gaz</sub> × (21&nbsp;% − FeO<sub>2</sub>)","temps de l'examen"), u:"V<sub>gaz</sub> = volume expiré · FeO<sub>2</sub> = fraction d'O₂ du gaz expiré",
+   x:"<p>L'air inspiré contient 21&nbsp;% d'O₂ ; ce qui manque dans l'air expiré a été consommé.</p>"},
+  {k:"drepos", st:1, q:"Dépense énergétique au repos", d:"Méthode du sac",
+   f:"Dépense = VO<sub>2</sub> (L/24 h) × équivalent énergétique de l'O<sub>2</sub> (kJ/L)", u:"Équivalent ≈ <b>20 kJ/L</b>",
+   x:"<p>On multiplie le volume d'O₂ consommé par l'énergie libérée par litre (@eqo2).</p><span class='trap'>Unités : VO₂ en <b>L/24 h</b>, équivalent en <b>kJ/L</b> → dépense en kJ/24 h.</span>"},
+  {k:"vo2cyc", st:0, q:"VO₂ par analyse cycle à cycle", d:"À chaque cycle ventilatoire, pour l'exercice",
+   f:"VO<sub>2</sub> = V<sub>I</sub> × 21 − (V<sub>E</sub> × F<sub>E</sub>O<sub>2</sub>)", u:"V<sub>I</sub>, V<sub>E</sub> = volumes inspiré et expiré · F<sub>E</sub>O<sub>2</sub> = fraction d'O₂ expirée",
+   x:"<p>O₂ entré (V<sub>I</sub> × fraction d'O₂ de l'air) moins O₂ ressorti (V<sub>E</sub> × F<sub>E</sub>O<sub>2</sub>).</p><span class='trap'>La fiche écrit « × 21 » sans le signe % : il s'agit des 21&nbsp;% d'O₂ de l'air, comme dans la méthode du sac.</span>"},
+  {k:"rb", st:1, q:"Rendement brut", d:"",
+   f:"Rendement brut = "+fr("W","Q<sub>effort</sub>"), u:"Q<sub>effort</sub> = dépense énergétique lors de l'effort",
+   x:"<p>Part de l'énergie dépensée à l'effort qui devient du travail mécanique.</p>"},
+  {k:"rn", der:["rb"], q:"Rendement net", d:"",
+   f:"Rendement net = "+fr("W","Q<sub>effort</sub> − Q<sub>repos</sub>"), u:"Q<sub>effort</sub> &gt; Q<sub>repos</sub>",
+   x:"<p>On ne compte que l'énergie dépensée <b>en plus</b> du repos : le rendement net est plus élevé que le brut.</p>"
+   + H(["Pars de W / Q<sub>effort</sub>.","Retire du dénominateur la dépense de repos Q<sub>repos</sub>."])}
+ ]}
+];
+
+
+
+const tb=document.getElementById('tb');let h='';
+const rowHTML=(r,code,par)=>`<div class="row${r.der?' der':''}${r.st?' star':''}" tabindex="0">
+      <div class="d"><span class="code">${code}</span>${par?`<span class="from">🔁 Déduite de <b>${par}</b></span>`:''}<span class="name">${r.q}</span>${r.st?`<span class="s">${'★'.repeat(r.st)}</span>`:''}</div>
+      <div class="f"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div></div>`;
+data.forEach(sec=>{
+  h+=`<section class="blk" style="--c:var(--${sec.id})"><header><span class="letter">${sec.id}</span>${sec.title}</header><div class="rows">`;
+  const groups=[];
+  sec.rows.forEach((r,i)=>{const c=sec.id+(i+1); if(r.der&&groups.length) groups[groups.length-1].kids.push([r,c]); else groups.push({r,c,kids:[]});});
+  groups.forEach(g=>{
+    h+=`<div class="grp">`+rowHTML(g.r,g.c);
+    if(g.kids.length) h+=`<div class="kids">`+g.kids.map(([r,c])=>rowHTML(r,c,g.c)).join('')+`</div>`;
+    h+=`</div>`;
+  });
+  h+=`</div></section>`;
+});
+tb.innerHTML=h;
+const b=document.getElementById('bHide'),quiz=document.getElementById('quiz'),qrows=document.getElementById('qrows');
+const all=[];data.forEach(sec=>sec.rows.forEach(r=>all.push(r)));
+const upd=()=>{const n=qrows.querySelectorAll('.qc.show').length,t=all.length;
+  document.getElementById('qcount').textContent=`${n} / ${t} révélées`;document.getElementById('qbar').style.width=(100*n/t)+'%';};
+const shuffle=()=>{
+  const a=all.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  qrows.innerHTML=a.map((r,i)=>`<div class="qc${r.st?' star':''}" tabindex="0">
+    <div class="qd"><span class="qn">${i+1}</span>${r.st?`<span class="qs">${'★'.repeat(r.st)}</span>`:''}<span class="qq">${r.q}</span></div>
+    <div class="qf"><div class="qans"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div><span class="qhint">👁 Révéler</span></div></div>`).join('');
+  upd();
+};
+document.getElementById('bShuffle').onclick=()=>{shuffle();window.scrollTo({top:0});};
+document.getElementById('bReset').onclick=()=>{qrows.querySelectorAll('.qc.show').forEach(c=>c.classList.remove('show'));upd();};
+b.onclick=()=>{
+  const on=document.body.classList.toggle('hide');b.setAttribute('aria-pressed',on);
+  b.textContent=on?'↩ Revenir à la page de référence':'🙈 Cacher les formules';
+  if(on)shuffle();
+  quiz.hidden=!on;tb.hidden=on;document.querySelector('.cols').hidden=on;
+  window.scrollTo({top:0});
+};
+const flip=e=>{const t=e.target.closest('.qc');if(t){t.classList.toggle('show');upd();}};
+qrows.addEventListener('click',flip);
+qrows.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip(e);}});
+</script>
+</body>
+</html>

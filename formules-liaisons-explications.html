@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules — Liaisons chimiques et orbitales moléculaires</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#ffffff; --ink:#1d2330; --muted:#5b6474; --line:#e3e6ec;
+  --star:#e8a900; --starbg:#fff6d6; --fbg:#f4f6fb; --ded:#3f9a6a; --dedbg:#eef6f1;
+  --A:#2f86a8; --B:#d0632e; --C:#c9971c; --D:#6f5aa8; --E:#a64b4b;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.4}
+.wrap{max-width:860px;margin:0 auto;padding:18px 14px 40px}
+h1{font-size:1.6rem;font-weight:800;margin:0}
+.sub{color:var(--muted);font-size:.9rem;margin:2px 0 0}
+.s{color:var(--star);letter-spacing:1px;white-space:nowrap}
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 0;margin:12px 0 4px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.toolbar button{font:inherit;font-size:.88rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 11px;border-radius:999px;cursor:pointer}
+.toolbar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.toolbar button:focus-visible,.card:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.count{margin-left:auto;color:var(--muted);font-size:.82rem}
+section{margin-top:22px}
+h2{font-size:1rem;margin:0 0 8px;padding:6px 12px;color:#fff;border-radius:6px}
+.card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:stretch;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.def{padding:10px 12px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.def .top{display:flex;gap:8px;align-items:baseline;font-size:.8rem;font-weight:800}
+.def .q{font-weight:700;font-size:1rem}
+.def .d{color:var(--muted);font-size:.86rem}
+.fm{background:var(--fbg);border-left:5px solid var(--sec);padding:12px 14px;display:flex;flex-direction:column;justify-content:center}
+.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.35rem;line-height:1.25}
+.f sub{font-size:.62em}
+.u{margin-top:6px;font-size:.9rem;font-weight:600;color:var(--ink)}
+.u b{color:var(--sec)}
+.card.starred .def{background:linear-gradient(90deg,var(--starbg),transparent 70%)}
+.card.derived{border-style:dashed}
+.card.derived .fm{border-left-color:var(--ded)}
+.card.derived .top .tag{color:var(--ded)}
+#A{--sec:var(--A)} #B{--sec:var(--B)} #C{--sec:var(--C)} #D{--sec:var(--D)} #E{--sec:var(--E)}
+#A h2{background:var(--A)} #B h2{background:var(--B)} #C h2{background:var(--C)} #D h2{background:var(--D)} #E h2{background:var(--E)}
+section .top .code{color:var(--sec)}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+body.hide .card{cursor:pointer}
+body.stars .card:not(.starred){display:none}
+body.base .card.derived{display:none}
+.hint{display:none;color:var(--muted);font-size:.85rem;margin:6px 0 0}
+body.hide .hint{display:block}
+@media (max-width:600px){
+  .card{grid-template-columns:1fr}
+  .fm{border-left:0;border-top:4px solid var(--sec)}
+  .card.derived .fm{border-top-color:var(--ded)}
+}
+@media (prefers-reduced-motion:no-preference){.f,.u{transition:filter .2s}}
+@media print{.toolbar,.hint{display:none}body.hide .fm .f,body.hide .fm .u{filter:none}.card{break-inside:avoid}}
+
+/* Cartes plus isolées */
+section{margin-top:34px}
+h2{margin-bottom:14px}
+.card{margin-bottom:18px;border:1.5px solid var(--line);border-radius:12px;box-shadow:0 2px 0 var(--line),0 6px 14px -8px rgba(29,35,48,.25)}
+.def{padding:14px 16px}
+.fm{padding:16px 18px}
+.card.derived{border-width:1.5px}
+@media (max-width:600px){.card{margin-bottom:16px}}
+
+/* Couple définition/formule plus serré, séparation légère */
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.def{padding:14px 12px 14px 16px}
+.fm{padding:14px 16px 14px 14px}
+.card{margin-bottom:28px}
+section{margin-top:40px}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px dashed var(--line)!important}
+  .def{padding:14px 16px 8px}
+  .fm{padding:10px 16px 14px}
+  .card{margin-bottom:26px}
+}
+
+.wrap{max-width:980px}
+.legend{margin-top:6px;font-size:.88rem;color:var(--muted)}
+.chain{margin:14px 0 4px;padding:12px 14px;border-left:4px solid var(--star);background:var(--starbg);border-radius:0 8px 8px 0;font-size:.95rem}
+.mnemo{margin:12px 0 4px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:.92rem}
+.mnemo strong{display:block;margin-bottom:6px}
+.mnemo ul{margin:0;padding-left:18px;columns:2;column-gap:28px}
+.mnemo li{margin-bottom:4px;break-inside:avoid}
+.chain .f,.mnemo .f{font-size:1rem}
+.card{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
+.x{grid-column:1 / -1;border-top:1px dashed var(--line);padding:12px 16px 14px;font-size:.9rem;color:var(--muted)}
+.x p{margin:0 0 5px}
+.x b,.x .tip,.x .trap{color:var(--ink)}
+.tip,.trap{display:block;margin-top:5px}
+.tip::before{content:"💡 "}
+.trap::before{content:"⚠️ "}
+.ded{margin-top:8px;padding:8px 10px;background:var(--dedbg);border-left:3px solid var(--ded);border-radius:0 6px 6px 0;font-size:.86rem;color:var(--ink)}
+.ded strong{display:block;margin-bottom:3px}
+.ded ol{margin:0;padding-left:20px}
+.from{display:block;margin-top:4px;font-size:.84rem;color:var(--ded);font-weight:600}
+.gives{display:block;margin-top:8px;font-size:.86rem;color:var(--ded);font-weight:600}
+.chip{display:inline-block;text-decoration:none;font-size:.78rem;font-weight:700;border:1px solid var(--line);border-radius:5px;padding:0 5px;background:var(--bg);color:var(--ink)}
+.card{scroll-margin-top:70px}
+.card:target{box-shadow:0 0 0 3px var(--star)}
+/* mode test : seul le titre reste visible */
+body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:blur(8px);user-select:none}
+body.hide .card.show .def .d,body.hide .card.show .def .from,body.hide .card.show .fm,body.hide .card.show .x{filter:none;user-select:auto}
+@media (max-width:600px){.mnemo ul{columns:1}.x{padding:10px 16px 14px}}
+@media print{body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:none}}
+
+/* Traits pleins fins à l'intérieur, cadre plus marqué */
+:root{--frame:#b9c0cc}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--frame:#4a5263}}
+:root[data-theme="dark"]{--frame:#4a5263}
+.card{border:2px solid var(--frame)!important}
+.card.derived{border:2px solid var(--ded)!important}
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.x{border-top:1px solid var(--line)!important}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px solid var(--line)!important}
+}
+
+/* Traits intérieurs un peu plus épais */
+.fm,.card.derived .fm{border-left:1.5px solid var(--frame)!important;border-top:0!important}
+.x{border-top:1.5px solid var(--frame)!important}
+@media (max-width:600px){.fm,.card.derived .fm{border-left:0!important;border-top:1.5px solid var(--frame)!important}}
+
+/* Cadre d'épaisseur identique sur les 4 côtés */
+.card{box-shadow:0 6px 14px -10px rgba(29,35,48,.28)!important}
+
+/* Mobile : carte empilée comme la page épurée (évite le trait doublé en haut de la formule) */
+@media (max-width:600px){.card{grid-template-columns:1fr!important}}
+
+/* Fractions : numérateur au-dessus du dénominateur */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor;padding-bottom:.08em}
+.frac>span:last-child{padding-top:.08em}
+
+/* Arbre : formule de base → formules déduites (comme la page arbre) */
+.grp{margin-bottom:28px}
+.grp .card{margin-bottom:0}
+.tree{list-style:none;margin:0 0 0 26px;padding:0}
+.tree > li{position:relative;padding:12px 0 0 30px}
+.tree > li::before{content:"";position:absolute;left:0;top:0;bottom:0;border-left:2px solid var(--ded)}
+.tree > li:last-child::before{bottom:auto;height:36px}
+.tree > li::after{content:"";position:absolute;left:0;top:36px;width:24px;border-top:2px solid var(--ded)}
+.tree .card{box-shadow:none!important}
+.tree .card .f{font-size:1.18rem}
+body.stars .grp:not(.gstar){display:none}
+body.stars .tree{display:none}
+body.base .tree{display:none}
+@media (max-width:600px){
+  .tree{margin-left:12px}
+  .tree > li{padding-left:22px}
+  .tree > li::after{width:18px}
+}
+
+/* Singe = bascule vers la vue épurée floutée (définition → formule) */
+body.hide .x,body.hide .chain,body.hide .mnemo,body.hide .legend,body.hide .from{display:none}
+body.hide .def .d{filter:none!important;user-select:auto}
+body.hide .fm{filter:none!important}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+@media (prefers-reduced-motion:no-preference){.fm .f,.fm .u{transition:filter .2s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Liaisons chimiques et orbitales moléculaires : les formules</h1>
+<p class="sub">M2 · Chimie · formules expliquées</p>
+<div class="legend"><span class="s">★</span> = tombée au concours, d'après la fiche de cours · <span class="s">★★★</span> = la plus fréquente · <span style="color:var(--ded);font-weight:700">🔁</span> = formule déduite d'une autre (cadre vert)</div>
+<div class="toolbar" role="toolbar" aria-label="Options">
+  <a href="formules-liaisons.html" style="font-size:.88rem;font-weight:600;text-decoration:none;color:var(--ink);border:1.5px solid var(--line);padding:6px 11px;border-radius:999px">← Tableau des formules</a>
+  <button id="bHide" aria-pressed="false">🙈 Réviser (vue épurée)</button>
+  <button id="bStars" aria-pressed="false"><span class="s">★</span> Concours</button>
+  <button id="bBase" aria-pressed="false">Sans les déduites</button>
+  <span class="count" id="count"></span>
+</div>
+<p class="hint">Vue épurée : touche une carte pour révéler la formule. Retouche 🙈 pour revenir aux explications.</p>
+<div class="chain">Le fil qui relie tout : <span class="f">Ψ = C<sub>A</sub>Ψ<sub>A</sub> ± C<sub>B</sub>Ψ<sub>B</sub></span> → remplissage (2 e⁻ par OM) → <span class="f">OL = <span class='frac'><span>n<sub>liants</sub> − n<sub>antiliants</sub></span><span>2</span></span></span> → <span class="f">n + m</span> (VSEPR) → 180° / 120° / 109,5° = sp / sp<sup>2</sup> / sp<sup>3</sup> → <span class="f">μ<sub>résultant</sub> = Σ μ</span> → énergies en 1/r<sup>6</sup> &lt; liaisons H &lt; covalentes.</div>
+
+<div class="mnemo">
+  <strong>Moyens mnémotechniques</strong>
+  <ul>
+    <li>OL = « liants moins antiliants, le tout sur 2 » ; OL = 0 → la molécule n'existe pas (He<sub>2</sub>).</li>
+    <li>OL 1, 2, 3 = simple, double, triple = 1, 2, 3 doublets partagés ; plus c'est multiple, plus c'est <b>court</b>.</li>
+    <li>O<sub>2</sub> triplet : S = ½ + ½ = <b>1</b> → électrons célibataires → paramagnétique.</li>
+    <li>n + m = 2, 3, 4 → <b>180°, 120°, 109,5°</b> ; chaque doublet libre <b>ferme</b> l'angle (&lt;).</li>
+    <li>sp, sp<sup>2</sup>, sp<sup>3</sup> : exposant + 1 = <b>2, 3, 4</b> orbitales, mêmes angles que VSEPR.</li>
+    <li>Triple = 1 σ + 2 π ; double = 1 σ + 1 π ; simple = 1 σ.</li>
+    <li><b>K</b>eesom p·p, <b>D</b>ebye p·α, <b>L</b>ondon α·α : toutes en −k …/r<sup>6</sup>.</li>
+    <li>Liaison H : <b>20×</b> plus faible qu'une covalente, <b>10×</b> plus forte que Van der Waals.</li>
+    <li>1 D = 0,333.10<sup>−29</sup> C.m ; eau : 1,8 D (coudée, donc polaire).</li>
+  </ul>
+</div>
+
+<main id="main"></main>
+<footer style="margin-top:30px;color:var(--muted);font-size:.8rem;text-align:center">Source : fiche de cours actualisée Médisup Tours/Orléans 2026-2027.</footer>
+</div>
+<script>
+const S = n => n ? '<span class="s">' + '★'.repeat(n) + '</span>' : '';
+const H = steps => `<div class="ded"><strong>🔁 Comment la retrouver</strong><ol>${steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>`;
+const fr=(n,d)=>`<span class='frac'><span>${n}</span><span>${d}</span></span>`;
+const data = [
+ {id:"A", title:"Règles de Lewis et orbitales moléculaires", pages:"p.2-6", rows:[
+  {k:"duet", st:0, q:"Règle du duet", d:"Atomes de la 1<sup>re</sup> période, comme l'hydrogène",
+   f:"H entouré de 2 électrons (1 paire)", u:"Stabilité <b>maximale</b> de H",
+   x:"<p>L'hydrogène n'a qu'une couche (1s<sup>1</sup> : 1 électron de valence). Il est stable dès qu'il est entouré d'<b>une seule paire</b> d'électrons, donc d'une seule liaison.</p><span class='tip'><b>Duo</b> = 2 : duet pour H, octet (8) pour les autres.</span>"},
+  {k:"octet", st:0, q:"Règle de l'octet", d:"Chaque atome d'une molécule, hormis l'hydrogène",
+   f:"8 électrons = 4 paires autour de l'atome", u:"Par analogie avec les gaz rares : <b>8 électrons de valence</b> (sauf He : 2)",
+   x:"<p>La molécule est la plus stable quand chaque atome (sauf H) est entouré de <b>4 paires</b> d'électrons (liantes + libres). L'objectif des atomes : ressembler au <b>gaz rare le plus proche</b>. Selon Lewis, c'est cette règle qui permet de choisir la structure la plus fidèle.</p><span class='tip'>NH<sub>3</sub> : 3 paires liantes + 1 paire libre = 4 paires. H<sub>2</sub>O : 2 liantes + 2 libres = 4 paires.</span>"},
+  {k:"d0", st:0, q:"Distance d'équilibre de la liaison H–H", d:"Distance à laquelle l'énergie potentielle est minimale",
+   f:"d<sub>0</sub>(H–H) = 0,74 Å", u:"d<sub>0</sub> = distance d'équilibre · E<sub>0</sub> = énergie minimale",
+   x:"<p>Quand deux atomes se rapprochent, l'énergie totale <b>baisse</b> (attraction) jusqu'à un minimum E<sub>0</sub> : c'est la formation de la liaison, à la distance d<sub>0</sub>. Plus près, la <b>répulsion</b> fait remonter l'énergie.</p><span class='tip'>Le recouvrement explique que la distance entre atomes d'une molécule soit <b>inférieure</b> à celle des OA des atomes juxtaposés.</span>"},
+  {k:"lcao", st:0, q:"Orbitale moléculaire liante (théorie LCAO)", d:"Combinaison linéaire des fonctions d'onde Ψ<sub>A</sub> et Ψ<sub>B</sub> des atomes A et B",
+   f:"Ψ<sub>a</sub> = C<sub>A</sub>Ψ<sub>A</sub> + C<sub>B</sub>Ψ<sub>B</sub>", u:"C<sub>A</sub>, C<sub>B</sub> = coefficients de pondération",
+   x:"<p>LCAO = Combinaison Linéaire des Orbitales Atomiques. On <b>additionne</b> les deux fonctions d'onde, chacune pondérée par son coefficient : on obtient l'OM <b>liante</b>, de plus basse énergie. Recouvrement par des lobes de <b>mêmes signes</b>.</p><span class='tip'>Liante = <b>+</b> (on additionne).</span>"},
+  {k:"anti", st:0, q:"Orbitale moléculaire antiliante (théorie LCAO)", d:"Même combinaison, avec une soustraction",
+   f:"Ψ<sub>b</sub>* = C<sub>A</sub>Ψ<sub>A</sub> − C<sub>B</sub>Ψ<sub>B</sub>", u:"Identifiée par une <b>*</b>",
+   x:"<p>En <b>soustrayant</b> les deux fonctions d'onde, on obtient l'OM <b>antiliante</b>, d'énergie plus élevée (déstabilisante). Recouvrement par des lobes de <b>signes opposés</b>.</p><span class='tip'>Antiliante = <b>−</b> et une étoile *.</span>"},
+  {k:"cH2", st:0, q:"Coefficients de pondération pour H<sub>2</sub>", d:"Deux OA 1s<sup>1</sup> identiques",
+   f:`C<sub>A</sub> = C<sub>B</sub> = ${fr('√2','2')}`, u:"",
+   x:"<p>Les deux atomes d'hydrogène sont identiques : ils pèsent autant l'un que l'autre dans l'OM, d'où des coefficients égaux.</p>"},
+  {k:"psiL", der:["cH2","lcao"], q:"OM liante σ de H<sub>2</sub>", d:"Obtenue par addition",
+   f:`Ψ<sub>liante</sub> = ${fr('√2','2')} (Ψ<sub>A</sub> + Ψ<sub>B</sub>)`, u:"",
+   x:"<p>Recouvrement des OA <b>maximal</b> : les 2 électrons de H<sub>2</sub> s'y placent, c'est l'OM σ.</p>"
+   + H(["Pars de Ψ<sub>a</sub> = C<sub>A</sub>Ψ<sub>A</sub> + C<sub>B</sub>Ψ<sub>B</sub>.","Remplace C<sub>A</sub> et C<sub>B</sub> par √2/2.","Mets √2/2 en facteur."])},
+  {k:"psiA", der:["cH2","anti"], q:"OM antiliante σ* de H<sub>2</sub>", d:"Obtenue par soustraction",
+   f:`Ψ<sub>antiliante</sub> = ${fr('√2','2')} (Ψ<sub>A</sub> − Ψ<sub>B</sub>)`, u:"",
+   x:"<p>Peu de recouvrement des OA et un <b>plan nodal central</b> qui sépare les deux lobes de l'OM. Elle reste vide dans H<sub>2</sub>.</p>"
+   + H(["Pars de Ψ<sub>b</sub>* = C<sub>A</sub>Ψ<sub>A</sub> − C<sub>B</sub>Ψ<sub>B</sub>.","Remplace C<sub>A</sub> et C<sub>B</sub> par √2/2.","Mets √2/2 en facteur."])},
+  {k:"nOM", st:0, q:"Nombre d'orbitales moléculaires", d:"Passage des atomes isolés à la molécule",
+   f:"nombre d'OM = nombre d'OA", u:"<b>Moitié liantes</b> (plus basses, stabilisantes) · <b>moitié antiliantes</b> (plus hautes, déstabilisantes)",
+   x:"<p>On ne crée ni ne perd d'orbitales : chaque paire d'OA combinées donne une OM liante et une OM antiliante.</p><span class='tip'>H<sub>2</sub> : 2 OA 1s → 2 OM (σ et σ*).</span>"},
+  {k:"nO2", der:["nOM"], q:"Nombre d'OM de O<sub>2</sub>", d:"OA de valence : 2s, 2p<sub>x</sub>, 2p<sub>y</sub>, 2p<sub>z</sub>",
+   f:"4 OA × 2 atomes = 8 OM", u:"4 liantes + 4 antiliantes",
+   x:"<p>Chaque oxygène apporte ses 4 OA de valence ; on obtient les 8 OM du diagramme : σ<sub>s</sub>, σ<sub>s</sub>*, σ<sub>p</sub>, π<sub>x</sub>, π<sub>z</sub>, π<sub>x</sub>*, π<sub>z</sub>*, σ<sub>p</sub>*.</p>"
+   + H(["Compte les OA de valence d'un O : 2s, 2p<sub>x</sub>, 2p<sub>y</sub>, 2p<sub>z</sub> = 4.","Multiplie par 2 atomes : 8 OA, donc 8 OM.","Moitié liantes, moitié antiliantes : 4 + 4."])},
+  {k:"max2", st:1, q:"Remplissage des OM", d:"Principe de Pauli et règle de Hund, mêmes règles que pour l'atome",
+   f:"2 électrons maximum par OM", u:"Avec les <b>électrons de la couche de valence</b> des atomes",
+   x:"<p>On remplit les OM en partant des <b>moins énergétiques</b>, 2 électrons au plus par OM. Seuls les électrons de <b>valence</b> sont placés.</p><span class='tip'>O<sub>2</sub> : 6 électrons de valence par O → 12 électrons à placer.</span>"}
+ ]},
+ {id:"B", title:"Spin, magnétisme et ordre de liaison", pages:"p.6-8", rows:[
+  {k:"trip", st:0, q:"Spin total de O<sub>2</sub> à l'état triplet", d:"2 électrons célibataires sur les deux OM π*",
+   f:"S = +½ + ½ = 1", u:"État le <b>plus stable</b> : plus haut spin (règle de Hund)",
+   x:"<p>Les deux derniers électrons de O<sub>2</sub> se placent chacun sur une π* avec des spins parallèles. Des électrons <b>non appariés</b> rendent la molécule <b>paramagnétique</b> (notion ★★) : O<sub>2</sub> liquide est attiré par les pôles d'un aimant.</p><span class='tip'>Paramagnétiques : O<sub>2</sub> triplet, NO (1 électron non apparié sur les π*, ★). Diamagnétiques (électrons tous appariés, ★) : N<sub>2</sub>, O<sub>2</sub> singulet.</span>"},
+  {k:"sing", st:0, q:"Spin total de O<sub>2</sub> à l'état singulet", d:"Les 2 électrons appariés sur une même π*",
+   f:"S = +½ − ½ = 0", u:"Espèce <b>excitée</b>, donc dangereuse",
+   x:"<p>Les deux spins s'annulent : plus aucun électron célibataire, O<sub>2</sub> singulet est <b>diamagnétique</b>.</p><span class='trap'>Triplet (S = 1) = état stable ; singulet (S = 0) = état excité.</span>"},
+  {k:"OL", st:2, q:"Ordre de liaison (indice de liaison)", d:"Calculable à partir du diagramme d'OM",
+   f:`OL = ${fr('n<sub>e⁻</sub>(liante) − n<sub>e⁻</sub>(antiliante)','2')}`, u:"<b>Positif ou nul</b> ; fractions possibles",
+   x:"<p>On compte les électrons placés dans les OM liantes, on retire ceux des OM antiliantes, et on divise par 2 (une liaison = une paire). Plus OL est grand, plus la liaison est multiple.</p><span class='tip'>« Liants moins antiliants, le tout sur 2 ».</span><span class='trap'>On ne compte que les électrons, pas les orbitales.</span>"},
+  {k:"OLH2", der:["OL"], q:"OL de H<sub>2</sub>", d:"",
+   f:`OL = ${fr('2 − 0','2')} = 1`, u:"1 liaison simple",
+   x:"<p>Les 2 électrons sont dans σ, σ* est vide : une liaison simple, comme H–H en Lewis.</p>"
+   + H(["Diagramme de H<sub>2</sub> : 2 électrons sur σ (liante), 0 sur σ*.","OL = (2 − 0) / 2 = 1."])},
+  {k:"OLH2p", der:["OL"], q:"OL de H<sub>2</sub><sup>+</sup>", d:"Exemple de fraction de liaison",
+   f:"OL = 0,5", u:"",
+   x:"<p>C'est l'exemple du cours pour montrer qu'un OL peut être <b>fractionnaire</b>.</p>"
+   + H(["H<sub>2</sub><sup>+</sup> a un électron de moins que H<sub>2</sub> : 1 électron sur σ, 0 sur σ*.","OL = (1 − 0) / 2 = 0,5."])},
+  {k:"OLN2", der:["OL"], q:"OL de N<sub>2</sub>", d:"D'après le diagramme d'OM des électrons de valence",
+   f:`OL = ${fr('8 − 2','2')} = 3`, u:"1 liaison triple",
+   x:"<p>On retrouve la triple liaison N≡N de Lewis. Dans N<sub>2</sub>, les OM π sont <b>plus basses</b> que l'OM σ issue des OA p (interactions sp), mais ça ne change pas le décompte.</p>"
+   + H(["Liants : σ<sub>1</sub> (2) + π (4) + σ<sub>2</sub> (2) = 8.","Antiliants : σ<sub>1</sub>* (2) ; les π* sont vides.","OL = (8 − 2) / 2 = 3."])},
+  {k:"OLO2", der:["OL"], q:"OL de O<sub>2</sub>", d:"D'après le diagramme d'OM de O<sub>2</sub> triplet",
+   f:`OL = ${fr('8 − 4','2')} = 2`, u:"1 liaison double",
+   x:"<p>On retrouve la double liaison O=O de Lewis.</p>"
+   + H(["Liants : σ<sub>s</sub> (2) + σ<sub>p</sub> (2) + π<sub>x</sub>, π<sub>z</sub> (4) = 8.","Antiliants : σ<sub>s</sub>* (2) + π* (2) = 4.","OL = (8 − 4) / 2 = 2."])},
+  {k:"OLNO", der:["OL"], q:"OL de NO", d:"Molécule AB : diagramme dissymétrique (O plus électronégatif)",
+   f:`OL = ${fr('8 − 3','2')} = 2,5`, u:"",
+   x:"<p>NO a un électron de plus que N<sub>2</sub>, placé seul sur une π* : il est antiliant et <b>non apparié</b> (d'où le paramagnétisme de NO).</p>"
+   + H(["Liants : σ (2) + π (4) + σ (2) = 8.","Antiliants : σ* (2) + π* (1) = 3.","OL = (8 − 3) / 2 = 2,5."])},
+  {k:"He2", st:1, q:"OL de He<sub>2</sub>", d:"Cas des gaz rares",
+   f:"OL = 0 → aucune liaison", u:"Molécule qui <b>ne peut pas exister</b>",
+   x:"<p>OL = 0 : aucune liaison, donc la molécule n'existe pas. C'est le cas des <b>gaz rares</b> (★), qui existent à l'état isolé.</p><span class='tip'>Se retrouve avec @OL : sur le modèle du diagramme de H<sub>2</sub>, 2 électrons sur σ et 2 sur σ* → (2 − 2) / 2 = 0.</span>"},
+  {k:"OLm", st:1, q:"Valeur de OL et type de liaison", d:"",
+   f:"OL = 1 → simple · OL = 2 → double · OL = 3 → triple", u:"Longueur : simple &gt; double &gt; triple",
+   x:"<p>OL donne le nombre de liaisons. En Lewis : liaison simple = 1 doublet partagé, double = 2 doublets, triple = 3 doublets. L'étoile porte sur OL = 1 (liaison simple).</p><span class='tip'>Plus la liaison est multiple, plus elle est <b>courte</b>.</span>"}
+ ]},
+ {id:"C", title:"Géométrie : méthode VSEPR et hybridation", pages:"p.9-13", rows:[
+  {k:"vsepr", st:3, q:"Méthode VSEPR (Gillespie) : figure formée", d:"AX<sub>n</sub>E<sub>m</sub> : A central, n ligands X, m doublets libres E sur A",
+   f:"n + m = 2 → droite · 3 → triangle · 4 → tétraèdre", u:"Géométrie des paires : <b>linéaire</b> · <b>trigonale</b> · <b>tétraédrique</b>",
+   x:"<p>Les paires électroniques de valence de l'atome central se repoussent et s'écartent au maximum. On compte <b>ligands + doublets libres</b> : c'est n + m qui fixe la figure.</p><span class='tip'>A = atome central = le plus entouré.</span><span class='trap'>Les doublets libres comptent dans n + m, même s'ils ne se « voient » pas dans la forme de la molécule.</span>"},
+  {k:"ax2", st:0, q:"Angle dans AX<sub>2</sub> (n + m = 2)", d:"",
+   f:"180°", u:"Linéaire · BeCl<sub>2</sub>, CO<sub>2</sub>, HCN",
+   x:"<p>Deux ligands de part et d'autre de A : molécule linéaire. AX<sub>1</sub>E<sub>1</sub> (N<sub>2</sub>) est aussi linéaire.</p>"},
+  {k:"ax3", st:1, q:"Angle dans AX<sub>3</sub> (n + m = 3)", d:"",
+   f:"120°", u:"Triangulaire (trigonale) · BF<sub>3</sub>, SO<sub>3</sub>, NO<sub>3</sub><sup>−</sup>, CO<sub>3</sub><sup>2−</sup>",
+   x:"<p>Trois ligands dans un plan, en triangle. L'étoile porte sur la géométrie triangulaire ; l'exemple NO<sub>3</sub><sup>−</sup> est aussi tombé (★).</p>"},
+  {k:"ax2e", st:0, q:"Angle dans AX<sub>2</sub>E (n + m = 3)", d:"",
+   f:"&lt; 120°", u:"Coudée · SO<sub>2</sub>, O<sub>3</sub>, NO<sub>2</sub><sup>−</sup>, SnCl<sub>2</sub>",
+   x:"<p>Même figure que AX<sub>3</sub>, mais un sommet est occupé par un doublet libre : la molécule est <b>coudée</b> et l'angle se <b>ferme</b> sous 120°.</p>"},
+  {k:"ax4", st:0, q:"Angle dans AX<sub>4</sub> (n + m = 4)", d:"",
+   f:"109,5°", u:"Tétraèdre · CH<sub>4</sub>, NH<sub>4</sub><sup>+</sup>, SO<sub>4</sub><sup>2−</sup>, CF<sub>4</sub>",
+   x:"<p>Quatre ligands aux sommets d'un tétraèdre. SO<sub>4</sub><sup>2−</sup> est un exemple tombé (★).</p>"},
+  {k:"ax3e", st:1, q:"Angle dans AX<sub>3</sub>E (n + m = 4)", d:"",
+   f:"&lt; 109,5°", u:"Pyramide triangulaire · NH<sub>3</sub>, H<sub>3</sub>O<sup>+</sup>, SO<sub>3</sub><sup>2−</sup>",
+   x:"<p>Un sommet du tétraèdre est un doublet libre : les trois ligands forment une <b>pyramide</b> et l'angle se ferme.</p><span class='tip'>H<sub>3</sub>O<sup>+</sup> est l'exemple le plus tombé (★★).</span>"},
+  {k:"ax2e2", st:1, q:"Angle dans AX<sub>2</sub>E<sub>2</sub> (n + m = 4)", d:"",
+   f:"&lt; 109,5°", u:"Coudée · H<sub>2</sub>O, SF<sub>2</sub>, ClO<sub>2</sub><sup>−</sup>, OF<sub>2</sub>",
+   x:"<p>Deux sommets sur quatre sont des doublets libres : il reste une molécule <b>coudée</b>. C'est le cas de l'eau.</p><span class='trap'>Coudée existe pour n + m = 3 (AX<sub>2</sub>E, &lt; 120°) et pour n + m = 4 (AX<sub>2</sub>E<sub>2</sub>, &lt; 109,5°).</span>"},
+  {k:"sp", st:0, q:"Hybridation sp", d:"1 orbitale s + 1 orbitale p",
+   f:"2 orbitales sp à 180°", u:"Linéaire · BeCl<sub>2</sub>",
+   x:"<p>Les OA externes se combinent en OA <b>identiques</b> : BeCl<sub>2</sub> a deux liaisons Be–Cl <b>égales</b>, ce que les OA s et p seules n'expliquaient pas. Les liaisons formées par des OA hybrides sont uniquement <b>σ</b> (recouvrement axial).</p><span class='tip'>Nombre d'OA hybrides = nombre d'OA mélangées : 1 + 1 = 2.</span>"},
+  {k:"sp2", st:2, q:"Hybridation sp<sup>2</sup>", d:"1 orbitale s + 2 orbitales p",
+   f:"3 orbitales sp<sup>2</sup> à 120°", u:"Trigonale · BF<sub>3</sub> (+ 1 orbitale 2p<sub>z</sub> restante)",
+   x:"<p>Trois OA hybrides dans un plan à 120°. L'orbitale p non hybridée reste disponible pour une liaison π.</p><span class='tip'>1 + 2 = 3 orbitales ; même angle que AX<sub>3</sub>.</span>"},
+  {k:"sp3", st:3, q:"Hybridation sp<sup>3</sup>", d:"1 orbitale s + 3 orbitales p",
+   f:"4 orbitales sp<sup>3</sup> à 109,5°", u:"Tétraédrique · CCl<sub>4</sub>",
+   x:"<p>Quatre OA hybrides vers les sommets d'un tétraèdre. Pour le carbone, on part de l'état excité 1s<sup>2</sup> 2s<sup>1</sup> 2p<sub>x</sub><sup>1</sup> 2p<sub>y</sub><sup>1</sup> 2p<sub>z</sub><sup>1</sup> (état fondamental 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>2</sup>, ★).</p><span class='tip'>sp, sp<sup>2</sup>, sp<sup>3</sup> : exposant + 1 = 2, 3, 4 orbitales ; angles 180°, 120°, 109,5° comme VSEPR.</span>"},
+  {k:"acet", st:1, q:"Liaisons de l'acétylène HC≡CH", d:"Carbones hybridés sp",
+   f:"2 σ C–H + 1 σ C–C + 2 π C–C", u:"2p<sub>x</sub><sup>1</sup> et 2p<sub>y</sub><sup>1</sup> forment les liaisons π",
+   x:"<p>Chaque carbone sp forme <b>2 liaisons σ</b> (une vers H, une vers l'autre C). Les deux orbitales p restantes donnent les <b>2 liaisons π</b> : la triple liaison = 1 σ + 2 π.</p>"},
+  {k:"ethy", st:1, q:"Liaisons de l'éthylène H<sub>2</sub>C=CH<sub>2</sub>", d:"Carbones hybridés sp<sup>2</sup>",
+   f:"4 σ C–H + 1 σ C–C + 1 π C–C", u:"2p<sub>z</sub><sup>1</sup> forme la liaison π",
+   x:"<p>Chaque carbone sp<sup>2</sup> forme <b>3 liaisons σ</b> (notion ★) : 2 vers H, 1 vers l'autre C. L'orbitale p restante donne la liaison π : double liaison = 1 σ + 1 π.</p>"},
+  {k:"etha", st:0, q:"Liaisons de l'éthane H<sub>3</sub>C–CH<sub>3</sub>", d:"Carbones hybridés sp<sup>3</sup>",
+   f:"6 σ C–H + 1 σ C–C", u:"Aucune liaison π",
+   x:"<p>Chaque carbone sp<sup>3</sup> forme <b>4 liaisons σ</b> et il ne reste aucune orbitale p libre : que des liaisons simples.</p><span class='tip'>Triple = 1 σ + 2 π ; double = 1 σ + 1 π ; simple = 1 σ.</span>"}
+ ]},
+ {id:"D", title:"Polarité et interactions électrostatiques", pages:"p.14-16", rows:[
+  {k:"delta", st:0, q:"Fraction de charge δ d'une liaison polarisée", d:"Molécule AB notée A<sup>δ+</sup>B<sup>δ−</sup>",
+   f:"δ &lt; ±1 ; δ = 0 → liaison covalente pure", u:"Ex. N<sup>δ+</sup>O<sup>δ−</sup> dans NO",
+   x:"<p>Quand A et B ont des électronégativités différentes (★), le doublet se rapproche de l'atome le plus électronégatif : il porte δ−, l'autre δ+. On a alors un pôle positif et un pôle négatif.</p><span class='trap'>La fiche écrit « δ &lt; ±1 » : à comprendre comme une fraction de charge comprise entre 0 et 1 en valeur absolue.</span>"},
+  {k:"debye", st:0, q:"Unité classique du moment dipolaire", d:"Moment dipolaire μ = grandeur vectorielle",
+   f:"1 D = 0,333.10<sup>−29</sup> C.m", u:"Unité SI : <b>coulomb.mètre</b> · unité classique : <b>Debye (D)</b>",
+   x:"<p>Le dipôle est formé de deux charges −δ et +δ séparées de la distance interatomique d ; son moment μ se donne le plus souvent en Debye.</p><span class='tip'>Pour passer de C.m en D, divise par 0,333.10<sup>−29</sup>.</span>"},
+  {k:"d480", st:0, q:"Moment dipolaire de deux charges + et − à 1 Å", d:"",
+   f:"μ = 4,80 D", u:"d = 1 Å",
+   x:"<p>Valeur de référence du cours pour deux charges opposées distantes de 1 Å.</p>"},
+  {k:"mures", st:0, q:"Moment dipolaire résultant", d:"Molécule à plusieurs liaisons polarisées",
+   f:"μ<sub>résultant</sub> = Σ μ (somme vectorielle)", u:"≠ 0 : molécule <b>polaire</b> · = 0 : molécule <b>apolaire</b>",
+   x:"<p>On additionne les moments dipolaires de chaque liaison <b>comme des vecteurs</b> : s'ils se compensent (géométrie symétrique), la molécule est apolaire même si ses liaisons sont polarisées.</p><span class='tip'>CH<sub>4</sub> : apolaire (μ résultant nul).</span>"},
+  {k:"muH2O", st:0, q:"Moment dipolaire de l'eau", d:"",
+   f:"μ(H<sub>2</sub>O) = 1,8 D", u:"Molécule polaire",
+   x:"<p>Non nul du fait de la géométrie <b>coudée</b>, donc non linéaire : les deux moments O–H ne se compensent pas (voir @ax2e2).</p>"},
+  {k:"coul", st:0, q:"Énergie d'interaction coulombienne", d:"Deux ions de charges opposées q<sub>1</sub> et q<sub>2</sub> séparés d'une distance r",
+   f:`E<sub>Coulomb</sub> = ${fr('q<sub>1</sub>.q<sub>2</sub>','4πεr')}`, u:"ε = permittivité électrique du milieu",
+   x:"<p>C'est l'attraction entre ions de charges opposées qui assure la cohésion d'un composé ionique (cristal Na<sup>+</sup>Cl<sup>−</sup> : métaux alcalins du groupe 1 + halogènes du groupe 17). Elle diminue quand la distance r augmente (en 1/r).</p>"},
+  {k:"coul0", der:["coul"], q:"Énergie coulombienne dans le vide", d:"",
+   f:`E<sub>Coulomb</sub> = ${fr('q<sub>1</sub>.q<sub>2</sub>','4πε<sub>0</sub>r')}`, u:"ε<sub>0</sub> = permittivité du vide",
+   x:"<p>Cas particulier où le milieu est le vide.</p>"
+   + H(["Pars de E = q<sub>1</sub>.q<sub>2</sub> / 4πεr.","Dans le vide, ε = ε<sub>0</sub>."])},
+  {k:"vdw", st:2, q:"Énergie des liaisons de Van der Waals", d:"Interactions électrostatiques entre dipôles, intermoléculaires",
+   f:"5 à 10 kJ.mol<sup>−1</sup>", u:"Très faibles · attractives · courte portée (quelques Å)",
+   x:"<p>Énergie faible, <b>contrairement aux interactions fortes</b> entre atomes que sont les liaisons covalentes (notion ★★).</p>"},
+  {k:"kees", st:1, q:"Énergie de Keesom", d:"Deux molécules polaires de moments dipolaires p<sub>1</sub> et p<sub>2</sub>",
+   f:`E<sub>Keesom</sub> = −k ${fr('p<sub>1</sub><sup>2</sup>.p<sub>2</sub><sup>2</sup>','r<sup>6</sup>')}`, u:"p<sub>i</sub> = moment dipolaire · r = distance moyenne · k = constante",
+   x:"<p>Interaction <b>polaire–polaire</b> (★). Elle est plus forte si les molécules sont <b>plus polaires</b> et plus faible si elles sont <b>plus éloignées</b> (en 1/r<sup>6</sup>).</p><span class='tip'>En 1/r<sup>6</sup> : doubler r divise l'énergie par 2<sup>6</sup> = 64.</span>"},
+  {k:"deb", st:0, q:"Énergie de Debye", d:"Dipôle permanent (molécule polaire) et dipôle induit (molécule apolaire polarisable)",
+   f:`E<sub>Debye</sub> = −k ${fr('p<sup>2</sup>.α','r<sup>6</sup>')}`, u:"p = moment dipolaire de la polaire · α = volume de polarisabilité de l'apolaire",
+   x:"<p>Interaction <b>polaire–apolaire</b> : la molécule polaire induit un dipôle dans l'apolaire. Plus forte si la polaire est plus polaire et si l'apolaire est plus polarisable.</p>"},
+  {k:"lond", st:0, q:"Énergie de London", d:"Deux molécules apolaires : dipôles instantanés",
+   f:`E<sub>London</sub> = −k ${fr('α<sub>1</sub>.α<sub>2</sub>','r<sup>6</sup>')}`, u:"α<sub>i</sub> = volume de polarisabilité de la molécule i",
+   x:"<p>Interaction <b>apolaire–apolaire</b> : les électrons bougent, créant un dipôle instantané qui induit un dipôle chez la voisine.</p><span class='tip'>Keesom → p·p ; Debye → p·α ; London → α·α. Toutes en −k …/r<sup>6</sup>.</span>"}
+ ]},
+ {id:"E", title:"Liaisons hydrogène", pages:"p.17-18", rows:[
+  {k:"hcov", st:1, q:"Liaison H comparée à une liaison covalente", d:"Interaction intermoléculaire, électrostatique à 90 %",
+   f:"E<sub>covalente</sub> ≈ 20 × E<sub>liaison H</sub>", u:"Liaison H 20 fois plus faible",
+   x:"<p>Interaction entre une paire d'électrons libres d'une molécule (accepteur) et un H d'une autre molécule (donneur). Son énergie plus faible permet de la <b>modifier à température ambiante</b>, contrairement aux liaisons covalentes.</p>"},
+  {k:"hvdw", st:0, q:"Liaison H comparée à Van der Waals", d:"",
+   f:"E<sub>liaison H</sub> ≈ 10 × E<sub>Van der Waals</sub>", u:"Liaisons H plus courtes que Van der Waals",
+   x:"<p>La liaison H est de la même famille (dipôle–dipôle) mais nettement plus forte.</p><span class='trap'>Les ordres de grandeur de la fiche ne collent pas exactement : Van der Waals 5-10 kJ.mol<sup>−1</sup> (@vdw) × 10 ne donne pas 20-40 kJ.mol<sup>−1</sup> (@hmol), et les liaisons H faibles (@hfai) sont dites « semblables à Van der Waals » avec 1-4 kJ.mol<sup>−1</sup>. Retiens chaque valeur telle qu'elle est donnée.</span>"},
+  {k:"hmol", st:0, q:"Énergie des liaisons H dans H<sub>2</sub>O, HF et NH<sub>3</sub>", d:"H déficitaires en électrons + paires libres sur O, N, F",
+   f:"20 à 40 kJ.mol<sup>−1</sup>", u:"Plus courtes et plus fortes que Van der Waals",
+   x:"<p>Conséquence : points d'ébullition de H<sub>2</sub>O, HF et NH<sub>3</sub> <b>beaucoup plus élevés</b> que prévu par l'évolution sur leur colonne (15, 16, 17). Les liaisons H stabilisent aussi les structures primaires et secondaires des protéines (hélice α).</p>"},
+  {k:"hfai", st:0, q:"Liaisons hydrogène faibles", d:"Semblables aux forces de Van der Waals",
+   f:"1 à 4 kJ.mol<sup>−1</sup>", u:"Distance <b>2,2 à 4,0 Å</b> · angle <b>90° à 150°</b>",
+   x:"<p>Les plus longues et les moins alignées : faciles à casser.</p>"},
+  {k:"hmod", st:0, q:"Liaisons hydrogène modérées", d:"",
+   f:"4 à 15 kJ.mol<sup>−1</sup>", u:"Distance <b>1,5 à 3,2 Å</b> · angle <b>130° à 170°</b>",
+   x:"<p>Intermédiaires en énergie, en distance et en angle.</p>"},
+  {k:"hfor", st:0, q:"Liaisons hydrogène fortes", d:"Semblables aux liaisons covalentes",
+   f:"15 à 40 kJ.mol<sup>−1</sup>", u:"Distance <b>1,2 à 2,5 Å</b> · angle <b>175° à 180°</b>",
+   x:"<p>Plus la distance est <b>courte</b> et plus l'angle est <b>proche de 180°</b>, plus la liaison est difficile à casser.</p><span class='tip'>Faible → modérée → forte : énergie ↑, distance ↓, angle → 180°.</span>"}
+ ]}
+];
+
+
+
+const code={}, gives={};
+data.forEach(sec=>sec.rows.forEach((r,i)=>{code[r.k]=sec.id+(i+1);}));
+data.forEach(sec=>sec.rows.forEach(r=>(r.der||[]).forEach(p=>{(gives[p]=gives[p]||[]).push(r.k);})));
+const chip=k=>`<a class="chip" href="#r-${code[k]}">${code[k]}</a>`;
+const refs=t=>t.replace(/@(\w+)/g,(m,k)=>code[k]?chip(k):m);
+const main=document.getElementById('main');
+let total=0,starred=0,derived=0;
+const cardHTML=(r,extra='')=>{
+  const from=r.der?`<span class="from">🔁 Déduite de ${r.der.map(chip).join(' ')}</span>`:'';
+  return `<div class="card${r.st?' starred':''}${r.der?' derived':''}" id="r-${code[r.k]}" tabindex="0">
+      <div class="def"><div class="top"><span class="code">${code[r.k]}</span>${S(r.st)}${r.der?'<span class="tag">🔁</span>':''}</div>
+      <div class="q">${r.q}</div>${r.d?`<div class="d">${r.d}</div>`:''}${from}</div>
+      <div class="fm"><span class="f">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div>
+      <div class="x">${refs(r.x)}</div></div>`;
+};
+data.forEach(sec=>{
+  let h=`<section id="${sec.id}"><h2>${sec.id} · ${sec.title} <small style="opacity:.85;font-weight:600">${sec.pages}</small></h2>`;
+  const groups=[];
+  sec.rows.forEach(r=>{ if(r.der&&groups.length) groups[groups.length-1].kids.push(r); else groups.push({r,kids:[]}); });
+  groups.forEach(({r,kids})=>{
+    total++; if(r.st)starred++;
+    h+=`<div class="grp${r.st?' gstar':''}">`+cardHTML(r);
+    if(kids.length){ h+=`<ul class="tree">`+kids.map(k=>{total++;derived++;return `<li>${cardHTML(k)}</li>`;}).join('')+`</ul>`; }
+    h+=`</div>`;
+  });
+  main.insertAdjacentHTML('beforeend',h+'</section>');
+});
+const B=document.body.classList,count=document.getElementById('count');
+const upd=()=>{count.textContent=B.contains('stars')?`${starred} ★`:B.contains('base')?`${total-derived} formules`:`${total} formules`;};
+upd();
+const tog=(id,c)=>{const b=document.getElementById(id);b.addEventListener('click',()=>{const on=B.toggle(c);b.setAttribute('aria-pressed',on);upd();if(c==='hide')document.querySelectorAll('.card.show').forEach(x=>x.classList.remove('show'));});};
+tog('bHide','hide');document.getElementById('bHide').addEventListener('click',()=>window.scrollTo({top:0}));tog('bStars','stars');tog('bBase','base');
+const flip=ev=>{if(ev.target.closest('a'))return;const c=ev.target.closest('.card');if(c&&B.contains('hide'))c.classList.toggle('show');};
+main.addEventListener('click',flip);
+main.addEventListener('keydown',ev=>{if(ev.target.classList.contains('card')&&(ev.key==='Enter'||ev.key===' ')){ev.preventDefault();flip(ev);}});
+
+</script>
+</body>
+</html>

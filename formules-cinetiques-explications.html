@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules — Propriétés cinétiques des solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#ffffff; --ink:#1d2330; --muted:#5b6474; --line:#e3e6ec;
+  --star:#e8a900; --starbg:#fff6d6; --fbg:#f4f6fb; --ded:#3f9a6a; --dedbg:#eef6f1;
+  --A:#2f86a8; --B:#d0632e; --C:#c9971c; --D:#6f5aa8; --E:#a64b4b;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.4}
+.wrap{max-width:860px;margin:0 auto;padding:18px 14px 40px}
+h1{font-size:1.6rem;font-weight:800;margin:0}
+.sub{color:var(--muted);font-size:.9rem;margin:2px 0 0}
+.s{color:var(--star);letter-spacing:1px;white-space:nowrap}
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 0;margin:12px 0 4px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.toolbar button{font:inherit;font-size:.88rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 11px;border-radius:999px;cursor:pointer}
+.toolbar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.toolbar button:focus-visible,.card:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.count{margin-left:auto;color:var(--muted);font-size:.82rem}
+section{margin-top:22px}
+h2{font-size:1rem;margin:0 0 8px;padding:6px 12px;color:#fff;border-radius:6px}
+.card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:stretch;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.def{padding:10px 12px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.def .top{display:flex;gap:8px;align-items:baseline;font-size:.8rem;font-weight:800}
+.def .q{font-weight:700;font-size:1rem}
+.def .d{color:var(--muted);font-size:.86rem}
+.fm{background:var(--fbg);border-left:5px solid var(--sec);padding:12px 14px;display:flex;flex-direction:column;justify-content:center}
+.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.35rem;line-height:1.25}
+.f sub{font-size:.62em}
+.u{margin-top:6px;font-size:.9rem;font-weight:600;color:var(--ink)}
+.u b{color:var(--sec)}
+.card.starred .def{background:linear-gradient(90deg,var(--starbg),transparent 70%)}
+.card.derived{border-style:dashed}
+.card.derived .fm{border-left-color:var(--ded)}
+.card.derived .top .tag{color:var(--ded)}
+#A{--sec:var(--A)} #B{--sec:var(--B)} #C{--sec:var(--C)} #D{--sec:var(--D)} #E{--sec:var(--E)}
+#A h2{background:var(--A)} #B h2{background:var(--B)} #C h2{background:var(--C)} #D h2{background:var(--D)} #E h2{background:var(--E)}
+section .top .code{color:var(--sec)}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+body.hide .card{cursor:pointer}
+body.stars .card:not(.starred){display:none}
+body.base .card.derived{display:none}
+.hint{display:none;color:var(--muted);font-size:.85rem;margin:6px 0 0}
+body.hide .hint{display:block}
+@media (max-width:600px){
+  .card{grid-template-columns:1fr}
+  .fm{border-left:0;border-top:4px solid var(--sec)}
+  .card.derived .fm{border-top-color:var(--ded)}
+}
+@media (prefers-reduced-motion:no-preference){.f,.u{transition:filter .2s}}
+@media print{.toolbar,.hint{display:none}body.hide .fm .f,body.hide .fm .u{filter:none}.card{break-inside:avoid}}
+
+/* Cartes plus isolées */
+section{margin-top:34px}
+h2{margin-bottom:14px}
+.card{margin-bottom:18px;border:1.5px solid var(--line);border-radius:12px;box-shadow:0 2px 0 var(--line),0 6px 14px -8px rgba(29,35,48,.25)}
+.def{padding:14px 16px}
+.fm{padding:16px 18px}
+.card.derived{border-width:1.5px}
+@media (max-width:600px){.card{margin-bottom:16px}}
+
+/* Couple définition/formule plus serré, séparation légère */
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.def{padding:14px 12px 14px 16px}
+.fm{padding:14px 16px 14px 14px}
+.card{margin-bottom:28px}
+section{margin-top:40px}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px dashed var(--line)!important}
+  .def{padding:14px 16px 8px}
+  .fm{padding:10px 16px 14px}
+  .card{margin-bottom:26px}
+}
+
+.wrap{max-width:980px}
+.legend{margin-top:6px;font-size:.88rem;color:var(--muted)}
+.chain{margin:14px 0 4px;padding:12px 14px;border-left:4px solid var(--star);background:var(--starbg);border-radius:0 8px 8px 0;font-size:.95rem}
+.mnemo{margin:12px 0 4px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:.92rem}
+.mnemo strong{display:block;margin-bottom:6px}
+.mnemo ul{margin:0;padding-left:18px;columns:2;column-gap:28px}
+.mnemo li{margin-bottom:4px;break-inside:avoid}
+.chain .f,.mnemo .f{font-size:1rem}
+.card{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
+.x{grid-column:1 / -1;border-top:1px dashed var(--line);padding:12px 16px 14px;font-size:.9rem;color:var(--muted)}
+.x p{margin:0 0 5px}
+.x b,.x .tip,.x .trap{color:var(--ink)}
+.tip,.trap{display:block;margin-top:5px}
+.tip::before{content:"💡 "}
+.trap::before{content:"⚠️ "}
+.ded{margin-top:8px;padding:8px 10px;background:var(--dedbg);border-left:3px solid var(--ded);border-radius:0 6px 6px 0;font-size:.86rem;color:var(--ink)}
+.ded strong{display:block;margin-bottom:3px}
+.ded ol{margin:0;padding-left:20px}
+.from{display:block;margin-top:4px;font-size:.84rem;color:var(--ded);font-weight:600}
+.gives{display:block;margin-top:8px;font-size:.86rem;color:var(--ded);font-weight:600}
+.chip{display:inline-block;text-decoration:none;font-size:.78rem;font-weight:700;border:1px solid var(--line);border-radius:5px;padding:0 5px;background:var(--bg);color:var(--ink)}
+.card{scroll-margin-top:70px}
+.card:target{box-shadow:0 0 0 3px var(--star)}
+/* mode test : seul le titre reste visible */
+body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:blur(8px);user-select:none}
+body.hide .card.show .def .d,body.hide .card.show .def .from,body.hide .card.show .fm,body.hide .card.show .x{filter:none;user-select:auto}
+@media (max-width:600px){.mnemo ul{columns:1}.x{padding:10px 16px 14px}}
+@media print{body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:none}}
+
+/* Traits pleins fins à l'intérieur, cadre plus marqué */
+:root{--frame:#b9c0cc}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--frame:#4a5263}}
+:root[data-theme="dark"]{--frame:#4a5263}
+.card{border:2px solid var(--frame)!important}
+.card.derived{border:2px solid var(--ded)!important}
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.x{border-top:1px solid var(--line)!important}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px solid var(--line)!important}
+}
+
+/* Traits intérieurs un peu plus épais */
+.fm,.card.derived .fm{border-left:1.5px solid var(--frame)!important;border-top:0!important}
+.x{border-top:1.5px solid var(--frame)!important}
+@media (max-width:600px){.fm,.card.derived .fm{border-left:0!important;border-top:1.5px solid var(--frame)!important}}
+
+/* Cadre d'épaisseur identique sur les 4 côtés */
+.card{box-shadow:0 6px 14px -10px rgba(29,35,48,.28)!important}
+
+/* Mobile : carte empilée comme la page épurée (évite le trait doublé en haut de la formule) */
+@media (max-width:600px){.card{grid-template-columns:1fr!important}}
+
+/* Fractions : numérateur au-dessus du dénominateur */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor;padding-bottom:.08em}
+.frac>span:last-child{padding-top:.08em}
+
+/* Arbre : formule de base → formules déduites (comme la page arbre) */
+.grp{margin-bottom:28px}
+.grp .card{margin-bottom:0}
+.tree{list-style:none;margin:0 0 0 26px;padding:0}
+.tree > li{position:relative;padding:12px 0 0 30px}
+.tree > li::before{content:"";position:absolute;left:0;top:0;bottom:0;border-left:2px solid var(--ded)}
+.tree > li:last-child::before{bottom:auto;height:36px}
+.tree > li::after{content:"";position:absolute;left:0;top:36px;width:24px;border-top:2px solid var(--ded)}
+.tree .card{box-shadow:none!important}
+.tree .card .f{font-size:1.18rem}
+body.stars .grp:not(.gstar){display:none}
+body.stars .tree{display:none}
+body.base .tree{display:none}
+@media (max-width:600px){
+  .tree{margin-left:12px}
+  .tree > li{padding-left:22px}
+  .tree > li::after{width:18px}
+}
+
+/* Singe = bascule vers la vue épurée floutée (définition → formule) */
+body.hide .x,body.hide .chain,body.hide .mnemo,body.hide .legend,body.hide .from{display:none}
+body.hide .def .d{filter:none!important;user-select:auto}
+body.hide .fm{filter:none!important}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+@media (prefers-reduced-motion:no-preference){.fm .f,.fm .u{transition:filter .2s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Propriétés cinétiques des solutions : les formules</h1>
+<p class="sub">M2 · Biophysique du milieu intérieur · formules expliquées</p>
+<div class="legend"><span class="s">★</span> = tombée au concours, d'après la fiche de cours · <span class="s">★★★</span> = la plus fréquente · <span style="color:var(--ded);font-weight:700">🔁</span> = formule déduite d'une autre (cadre vert)</div>
+<div class="toolbar" role="toolbar" aria-label="Options">
+  <a href="formules-cinetiques.html" style="font-size:.88rem;font-weight:600;text-decoration:none;color:var(--ink);border:1.5px solid var(--line);padding:6px 11px;border-radius:999px">← Tableau des formules</a>
+  <button id="bHide" aria-pressed="false">🙈 Réviser (vue épurée)</button>
+  <button id="bStars" aria-pressed="false"><span class="s">★</span> Concours</button>
+  <button id="bBase" aria-pressed="false">Sans les déduites</button>
+  <span class="count" id="count"></span>
+</div>
+<p class="hint">Vue épurée : touche une carte pour révéler la formule. Retouche 🙈 pour revenir aux explications.</p>
+<div class="chain">Le fil qui relie tout : <span class='f'>J = <span class='frac'><span>dN</span><span>dt</span></span></span> → Fick <span class='f'>J = −D.S.<span class='frac'><span>∂C</span><span>∂x</span></span></span> avec <span class='f'>D = <span class='frac'><span>kT</span><span>6πrη</span></span></span> → membrane <span class='f'>J = D.S<sub>p</sub>.<span class='frac'><span>ΔC</span><span>h</span></span></span> (× (1 − σ) si sélective) → filtration <span class='f'>J<sub>v,f</sub> = <span class='frac'><span>N<sub>p</sub>.π.a⁴</span><span>8η.h</span></span>.ΔP</span>.</div>
+
+<div class="mnemo">
+  <strong>Moyens mnémotechniques</strong>
+  <ul>
+    <li>Fick : le signe <b>−</b> = le flux vide le milieu le plus concentré.</li>
+    <li>D = kT / 6πrη : <b>chaud</b> ↑, <b>gros</b> ↓, <b>visqueux</b> ↓ (T en haut, r et η en bas).</li>
+    <li>σ = <b>1</b> : que l'eau passe ; σ = <b>0</b> : zéro obstacle, tout passe.</li>
+    <li>Membrane : ∂C/∂x devient simplement <b>ΔC / h</b>.</li>
+    <li>Surface des pores = N<sub>p</sub> × disque <b>πa²</b>.</li>
+    <li>Filtration : rayon à la puissance <b>4</b> → doubler le rayon multiplie le débit par 16.</li>
+    <li>Diffusion : les <b>solutés</b> vont du + concentré vers le − ; osmose : l'<b>eau</b> va du − concentré vers le +.</li>
+    <li>Deux compartiments égaux : on partage → <b>x/2</b>.</li>
+  </ul>
+</div>
+
+<main id="main"></main>
+<footer style="margin-top:30px;color:var(--muted);font-size:.8rem;text-align:center">Source : fiche de cours Médisup Tours/Orléans 2026-2027 (actualisation).</footer>
+</div>
+<script>
+const S = n => n ? '<span class="s">' + '★'.repeat(n) + '</span>' : '';
+const H = steps => `<div class="ded"><strong>🔁 Comment la retrouver</strong><ol>${steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>`;
+const data = [
+ {
+  "id": "A",
+  "title": "Débits (flux)",
+  "pages": "p.3",
+  "rows": [
+   {
+    "k": "J",
+    "st": 0,
+    "q": "Débit (flux)",
+    "d": "",
+    "f": "J = <span class='frac'><span>dN</span><span>dt</span></span>",
+    "u": "Unité : <b>s⁻¹</b>",
+    "x": "<p>dN = nombre de particules qui traversent une surface élémentaire pendant dt. Le même débit sert aussi pour le transport par convection (filtration).</p>"
+   },
+   {
+    "k": "j",
+    "st": 0,
+    "q": "Densité de débit",
+    "d": "",
+    "f": "j = <span class='frac'><span>J</span><span>S</span></span>",
+    "u": "Si J est constant en tout point de la surface S perpendiculaire au flux",
+    "x": "<p>Le débit rapporté à la surface traversée.</p>"
+   },
+   {
+    "k": "dmol",
+    "st": 0,
+    "q": "Débit molaire : unité",
+    "d": "",
+    "f": "mol.s⁻¹",
+    "u": "",
+    "x": "<p>Nombre de <b>moles</b> qui traversent une surface élémentaire par unité de temps.</p>"
+   },
+   {
+    "k": "dmas",
+    "st": 0,
+    "q": "Débit massique : unité",
+    "d": "",
+    "f": "kg.s⁻¹",
+    "u": "",
+    "x": "<p><b>Masse</b> qui traverse une surface élémentaire par unité de temps.</p>"
+   },
+   {
+    "k": "dvol",
+    "st": 1,
+    "q": "Débit volumique : unité",
+    "d": "",
+    "f": "m³.s⁻¹",
+    "u": "",
+    "x": "<p><b>Volume</b> qui traverse une surface élémentaire par unité de temps : c'est le débit de la filtration (@jvf).</p>"
+   }
+  ]
+ },
+ {
+  "id": "B",
+  "title": "Diffusion en milieu libre",
+  "pages": "p.3-5",
+  "rows": [
+   {
+    "k": "fick",
+    "st": 0,
+    "q": "1ʳᵉ loi de Fick",
+    "d": "",
+    "f": "J = −D.S.<span class='frac'><span>∂C</span><span>∂x</span></span>",
+    "u": "D = coefficient de diffusion (<b>m².s⁻¹</b>) · S = surface · ∂C/∂x = gradient de concentration",
+    "x": "<p>La diffusion est le déplacement de molécules dû à une <b>différence de concentration</b> (★★). Le débit augmente avec le <b>gradient de concentration</b> (★), la surface et D. C'est un transport passif : l'énergie thermique suffit.</p><span class='trap'>Le signe « − » : le flux tend à diminuer le gradient, il appauvrit le milieu concentré.</span>"
+   },
+   {
+    "k": "stat",
+    "der": [
+     "fick"
+    ],
+    "q": "État stationnaire dans l'organisme",
+    "d": "",
+    "f": "<span class='frac'><span>∂C</span><span>∂x</span></span> = constante → flux net constant",
+    "u": "",
+    "x": "<p>Les solutés sont produits (métabolisme) et éliminés (rein) en permanence : la concentration est constante dans le temps en un point, mais pas la même partout.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>À l'état stationnaire, le gradient ∂C/∂x ne change pas.</li><li>D et S étant fixes, J = −D.S.∂C/∂x est constant.</li></ol></div>"
+   },
+   {
+    "k": "D",
+    "st": 0,
+    "q": "Coefficient de diffusion du soluté",
+    "d": "",
+    "f": "D = <span class='frac'><span>kT</span><span>6π r η</span></span>",
+    "u": "k = constante de Boltzmann (J.K⁻¹) · T en K · r = rayon de la molécule (m) · η = viscosité (kg.m⁻¹.s⁻¹)",
+    "x": "<p>D met en balance la <b>force motrice</b> (agitation thermique, ∝ T) et la <b>résistance</b> (frottements, ∝ viscosité). Ce n'est pas une constante : on le mesure en conditions expérimentales.</p><span class='tip'>La diffusion est favorisée par une T° élevée, une viscosité faible, une molécule petite et légère.</span>"
+   },
+   {
+    "k": "dT",
+    "der": [
+     "D",
+     "fick"
+    ],
+    "q": "Effet d'une hausse de température",
+    "d": "",
+    "f": "T ↑ ⇒ η ↓ ⇒ D ↑ ⇒ J ↑",
+    "u": "",
+    "x": "<p>Dans un liquide, la diffusion des solutés augmente avec la température.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>La viscosité du liquide diminue quand T augmente.</li><li>Dans D = kT/(6πrη) : T ↑ et η ↓, donc D ↑.</li><li>Dans la loi de Fick, J est proportionnel à D : J ↑.</li></ol></div>"
+   },
+   {
+    "k": "ceq",
+    "st": 1,
+    "q": "Concentration finale entre 2 compartiments de même volume",
+    "d": "Au départ : C₀ = x mol/L d'un côté, 0 mol/L de l'autre",
+    "f": "C<sub>eq</sub> = <span class='frac'><span>x</span><span>2</span></span> mol/L",
+    "u": "",
+    "x": "<p>Après un <b>temps long</b>, la quantité de soluté se répartit sur un volume double : la concentration est la même partout.</p>"
+   },
+   {
+    "k": "grad0",
+    "st": 1,
+    "q": "Gradient de concentration à l'équilibre",
+    "d": "",
+    "f": "<span class='frac'><span>∂C</span><span>∂x</span></span> = 0",
+    "u": "",
+    "x": "<p>Concentration identique en tout point : plus aucune différence de concentration. La diffusion est un phénomène <b>irréversible</b> qui aboutit à l'homogénéisation.</p>"
+   },
+   {
+    "k": "flux0",
+    "der": [
+     "grad0",
+     "fick"
+    ],
+    "q": "Flux net à l'équilibre",
+    "d": "",
+    "f": "J = −D.S.<span class='frac'><span>∂C</span><span>∂x</span></span> = 0",
+    "u": "",
+    "x": "<p>Les molécules bougent toujours, mais autant dans un sens que dans l'autre.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de la loi de Fick.</li><li>À l'équilibre, ∂C/∂x = 0.</li><li>Donc J = 0 : flux net nul.</li></ol></div>"
+   }
+  ]
+ },
+ {
+  "id": "C",
+  "title": "Diffusion à travers une membrane",
+  "pages": "p.5-7",
+  "rows": [
+   {
+    "k": "sigma",
+    "st": 1,
+    "q": "Coefficient de réflexion σ",
+    "d": "",
+    "f": "σ = 1 : hémiperméable<br>σ = 0 : perméable<br>0 &lt; σ &lt; 1 : sélective (dialysante)",
+    "u": "",
+    "x": "<p>σ dépend de la nature du soluté. Hémiperméable : ne laisse passer que l'eau (les membranes semi-perméables le sont presque). Perméable : eau et tous les solutés. Sélective : eau et certains solutés selon leur masse molaire, jusqu'au point de cut-off.</p><span class='tip'>★ tombé : σ = 0 → membrane perméable.</span>"
+   },
+   {
+    "k": "sp",
+    "st": 0,
+    "q": "Surface totale des pores",
+    "d": "",
+    "f": "S<sub>p</sub> = Σ s<sub>p</sub> = N<sub>p</sub>πa²",
+    "u": "s<sub>p</sub> = πa² : surface d'un pore de rayon a · N<sub>p</sub> = nombre total de pores",
+    "x": "<p>La surface d'échange d'une membrane n'est pas toute sa surface, mais la somme des surfaces de ses pores (des disques).</p>"
+   },
+   {
+    "k": "seff",
+    "st": 0,
+    "q": "Surface efficace des pores (membrane sélective)",
+    "d": "",
+    "f": "S<sub>efficace</sub> = (1 − σ).S<sub>p</sub>",
+    "u": "",
+    "x": "<p>Pour une membrane sélective, seule une partie de la surface des pores est utile au soluté.</p><span class='tip'>σ = 0 → toute la surface ; σ = 1 → aucune.</span>"
+   },
+   {
+    "k": "gradm",
+    "st": 0,
+    "q": "Gradient de concentration à travers une membrane (état stationnaire)",
+    "d": "",
+    "f": "|<span class='frac'><span>∂C</span><span>∂x</span></span>| = <span class='frac'><span>ΔC</span><span>h</span></span>",
+    "u": "ΔC = différence de concentration de part et d'autre · h = épaisseur",
+    "x": "<p>Dans l'épaisseur de la membrane, le gradient se résume à la différence de concentration divisée par l'épaisseur.</p>"
+   },
+   {
+    "k": "fickm",
+    "st": 1,
+    "q": "Loi de Fick pour une membrane perméable",
+    "d": "",
+    "f": "J = D.S<sub>p</sub>.<span class='frac'><span>ΔC</span><span>h</span></span> = D.N<sub>p</sub>πa².<span class='frac'><span>ΔC</span><span>h</span></span>",
+    "u": "",
+    "x": "<p>Diffusion identique à la diffusion libre, mais la surface d'échange est la <b>surface des pores</b>.</p><span class='tip'>Se retrouve en injectant S = Sₚ = Nₚπa² et ∂C/∂x = ΔC/h dans la loi de Fick (@fick, @sp, @gradm).</span>"
+   },
+   {
+    "k": "fickd",
+    "der": [
+     "fickm",
+     "seff"
+    ],
+    "q": "Loi de Fick pour une membrane dialysante (sélective)",
+    "d": "",
+    "f": "J = D.(1 − σ).S<sub>p</sub>.<span class='frac'><span>ΔC</span><span>h</span></span>",
+    "u": "",
+    "x": "<p>Même loi, avec la surface efficace. Application : l'<b>hémodialyse</b> (★★), diffusion des solutés du milieu le plus concentré vers le moins concentré, du sang vers le dialysat.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de J = D.Sₚ.ΔC/h.</li><li>Remplace Sₚ par la surface efficace (1 − σ).Sₚ.</li></ol></div>"
+   },
+   {
+    "k": "partage",
+    "st": 0,
+    "q": "Coefficient de partage α (membrane biologique)",
+    "d": "",
+    "f": "C près de la membrane = α.C",
+    "u": "C = concentration globale du milieu",
+    "x": "<p>La bicouche lipidique accumule les solutés lipophiles (zone lipidique) ou hydrophiles (zone aqueuse) : la concentration près de la membrane est modifiée selon α.</p><span class='tip'>Soluté lipophile : diffusion facile (d'où les médicaments rendus liposolubles). Non lipophile : transporteurs, canaux, aquaporines pour l'eau.</span>"
+   }
+  ]
+ },
+ {
+  "id": "D",
+  "title": "Osmose et filtration",
+  "pages": "p.8-9",
+  "rows": [
+   {
+    "k": "jeau",
+    "st": 0,
+    "q": "Flux diffusif de l'eau (osmose)",
+    "d": "",
+    "f": "J<sub>eau</sub> = +D<sub>eau</sub>.S<sub>m</sub>.<span class='frac'><span>∂C<sub>soluté</sub></span><span>∂x</span></span>",
+    "u": "Dans le <b>sens inverse</b> du gradient de concentration du soluté",
+    "x": "<p>L'eau se déplace du milieu le <b>moins</b> concentré vers le <b>plus</b> concentré en soluté : transport passif, dû à l'agitation thermique.</p><span class='trap'>Signe <b>+</b> ici, contrairement au − de la loi de Fick pour les solutés.</span>"
+   },
+   {
+    "k": "jvf",
+    "st": 0,
+    "q": "Débit volumique de filtration",
+    "d": "",
+    "f": "J<sub>v,f</sub> = <span class='frac'><span>N<sub>p</sub>.π.a⁴</span><span>8η.h</span></span>.ΔP",
+    "u": "η = viscosité · a = rayon d'un pore · h = épaisseur · N<sub>p</sub> = nombre de pores · ΔP = différence de pression",
+    "x": "<p>La filtration est un déplacement induit par une <b>différence de pression hydrostatique ΔP</b> (★). Force motrice ∝ ΔP ; force de résistance ∝ viscosité η (et dépend de la membrane).</p><span class='trap'>Hors programme (rayé) : le coefficient L<sub>H</sub>, la densité de débit de filtration et le coefficient de tamisage.</span>"
+   },
+   {
+    "k": "pois",
+    "st": 0,
+    "q": "Écoulement d'un fluide dans une conduite",
+    "d": "",
+    "f": "J = <span class='frac'><span>π.r⁴</span><span>8η.L</span></span>.ΔP",
+    "u": "Conduite de rayon r et de longueur L",
+    "x": "<p>Même forme que le débit de filtration pour un seul tuyau : le rayon à la puissance 4 domine tout.</p><span class='tip'>Applications : échanges capillaires (Starling), filtration glomérulaire, hémofiltration.</span>"
+   }
+  ]
+ }
+];
+
+
+const code={}, gives={};
+data.forEach(sec=>sec.rows.forEach((r,i)=>{code[r.k]=sec.id+(i+1);}));
+data.forEach(sec=>sec.rows.forEach(r=>(r.der||[]).forEach(p=>{(gives[p]=gives[p]||[]).push(r.k);})));
+const chip=k=>`<a class="chip" href="#r-${code[k]}">${code[k]}</a>`;
+const refs=t=>t.replace(/@(\w+)/g,(m,k)=>code[k]?chip(k):m);
+const main=document.getElementById('main');
+let total=0,starred=0,derived=0;
+const cardHTML=(r,extra='')=>{
+  const from=r.der?`<span class="from">🔁 Déduite de ${r.der.map(chip).join(' ')}</span>`:'';
+  return `<div class="card${r.st?' starred':''}${r.der?' derived':''}" id="r-${code[r.k]}" tabindex="0">
+      <div class="def"><div class="top"><span class="code">${code[r.k]}</span>${S(r.st)}${r.der?'<span class="tag">🔁</span>':''}</div>
+      <div class="q">${r.q}</div>${r.d?`<div class="d">${r.d}</div>`:''}${from}</div>
+      <div class="fm"><span class="f">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div>
+      <div class="x">${refs(r.x)}</div></div>`;
+};
+data.forEach(sec=>{
+  let h=`<section id="${sec.id}"><h2>${sec.id} · ${sec.title} <small style="opacity:.85;font-weight:600">${sec.pages}</small></h2>`;
+  const groups=[];
+  sec.rows.forEach(r=>{ if(r.der&&groups.length) groups[groups.length-1].kids.push(r); else groups.push({r,kids:[]}); });
+  groups.forEach(({r,kids})=>{
+    total++; if(r.st)starred++;
+    h+=`<div class="grp${r.st?' gstar':''}">`+cardHTML(r);
+    if(kids.length){ h+=`<ul class="tree">`+kids.map(k=>{total++;derived++;return `<li>${cardHTML(k)}</li>`;}).join('')+`</ul>`; }
+    h+=`</div>`;
+  });
+  main.insertAdjacentHTML('beforeend',h+'</section>');
+});
+const B=document.body.classList,count=document.getElementById('count');
+const upd=()=>{count.textContent=B.contains('stars')?`${starred} ★`:B.contains('base')?`${total-derived} formules`:`${total} formules`;};
+upd();
+const tog=(id,c)=>{const b=document.getElementById(id);b.addEventListener('click',()=>{const on=B.toggle(c);b.setAttribute('aria-pressed',on);upd();if(c==='hide')document.querySelectorAll('.card.show').forEach(x=>x.classList.remove('show'));});};
+tog('bHide','hide');document.getElementById('bHide').addEventListener('click',()=>window.scrollTo({top:0}));tog('bStars','stars');tog('bBase','base');
+const flip=ev=>{if(ev.target.closest('a'))return;const c=ev.target.closest('.card');if(c&&B.contains('hide'))c.classList.toggle('show');};
+main.addEventListener('click',flip);
+main.addEventListener('keydown',ev=>{if(ev.target.classList.contains('card')&&(ev.key==='Enter'||ev.key===' ')){ev.preventDefault();flip(ev);}});
+
+</script>
+</body>
+</html>

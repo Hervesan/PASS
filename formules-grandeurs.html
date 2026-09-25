@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules en 2 colonnes — Grandeurs physiques et mesures</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff;--ink:#1d2330;--muted:#5b6474;--line:#e3e6ec;--frame:#b9c0cc;--star:#e8a900;--starbg:#fff6d6;--ded:#3f9a6a;
+--A:#2f86a8;--B:#d0632e;--C:#c9971c;--D:#6f5aa8;--E:#a64b4b;--F:#b0527f}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.35}
+.wrap{max-width:820px;margin:0 auto;padding:16px 12px 40px}
+h1{font-size:1.4rem;margin:0 0 10px;font-weight:800}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:6px 0 8px;z-index:2;display:flex;gap:8px;align-items:center}
+.bar button{font:inherit;font-size:.9rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+.bar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.bar button:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.bar span{font-size:.8rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;border:2px solid var(--frame)}
+th{text-align:left;font-size:.78rem;color:var(--muted);font-weight:700;padding:6px 10px;border-bottom:2px solid var(--frame)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+td.d{width:42%;font-weight:700;font-size:.95rem;border-right:1.5px solid var(--frame)}
+td.d .s{color:var(--star);font-size:.8rem;margin-left:4px;white-space:nowrap}
+td.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.12rem}
+td.f .u{display:block;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.82rem;color:var(--muted);margin-top:2px}
+td.f .u b{color:var(--ink)}
+tr.sec td{background:var(--c);color:#fff;font-weight:800;font-size:.95rem;padding:6px 10px;border-bottom:0}
+tr.der td.d{padding-left:24px;color:var(--ded);font-weight:600;font-size:.9rem}
+tr.der td.d::before{content:"↳ ";font-weight:800}
+tr.der td.f{font-size:1rem;color:var(--ded)}
+sub{font-size:.65em}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor}
+body.hide td.f .ft,body.hide td.f .u{filter:blur(7px)}
+body.hide tr:not(.sec){cursor:pointer}
+body.hide tr.show td.f .ft,body.hide tr.show td.f .u{filter:none}
+@media (prefers-reduced-motion:no-preference){.ft,.u{transition:filter .2s}}
+@media (max-width:480px){td{padding:8px 7px}td.d{font-size:.88rem}td.f{font-size:1rem}tr.der td.d{padding-left:16px}}
+@media print{.bar{display:none}body.hide .ft,body.hide .u{filter:none}tr{break-inside:avoid}}
+
+/* ---- Mise en page soignée ---- */
+body{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0)}
+.wrap{max-width:860px;padding:22px 14px 50px}
+.top{padding:4px 2px 6px}
+.kicker{margin:0;font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--muted)}
+.top h1{font-size:1.9rem;margin:2px 0 4px;letter-spacing:-.01em}
+.meta{margin:0;font-size:.88rem;color:var(--muted)}
+.meta .s{color:var(--star)} .meta .g{color:var(--ded);font-weight:800}
+.bar{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0);padding:10px 0}
+.bar button{background:var(--bg);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.cols{display:grid;grid-template-columns:42% 58%;font-size:.72rem;font-weight:700;letter-spacing:.03em;color:var(--muted);padding:4px 16px 6px}
+.blk{background:var(--bg);border-radius:16px;margin:0 0 22px;overflow:hidden;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25);border:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.blk header{display:flex;align-items:center;gap:10px;padding:12px 16px;font-weight:800;font-size:1.02rem;color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--bg));border-bottom:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.letter{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--c);color:#fff;font-size:.95rem}
+.row{display:grid;grid-template-columns:42% 58%;align-items:stretch;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .d{padding:12px 12px 12px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.code{font-size:.72rem;font-weight:800;color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg));border-radius:5px;padding:1px 6px}
+.name{font-weight:700;font-size:.95rem;flex-basis:100%}
+.row .d .s{color:var(--star);font-size:.82rem;letter-spacing:1px}
+.row .f{padding:12px 16px;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line));display:flex;flex-direction:column;justify-content:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.2rem}
+.row .f .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px;line-height:1.3}
+.row .f .u b{color:var(--c)}
+.row.star .d{background:linear-gradient(90deg,var(--starbg),transparent 75%)}
+.row.der .d{padding-left:30px;position:relative}
+.row.der .d::before{content:"↳";position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ded);font-weight:800}
+.row.der .name{color:var(--ded);font-weight:600;font-size:.9rem}
+.row.der .code{color:var(--ded);background:color-mix(in srgb,var(--ded) 12%,var(--bg))}
+.row.der .f{font-size:1.05rem;color:var(--ded);background:color-mix(in srgb,var(--ded) 6%,var(--bg))}
+body.hide .ft,body.hide .u{filter:blur(7px);user-select:none}
+body.hide .row{cursor:pointer}
+body.hide .row.show .ft,body.hide .row.show .u{filter:none}
+.row:focus-visible{outline:3px solid var(--star);outline-offset:-3px}
+@media (max-width:480px){
+  .cols,.row{grid-template-columns:44% 56%}
+  .row .d{padding:10px 8px 10px 12px}.row .f{padding:10px 12px;font-size:1.05rem}
+  .name{font-size:.88rem}.row.der .d{padding-left:24px}.row.der .d::before{left:8px}
+  .top h1{font-size:1.6rem}
+}
+@media print{body{background:#fff}.blk{box-shadow:none;break-inside:avoid}}
+
+
+/* Option 1 : groupe encadré (formule mère + filles dans une bande verte) */
+.grp{border-top:1px solid var(--line)}
+.grp:first-child{border-top:0}
+.grp > .row{border-top:0}
+.kids{background:color-mix(in srgb,var(--ded) 13%,var(--bg));padding:8px 10px 10px;display:flex;flex-direction:column;gap:7px;border-top:1px solid color-mix(in srgb,var(--ded) 30%,var(--line))}
+.kids .row{border:1px solid color-mix(in srgb,var(--ded) 30%,var(--line));border-radius:10px;overflow:hidden;background:var(--bg);grid-template-columns:calc(42% - 4px) auto}
+.kids .row .d{padding:9px 10px}
+.kids .row .f{background:color-mix(in srgb,var(--ded) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--ded) 25%,var(--line))}
+.row.der .d{padding-left:10px}
+.row.der .d::before{content:none}
+@media (max-width:480px){.kids{padding:7px 7px 8px}.kids .row .d{padding:8px}}
+
+/* Formules déduites : mêmes couleurs que les autres (seul le regroupement les distingue) */
+.kids{background:color-mix(in srgb,var(--ink) 5%,var(--bg));border-top:1px solid var(--line)}
+.kids .row{border-color:var(--line)}
+.row.der .name{color:var(--ink);font-weight:700;font-size:.95rem}
+.row.der .code{color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg))}
+.row.der .code::before{content:none}
+.row.der .f,.kids .row .f{color:var(--ink);font-size:1.2rem;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line))}
+@media (max-width:480px){.row.der .f,.kids .row .f{font-size:1.05rem}.row.der .name{font-size:.88rem}}
+
+/* Comme la page explication : filles décalées, reliées par un trait à leur formule mère */
+.kids{background:transparent;border-top:0;padding:0 12px 14px 38px;gap:10px;position:relative}
+.kids .row{position:relative;overflow:visible;border:1.5px solid color-mix(in srgb,var(--ded) 60%,var(--line));border-radius:10px;background:var(--bg)}
+.kids .row .d{border-radius:9px 0 0 9px}
+.kids .row .f{border-radius:0 9px 9px 0}
+.kids .row::before{content:"";position:absolute;left:-24px;top:-12px;bottom:-12px;border-left:2px solid var(--ded)}
+.kids .row:first-child::before{top:-2px}
+.kids .row:last-child::before{bottom:50%}
+.kids .row::after{content:"";position:absolute;left:-24px;top:50%;width:22px;border-top:2px solid var(--ded)}
+.grp:has(.kids) > .row{border-bottom:0}
+.from{flex-basis:100%;font-size:.76rem;font-weight:700;color:var(--ded)}
+.from b{font-weight:800}
+@media (max-width:480px){
+  .kids{padding:0 8px 12px 28px}
+  .kids .row::before,.kids .row::after{left:-18px}
+  .kids .row::after{width:16px}
+}
+
+/* Colonnes alignées partout + petit espace entre formules principales + cadres déduits plus étroits */
+.blk{container-type:inline-size}
+.row{grid-template-columns:42cqw minmax(0,1fr)!important}
+.kids .row{grid-template-columns:calc(42cqw - 39.5px) minmax(0,1fr)!important}
+.cols{grid-template-columns:42% 58%}
+.rows{display:flex;flex-direction:column;gap:6px;background:color-mix(in srgb,var(--ink) 6%,var(--bg))}
+.grp{border-top:0!important;background:var(--bg)}
+.kids{padding:0 34px 14px 38px}
+@media (max-width:480px){
+  .kids{padding:0 22px 12px 38px}
+  .kids .row::before,.kids .row::after{left:-24px}
+  .kids .row::after{width:22px}
+}
+.from{white-space:nowrap;font-size:.7rem}
+@media (max-width:480px){.kids .row .d{padding:8px 6px 8px 8px}}
+
+/* Tableau neutre (mode singe) : sans sections, sans codes, sans étoiles, mélangé */
+.neutral{--c:var(--muted);border-color:var(--line)}
+.neutral .row .f{background:color-mix(in srgb,var(--ink) 4%,var(--bg));border-left:1px solid var(--line)}
+.neutral .row .u b{color:var(--ink)}
+.neutral .row .u [style]{color:inherit!important}
+.qbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin:0 0 10px;font-size:.85rem;color:var(--muted)}
+.qbar button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer}
+[hidden]{display:none!important}
+body.hide .meta{display:none}
+
+/* ---- Mode entraînement (singe) ---- */
+.qhead{background:var(--bg);border-radius:16px;padding:14px 16px;margin:0 0 16px;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25)}
+.qtop{display:flex;justify-content:space-between;align-items:baseline}
+.qtitle{font-weight:800;font-size:1.1rem}
+.qcount{font-size:.85rem;color:var(--muted);font-weight:600}
+.prog{height:8px;border-radius:99px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));margin:10px 0 12px;overflow:hidden}
+.prog span{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#f5c542,var(--star));transition:width .3s}
+.qbtns{display:flex;gap:8px;flex-wrap:wrap}
+.qbtns button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 13px;border-radius:999px;cursor:pointer}
+.qlist{display:flex;flex-direction:column;gap:10px;container-type:inline-size}
+.qc{display:grid;grid-template-columns:42cqw minmax(0,1fr);background:var(--bg);border-radius:14px;overflow:hidden;cursor:pointer;
+  border:1px solid var(--line);box-shadow:0 1px 2px rgba(20,30,50,.05),0 6px 16px -10px rgba(20,30,50,.3);transition:transform .15s}
+.qc:active{transform:scale(.99)}
+.qc:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.qc.star{border-color:color-mix(in srgb,var(--star) 45%,var(--line))}
+.qd{padding:12px 12px 12px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.qc.star .qd{background:linear-gradient(90deg,var(--starbg),transparent 85%)}
+.qn{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:7px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));color:var(--muted);font-size:.75rem;font-weight:800}
+.qs{color:var(--star);font-size:.85rem;letter-spacing:1px}
+.qq{flex-basis:100%;font-weight:700;font-size:.95rem}
+.qf{position:relative;padding:12px 14px;background:color-mix(in srgb,var(--ink) 3.5%,var(--bg));border-left:1px solid var(--line);display:flex;align-items:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.15rem}
+.qans{display:flex;flex-direction:column;filter:blur(8px);opacity:.6;transition:filter .25s,opacity .25s;user-select:none}
+.qans .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px}
+.qans .u b,.qans .u [style]{color:var(--ink)!important}
+.qhint{position:absolute;inset:0;display:grid;place-items:center;font-family:"Source Sans 3",system-ui,sans-serif;font-size:.8rem;font-weight:700;color:var(--muted)}
+.qc.show .qans{filter:none;opacity:1;user-select:auto}
+.qc.show .qhint{display:none}
+.qc.show .qf{background:color-mix(in srgb,#3f9a6a 7%,var(--bg))}
+.qc.show .qn{background:#3f9a6a;color:#fff}
+@media (max-width:480px){.qf{font-size:1.02rem;padding:10px 12px}.qq{font-size:.88rem}}
+body.hide .qc .ft,body.hide .qc .u{filter:none!important;user-select:auto}
+.bar{flex-wrap:wrap}
+.blink{font-size:.9rem;font-weight:600;text-decoration:none;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);padding:6px 12px;border-radius:999px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.blink:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><p class="kicker">M2 · Biophysique du milieu intérieur</p><h1>Grandeurs physiques et mesures</h1><p class="meta">83 formules · <span class="s">★</span> tombées au concours · <span class="g">🔁</span> formules déduites, reliées à leur formule de base</p></header>
+<div class="bar"><button id="bHide" aria-pressed="false">🙈 Cacher les formules</button><a class="blink" href="formules.html" style="margin-left:auto">← Cours</a><a class="blink" href="formules-grandeurs-explications.html">📖 Explications</a></div>
+<div class="cols"><span>Définition</span><span>Formule · unité · constante</span></div><div id="tb"></div>
+<div id="quiz" hidden>
+<div class="qhead"><div class="qtop"><span class="qtitle">Entraînement</span><span id="qcount" class="qcount"></span></div>
+<div class="prog"><span id="qbar"></span></div>
+<div class="qbtns"><button id="bShuffle">🔀 Mélanger</button><button id="bReset">🙈 Tout recacher</button></div></div>
+<div id="qrows" class="qlist"></div></div>
+</div>
+<script>
+const H=()=>'';
+const data = [
+ {
+  "id": "A",
+  "title": "Unités de base du SI et constantes",
+  "pages": "p.3-4, 7",
+  "rows": [
+   {
+    "k": "zero",
+    "st": 0,
+    "q": "Zéro absolu",
+    "d": "",
+    "f": "0 K = −273,15 °C",
+    "u": "Kelvin (K) : unité SI de la température",
+    "x": "<p>La température est une grandeur de base du SI ; le kelvin est fixé à partir de la constante de Boltzmann (2018). Son zéro correspond à −273,15 °C.</p><span class='trap'>La température est une grandeur <b>repérable</b> (non additive) : on ne somme pas deux températures, mais une variation de température est mesurable.</span>"
+   },
+   {
+    "k": "avo",
+    "st": 0,
+    "q": "Constante d'Avogadro",
+    "d": "",
+    "f": "N ≈ 6,022.10²³ mol⁻¹",
+    "u": "1 mol = N entités",
+    "x": "<p>La mole (★ unité de base) compte des entités : autant d'unités élémentaires qu'il y a d'atomes dans 0,012 kg de carbone 12.</p>"
+   },
+   {
+    "k": "c",
+    "st": 0,
+    "q": "Vitesse de la lumière dans le vide",
+    "d": "",
+    "f": "c ≈ 3.10⁸ m.s⁻¹ ≈ 3.10⁵ km.s⁻¹",
+    "u": "",
+    "x": "<p>Beaucoup de constantes physiques ont une grandeur <b>et</b> une unité (★ tombé). Passer des m aux km divise par 1000.</p>"
+   },
+   {
+    "k": "h",
+    "st": 0,
+    "q": "Constante de Planck",
+    "d": "",
+    "f": "h = 6,62.10⁻³⁴ J.s",
+    "u": "",
+    "x": "<p>Autre exemple de constante avec unité ; depuis 2019, le kilogramme est fixé à partir de h.</p>"
+   },
+   {
+    "k": "rad",
+    "st": 1,
+    "q": "Angle plan",
+    "d": "",
+    "f": "0 ≤ θ ≤ 2π<br>2π rd = tour complet d'un cercle",
+    "u": "Radian (rd) : unité <b>sans dimension</b>",
+    "x": "<p>Unité supplémentaire sans dimension : un tour complet vaut 2π radians.</p>"
+   },
+   {
+    "k": "sr",
+    "st": 0,
+    "q": "Angle solide",
+    "d": "",
+    "f": "0 ≤ θ ≤ 4π<br>4π sr = sphère entière",
+    "u": "Stéradian (sr) : unité <b>sans dimension</b>",
+    "x": "<p>L'équivalent de l'angle plan dans l'espace : l'angle solide maximal vaut 4π stéradians.</p><span class='trap'>La fiche écrit « 4π sr = volume total de la sphère » : un angle solide n'est pas un volume, comprends « toute la sphère vue depuis son centre ».</span>"
+   }
+  ]
+ },
+ {
+  "id": "B",
+  "title": "Unités dérivées et grandeurs reliées",
+  "pages": "p.4-5",
+  "rows": [
+   {
+    "k": "vit",
+    "st": 0,
+    "q": "Vitesse : unité SI",
+    "d": "",
+    "f": "m.s⁻¹",
+    "u": "",
+    "x": "<p>Grandeur dérivée : une longueur divisée par un temps (voir @v).</p>"
+   },
+   {
+    "k": "acc",
+    "st": 1,
+    "q": "Accélération : unité SI",
+    "d": "",
+    "f": "m.s⁻²",
+    "u": "",
+    "x": "<p>Une vitesse divisée par un temps : m.s⁻¹ ÷ s = m.s⁻².</p>"
+   },
+   {
+    "k": "freq",
+    "st": 1,
+    "q": "Fréquence : unité SI",
+    "d": "",
+    "f": "Hertz : Hz = s⁻¹",
+    "u": "",
+    "x": "<p>Nombre d'événements par seconde.</p><span class='trap'>Le becquerel (@bq) a la même expression s⁻¹ : deux grandeurs différentes peuvent avoir la même dimension.</span>"
+   },
+   {
+    "k": "force",
+    "st": 2,
+    "q": "Force : unité SI",
+    "d": "",
+    "f": "Newton : N = m.kg.s⁻²",
+    "u": "",
+    "x": "<p>Une force est l'interaction d'un corps sur un autre : mise en mouvement, modification d'un mouvement, déformation.</p><span class='tip'>Retrouve-la avec le poids P = mg : kg × m.s⁻² (@P).</span>"
+   },
+   {
+    "k": "grav",
+    "st": 0,
+    "q": "Force de gravitation entre deux corps A et B",
+    "d": "",
+    "f": "F<sub>A/B</sub> = F<sub>B/A</sub> = <span class='frac'><span>G × m<sub>A</sub> × m<sub>B</sub></span><span>d²</span></span>",
+    "u": "G = constante de gravitation universelle · d = distance entre A et B",
+    "x": "<p>Exemple de force donné par la fiche : proportionnelle aux deux masses, inversement proportionnelle au carré de la distance.</p>"
+   },
+   {
+    "k": "pres",
+    "st": 2,
+    "q": "Pression : unité SI",
+    "d": "",
+    "f": "Pascal : Pa = N.m⁻² = kg.m⁻¹.s⁻²",
+    "u": "Pression = <b>force / surface</b>",
+    "x": "<p>Une pression est une force qui s'exerce sur une surface. La tension artérielle (pression du sang sur la surface des artères) s'exprime classiquement en mmHg.</p><span class='tip'>N.m⁻² puis remplace N par kg.m.s⁻² : kg.m.s⁻² × m⁻² = kg.m⁻¹.s⁻².</span>"
+   },
+   {
+    "k": "trav",
+    "st": 0,
+    "q": "Travail, énergie, quantité de chaleur : unité SI",
+    "d": "",
+    "f": "W = distance × force<br>Joule : J = N × m = kg.m².s⁻²",
+    "u": "",
+    "x": "<p>Le travail est l'« énergie utile » (★), par opposition aux pertes (chaleur, frottements). Il intervient quand une force déplace un corps.</p>"
+   },
+   {
+    "k": "puis",
+    "st": 1,
+    "q": "Puissance : unité SI",
+    "d": "",
+    "f": "Puissance = <span class='frac'><span>énergie</span><span>durée</span></span><br>Watt : W = J.s⁻¹ = kg.m².s⁻³",
+    "u": "",
+    "x": "<p>La puissance est un <b>débit d'énergie</b> : elle décrit la vitesse à laquelle l'énergie est libérée.</p><span class='tip'>Grenade et batterie : énergies chimiques équivalentes, mais libérées en quelques ms contre quelques heures → la grenade est bien plus puissante.</span>"
+   },
+   {
+    "k": "pui",
+    "st": 0,
+    "q": "Puissance en électricité",
+    "d": "",
+    "f": "P = U × I",
+    "u": "",
+    "x": "<p>U = tension électrique (V), I = intensité (A).</p>"
+   },
+   {
+    "k": "volt",
+    "der": [
+     "pui",
+     "puis"
+    ],
+    "q": "Potentiel électrique (tension) : unité SI",
+    "d": "",
+    "f": "Volt : V = W.A⁻¹ = kg.m².A⁻¹.s⁻³",
+    "u": "",
+    "x": "<p>Potentiel électrique, tension et force électromotrice ont la même unité, le volt.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de P = U × I : U = P / I.</li><li>En unités : V = W / A = W.A⁻¹.</li><li>Remplace W par kg.m².s⁻³.</li></ol></div>"
+   },
+   {
+    "k": "coul",
+    "st": 0,
+    "q": "Charge électrique : unité SI",
+    "d": "",
+    "f": "Coulomb : C = A.s",
+    "u": "",
+    "x": "<p>Quantité d'électricité : un courant (A) pendant une durée (s).</p>"
+   },
+   {
+    "k": "bq",
+    "st": 0,
+    "q": "Activité d'une source (rayonnement ionisant) : unité SI",
+    "d": "",
+    "f": "Becquerel : Bq = s⁻¹",
+    "u": "",
+    "x": "<p>Nombre de désintégrations par seconde.</p>"
+   }
+  ]
+ },
+ {
+  "id": "C",
+  "title": "Conversions d'unités",
+  "pages": "p.6",
+  "rows": [
+   {
+    "k": "cal",
+    "st": 0,
+    "q": "Calorie",
+    "d": "",
+    "f": "1 calorie = 4,186 J",
+    "u": "",
+    "x": "<p>Unité d'énergie usuelle (nutrition).</p>"
+   },
+   {
+    "k": "kwh",
+    "st": 0,
+    "q": "Kilowattheure",
+    "d": "",
+    "f": "1 kWh = 3,6 MJ",
+    "u": "",
+    "x": "<p>Unité d'énergie : une puissance × une durée.</p><span class='tip'>1000 W × 3600 s = 3 600 000 J = 3,6 MJ.</span>"
+   },
+   {
+    "k": "th",
+    "st": 0,
+    "q": "Thermie",
+    "d": "",
+    "f": "1 th = 4,12 MJ",
+    "u": "",
+    "x": "<p>Unité d'énergie ancienne.</p>"
+   },
+   {
+    "k": "toe",
+    "st": 0,
+    "q": "Tonne équivalent pétrole (TOE)",
+    "d": "",
+    "f": "1 TOE = 41,2 GJ",
+    "u": "",
+    "x": "<p>Unité d'énergie utilisée pour les bilans énergétiques.</p>"
+   },
+   {
+    "k": "kcalh",
+    "st": 0,
+    "q": "Kilocalorie par heure",
+    "d": "",
+    "f": "1 kcal.h⁻¹ = 1,16 W",
+    "u": "",
+    "x": "<p>Unité de <b>puissance</b> (énergie ÷ durée).</p><span class='tip'>Cohérent avec la calorie : 4186 J ÷ 3600 s ≈ 1,16 W.</span>"
+   },
+   {
+    "k": "kgf",
+    "st": 0,
+    "q": "Kilogramme-force mètre par seconde",
+    "d": "",
+    "f": "1 kgf.m.s⁻¹ = 8,43 W",
+    "u": "",
+    "x": "<p>Unité de puissance ancienne, telle que donnée par la fiche.</p>"
+   },
+   {
+    "k": "ch",
+    "st": 0,
+    "q": "Cheval-vapeur",
+    "d": "",
+    "f": "1 ch = 0,7355 W",
+    "u": "",
+    "x": "<p>Unité de puissance, valeur recopiée telle quelle.</p><span class='trap'>La fiche écrit 0,7355 <b>W</b> : c'est très probablement une coquille pour 0,7355 <b>kW</b> (735,5 W). À vérifier avec ton professeur.</span>"
+   },
+   {
+    "k": "torr",
+    "st": 0,
+    "q": "Torr",
+    "d": "",
+    "f": "1 torr = 133 Pa",
+    "u": "",
+    "x": "<p>Unité de pression, quasiment égale au mmHg.</p>"
+   },
+   {
+    "k": "psi",
+    "st": 0,
+    "q": "Livre par pouce carré (psi)",
+    "d": "",
+    "f": "1 psi = 6,9 kPa",
+    "u": "",
+    "x": "<p>Unité de pression anglo-saxonne.</p>"
+   },
+   {
+    "k": "mmhg",
+    "st": 1,
+    "q": "Millimètre de mercure",
+    "d": "",
+    "f": "1 mmHg = 133,2 Pa",
+    "u": "",
+    "x": "<p>L'unité de la tension artérielle et des pressions partielles de gaz du sang.</p><span class='tip'>mmHg ≈ torr ≈ 133 Pa.</span>"
+   },
+   {
+    "k": "bar",
+    "st": 0,
+    "q": "Bar",
+    "d": "",
+    "f": "1 bar = 1000 hPa = 100 kPa",
+    "u": "",
+    "x": "<p>Unité de pression courante.</p>"
+   },
+   {
+    "k": "atm",
+    "st": 0,
+    "q": "Atmosphère",
+    "d": "",
+    "f": "1 atm = 1013 hPa = 101,3 kPa",
+    "u": "",
+    "x": "<p>Pression atmosphérique normale.</p><span class='tip'>1 atm ≈ 1 bar, un peu plus.</span>"
+   }
+  ]
+ },
+ {
+  "id": "D",
+  "title": "Dimensions et analyse dimensionnelle",
+  "pages": "p.7-8",
+  "rows": [
+   {
+    "k": "dim",
+    "st": 1,
+    "q": "Dimension d'une grandeur",
+    "d": "",
+    "f": "Dimension = M<sup>α</sup>.L<sup>β</sup>.T<sup>γ</sup><br>→ unité possible = kg<sup>α</sup>.m<sup>β</sup>.s<sup>γ</sup>",
+    "u": "Notation entre crochets : <b>[grandeur]</b>",
+    "x": "<p>La dimension est un produit, quotient et/ou puissance des grandeurs fondamentales. Une grandeur a une <b>unique dimension</b> mais peut s'exprimer en <b>plusieurs unités</b>.</p>"
+   },
+   {
+    "k": "prod",
+    "st": 3,
+    "q": "Dimension d'un produit de puissances",
+    "d": "",
+    "f": "X = Y<sup>α</sup> × Z<sup>β</sup> ⇒ [X] = [Y]<sup>α</sup> × [Z]<sup>β</sup>",
+    "u": "",
+    "x": "<p><b>La plus tombée.</b> Dans une équation aux dimensions, on remplace chaque grandeur par sa dimension et on garde les mêmes produits et puissances.</p>"
+   },
+   {
+    "k": "P",
+    "der": [
+     "prod",
+     "a"
+    ],
+    "q": "Dimension du poids",
+    "d": "",
+    "f": "P = mg<br>[P] = [m] × [g] = M.L.T⁻²",
+    "u": "",
+    "x": "<p>Exemple de force : sa dimension est celle d'une masse × une accélération.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>P = m × g : applique [X] = [Y] × [Z].</li><li>[m] = M et [g] = dimension d'une accélération = L.T⁻² (@a).</li><li>[P] = M.L.T⁻².</li></ol></div>"
+   },
+   {
+    "k": "somme",
+    "st": 1,
+    "q": "Dimension d'une somme",
+    "d": "",
+    "f": "X = Y<sup>α</sup> + Z<sup>β</sup> ⇒ [X] = [Y]<sup>α</sup> = [Z]<sup>β</sup>",
+    "u": "",
+    "x": "<p>On ne peut additionner que des grandeurs de <b>même dimension</b> ; la somme garde cette dimension.</p><span class='tip'>0,06 m³ + 5 L : possible (deux volumes). 1 kg + 1 s : non-sens.</span>"
+   },
+   {
+    "k": "deriv",
+    "st": 0,
+    "q": "Dimension d'une dérivée",
+    "d": "",
+    "f": "X = <span class='frac'><span>d<sup>n</sup>Y</span><span>dZ<sup>n</sup></span></span> ⇒ [X] = <span class='frac'><span>[Y]</span><span>[Z]<sup>n</sup></span></span>",
+    "u": "",
+    "x": "<p>Une dérivée se comporte comme un quotient : dimension du numérateur ÷ dimension du dénominateur à la puissance n.</p>"
+   },
+   {
+    "k": "v",
+    "der": [
+     "deriv"
+    ],
+    "q": "Dimension d'une vitesse linéaire",
+    "d": "",
+    "f": "v = <span class='frac'><span>dx</span><span>dt</span></span><br>[v] = <span class='frac'><span>L</span><span>T</span></span> = L.T⁻¹",
+    "u": "Unité possible : m.s⁻¹ ou km.h⁻¹",
+    "x": "<p>Exemple direct de la règle de la dérivée.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>v = dx/dt : dérivée première (n = 1).</li><li>[x] = L, [t] = T.</li><li>[v] = L/T = L.T⁻¹.</li></ol></div>"
+   },
+   {
+    "k": "a",
+    "der": [
+     "deriv",
+     "v"
+    ],
+    "q": "Dimension d'une accélération linéaire",
+    "d": "",
+    "f": "a = <span class='frac'><span>dv</span><span>dt</span></span> = <span class='frac'><span>d²x</span><span>dt²</span></span><br>[a] = <span class='frac'><span>L</span><span>T²</span></span> = L.T⁻²",
+    "u": "",
+    "x": "<p>Dérivée seconde de la position : on divise deux fois par un temps.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>a = d²x/dt² : dérivée seconde (n = 2).</li><li>[a] = [x]/[t]² = L/T².</li><li>Soit L.T⁻².</li></ol></div>"
+   },
+   {
+    "k": "cst",
+    "st": 0,
+    "q": "Dimension d'une constante numérique",
+    "d": "",
+    "f": "[π] = 1",
+    "u": "",
+    "x": "<p>Les constantes numériques (π, 2, ½…) sont sans dimension : elles disparaissent de l'équation aux dimensions.</p>"
+   },
+   {
+    "k": "arg",
+    "st": 0,
+    "q": "Argument d'une fonction mathématique",
+    "d": "",
+    "f": "cos(x), sin(x), ln(x), log(x), exp(x) :<br>nécessairement [x] = 1",
+    "u": "",
+    "x": "<p>On ne peut prendre le cosinus, le logarithme ou l'exponentielle que d'un nombre <b>sans dimension</b>. Cela permet de retrouver l'unité d'une constante.</p>"
+   },
+   {
+    "k": "cosf",
+    "der": [
+     "arg",
+     "cst"
+    ],
+    "q": "Unité de f dans cos(2πft)",
+    "d": "",
+    "f": "t en s → f en s⁻¹",
+    "u": "",
+    "x": "<p>Application directe : f × t doit être sans dimension.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>[2πft] = 1 et [2π] = 1.</li><li>Donc [f] × [t] = 1.</li><li>t en s ⇒ f en s⁻¹.</li></ol></div>"
+   },
+   {
+    "k": "lambda",
+    "st": 1,
+    "q": "Unité de λ dans N(t) = N<sub>0</sub>.e<sup>−λt</sup>",
+    "d": "",
+    "f": "t en s → λ en s⁻¹",
+    "u": "λ = constante radioactive",
+    "x": "<p>Même raisonnement que pour cos(2πft) : λt est l'argument d'une exponentielle, il doit être sans dimension.</p>"
+   },
+   {
+    "k": "phref",
+    "st": 1,
+    "q": "Concentration de référence implicite du pH",
+    "d": "",
+    "f": "pH = −log <span class='frac'><span>[H⁺]</span><span>[Ref]</span></span><br>avec [Ref] = 1 mol.L⁻¹",
+    "u": "",
+    "x": "<p>pH = −log[H⁺] sous-entend une division par une concentration de référence, pour que l'argument du log soit sans dimension.</p>"
+   }
+  ]
+ },
+ {
+  "id": "E",
+  "title": "Logarithme et exponentielle",
+  "pages": "p.9-11",
+  "rows": [
+   {
+    "k": "log1",
+    "st": 0,
+    "q": "Logarithme de 1",
+    "d": "",
+    "f": "log<sub>a</sub>(1) = 0",
+    "u": "",
+    "x": "<p>Le logarithme (défini sur ℝ*₊, à valeurs dans ℝ) s'annule en 1, quelle que soit la base.</p>"
+   },
+   {
+    "k": "loga",
+    "st": 0,
+    "q": "Logarithme de sa propre base",
+    "d": "",
+    "f": "log<sub>a</sub>(a) = 1",
+    "u": "",
+    "x": "<p>Valeur remarquable : log₁₀(10) = 1, ln(e) = 1.</p>"
+   },
+   {
+    "k": "logcr",
+    "st": 0,
+    "q": "Sens de variation du logarithme",
+    "d": "",
+    "f": "x &lt; y ⇔ log<sub>a</sub>(x) &lt; log<sub>a</sub>(y)",
+    "u": "",
+    "x": "<p>Fonction continue et <b>strictement croissante</b> (base a &gt; 1) : elle garde l'ordre.</p>"
+   },
+   {
+    "k": "loglim",
+    "st": 0,
+    "q": "Limites du logarithme",
+    "d": "",
+    "f": "lim<sub>x→0</sub> log<sub>a</sub>(x) = −∞<br>lim<sub>x→+∞</sub> log<sub>a</sub>(x) = +∞",
+    "u": "",
+    "x": "<p>Il plonge vers −∞ près de 0 et monte (lentement) vers +∞.</p>"
+   },
+   {
+    "k": "logder",
+    "st": 0,
+    "q": "Dérivée du logarithme de base a",
+    "d": "",
+    "f": "(log<sub>a</sub>)'(x) = <span class='frac'><span>1</span><span>ln(a)</span></span> × <span class='frac'><span>1</span><span>x</span></span> &gt; 0",
+    "u": "",
+    "x": "<p>La dérivée est positive : c'est ce qui rend la fonction croissante.</p>"
+   },
+   {
+    "k": "lnder",
+    "der": [
+     "logder"
+    ],
+    "q": "Dérivée du logarithme népérien",
+    "d": "",
+    "f": "ln'(x) = <span class='frac'><span>1</span><span>x</span></span>",
+    "u": "",
+    "x": "<p>Le logarithme népérien est le log de base e (e ≈ 2,718).</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de (logₐ)'(x) = 1/ln(a) × 1/x.</li><li>Pour ln, a = e et ln(e) = 1 (@loga).</li><li>Il reste 1/x.</li></ol></div>"
+   },
+   {
+    "k": "logprod",
+    "st": 0,
+    "q": "Logarithme d'un produit",
+    "d": "",
+    "f": "log<sub>a</sub>(xy) = log<sub>a</sub>(x) + log<sub>a</sub>(y)",
+    "u": "donc ln(xy) = ln x + ln y",
+    "x": "<p>Le logarithme transforme un <b>produit</b> en <b>somme</b> : c'est pour cela qu'il a été inventé (gagner du temps dans les calculs d'astronomie).</p>"
+   },
+   {
+    "k": "logquot",
+    "st": 0,
+    "q": "Logarithme d'un quotient",
+    "d": "",
+    "f": "log<sub>a</sub>(<span class='frac'><span>x</span><span>y</span></span>) = log<sub>a</sub>(x) − log<sub>a</sub>(y)",
+    "u": "donc ln(<span class='frac'><span>x</span><span>y</span></span>) = ln x − ln y",
+    "x": "<p>Un quotient devient une <b>différence</b>.</p>"
+   },
+   {
+    "k": "loginv",
+    "der": [
+     "logquot",
+     "log1"
+    ],
+    "q": "Logarithme de l'inverse",
+    "d": "",
+    "f": "log<sub>a</sub>(<span class='frac'><span>1</span><span>x</span></span>) = −log<sub>a</sub>(x)",
+    "u": "donc ln(<span class='frac'><span>1</span><span>x</span></span>) = −ln x",
+    "x": "<p>Cas particulier du quotient avec 1 au numérateur.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de logₐ(x/y) = logₐ(x) − logₐ(y) avec 1 au numérateur.</li><li>logₐ(1/x) = logₐ(1) − logₐ(x).</li><li>logₐ(1) = 0.</li></ol></div>"
+   },
+   {
+    "k": "logpow",
+    "st": 0,
+    "q": "Logarithme d'une puissance",
+    "d": "",
+    "f": "log<sub>a</sub>(x<sup>n</sup>) = n log<sub>a</sub>(x)",
+    "u": "",
+    "x": "<p>L'exposant « descend » devant le log.</p>"
+   },
+   {
+    "k": "log2",
+    "der": [
+     "logpow"
+    ],
+    "q": "Logarithme décimal d'un carré",
+    "d": "",
+    "f": "log x² = 2 log x",
+    "u": "",
+    "x": "<p>Forme donnée pour le logarithme de base 10.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de logₐ(xⁿ) = n logₐ(x).</li><li>Base 10 et n = 2.</li></ol></div>"
+   },
+   {
+    "k": "lnexp",
+    "st": 1,
+    "q": "Réciprocité ln / exp",
+    "d": "",
+    "f": "ln(e<sup>x</sup>) = x = e<sup>ln(x)</sup>",
+    "u": "soit <b>ln(x) = y ⇔ x = exp(y)</b> · e ≈ 2,718",
+    "x": "<p>ln et exp sont des fonctions <b>réciproques</b> : l'une défait ce que fait l'autre. Nom en hommage à John Napier (Néper).</p>"
+   },
+   {
+    "k": "log10",
+    "st": 0,
+    "q": "Réciprocité du logarithme de base 10",
+    "d": "",
+    "f": "log x = y ⇔ x = 10<sup>y</sup>",
+    "u": "",
+    "x": "<p>Même idée avec la base 10 : c'est le passage entre pH et [H₃O⁺].</p>"
+   },
+   {
+    "k": "expa",
+    "st": 0,
+    "q": "Exponentielle de base a",
+    "d": "",
+    "f": "exp<sub>a</sub>(x + y) = exp<sub>a</sub>(x) × exp<sub>a</sub>(y)",
+    "u": "exp<sub>a</sub>(1) = a",
+    "x": "<p>Définie sur ℝ, à valeurs dans ℝ*₊, continue ; elle transforme une <b>somme</b> en <b>produit</b>.</p>"
+   },
+   {
+    "k": "exp0",
+    "st": 1,
+    "q": "Exponentielle de 0",
+    "d": "",
+    "f": "exp(0) = 1",
+    "u": "",
+    "x": "<p>Valeur remarquable : toutes les exponentielles valent 1 en 0.</p><span class='tip'>Pendant de ln(1) = 0.</span>"
+   },
+   {
+    "k": "exp1",
+    "st": 0,
+    "q": "Exponentielle de 1",
+    "d": "",
+    "f": "exp(1) = e ≈ 2,718",
+    "u": "",
+    "x": "<p>e = nombre d'Euler (constante de Néper).</p>"
+   },
+   {
+    "k": "expcr",
+    "st": 0,
+    "q": "Sens de variation de l'exponentielle",
+    "d": "",
+    "f": "x &lt; y ⇔ exp(x) &lt; exp(y)<br>x = y ⇔ exp(x) = exp(y)<br>x &gt; 0 ⇔ exp(x) &gt; 1",
+    "u": "",
+    "x": "<p>L'exponentielle est strictement croissante.</p>"
+   },
+   {
+    "k": "explim",
+    "st": 0,
+    "q": "Limites de l'exponentielle",
+    "d": "",
+    "f": "lim<sub>x→−∞</sub> exp(x) = 0<br>lim<sub>x→+∞</sub> exp(x) = +∞",
+    "u": "",
+    "x": "<p>Elle s'approche de 0 sans jamais l'atteindre, et explose vers +∞.</p>"
+   },
+   {
+    "k": "expder",
+    "st": 0,
+    "q": "Dérivée de l'exponentielle",
+    "d": "",
+    "f": "exp'(x) = exp(x)",
+    "u": "strictement positive",
+    "x": "<p>L'exponentielle est sa propre dérivée.</p>"
+   },
+   {
+    "k": "expsum",
+    "st": 0,
+    "q": "Exponentielle d'une somme",
+    "d": "",
+    "f": "e<sup>x+y</sup> = e<sup>x</sup> × e<sup>y</sup>",
+    "u": "",
+    "x": "<p>Somme dans l'exposant = produit des exponentielles.</p>"
+   },
+   {
+    "k": "expdiff",
+    "st": 0,
+    "q": "Exponentielle d'une différence",
+    "d": "",
+    "f": "e<sup>x−y</sup> = <span class='frac'><span>e<sup>x</sup></span><span>e<sup>y</sup></span></span>",
+    "u": "",
+    "x": "<p>Différence dans l'exposant = quotient.</p>"
+   },
+   {
+    "k": "expneg",
+    "der": [
+     "expdiff",
+     "exp0"
+    ],
+    "q": "Exponentielle de −x",
+    "d": "",
+    "f": "e<sup>−x</sup> = <span class='frac'><span>1</span><span>e<sup>x</sup></span></span>",
+    "u": "",
+    "x": "<p>Utile pour les décroissances exponentielles.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de e^(x−y) = eˣ / eʸ avec x = 0.</li><li>e^(−y) = e⁰ / eʸ.</li><li>e⁰ = exp(0) = 1.</li></ol></div>"
+   },
+   {
+    "k": "expprod",
+    "st": 0,
+    "q": "Exponentielle d'un produit dans l'exposant",
+    "d": "",
+    "f": "e<sup>x×y</sup> = (e<sup>x</sup>)<sup>y</sup>",
+    "u": "",
+    "x": "<p>Produit dans l'exposant = puissance d'une exponentielle.</p>"
+   },
+   {
+    "k": "croiss",
+    "st": 0,
+    "q": "Croissance exponentielle",
+    "d": "",
+    "f": "y(t) = y<sub>0</sub>.e<sup>at</sup>",
+    "u": "a &gt; 0 constante · y<sub>0</sub> constante",
+    "x": "<p>Exemples : développement des micro-organismes, croissance cellulaire.</p>"
+   },
+   {
+    "k": "decr",
+    "st": 0,
+    "q": "Décroissance exponentielle",
+    "d": "",
+    "f": "y(t) = y<sub>0</sub>.e<sup>−at</sup>",
+    "u": "a &gt; 0 constante · y<sub>0</sub> constante",
+    "x": "<p>Exemples : décroissance radioactive, pharmacocinétique.</p>"
+   },
+   {
+    "k": "radio",
+    "st": 1,
+    "q": "Décroissance radioactive",
+    "d": "",
+    "f": "N(t) = N<sub>0</sub>.e<sup>−λt</sup>",
+    "u": "N<sub>0</sub> = nombre initial de noyaux · λ = constante radioactive",
+    "x": "<p>Cas particulier de la décroissance exponentielle (a = λ), utilisé pour la datation au carbone 14.</p><span class='tip'>λ est en s⁻¹ si t est en s (@lambda).</span>"
+   }
+  ]
+ },
+ {
+  "id": "F",
+  "title": "Dérivées et incertitudes",
+  "pages": "p.12-13",
+  "rows": [
+   {
+    "k": "fprime",
+    "st": 0,
+    "q": "Dérivée en un point",
+    "d": "",
+    "f": "f'(x) = lim<sub>Δx→0</sub> <span class='frac'><span>f(x + Δx) − f(x)</span><span>Δx</span></span>",
+    "u": "= coefficient directeur de la tangente",
+    "x": "<p>La dérivée est la pente de la droite reliant (x, f(x)) et (x + Δx, f(x + Δx)) quand Δx devient infiniment petit.</p>"
+   },
+   {
+    "k": "signe",
+    "st": 0,
+    "q": "Signe de la dérivée et variations",
+    "d": "",
+    "f": "f'(x) &gt; 0 ⇔ f croissante<br>f'(x) &lt; 0 ⇔ f décroissante<br>f'(x) = 0 ⇔ f passe par un extremum",
+    "u": "",
+    "x": "<p>Le signe de la pente dit si la fonction monte ou descend.</p>"
+   },
+   {
+    "k": "diff",
+    "st": 0,
+    "q": "Différentielle",
+    "d": "",
+    "f": "dy = f'(x).dx<br>soit f'(x) = <span class='frac'><span>dy</span><span>dx</span></span>",
+    "u": "",
+    "x": "<p>Petite variation de y provoquée par une petite variation de x.</p>"
+   },
+   {
+    "k": "dcst",
+    "st": 0,
+    "q": "Dérivée d'une constante",
+    "d": "",
+    "f": "constante → 0",
+    "u": "",
+    "x": "<p>Une constante ne varie pas : pente nulle.</p>"
+   },
+   {
+    "k": "dxn",
+    "st": 0,
+    "q": "Dérivée de xⁿ",
+    "d": "",
+    "f": "x<sup>n</sup> → n x<sup>n−1</sup>",
+    "u": "",
+    "x": "<p>L'exposant descend devant et diminue de 1.</p>"
+   },
+   {
+    "k": "dx",
+    "der": [
+     "dxn"
+    ],
+    "q": "Dérivée de x",
+    "d": "",
+    "f": "x → 1",
+    "u": "",
+    "x": "<p>La droite y = x a une pente de 1.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de xⁿ → n xⁿ⁻¹ avec n = 1.</li><li>1 × x⁰ = 1.</li></ol></div>"
+   },
+   {
+    "k": "dx2",
+    "der": [
+     "dxn"
+    ],
+    "q": "Dérivée de x²",
+    "d": "",
+    "f": "x² → 2x",
+    "u": "",
+    "x": "<p>Cas n = 2.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de xⁿ → n xⁿ⁻¹ avec n = 2.</li><li>2 × x¹ = 2x.</li></ol></div>"
+   },
+   {
+    "k": "dinvn",
+    "st": 0,
+    "q": "Dérivée de 1/xⁿ",
+    "d": "",
+    "f": "<span class='frac'><span>1</span><span>x<sup>n</sup></span></span> → −<span class='frac'><span>n</span><span>x<sup>n+1</sup></span></span>",
+    "u": "",
+    "x": "<p>Attention au signe <b>moins</b> et à l'exposant qui <b>augmente</b> de 1.</p>"
+   },
+   {
+    "k": "dinv",
+    "der": [
+     "dinvn"
+    ],
+    "q": "Dérivée de 1/x",
+    "d": "",
+    "f": "<span class='frac'><span>1</span><span>x</span></span> → −<span class='frac'><span>1</span><span>x²</span></span>",
+    "u": "",
+    "x": "<p>Cas n = 1.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de 1/xⁿ → −n/xⁿ⁺¹ avec n = 1.</li><li>−1/x².</li></ol></div>"
+   },
+   {
+    "k": "dsqrt",
+    "st": 0,
+    "q": "Dérivée de √x",
+    "d": "",
+    "f": "√x → <span class='frac'><span>1</span><span>2√x</span></span>",
+    "u": "",
+    "x": "<p>À connaître par cœur.</p>"
+   },
+   {
+    "k": "dcos",
+    "st": 0,
+    "q": "Dérivée de cos x",
+    "d": "",
+    "f": "cos x → −sin x",
+    "u": "",
+    "x": "<p>Le signe moins est pour le cosinus.</p><span class='trap'>sin → cos (sans moins) ; cos → −sin.</span>"
+   },
+   {
+    "k": "dsin",
+    "st": 0,
+    "q": "Dérivée de sin x",
+    "d": "",
+    "f": "sin x → cos x",
+    "u": "",
+    "x": "<p>Pas de signe moins ici.</p>"
+   },
+   {
+    "k": "dtot",
+    "st": 0,
+    "q": "Différentielle totale",
+    "d": "",
+    "f": "dy = <span class='frac'><span>∂y</span><span>∂x</span></span>.dx + <span class='frac'><span>∂y</span><span>∂z</span></span>.dz + <span class='frac'><span>∂y</span><span>∂t</span></span>.dt",
+    "u": "y = f(x, z, t)",
+    "x": "<p>∂y/∂x est la <b>dérivée partielle</b> : dérivée de y par rapport à x en gardant z et t constants. La différentielle totale additionne l'effet de chaque variable.</p>"
+   },
+   {
+    "k": "incert",
+    "der": [
+     "dtot"
+    ],
+    "q": "Incertitude sur la mesure",
+    "d": "",
+    "f": "Δy = |<span class='frac'><span>∂y</span><span>∂x</span></span>|.Δx + |<span class='frac'><span>∂y</span><span>∂z</span></span>|.Δz + |<span class='frac'><span>∂y</span><span>∂t</span></span>|.Δt",
+    "u": "",
+    "x": "<p>Permet de calculer l'incertitude sur y à partir des incertitudes sur chacune des 3 variables.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Pars de la différentielle totale.</li><li>Remplace dx, dz, dt par les incertitudes Δx, Δz, Δt.</li><li>Prends les valeurs absolues des dérivées partielles : les incertitudes s'additionnent.</li></ol></div>"
+   },
+   {
+    "k": "increl",
+    "der": [
+     "incert"
+    ],
+    "q": "Incertitude relative",
+    "d": "",
+    "f": "<span class='frac'><span>Δy</span><span>y</span></span>",
+    "u": "Sans unité, souvent exprimée en <b>pourcentage</b>",
+    "x": "<p>On rapporte l'incertitude à la valeur mesurée.</p><div class=\"ded\"><strong>🔁 Comment la retrouver</strong><ol><li>Calcule Δy avec la formule de l'incertitude.</li><li>Divise par y : Δy et y ont la même unité, le rapport est sans unité.</li></ol></div>"
+   }
+  ]
+ }
+];
+
+
+const tb=document.getElementById('tb');let h='';
+const rowHTML=(r,code,par)=>`<div class="row${r.der?' der':''}${r.st?' star':''}" tabindex="0">
+      <div class="d"><span class="code">${code}</span>${par?`<span class="from">🔁 Déduite de <b>${par}</b></span>`:''}<span class="name">${r.q}</span>${r.st?`<span class="s">${'★'.repeat(r.st)}</span>`:''}</div>
+      <div class="f"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div></div>`;
+data.forEach(sec=>{
+  h+=`<section class="blk" style="--c:var(--${sec.id})"><header><span class="letter">${sec.id}</span>${sec.title}</header><div class="rows">`;
+  const groups=[];
+  sec.rows.forEach((r,i)=>{const c=sec.id+(i+1); if(r.der&&groups.length) groups[groups.length-1].kids.push([r,c]); else groups.push({r,c,kids:[]});});
+  groups.forEach(g=>{
+    h+=`<div class="grp">`+rowHTML(g.r,g.c);
+    if(g.kids.length) h+=`<div class="kids">`+g.kids.map(([r,c])=>rowHTML(r,c,g.c)).join('')+`</div>`;
+    h+=`</div>`;
+  });
+  h+=`</div></section>`;
+});
+tb.innerHTML=h;
+const b=document.getElementById('bHide'),quiz=document.getElementById('quiz'),qrows=document.getElementById('qrows');
+const all=[];data.forEach(sec=>sec.rows.forEach(r=>all.push(r)));
+const upd=()=>{const n=qrows.querySelectorAll('.qc.show').length,t=all.length;
+  document.getElementById('qcount').textContent=`${n} / ${t} révélées`;document.getElementById('qbar').style.width=(100*n/t)+'%';};
+const shuffle=()=>{
+  const a=all.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  qrows.innerHTML=a.map((r,i)=>`<div class="qc${r.st?' star':''}" tabindex="0">
+    <div class="qd"><span class="qn">${i+1}</span>${r.st?`<span class="qs">${'★'.repeat(r.st)}</span>`:''}<span class="qq">${r.q}</span></div>
+    <div class="qf"><div class="qans"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div><span class="qhint">👁 Révéler</span></div></div>`).join('');
+  upd();
+};
+document.getElementById('bShuffle').onclick=()=>{shuffle();window.scrollTo({top:0});};
+document.getElementById('bReset').onclick=()=>{qrows.querySelectorAll('.qc.show').forEach(c=>c.classList.remove('show'));upd();};
+b.onclick=()=>{
+  const on=document.body.classList.toggle('hide');b.setAttribute('aria-pressed',on);
+  b.textContent=on?'↩ Revenir à la page de référence':'🙈 Cacher les formules';
+  if(on)shuffle();
+  quiz.hidden=!on;tb.hidden=on;document.querySelector('.cols').hidden=on;
+  window.scrollTo({top:0});
+};
+const flip=e=>{const t=e.target.closest('.qc');if(t){t.classList.toggle('show');upd();}};
+qrows.addEventListener('click',flip);
+qrows.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip(e);}});
+</script>
+</body>
+</html>
