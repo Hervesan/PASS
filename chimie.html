@@ -267,6 +267,33 @@
   .mode-card.is-qrm:hover .mode-arrow{ color: var(--accent-3); }
   .mode-card.is-recap:hover .mode-arrow{ color: var(--accent-2); }
 
+  /* ---- bouton FICHE SCHÉMAS (en haut du cours, distinct des modes) ---- */
+  .schema-btn{
+    position:relative; overflow:hidden; display:flex; align-items:center; gap:14px;
+    margin-top:18px; padding:14px 18px 14px 14px; border-radius:16px; text-decoration:none; color:#2A1A05;
+    background: linear-gradient(120deg, #FFD978 0%, #F7B24A 55%, #EE8B3A 100%);
+    box-shadow: 0 12px 26px -16px rgba(180,100,20,.55);
+    transition: transform .16s cubic-bezier(.2,.7,.3,1), box-shadow .16s ease;
+  }
+  .schema-btn::before{
+    content:""; position:absolute; left:0; top:0; bottom:0; width:5px;
+    background: linear-gradient(180deg,#2E8B57 0 25%,#C62828 25% 50%,#1F5FBF 50% 75%,#D9690F 75% 100%);
+  }
+  .schema-btn:hover{ transform: translateY(-2px); box-shadow: 0 18px 34px -16px rgba(180,100,20,.65); }
+  .schema-btn:active{ transform: scale(.985); }
+  .schema-btn .sb-icon{ flex-shrink:0; width:46px; height:46px; margin-left:4px; border-radius:12px; display:flex; align-items:center; justify-content:center; background: rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.8); }
+  .schema-btn .sb-body{ flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+  .schema-btn .sb-kicker{ font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:#8A3A0A; font-weight:700; }
+  .schema-btn .sb-title{ font-family:'Fraunces', serif; font-weight:700; font-size:18px; line-height:1.2; }
+  .schema-btn .sb-desc{ font-size:12.5px; color:#5A3A12; line-height:1.4; }
+  .schema-btn .sb-arrow{ flex-shrink:0; font-size:19px; color:#2A1A05; transition: transform .16s ease; }
+  .schema-btn:hover .sb-arrow{ transform: translateX(4px); }
+  .tile-schema-chip{
+    display:inline-flex; align-items:center; gap:4px; margin-left:6px; vertical-align:1px;
+    font-family:'IBM Plex Mono', monospace; font-size:9.5px; font-weight:700; letter-spacing:.05em;
+    color:#fff; background: linear-gradient(90deg,#2E8B57,#1F5FBF 55%,#D9690F); padding:2px 7px; border-radius:100px;
+  }
+
   /* ---- deck / serie item cards (level 3 lists) ---- */
   .item-card{
     border: 1px solid var(--line); background: var(--card); border-radius: 16px;
@@ -553,6 +580,11 @@
     <p class="eyebrow" id="courseEyebrow" style="margin-bottom:14px;"><span class="dot"></span>Chapitre</p>
     <h2 id="courseTitle">—</h2>
     <p id="courseDesc"></p>
+    <a class="schema-btn" id="schemaBtn" href="#" target="_blank" rel="noopener" style="display:none;">
+      <span class="sb-icon"><svg width="34" height="34" viewBox="0 0 28 28" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="14" cy="5.5" r="3.2" stroke="#B1365B" stroke-width="1.9"/><circle cx="5.5" cy="21.5" r="3.2" stroke="#3D2A10" stroke-width="1.9"/><circle cx="22.5" cy="21.5" r="3.2" stroke="#3D2A10" stroke-width="1.9"/><path d="M12.3 8.3 L7.3 18.6 M15.7 8.3 L20.7 18.6 M8.8 21.5 H19.2" stroke="#3D2A10" stroke-width="1.6" opacity=".85"/></svg></span>
+      <span class="sb-body"><span class="sb-kicker">✦ Nouveau · à imprimer</span><span class="sb-title">Fiche schémas</span><span class="sb-desc" id="schemaDesc"></span></span>
+      <span class="sb-arrow">→</span>
+    </a>
   </div>
   <div class="content">
     <div class="chapter-block" style="margin-top:26px;">
@@ -50841,7 +50873,7 @@ const COURSES = [
   "id": "alcenes",
   "chapter": "Module 2 · Chimie",
   "title": "Les alcènes",
-  "desc": "Fiche de cours n°7 (actualisation) : structure de la double liaison, nomenclature et stabilité relative, hydrogénation catalytique, effet inductif et carbocations, addition ionique des hydracides HX (Markovnikov), hydratation en milieu acide, hydroboration, addition des dihalogènes, addition radicalaire de HBr (effet Kharash), ozonolyse, KMnO<sub>4</sub>, époxydation et réaction de Diels et Alder.",
+  "desc": "Fiche de cours n°7 (actualisation) : structure de la double liaison, nomenclature et stabilité relative, hydrogénation catalytique, effet inductif et carbocations, addition ionique des hydracides HX (Markovnikov), hydratation en milieu acide, hydroboration, addition des dihalogènes, addition radicalaire de HBr (effet Kharash), ozonolyse, KMnO₄, époxydation et réaction de Diels et Alder.",
   "flashcards": {
    "desc": "Cartes de révision du cours Les alcènes : les bases (notions ★ concours, formules, notions structurantes) puis le reste du cours regroupé par thèmes.",
    "decks": [
@@ -51462,6 +51494,8 @@ const COURSES = [
    "series": QRM_ALCENES_SERIES
   },
   "recapPdf": "Fiche_visuelle_Alcenes.pdf",
+  "schemaPdf": "Schemas_Alcenes.pdf",
+  "schemaDesc": "Les règles · la roue des réactions · duels et mécanismes",
   "qrmPdf": "QRM_Alcenes.pdf"
  },
  {
@@ -51900,7 +51934,7 @@ function courseItemHTML(c){
       <span class="tile-body">
         <span class="tile-kicker">${c.chapter}</span>
         <span class="tile-title">${c.title}</span>
-        <span class="tile-meta">${metaParts.join(' · ')}</span>
+        <span class="tile-meta">${metaParts.join(' · ')}${c.schemaPdf?'<span class="tile-schema-chip">✦ SCHÉMAS</span>':''}</span>
       </span>
       <span class="tile-arrow">→</span>
     </button>
@@ -51958,6 +51992,9 @@ function openCourseDetail(courseId){
   document.getElementById('courseEyebrow').innerHTML = `<span class="dot"></span>${course.chapter}`;
   document.getElementById('courseTitle').textContent = course.title;
   document.getElementById('courseDesc').textContent = course.desc;
+  const sb=document.getElementById('schemaBtn');
+  if(course.schemaPdf){ sb.href=course.schemaPdf; document.getElementById('schemaDesc').textContent=course.schemaDesc||''; sb.style.display='flex'; }
+  else sb.style.display='none';
 
   const modes = [];
   if(course.flashcards){
