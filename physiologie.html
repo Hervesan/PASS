@@ -293,6 +293,34 @@
   .mode-card.is-qrm:hover .mode-arrow{ color: var(--accent-3); }
   .mode-card.is-recap:hover .mode-arrow{ color: var(--accent-2); }
 
+
+  /* ---- bouton FICHE SCHÉMAS (en haut du cours, distinct des modes) ---- */
+  .schema-btn{
+    position:relative; overflow:hidden; display:flex; align-items:center; gap:14px;
+    margin-top:18px; padding:14px 18px 14px 14px; border-radius:16px; text-decoration:none; color:#fff;
+    background: radial-gradient(120% 160% at 0% 0%, #2F3F6B 0%, #1B2238 60%, #241A3A 100%);
+    box-shadow: 0 12px 26px -16px rgba(21,27,46,.6);
+    transition: transform .16s cubic-bezier(.2,.7,.3,1), box-shadow .16s ease;
+  }
+  .schema-btn::before{
+    content:""; position:absolute; left:0; top:0; bottom:0; width:5px;
+    background: linear-gradient(180deg,#2E8B57 0 25%,#C62828 25% 50%,#1F5FBF 50% 75%,#D9690F 75% 100%);
+  }
+  .schema-btn:hover{ transform: translateY(-2px); box-shadow: 0 18px 34px -16px rgba(36,26,58,.7); }
+  .schema-btn:active{ transform: scale(.985); }
+  .schema-btn .sb-icon{ flex-shrink:0; width:46px; height:46px; margin-left:4px; border-radius:12px; display:flex; align-items:center; justify-content:center; background: rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); }
+  .schema-btn .sb-body{ flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+  .schema-btn .sb-kicker{ font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:#F2C14E; font-weight:700; }
+  .schema-btn .sb-title{ font-family:'Fraunces', serif; font-weight:700; font-size:18px; line-height:1.2; }
+  .schema-btn .sb-desc{ font-size:12.5px; color:#C9D3E6; line-height:1.4; }
+  .schema-btn .sb-arrow{ flex-shrink:0; font-size:19px; color:#F2C14E; transition: transform .16s ease; }
+  .schema-btn:hover .sb-arrow{ transform: translateX(4px); }
+  .tile-schema-chip{
+    display:inline-flex; align-items:center; gap:4px; margin-left:6px; vertical-align:1px;
+    font-family:'IBM Plex Mono', monospace; font-size:9.5px; font-weight:700; letter-spacing:.05em;
+    color:#fff; background: linear-gradient(90deg,#2E8B57,#1F5FBF 55%,#D9690F); padding:2px 7px; border-radius:100px;
+  }
+
   /* ---- deck / serie item cards (level 3 lists) ---- */
   .item-card{
     border: 1px solid var(--line); background: var(--card); border-radius: 16px;
@@ -560,7 +588,7 @@
     <div class="hero-inner">
       <div class="eyebrow"><span class="dot"></span>Médisup · M1</div>
       <h1>Réviser la physiologie, <span class="accent-word">un cours à la fois</span>.</h1>
-      <p>Touchez un cours pour l'ouvrir, puis choisissez entre flashcards et QRM. Tout se passe dans cette page, aucun autre fichier n'est nécessaire.</p>
+      <p>Touchez un cours pour l'ouvrir, puis choisissez entre flashcards, QRM, récapitulatif ou fiche schémas (✦). Tout se passe dans cette page, aucun autre fichier n'est nécessaire.</p>
       <div class="hero-stats" id="heroStats"></div>
     </div>
   </div>
@@ -579,6 +607,11 @@
     <p class="eyebrow" id="courseEyebrow" style="margin-bottom:14px;"><span class="dot"></span>Chapitre</p>
     <h2 id="courseTitle">—</h2>
     <p id="courseDesc"></p>
+    <a class="schema-btn" id="schemaBtn" href="#" target="_blank" rel="noopener" style="display:none;">
+      <span class="sb-icon"><svg width="34" height="34" viewBox="0 0 28 28" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="14" cy="5.5" r="3.2" stroke="#F2C14E" stroke-width="1.8"/><circle cx="5.5" cy="21.5" r="3.2" stroke="#fff" stroke-width="1.8"/><circle cx="22.5" cy="21.5" r="3.2" stroke="#fff" stroke-width="1.8"/><path d="M12.3 8.3 L7.3 18.6 M15.7 8.3 L20.7 18.6 M8.8 21.5 H19.2" stroke="#fff" stroke-width="1.6" opacity=".85"/></svg></span>
+      <span class="sb-body"><span class="sb-kicker">✦ Nouveau · à imprimer</span><span class="sb-title">Fiche schémas</span><span class="sb-desc" id="schemaDesc"></span></span>
+      <span class="sb-arrow">→</span>
+    </a>
   </div>
   <div class="content">
     <div class="chapter-block" style="margin-top:26px;">
@@ -1815,6 +1848,7 @@ const COURSES = [
   {
     id: "physiologie-digestive",
     chapter: "Module 1",
+    schemaPdf: "Schemas_Physiologie_digestive.pdf", schemaPages: 2, schemaDesc: "Le trajet · qui commande · l'estomac",
     title: "Physiologie digestive",
     desc: "Anatomie et régulation du tube digestif, motilité, bouche et œsophage, estomac : sécrétions et régulation de l'activité gastrique.",
     flashcards: {
@@ -2236,6 +2270,7 @@ const COURSES = [
   {
     id: "equilibre-acido-basique",
     chapter: "Module 1",
+    schemaPdf: "Schemas_Equilibre_acido_basique.pdf", schemaPages: 3, schemaDesc: "Le pH et le vivant · les tampons · les troubles",
     title: "Équilibre acido-basique",
     desc: "Effets du pH sur les protéines et le gradient potassique, pH et vivant, charge acide quotidienne, tampons fermés (protéines, phosphate), tampon ouvert CO₂/bicarbonate et ventilation, rôle du rein, conditions normales et troubles acido-basiques (acidoses, alcaloses), analyse des gaz du sang.",
     recapPdf: "Fiche_visuelle_Equilibre_acido_basique.pdf",
@@ -2333,6 +2368,7 @@ const COURSES = [
   },  {
     id: "thermoregulation",
     chapter: "Module 1",
+    schemaPdf: "Schemas_Thermoregulation.pdf", schemaPages: 1, schemaDesc: "Le thermostat · échanges corps ↔ milieu",
     title: "Thermorégulation",
     desc: "Température et vivant (poïkilothermes, homéothermes, hétérothermes), déterminants de la température, noyau et écorce, échanges noyau-écorce par convection circulatoire, échanges écorce-milieu (radiation, convection, conduction, évaporation), régulation non comportementale (hypothalamus, frisson, adipocytes bruns, sudation), régulation comportementale et fièvre.",
     recapPdf: "Fiche_visuelle_Thermoregulation.pdf",
@@ -2560,7 +2596,7 @@ function courseItemHTML(c){
       <span class="tile-body">
         <span class="tile-kicker">${c.chapter}</span>
         <span class="tile-title">${c.title}</span>
-        <span class="tile-meta">${metaParts.join(' · ')}</span>
+        <span class="tile-meta">${metaParts.join(' · ')}${c.schemaPdf?'<span class="tile-schema-chip">✦ SCHÉMAS</span>':''}</span>
       </span>
       <span class="tile-arrow">→</span>
     </button>
@@ -2618,6 +2654,9 @@ function openCourseDetail(courseId){
   document.getElementById('courseEyebrow').innerHTML = `<span class="dot"></span>${course.chapter}`;
   document.getElementById('courseTitle').textContent = course.title;
   document.getElementById('courseDesc').textContent = course.desc;
+  const sb=document.getElementById('schemaBtn');
+  if(course.schemaPdf){ sb.href=course.schemaPdf; document.getElementById('schemaDesc').textContent=course.schemaDesc||''; sb.style.display='flex'; }
+  else sb.style.display='none';
 
   const modes = [];
   if(course.flashcards){
