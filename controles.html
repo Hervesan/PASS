@@ -245,7 +245,134 @@ const COURS_BMI = {
   mecaniques:  "Propriétés mécaniques des solutions (tension superficielle)",
 };
 
+const COURS_BAM = {
+  constitution: "Constitution de la matière",
+  etats:        "États et transitions de phase",
+  gaz:          "Systèmes gazeux",
+  noyaux:       "Noyaux et rayonnements",
+  interaction:  "Interaction des rayonnements ionisants avec la matière",
+};
+
+const COURS_PHYSIO = {
+  bioen:     "FC4 Bioénergétique",
+  digestive: "FC5 Physiologie digestive",
+  snc:       "FC6 Organisation du système nerveux",
+  synapse:   "FC7 Transmission synaptique",
+  endoc:     "FC8 Système endocrinien",
+  acido:     "FC9 Équilibre acido-basique",
+  thermo:    "FC10 Thermorégulation",
+};
+
 const MODULES = [
+  { label:"M1", matieres:[
+    {
+      title:"Biophysique appliquée aux méthodes exploratoires", color:"var(--c-biophysique)", href:"biophysique.html",
+      groupes:[
+      {
+      titre:"Contrôle n°1",
+      sousTitre:"Le contrôle officiel Médisup et les entraînements générés sur son programme (5 cours).",
+      controles:[
+        {
+          id:"bam-c1", titre:"Contrôle n°1", source:"Modèle Médisup",
+          note:"Contrôle officiel Médisup. La fiche « Tips » donne les raisonnements réflexes question par question ; ses verdicts sont vérifiés sur le corrigé Médisup.",
+          nbQ:19, qrm:16, qru:3, duree:"30 min",
+          cours:[
+            { t:COURS_BAM.constitution, q:"Q1–2" }, { t:COURS_BAM.etats, q:"Q3–4" }, { t:COURS_BAM.gaz, q:"Q5–6" },
+            { t:COURS_BAM.noyaux, q:"Q7–14" }, { t:COURS_BAM.interaction, q:"Q15–19" },
+          ],
+          pdfs:[
+            { label:"Sujet", href:"controles/BAM_Controle1_Medisup_sujet.pdf" },
+            { label:"Corrigé", href:"controles/BAM_Controle1_Medisup_corrige.pdf", alt:true },
+            { label:"Tips", href:"controles/BAM_Controle1_Medisup_tips.pdf", tips:true },
+          ],
+        },
+        {
+          id:"bam-c3", titre:"Contrôle d'entraînement n°3", source:"Généré par Claude",
+          nbQ:18, qrm:11, qru:7, duree:"36 min",
+          cours:[
+            { t:COURS_BAM.constitution + " — gravitation, statistiques, hadrons", q:"Q1–3" },
+            { t:COURS_BAM.etats + " — chaleur latente, transformations, matière molle", q:"Q4–6" },
+            { t:COURS_BAM.gaz + " — ballon-sonde, chambre hyperbare, pression hydrostatique sanguine", q:"Q7–9" },
+            { t:COURS_BAM.noyaux + " — α de l'uranium 238, λ et période, β⁺/CE, énergies", q:"Q10–14" },
+            { t:COURS_BAM.interaction + " — μ et CDA, τ/σ/π, énergie transmise, ionisation", q:"Q15–18" },
+          ],
+          pdfs:[ { label:"Sujet + corrigé", href:"controles/BAM_Controle3_entrainement.pdf" } ],
+          note:"Annales ACC et contrôles Médisup utilisés uniquement pour calibrer : aucune question proche. Contenu tiré des fiches de synthèse. Le corrigé commence page 6 ; chaque question y a son encadré « Tips réflexes ».",
+        },
+        {
+          id:"bam-c4", titre:"Contrôle d'entraînement n°4", source:"Généré par Claude",
+          nbQ:18, qrm:11, qru:7, duree:"36 min",
+          cours:[
+            { t:COURS_BAM.constitution + " — liaisons, dimensions de l'atome, bosons", q:"Q1–3" },
+            { t:COURS_BAM.etats + " — perspiration pulmonaire, diagramme de phase, états", q:"Q4–6" },
+            { t:COURS_BAM.gaz + " — loi de Charles, air alvéolaire, gaz parfaits et réels", q:"Q7–9" },
+            { t:COURS_BAM.noyaux + " — K40/Ca40, spectre β⁻, iode 131, Tc99m, applications", q:"Q10–14" },
+            { t:COURS_BAM.interaction + " — devenir des photons, CDA à rebours, électrons, dose", q:"Q15–18" },
+          ],
+          pdfs:[ { label:"Sujet + corrigé", href:"controles/BAM_Controle4_entrainement.pdf" } ],
+          note:"Annales ACC et contrôles Médisup utilisés uniquement pour calibrer : aucune question proche. Contenu tiré des fiches de synthèse. Le corrigé commence page 6 ; chaque question y a son encadré « Tips réflexes ».",
+        },
+      ],
+      },
+      ],
+    },
+    {
+      title:"Physiologie humaine", color:"var(--c-physiologie)", href:"physiologie.html",
+      groupes:[
+      {
+      titre:"Contrôle n°2",
+      sousTitre:"Le contrôle officiel Médisup et les entraînements générés sur son programme (FC4 à FC10).",
+      controles:[
+        {
+          id:"physio-c2", titre:"Contrôle n°2", source:"Modèle Médisup",
+          note:"Contrôle officiel Médisup. La fiche « Tips » donne les raisonnements réflexes question par question ; ses verdicts sont vérifiés sur le corrigé Médisup.",
+          nbQ:24, qrm:17, qru:7, duree:"30 min",
+          cours:[
+            { t:COURS_PHYSIO.digestive, q:"Q1–5" }, { t:COURS_PHYSIO.snc, q:"Q6" }, { t:COURS_PHYSIO.synapse, q:"Q7–11" },
+            { t:COURS_PHYSIO.endoc, q:"Q12–18" }, { t:COURS_PHYSIO.bioen, q:"Q19" }, { t:COURS_PHYSIO.acido, q:"Q20–22" },
+            { t:COURS_PHYSIO.thermo, q:"Q23–24" },
+          ],
+          pdfs:[
+            { label:"Sujet", href:"controles/Physiologie_Controle2_Medisup_sujet.pdf" },
+            { label:"Corrigé", href:"controles/Physiologie_Controle2_Medisup_corrige.pdf", alt:true },
+            { label:"Tips", href:"controles/Physiologie_Controle2_Medisup_tips.pdf", tips:true },
+          ],
+        },
+        {
+          id:"physio-c3", titre:"Contrôle d'entraînement n°3", source:"Généré par Claude",
+          nbQ:18, qrm:11, qru:7, duree:"36 min",
+          cours:[
+            { t:COURS_PHYSIO.bioen + " — bombe calorimétrique, rendements brut et net, stocks", q:"Q1–3" },
+            { t:COURS_PHYSIO.digestive + " — durées, système nerveux entérique, pH gastrique", q:"Q4–6" },
+            { t:COURS_PHYSIO.snc + " — couches et colonnes, développement", q:"Q7–8" },
+            { t:COURS_PHYSIO.synapse + " — canaux excitateurs, synaptotagmine, psychotropes", q:"Q9–11" },
+            { t:COURS_PHYSIO.endoc + " — complexe hypothalamo-hypophysaire, GH, glycémie", q:"Q12–14" },
+            { t:COURS_PHYSIO.acido + " — pouvoir tampon, alcalose métabolique", q:"Q15–16" },
+            { t:COURS_PHYSIO.thermo + " — convection, UCP1, noyau-écorce", q:"Q17–18" },
+          ],
+          pdfs:[ { label:"Sujet + corrigé", href:"controles/Physiologie_Controle3_entrainement.pdf" } ],
+          note:"Annales ACC et contrôles Médisup utilisés uniquement pour calibrer : aucune question proche. Contenu tiré des fiches de synthèse. Le corrigé commence page 6 ; chaque question y a son encadré « Tips réflexes ».",
+        },
+        {
+          id:"physio-c4", titre:"Contrôle d'entraînement n°4", source:"Généré par Claude",
+          nbQ:18, qrm:11, qru:7, duree:"36 min",
+          cours:[
+            { t:COURS_PHYSIO.bioen + " — quotient respiratoire, méthodes de mesure, glycogène", q:"Q1–3" },
+            { t:COURS_PHYSIO.digestive + " — déglutition, estomac, cellules entérochromaffines", q:"Q4–6" },
+            { t:COURS_PHYSIO.snc + " — latéralisation, troubles, substance grise", q:"Q7–8" },
+            { t:COURS_PHYSIO.synapse + " — bloqueur calcique, neurotransmetteurs, sommation temporelle", q:"Q9–11" },
+            { t:COURS_PHYSIO.endoc + " — mécanismes d'action, généralités, mélatonine", q:"Q12–14" },
+            { t:COURS_PHYSIO.acido + " — pH avec aide, échelle logarithmique", q:"Q15–16" },
+            { t:COURS_PHYSIO.thermo + " — radiation, frisson", q:"Q17–18" },
+          ],
+          pdfs:[ { label:"Sujet + corrigé", href:"controles/Physiologie_Controle4_entrainement.pdf" } ],
+          note:"Annales ACC et contrôles Médisup utilisés uniquement pour calibrer : aucune question proche. Contenu tiré des fiches de synthèse. Le corrigé commence page 6 ; chaque question y a son encadré « Tips réflexes ».",
+        },
+      ],
+      },
+      ],
+    },
+  ]},
   { label:"M2", matieres:[
     {
       title:"Biophysique du milieu intérieur", color:"var(--c-milieu)", href:"biophysique-milieu-interieur.html",
