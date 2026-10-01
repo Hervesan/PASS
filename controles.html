@@ -31,6 +31,7 @@
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
   body{
     font-family:'IBM Plex Sans', sans-serif;
     background:var(--paper);
@@ -38,9 +39,10 @@
     -webkit-font-smoothing:antialiased;
     min-height:100vh;
   }
+  .wrap{ max-width:920px; margin:0 auto; padding-left:22px; padding-right:22px; }
 
-  /* ============ HEADER ============ */
-  .top{ max-width:900px; margin:0 auto; padding:26px 22px 0; }
+  /* ============ EN-TÊTE ============ */
+  .top{ padding-top:26px; }
   .back{
     display:inline-flex; align-items:center; gap:6px;
     font-size:13px; font-weight:600; color:var(--ink-soft);
@@ -49,193 +51,289 @@
   .back:hover{ background:var(--card); color:var(--ink); }
   .back svg{ width:15px; height:15px; }
 
-  .hero{ max-width:900px; margin:0 auto; padding:18px 22px 22px; }
+  .hero{ padding-top:16px; padding-bottom:18px; }
   .hero h1{
     font-family:'Fraunces', serif; font-weight:700;
     font-size:clamp(30px, 5.5vw, 46px); line-height:1.05;
-    margin:0 0 12px; letter-spacing:-0.01em;
+    margin:0 0 10px; letter-spacing:-0.01em;
   }
   .hero h1 em{ font-style:italic; font-weight:500; color:var(--gold); }
-  .hero p{ font-size:15.5px; line-height:1.6; color:var(--ink-soft); margin:0 0 20px; max-width:560px; }
+  .hero p{ font-size:15px; line-height:1.6; color:var(--ink-soft); margin:0 0 16px; max-width:620px; }
+  .hero p b{ color:var(--ink); font-weight:600; }
   .stats{ display:flex; gap:24px; flex-wrap:wrap; }
   .stats div{ display:flex; flex-direction:column; gap:1px; }
   .stats b{ font-family:'Fraunces', serif; font-size:26px; font-weight:700; }
   .stats span{ font-size:12px; color:var(--ink-soft); }
 
-  .toolbar{ max-width:900px; margin:0 auto; padding:6px 22px 0; }
+  /* ============ BARRE D'OUTILS (collante) ============ */
+  .bar{ position:sticky; top:0; z-index:5; background:rgba(246,244,238,0.94); backdrop-filter:blur(8px);
+        -webkit-backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .bar .wrap{ padding-top:12px; padding-bottom:12px; display:grid; gap:10px; }
   #searchBox{
     width:100%; font-family:inherit; font-size:15px;
-    padding:13px 17px; border-radius:14px;
+    padding:11px 16px; border-radius:13px;
     border:1.5px solid var(--line); background:var(--card); color:var(--ink); outline:none;
     transition:border-color .15s ease, box-shadow .15s ease;
   }
   #searchBox:focus{ border-color:var(--ink); box-shadow:0 0 0 4px rgba(21,27,46,0.06); }
   #searchBox::placeholder{ color:#A9A492; }
+  .filters{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .filters .sep{ width:1px; height:22px; background:var(--line); margin:0 4px; }
+  .chip{
+    display:inline-flex; align-items:center; gap:7px; cursor:pointer;
+    font-family:inherit; font-size:13px; font-weight:600; color:var(--ink-soft);
+    padding:7px 12px; border-radius:100px; border:1.5px solid var(--line); background:var(--card);
+  }
+  .chip .dot{ width:9px; height:9px; border-radius:50%; background:var(--c); }
+  .chip:hover{ color:var(--ink); }
+  .chip.on{ background:var(--ink); border-color:var(--ink); color:#fff; }
 
-  /* ============ CONTENU ============ */
-  .content{ max-width:900px; margin:0 auto; padding:28px 22px 60px; }
-  .module{ margin-bottom:34px; }
-  .module > h2{
-    font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:12px;
-    letter-spacing:.08em; color:var(--ink-soft); margin:0 0 12px;
+  /* ============ SOMMAIRE ============ */
+  .content{ padding-top:22px; padding-bottom:50px; }
+  .label{
+    font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:11.5px;
+    letter-spacing:.08em; color:var(--ink-soft); margin:0 0 10px; text-transform:uppercase;
   }
-  .matiere{ margin-bottom:22px; }
-  .mat-head{ display:flex; align-items:center; gap:10px; margin-bottom:12px; }
-  .mat-head .dot{ width:11px; height:11px; border-radius:50%; background:var(--c); flex:none; }
-  .mat-head h3{ font-family:'Fraunces', serif; font-weight:600; font-size:21px; margin:0; }
-  .mat-head .count{ font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--ink-soft); }
-  .mat-head a{ margin-left:auto; font-size:12.5px; font-weight:600; color:var(--ink-soft); text-decoration:none; }
-  .mat-head a:hover{ color:var(--ink); }
+  .sommaire{ display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:10px; margin-bottom:34px; }
+  .som{
+    display:block; text-decoration:none; color:inherit; position:relative; overflow:hidden;
+    background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 14px 12px 18px;
+    transition:transform .14s ease, box-shadow .14s ease;
+  }
+  .som::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--c); }
+  .som:hover{ transform:translateY(-2px); box-shadow:0 10px 22px -14px rgba(21,27,46,0.45); }
+  .som .k{ font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600; color:var(--ink-soft); letter-spacing:.04em; }
+  .som .t{ font-family:'Fraunces', serif; font-weight:600; font-size:17px; margin:2px 0 6px; }
+  .som .s{ font-size:12.5px; color:var(--ink-soft); display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .bar-prog{ height:5px; border-radius:5px; background:#EFECE2; overflow:hidden; margin-top:8px; }
+  .bar-prog i{ display:block; height:100%; background:var(--c); border-radius:5px; }
 
-  .list{ display:grid; gap:12px; }
+  /* ============ BLOC D'UN CONTRÔLE (programme + sujets) ============ */
+  .prog{
+    scroll-margin-top:130px;
+    background:var(--card); border:1px solid var(--line); border-radius:18px;
+    margin-bottom:22px; overflow:hidden;
+  }
+  .prog-head{
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    padding:16px 20px 14px; border-bottom:1px solid var(--line);
+    background:linear-gradient(90deg, color-mix(in srgb, var(--c) 16%, #fff), #fff 70%);
+  }
+  .prog-head .mod{ font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600; letter-spacing:.06em; color:var(--ink-soft); }
+  .prog-head h2{ font-family:'Fraunces', serif; font-weight:700; font-size:22px; margin:1px 0 0; line-height:1.15; }
+  .prog-head .right{ margin-left:auto; display:flex; align-items:center; gap:14px; font-size:12.5px; color:var(--ink-soft); }
+  .prog-head .right a{ font-weight:600; color:var(--ink-soft); text-decoration:none; }
+  .prog-head .right a:hover{ color:var(--ink); }
+  .prog-head .pct{ font-family:'IBM Plex Mono', monospace; font-weight:600; color:var(--ink); }
+  .prog-date{ font-size:12.5px; color:var(--ink-soft); margin-top:3px; }
+  .prog-date b{ color:var(--ink); font-weight:600; }
 
-  .ctrl{
-    position:relative; background:var(--card);
-    border:1px solid var(--line); border-radius:16px;
-    padding:18px 18px 16px 22px; overflow:hidden;
-  }
-  .ctrl::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--c); }
-  .ctrl-top{ display:flex; align-items:flex-start; gap:12px; flex-wrap:wrap; }
-  .ctrl h4{ font-family:'Fraunces', serif; font-weight:600; font-size:18px; margin:0; line-height:1.25; }
-  .ctrl .src{
-    font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.04em;
-    padding:4px 9px; border-radius:100px; white-space:nowrap;
-    border:1px solid var(--line); color:var(--ink-soft); background:var(--paper);
-  }
-  .legend{ display:grid; gap:6px; margin:0 0 20px; font-size:12.5px; color:var(--ink-soft); }
-  .legend span{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-  .legend .src{ font-style:normal; font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.04em;
-    padding:3px 9px; border-radius:100px; border:1px solid var(--line); background:var(--card); color:var(--ink-soft); white-space:nowrap; }
-  .legend .src.medisup{ background:var(--ink); color:#fff; border-color:var(--ink); }
-  .ctrl .src.medisup{ background:var(--ink); color:#fff; border-color:var(--ink); }
-  .meta{ display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 14px; }
-  .meta span{
-    font-size:12px; color:var(--ink-soft);
-    background:var(--paper); border-radius:8px; padding:4px 9px;
-  }
-  .meta b{ color:var(--ink); font-weight:600; }
-
-  .cours-title{
-    font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.08em;
-    color:var(--ink-soft); margin:0 0 7px;
-  }
-  .cours{ list-style:none; margin:0 0 16px; padding:0; display:grid; gap:5px; }
-  .cours li{
+  .programme{
     display:flex; align-items:baseline; gap:10px;
-    font-size:13.5px; line-height:1.4;
-    padding:7px 10px; border-radius:10px; background:#FBFAF6; border:1px solid #EFECE2;
+    padding:10px 20px; border-bottom:1px solid var(--line); background:#FCFBF8;
   }
-  .cours li .n{
-    font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600;
-    color:var(--c); flex:none; min-width:24px;
+  .programme .label{ margin:0; flex:none; position:relative; top:-1px; }
+  .programme ol{ list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:3px 16px; font-size:13px; line-height:1.45; }
+  .programme li{ display:inline-flex; align-items:baseline; gap:6px; }
+  .programme li .n{
+    font-family:'IBM Plex Mono', monospace; font-size:10px; font-weight:600; color:#fff; background:var(--c);
+    min-width:17px; height:17px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;
+    position:relative; top:-1px;
   }
-  .cours li .t{ flex:1; min-width:0; }
-  .cours li .q{ margin-left:auto; font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); white-space:nowrap; }
-  .cours li mark{ background:rgba(231,169,60,0.28); color:inherit; border-radius:3px; padding:0 1px; }
 
-  .actions{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  /* icônes */
+  .ico{ display:inline-flex; align-items:center; justify-content:center; flex:none; }
+  .ico svg{ width:100%; height:100%; }
+  .mat-ico{
+    width:40px; height:40px; border-radius:12px; padding:8px; flex:none;
+    color:var(--c); background:color-mix(in srgb, var(--c) 16%, #fff);
+    border:1.5px solid color-mix(in srgb, var(--c) 35%, #fff);
+  }
+  .prog-head > div:not(.right){ flex:1; min-width:0; }
+  .prog-head .mat-ico{ width:46px; height:46px; padding:9px; background:#fff; }
+  .som-top{ display:flex; align-items:center; gap:11px; }
+  .label{ display:flex; align-items:center; gap:7px; }
+  .label .ico{ width:15px; height:15px; color:var(--ink); }
+  .s-meta .m{ display:inline-flex; align-items:center; gap:5px; }
+  .s-meta .m svg, .som .s svg{ width:13px; height:13px; flex:none; }
+  .som .s span{ display:inline-flex; align-items:center; gap:4px; }
+  .prog-head .right .ico{ width:14px; height:14px; vertical-align:-2px; margin-right:3px; }
+  .prog-head .right a{ display:inline-flex; align-items:center; gap:5px; }
+  .regles{ display:flex; gap:12px; align-items:flex-start; }
+  .regles .ico{ width:20px; height:20px; color:var(--ink); margin-top:1px; }
+
+  /* séparation sommaire / contenu */
+  .divider{ display:flex; align-items:center; gap:14px; margin:6px 0 26px; }
+  .divider::before, .divider::after{ content:""; flex:1; height:1px;
+    background:linear-gradient(90deg, transparent, var(--line) 25%, var(--line) 75%, transparent); }
+  .divider .pill{
+    display:inline-flex; align-items:center; gap:9px; white-space:nowrap;
+    font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:11.5px; letter-spacing:.1em; color:var(--ink);
+    padding:7px 14px; border-radius:100px; background:var(--card); border:1px solid var(--line);
+    box-shadow:0 6px 16px -12px rgba(21,27,46,.45);
+  }
+  .divider .pill{ gap:10px; padding:7px 13px; }
+  .divider .pill .ico{ width:17px; height:17px; }
+  .divider .sep-dot{ width:4px; height:4px; border-radius:50%; background:var(--line); }
+  .divider .dots{ display:inline-flex; gap:4px; }
+  .divider .dots i{ width:7px; height:7px; border-radius:50%; background:var(--c); }
+
+  /* une ligne = un sujet */
+  .sujet{ display:grid; grid-template-columns:54px 1fr; gap:4px 14px; padding:15px 20px; border-bottom:1px solid #EFECE2; }
+  .sujet:last-child{ border-bottom:none; }
+  .sujet.done{ background:#FBFAF6; }
+  .badge{
+    grid-row:span 3; align-self:start;
+    width:46px; height:46px; border-radius:13px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono', monospace; font-weight:600; line-height:1;
+    border:2px solid var(--c); color:var(--ink); background:#fff;
+  }
+  .badge small{ font-size:8.5px; letter-spacing:.06em; color:var(--ink-soft); margin-bottom:3px; }
+  .badge span{ font-size:18px; }
+  .badge.off{ background:var(--ink); border-color:var(--ink); color:#fff; }
+  .badge.off small{ color:#C9CCD6; }
+  .badge.off span{ font-size:11px; letter-spacing:.04em; }
+  .sujet.done .badge{ background:var(--c); color:#fff; }
+  .sujet.done .badge small{ color:rgba(255,255,255,.85); }
+  .sujet.done .badge.off{ background:var(--ink); }
+
+  .sujet.avenir .badge{ background:transparent; border:2px dashed #B9B4A4; color:#9A957F; }
+  .sujet.avenir .badge small{ color:#9A957F; }
+  .sujet.avenir h3{ color:var(--ink-soft); }
+  .s-top{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .s-top h3{ font-family:'Fraunces', serif; font-weight:600; font-size:17.5px; margin:0; line-height:1.25; }
+  .s-top .code{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); background:var(--paper); padding:2px 7px; border-radius:6px; }
+  .s-top .src{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.03em; color:var(--ink-soft); }
+  .s-meta{ display:flex; gap:6px 14px; flex-wrap:wrap; font-size:12.5px; color:var(--ink-soft); }
+  .s-meta b{ color:var(--ink); font-weight:600; }
+  .s-meta .when{ display:inline-flex; align-items:center; gap:5px; }
+  .s-meta svg{ width:13px; height:13px; }
+
+  .s-actions{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:8px; }
   .btn{
     display:inline-flex; align-items:center; gap:7px;
     text-decoration:none; font-size:13px; font-weight:600;
-    padding:9px 13px; border-radius:11px;
+    padding:8px 12px; border-radius:11px;
     background:var(--ink); color:#fff;
     transition:transform .14s ease, box-shadow .14s ease;
   }
   .btn.alt{ background:var(--card); color:var(--ink); border:1.5px solid var(--line); }
   .btn:hover{ transform:translateY(-2px); box-shadow:0 8px 18px -10px rgba(21,27,46,0.5); }
   .btn svg{ width:15px; height:15px; flex:none; }
+  .btn.tips{ background:linear-gradient(135deg, #FFE08A, var(--gold)); color:var(--ink); }
+  .btn.tips svg{ width:17px; height:17px; transition:transform .25s ease; transform-origin:50% 90%; }
+  .btn.tips:hover svg{ transform:rotate(-14deg) scale(1.12); }
 
-  .track{ margin-left:auto; display:flex; align-items:center; gap:10px; font-size:12.5px; color:var(--ink-soft); }
+  .track{ margin-left:auto; display:flex; align-items:center; gap:10px; font-size:12.5px; color:var(--ink-soft); flex-wrap:wrap; }
   .track label{ display:inline-flex; align-items:center; gap:6px; cursor:pointer; }
   .track input[type=checkbox]{ width:16px; height:16px; accent-color:var(--c); cursor:pointer; }
   .track input[type=number]{
     width:52px; font-family:'IBM Plex Mono', monospace; font-size:12.5px;
     padding:5px 6px; border:1.5px solid var(--line); border-radius:8px; background:var(--paper); color:var(--ink);
   }
-  .ctrl.done h4::after{
-    content:"✓ fait"; margin-left:8px; font-family:'IBM Plex Mono', monospace;
-    font-size:11px; font-weight:600; color:var(--c); vertical-align:middle;
-  }
+  .track .fait-le{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink); }
 
-  .note{ font-size:12.5px; color:var(--ink-soft); margin:10px 0 0; line-height:1.5; }
+  details.det{ margin-top:6px; }
+  details.det summary{
+    cursor:pointer; list-style:none; display:inline-flex; align-items:center; gap:6px;
+    font-size:12.5px; font-weight:600; color:var(--ink-soft);
+  }
+  details.det summary::-webkit-details-marker{ display:none; }
+  details.det summary svg{ width:14px; height:14px; transition:transform .2s ease; transform:rotate(-90deg); }
+  details.det[open] summary svg{ transform:rotate(0); }
+  details.det summary:hover{ color:var(--ink); }
+  .cours{ list-style:none; margin:8px 0 0; padding:0; display:grid; gap:4px; }
+  .cours li{
+    display:flex; align-items:baseline; gap:10px;
+    font-size:13px; line-height:1.4;
+    padding:6px 10px; border-radius:9px; background:#FBFAF6; border:1px solid #EFECE2;
+  }
+  .cours li .t{ flex:1; min-width:0; }
+  .cours li .t i{ font-style:normal; color:var(--ink-soft); }
+  .cours li .q{ margin-left:auto; font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); white-space:nowrap; }
+  mark{ background:rgba(231,169,60,0.32); color:inherit; border-radius:3px; padding:0 1px; }
+  .note{ font-size:12.5px; color:var(--ink-soft); margin:8px 0 0; line-height:1.5; }
 
   .empty{ text-align:center; padding:50px 20px; color:var(--ink-soft); font-size:14.5px; }
 
-  .howto{
-    margin-top:10px; padding:14px 16px; border-radius:14px;
+  .regles{
+    margin-top:8px; padding:14px 16px; border-radius:14px;
     background:var(--card); border:1px dashed var(--line);
     font-size:12.5px; color:var(--ink-soft); line-height:1.6;
   }
-  .howto code{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; background:var(--paper); padding:1px 5px; border-radius:5px; color:var(--ink); }
+  .regles b{ color:var(--ink); }
 
   footer{
-    max-width:900px; margin:0 auto; padding:22px 22px 40px;
     border-top:1px solid var(--line); color:var(--ink-soft);
-    font-size:12px; font-family:'IBM Plex Mono', monospace;
+    font-size:12px; font-family:'IBM Plex Mono', monospace; padding-top:22px; padding-bottom:40px;
   }
 
-  /* ============ SOUS-PARTIE (ex. Contrôle n°1) ============ */
-  .groupe{ margin:0 0 18px 6px; padding-left:16px; border-left:2px solid var(--c); }
-  .groupe-head{ display:flex; align-items:center; gap:10px; margin:0 0 10px; cursor:pointer; user-select:none; }
-  .groupe-head h5{ font-family:'Fraunces', serif; font-weight:600; font-size:16.5px; margin:0; }
-  .groupe-head .count{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--ink-soft); }
-  .groupe-head .chev{ width:16px; height:16px; color:var(--ink-soft); transition:transform .2s ease; margin-left:auto; }
-  .groupe.closed .chev{ transform:rotate(-90deg); }
-  .groupe.closed .list{ display:none; }
-  .groupe-sub{ font-size:12px; color:var(--ink-soft); margin:-6px 0 10px; }
-
-  /* ============ BOUTON TIPS ============ */
-  .btn.tips{ background:linear-gradient(135deg, #FFE08A, var(--gold)); color:var(--ink); }
-  .btn.tips svg{ width:17px; height:17px; transition:transform .25s ease; transform-origin:50% 90%; }
-  .btn.tips:hover svg{ transform:rotate(-14deg) scale(1.12); }
-
-  @media (max-width:560px){
-    .groupe{ margin-left:0; padding-left:12px; }
-    .top,.hero,.toolbar{ padding-left:16px; padding-right:16px; }
-    .content{ padding:24px 16px 50px; }
+  @media (max-width:600px){
+    .wrap{ padding-left:16px; padding-right:16px; }
+    .prog-head, .programme, .sujet{ padding-left:14px; padding-right:14px; }
+    .programme{ flex-direction:column; gap:6px; }
+    .programme ol{ gap:3px 12px; font-size:12.5px; }
+    .prog-head .right{ margin-left:0; width:100%; }
+    .sujet{ grid-template-columns:42px 1fr; gap:4px 11px; }
+    .badge{ width:40px; height:40px; border-radius:11px; }
+    .badge span{ font-size:16px; }
     .track{ margin-left:0; width:100%; }
-    .cours li .q{ font-size:10.5px; }
-    .mat-head{ flex-wrap:wrap; }
+    .filters .sep{ display:none; }
+    .chip{ padding:6px 10px; font-size:12.5px; }
   }
 </style>
 </head>
 <body>
 
-<div class="top">
+<div class="top wrap">
   <a class="back" href="index.html">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
     Toutes les matières
   </a>
 </div>
 
-<div class="hero">
+<div class="hero wrap">
   <h1>Je <em>m'entraîne</em></h1>
-  <p>Les contrôles et sujets d'entraînement, classés par matière. Pour chacun : les cours concernés, et le PDF du sujet avec son corrigé.</p>
-  <div class="legend">
-    <span><i class="src medisup">Modèle Médisup</i> contrôle officiel donné en exemple, qui a servi de modèle</span>
-    <span><i class="src">Généré par Claude</i> sujet d'entraînement créé à partir du modèle, des fiches de cours et des annales</span>
-  </div>
+  <p>Rangement : <b>un bloc par contrôle Médisup</b>, avec son programme en tête. Dans chaque bloc, le <b>sujet officiel</b> puis les <b>entraînements numérotés 1, 2, 3…</b> dans l'ordre de création, chacun daté.</p>
   <div class="stats">
-    <div><b id="stCtrl">0</b><span>contrôles</span></div>
+    <div><b id="stCtrl">0</b><span>sujets</span></div>
     <div><b id="stQ">0</b><span>questions</span></div>
     <div><b id="stDone">0</b><span>faits</span></div>
   </div>
 </div>
 
-<div class="toolbar">
-  <input type="text" id="searchBox" placeholder="Rechercher une matière, un cours (ex. « osmose », « pH »)...">
+<div class="bar">
+  <div class="wrap">
+    <input type="text" id="searchBox" placeholder="Rechercher un cours, une notion (ex. « osmose », « pH », « CDA »), un code (ex. BAM-C1-E2)…">
+    <div class="filters" id="filters"></div>
+  </div>
 </div>
 
-<div class="content" id="content"></div>
+<div class="content wrap" id="content"></div>
 
-<footer>Médisup Tours/Orléans — je m'entraîne · les PDF sont rangés dans le dossier « controles/ »</footer>
+<footer class="wrap">Médisup Tours/Orléans — je m'entraîne · PDF rangés dans « controles/ » · code d'un sujet : MATIÈRE-Cn°-En° (OFF = sujet officiel)</footer>
 
 <script>
 /* =====================================================================
-   DONNÉES — pour ajouter un contrôle, copier un bloc { ... } dans
-   la liste "controles" de la bonne matière, et déposer le PDF dans
-   le dossier controles/ à côté de ce fichier.
+   DONNÉES
+   - Un objet de CONTROLES = un contrôle Médisup (son programme + ses sujets).
+   - Pour ajouter un entraînement : copier un bloc dans "entrainements",
+     incrémenter n, mettre la date de création (AAAA-MM-JJ) et déposer le PDF
+     dans controles/ sous le nom MATIERE_Cx_entrainementN.pdf.
+   - "date" du contrôle : date de passage du contrôle Médisup (facultatif,
+     ex. "2026-10-06") ; elle s'affiche dans l'en-tête du bloc.
+   - Contrôle Médisup pas encore disponible : mettre officiel:null et remplir
+     "programme" à partir du planning Médisup. Le bloc s'affiche quand même,
+     avec une ligne « Sujet officiel à venir » ; il suffira ensuite de
+     remplacer null par le bloc officiel (sujet, corrigé, tips).
    ===================================================================== */
+const MATIERES = {
+  bam:    { code:"BAM",    module:"M1", titre:"Biophysique appliquée aux méthodes exploratoires", color:"var(--c-biophysique)", href:"biophysique.html" },
+  physio: { code:"PHYSIO", module:"M1", titre:"Physiologie humaine",                              color:"var(--c-physiologie)", href:"physiologie.html" },
+  bmi:    { code:"BMI",    module:"M2", titre:"Biophysique du milieu intérieur",                  color:"var(--c-milieu)",      href:"biophysique-milieu-interieur.html" },
+};
+
 const COURS_BMI = {
   grandeurs:   "Grandeurs physiques et mesures",
   energie:     "Énergie et équilibre",
@@ -244,7 +342,6 @@ const COURS_BMI = {
   cinetiques:  "Propriétés cinétiques des solutions",
   mecaniques:  "Propriétés mécaniques des solutions (tension superficielle)",
 };
-
 const COURS_BAM = {
   constitution: "Constitution de la matière",
   etats:        "États et transitions de phase",
@@ -252,7 +349,6 @@ const COURS_BAM = {
   noyaux:       "Noyaux et rayonnements",
   interaction:  "Interaction des rayonnements ionisants avec la matière",
 };
-
 const COURS_PHYSIO = {
   bioen:     "FC4 Bioénergétique",
   digestive: "FC5 Physiologie digestive",
@@ -263,297 +359,358 @@ const COURS_PHYSIO = {
   thermo:    "FC10 Thermorégulation",
 };
 
-const MODULES = [
-  { label:"M1", matieres:[
-    {
-      title:"Biophysique appliquée aux méthodes exploratoires", color:"var(--c-biophysique)", href:"biophysique.html",
-      groupes:[
-      {
-      titre:"Contrôle n°1",
-      sousTitre:"Le contrôle officiel Médisup et les entraînements générés sur son programme (5 cours).",
-      controles:[
-        {
-          id:"bam-c1", titre:"Contrôle n°1", source:"Modèle Médisup",
-          note:"Contrôle officiel Médisup. La fiche « Tips » donne les raisonnements réflexes question par question ; ses verdicts sont vérifiés sur le corrigé Médisup.",
-          nbQ:19, qrm:16, qru:3, duree:"30 min",
-          cours:[
-            { t:COURS_BAM.constitution, q:"Q1–2" }, { t:COURS_BAM.etats, q:"Q3–4" }, { t:COURS_BAM.gaz, q:"Q5–6" },
-            { t:COURS_BAM.noyaux, q:"Q7–14" }, { t:COURS_BAM.interaction, q:"Q15–19" },
-          ],
-          pdfs:[
-            { label:"Sujet", href:"controles/BAM_Controle1_Medisup_sujet.pdf" },
-            { label:"Corrigé", href:"controles/BAM_Controle1_Medisup_corrige.pdf", alt:true },
-            { label:"Tips", href:"controles/BAM_Controle1_Medisup_tips.pdf", tips:true },
-          ],
-        },
-        {
-          id:"bam-c3", titre:"Contrôle d'entraînement n°3", source:"Généré par Claude",
-          nbQ:18, qrm:11, qru:7, duree:"36 min",
-          cours:[
-            { t:COURS_BAM.constitution + " — gravitation, statistiques, hadrons", q:"Q1–3" },
-            { t:COURS_BAM.etats + " — chaleur latente, transformations, matière molle", q:"Q4–6" },
-            { t:COURS_BAM.gaz + " — ballon-sonde, chambre hyperbare, pression hydrostatique sanguine", q:"Q7–9" },
-            { t:COURS_BAM.noyaux + " — α de l'uranium 238, λ et période, β⁺/CE, énergies", q:"Q10–14" },
-            { t:COURS_BAM.interaction + " — μ et CDA, τ/σ/π, énergie transmise, ionisation", q:"Q15–18" },
-          ],
-          pdfs:[ { label:"Sujet + corrigé", href:"controles/BAM_Controle3_entrainement.pdf" } ],
-          note:"Annales ACC et contrôles Médisup utilisés uniquement pour calibrer : aucune question proche. Contenu tiré des fiches de synthèse. Le corrigé commence page 6 ; chaque question y a son encadré « Tips réflexes ».",
-        },
-        {
-          id:"bam-c4", titre:"Contrôle d'entraînement n°4", source:"Généré par Claude",
-          nbQ:18, qrm:11, qru:7, duree:"36 min",
-          cours:[
-            { t:COURS_BAM.constitution + " — liaisons, dimensions de l'atome, bosons", q:"Q1–3" },
-            { t:COURS_BAM.etats + " — perspiration pulmonaire, diagramme de phase, états", q:"Q4–6" },
-            { t:COURS_BAM.gaz + " — loi de Charles, air alvéolaire, gaz parfaits et réels", q:"Q7–9" },
-            { t:COURS_BAM.noyaux + " — K40/Ca40, spectre β⁻, iode 131, Tc99m, applications", q:"Q10–14" },
-            { t:COURS_BAM.interaction + " — devenir des photons, CDA à rebours, électrons, dose", q:"Q15–18" },
-          ],
-          pdfs:[ { label:"Sujet + corrigé", href:"controles/BAM_Controle4_entrainement.pdf" } ],
-          note:"Annales ACC et contrôles Médisup utilisés uniquement pour calibrer : aucune question proche. Contenu tiré des fiches de synthèse. Le corrigé commence page 6 ; chaque question y a son encadré « Tips réflexes ».",
-        },
+const NOTE_GEN = "Corrigé à partir de la page 6 ; chaque question y a son encadré « Tips réflexes ».";
+
+const CONTROLES = [
+  /* ---------------- M1 · BAM · Contrôle n°1 ---------------- */
+  {
+    key:"bam-1", matiere:"bam", numero:1, date:null,
+    programme:[
+      { t:COURS_BAM.constitution, q:"Q1–2" }, { t:COURS_BAM.etats, q:"Q3–4" }, { t:COURS_BAM.gaz, q:"Q5–6" },
+      { t:COURS_BAM.noyaux, q:"Q7–14" }, { t:COURS_BAM.interaction, q:"Q15–19" },
+    ],
+    officiel:{
+      id:"bam-c1", nbQ:19, qrm:16, qru:3, duree:"30 min",
+      pdfs:[
+        { label:"Sujet", href:"controles/BAM_Controle1_Medisup_sujet.pdf" },
+        { label:"Corrigé", href:"controles/BAM_Controle1_Medisup_corrige.pdf", alt:true },
+        { label:"Tips", href:"controles/BAM_Controle1_Medisup_tips.pdf", tips:true },
       ],
+      note:"La fiche « Tips » donne les raisonnements réflexes question par question ; verdicts vérifiés sur le corrigé Médisup.",
+    },
+    entrainements:[
+      {
+        id:"bam-c3", n:1, date:"2026-09-30", nbQ:18, qrm:11, qru:7, duree:"36 min",
+        cours:[
+          { t:COURS_BAM.constitution, d:"gravitation, statistiques, hadrons", q:"Q1–3" },
+          { t:COURS_BAM.etats, d:"chaleur latente, transformations, matière molle", q:"Q4–6" },
+          { t:COURS_BAM.gaz, d:"ballon-sonde, chambre hyperbare, pression hydrostatique sanguine", q:"Q7–9" },
+          { t:COURS_BAM.noyaux, d:"α de l'uranium 238, λ et période, β⁺/CE, énergies", q:"Q10–14" },
+          { t:COURS_BAM.interaction, d:"μ et CDA, τ/σ/π, énergie transmise, ionisation", q:"Q15–18" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/BAM_C1_entrainement1.pdf" } ],
+        note:NOTE_GEN,
       },
+      {
+        id:"bam-c4", n:2, date:"2026-09-30", nbQ:18, qrm:11, qru:7, duree:"36 min",
+        cours:[
+          { t:COURS_BAM.constitution, d:"liaisons, dimensions de l'atome, bosons", q:"Q1–3" },
+          { t:COURS_BAM.etats, d:"perspiration pulmonaire, diagramme de phase, états", q:"Q4–6" },
+          { t:COURS_BAM.gaz, d:"loi de Charles, air alvéolaire, gaz parfaits et réels", q:"Q7–9" },
+          { t:COURS_BAM.noyaux, d:"K40/Ca40, spectre β⁻, iode 131, Tc99m, applications", q:"Q10–14" },
+          { t:COURS_BAM.interaction, d:"devenir des photons, CDA à rebours, électrons, dose", q:"Q15–18" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/BAM_C1_entrainement2.pdf" } ],
+        note:NOTE_GEN,
+      },
+    ],
+  },
+
+  /* ---------------- M1 · Physiologie · Contrôle n°2 ---------------- */
+  {
+    key:"physio-2", matiere:"physio", numero:2, date:null,
+    programme:[
+      { t:COURS_PHYSIO.bioen, q:"Q19" }, { t:COURS_PHYSIO.digestive, q:"Q1–5" }, { t:COURS_PHYSIO.snc, q:"Q6" },
+      { t:COURS_PHYSIO.synapse, q:"Q7–11" }, { t:COURS_PHYSIO.endoc, q:"Q12–18" }, { t:COURS_PHYSIO.acido, q:"Q20–22" },
+      { t:COURS_PHYSIO.thermo, q:"Q23–24" },
+    ],
+    officiel:{
+      id:"physio-c2", nbQ:24, qrm:17, qru:7, duree:"30 min",
+      pdfs:[
+        { label:"Sujet", href:"controles/Physiologie_Controle2_Medisup_sujet.pdf" },
+        { label:"Corrigé", href:"controles/Physiologie_Controle2_Medisup_corrige.pdf", alt:true },
+        { label:"Tips", href:"controles/Physiologie_Controle2_Medisup_tips.pdf", tips:true },
+      ],
+      note:"La fiche « Tips » donne les raisonnements réflexes question par question ; verdicts vérifiés sur le corrigé Médisup.",
+    },
+    entrainements:[
+      {
+        id:"physio-c3", n:1, date:"2026-09-30", nbQ:18, qrm:11, qru:7, duree:"36 min",
+        cours:[
+          { t:COURS_PHYSIO.bioen, d:"bombe calorimétrique, rendements brut et net, stocks", q:"Q1–3" },
+          { t:COURS_PHYSIO.digestive, d:"durées, système nerveux entérique, pH gastrique", q:"Q4–6" },
+          { t:COURS_PHYSIO.snc, d:"couches et colonnes, développement", q:"Q7–8" },
+          { t:COURS_PHYSIO.synapse, d:"canaux excitateurs, synaptotagmine, psychotropes", q:"Q9–11" },
+          { t:COURS_PHYSIO.endoc, d:"complexe hypothalamo-hypophysaire, GH, glycémie", q:"Q12–14" },
+          { t:COURS_PHYSIO.acido, d:"pouvoir tampon, alcalose métabolique", q:"Q15–16" },
+          { t:COURS_PHYSIO.thermo, d:"convection, UCP1, noyau-écorce", q:"Q17–18" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Physiologie_C2_entrainement1.pdf" } ],
+        note:NOTE_GEN,
+      },
+      {
+        id:"physio-c4", n:2, date:"2026-09-30", nbQ:18, qrm:11, qru:7, duree:"36 min",
+        cours:[
+          { t:COURS_PHYSIO.bioen, d:"quotient respiratoire, méthodes de mesure, glycogène", q:"Q1–3" },
+          { t:COURS_PHYSIO.digestive, d:"déglutition, estomac, cellules entérochromaffines", q:"Q4–6" },
+          { t:COURS_PHYSIO.snc, d:"latéralisation, troubles, substance grise", q:"Q7–8" },
+          { t:COURS_PHYSIO.synapse, d:"bloqueur calcique, neurotransmetteurs, sommation temporelle", q:"Q9–11" },
+          { t:COURS_PHYSIO.endoc, d:"mécanismes d'action, généralités, mélatonine", q:"Q12–14" },
+          { t:COURS_PHYSIO.acido, d:"pH avec aide, échelle logarithmique", q:"Q15–16" },
+          { t:COURS_PHYSIO.thermo, d:"radiation, frisson", q:"Q17–18" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Physiologie_C2_entrainement2.pdf" } ],
+        note:NOTE_GEN,
+      },
+    ],
+  },
+
+  /* ---------------- M2 · BMI · Contrôle n°1 ---------------- */
+  {
+    key:"bmi-1", matiere:"bmi", numero:1, date:null,
+    programme:[
+      { t:COURS_BMI.grandeurs }, { t:COURS_BMI.energie }, { t:COURS_BMI.ph },
+      { t:COURS_BMI.colligatives }, { t:COURS_BMI.cinetiques }, { t:COURS_BMI.mecaniques },
+    ],
+    officiel:{
+      id:"bmi-c1", nbQ:15, qrm:null, qru:null, duree:"30 min",
+      pdfs:[
+        { label:"Sujet", href:"controles/BMI_Controle1_Medisup_sujet.pdf" },
+        { label:"Corrigé", href:"controles/BMI_Controle1_Medisup_corrige.pdf", alt:true },
+        { label:"Tips", href:"controles/BMI_Controle1_Medisup_tips.pdf", tips:true },
       ],
     },
-    {
-      title:"Physiologie humaine", color:"var(--c-physiologie)", href:"physiologie.html",
-      groupes:[
+    entrainements:[
       {
-      titre:"Contrôle n°2",
-      sousTitre:"Le contrôle officiel Médisup et les entraînements générés sur son programme (FC4 à FC10).",
-      controles:[
-        {
-          id:"physio-c2", titre:"Contrôle n°2", source:"Modèle Médisup",
-          note:"Contrôle officiel Médisup. La fiche « Tips » donne les raisonnements réflexes question par question ; ses verdicts sont vérifiés sur le corrigé Médisup.",
-          nbQ:24, qrm:17, qru:7, duree:"30 min",
-          cours:[
-            { t:COURS_PHYSIO.digestive, q:"Q1–5" }, { t:COURS_PHYSIO.snc, q:"Q6" }, { t:COURS_PHYSIO.synapse, q:"Q7–11" },
-            { t:COURS_PHYSIO.endoc, q:"Q12–18" }, { t:COURS_PHYSIO.bioen, q:"Q19" }, { t:COURS_PHYSIO.acido, q:"Q20–22" },
-            { t:COURS_PHYSIO.thermo, q:"Q23–24" },
-          ],
-          pdfs:[
-            { label:"Sujet", href:"controles/Physiologie_Controle2_Medisup_sujet.pdf" },
-            { label:"Corrigé", href:"controles/Physiologie_Controle2_Medisup_corrige.pdf", alt:true },
-            { label:"Tips", href:"controles/Physiologie_Controle2_Medisup_tips.pdf", tips:true },
-          ],
-        },
-        {
-          id:"physio-c3", titre:"Contrôle d'entraînement n°3", source:"Généré par Claude",
-          nbQ:18, qrm:11, qru:7, duree:"36 min",
-          cours:[
-            { t:COURS_PHYSIO.bioen + " — bombe calorimétrique, rendements brut et net, stocks", q:"Q1–3" },
-            { t:COURS_PHYSIO.digestive + " — durées, système nerveux entérique, pH gastrique", q:"Q4–6" },
-            { t:COURS_PHYSIO.snc + " — couches et colonnes, développement", q:"Q7–8" },
-            { t:COURS_PHYSIO.synapse + " — canaux excitateurs, synaptotagmine, psychotropes", q:"Q9–11" },
-            { t:COURS_PHYSIO.endoc + " — complexe hypothalamo-hypophysaire, GH, glycémie", q:"Q12–14" },
-            { t:COURS_PHYSIO.acido + " — pouvoir tampon, alcalose métabolique", q:"Q15–16" },
-            { t:COURS_PHYSIO.thermo + " — convection, UCP1, noyau-écorce", q:"Q17–18" },
-          ],
-          pdfs:[ { label:"Sujet + corrigé", href:"controles/Physiologie_Controle3_entrainement.pdf" } ],
-          note:"Annales ACC et contrôles Médisup utilisés uniquement pour calibrer : aucune question proche. Contenu tiré des fiches de synthèse. Le corrigé commence page 6 ; chaque question y a son encadré « Tips réflexes ».",
-        },
-        {
-          id:"physio-c4", titre:"Contrôle d'entraînement n°4", source:"Généré par Claude",
-          nbQ:18, qrm:11, qru:7, duree:"36 min",
-          cours:[
-            { t:COURS_PHYSIO.bioen + " — quotient respiratoire, méthodes de mesure, glycogène", q:"Q1–3" },
-            { t:COURS_PHYSIO.digestive + " — déglutition, estomac, cellules entérochromaffines", q:"Q4–6" },
-            { t:COURS_PHYSIO.snc + " — latéralisation, troubles, substance grise", q:"Q7–8" },
-            { t:COURS_PHYSIO.synapse + " — bloqueur calcique, neurotransmetteurs, sommation temporelle", q:"Q9–11" },
-            { t:COURS_PHYSIO.endoc + " — mécanismes d'action, généralités, mélatonine", q:"Q12–14" },
-            { t:COURS_PHYSIO.acido + " — pH avec aide, échelle logarithmique", q:"Q15–16" },
-            { t:COURS_PHYSIO.thermo + " — radiation, frisson", q:"Q17–18" },
-          ],
-          pdfs:[ { label:"Sujet + corrigé", href:"controles/Physiologie_Controle4_entrainement.pdf" } ],
-          note:"Annales ACC et contrôles Médisup utilisés uniquement pour calibrer : aucune question proche. Contenu tiré des fiches de synthèse. Le corrigé commence page 6 ; chaque question y a son encadré « Tips réflexes ».",
-        },
-      ],
+        id:"bmi-c2", n:1, date:"2026-09-26", nbQ:17, qrm:11, qru:6, duree:"35 min",
+        cours:[
+          { t:COURS_BMI.grandeurs, q:"Q1–3" }, { t:COURS_BMI.energie, q:"Q4–6" }, { t:COURS_BMI.ph, q:"Q7–10" },
+          { t:COURS_BMI.colligatives, q:"Q11–13" }, { t:COURS_BMI.cinetiques, q:"Q14–15" }, { t:COURS_BMI.mecaniques, q:"Q16–17" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/BMI_C1_entrainement1.pdf" } ],
+        note:"Propositions des QRM mélangées. Corrigé détaillé à partir de la page 7.",
       },
-      ],
-    },
-  ]},
-  { label:"M2", matieres:[
-    {
-      title:"Biophysique du milieu intérieur", color:"var(--c-milieu)", href:"biophysique-milieu-interieur.html",
-      groupes:[
       {
-      titre:"Contrôle n°1",
-      sousTitre:"Le contrôle officiel Médisup et les entraînements générés sur son modèle.",
-      controles:[
-        {
-          id:"bmi-c1", titre:"Contrôle n°1", source:"Modèle Médisup",
-          note:"Contrôle officiel Médisup, donné en exemple : il sert de modèle (type de questions, difficulté, répartition QRM/QRU) pour les sujets générés.",
-          nbQ:15, qrm:null, qru:null, duree:"30 min",
-          cours:[
-            { t:COURS_BMI.grandeurs }, { t:COURS_BMI.energie }, { t:COURS_BMI.ph },
-            { t:COURS_BMI.colligatives }, { t:COURS_BMI.cinetiques }, { t:COURS_BMI.mecaniques },
-          ],
-          pdfs:[
-            { label:"Sujet", href:"controles/BMI_Controle1_Medisup_sujet.pdf" },
-            { label:"Corrigé", href:"controles/BMI_Controle1_Medisup_corrige.pdf", alt:true },
-            { label:"Tips", href:"controles/BMI_Controle1_Medisup_tips.pdf", tips:true },
-          ],
-        },
-        {
-          id:"bmi-c2", titre:"Contrôle d'entraînement n°2", source:"Généré par Claude",
-          nbQ:17, qrm:11, qru:6, duree:"35 min",
-          cours:[
-            { t:COURS_BMI.grandeurs,    q:"Q1–3" },
-            { t:COURS_BMI.energie,      q:"Q4–6" },
-            { t:COURS_BMI.ph,           q:"Q7–10" },
-            { t:COURS_BMI.colligatives, q:"Q11–13" },
-            { t:COURS_BMI.cinetiques,   q:"Q14–15" },
-            { t:COURS_BMI.mecaniques,   q:"Q16–17" },
-          ],
-          pdfs:[ { label:"Sujet + corrigé", href:"controles/BMI_Controle2_entrainement.pdf" } ],
-          note:"Généré sur le modèle du contrôle n°1. Propositions des QRM mélangées ; réponses vérifiées avec les fiches et les corrigés des annales. Le corrigé détaillé commence page 7.",
-        },
-        {
-          id:"bmi-c3", titre:"Contrôle d'entraînement n°3", source:"Généré par Claude",
-          nbQ:17, qrm:11, qru:6, duree:"35 min",
-          cours:[
-            { t:COURS_BMI.grandeurs + " — préfixes, dimensions, incertitudes, exponentielle", q:"Q1–5" },
-            { t:COURS_BMI.energie + " — électrostatique, frottements, énergie de liaison", q:"Q6–8" },
-            { t:COURS_BMI.ph + " — base faible, Henderson-Hasselbalch, acides aminés", q:"Q9–11" },
-            { t:COURS_BMI.colligatives + " — cryoscopie, osmolalité calculée, glucose 5 %", q:"Q12–13" },
-            { t:COURS_BMI.cinetiques + " — filtration, hémodialyse, Stokes-Einstein", q:"Q14–16" },
-            { t:COURS_BMI.mecaniques + " — Jurin, Laplace", q:"Q17" },
-          ],
-          pdfs:[ { label:"Sujet + corrigé", href:"controles/BMI_Controle3_entrainement.pdf" } ],
-          note:"Généré sur le modèle du contrôle n°1, en s'appuyant sur les annales pour couvrir d'autres parties du cours ; réponses vérifiées avec les fiches et les corrigés des annales. Le corrigé détaillé commence page 7.",
-        },
-      ],
+        id:"bmi-c3", n:2, date:"2026-09-26", nbQ:17, qrm:11, qru:6, duree:"35 min",
+        cours:[
+          { t:COURS_BMI.grandeurs, d:"préfixes, dimensions, incertitudes, exponentielle", q:"Q1–5" },
+          { t:COURS_BMI.energie, d:"électrostatique, frottements, énergie de liaison", q:"Q6–8" },
+          { t:COURS_BMI.ph, d:"base faible, Henderson-Hasselbalch, acides aminés", q:"Q9–11" },
+          { t:COURS_BMI.colligatives, d:"cryoscopie, osmolalité calculée, glucose 5 %", q:"Q12–13" },
+          { t:COURS_BMI.cinetiques, d:"filtration, hémodialyse, Stokes-Einstein", q:"Q14–16" },
+          { t:COURS_BMI.mecaniques, d:"Jurin, Laplace", q:"Q17" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/BMI_C1_entrainement2.pdf" } ],
+        note:"Couvre d'autres parties du cours que l'entraînement 1. Corrigé détaillé à partir de la page 7.",
       },
-      ],
-    },
-  ]},
+    ],
+  },
 ];
 
 /* ===================================================================== */
 const PDF_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 14h6M9 17h4"/></svg>';
-
 const TIPS_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1.1 2V16h5v-.2c.1-.8.5-1.5 1.1-2A6 6 0 0 0 12 3z" fill="#FFF6D6"/><path d="M12 7.5l.8 1.7 1.8.3-1.3 1.2.3 1.8-1.6-.9-1.6.9.3-1.8-1.3-1.2 1.8-.3z" fill="currentColor" stroke="none"/></svg>';
-const CHEV = '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+const CAL_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>';
+const SV = (d, extra="") => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"${extra}>${d}</svg>`;
+const ICONS = {
+  bam:    SV('<circle cx="12" cy="12" r="1.8" fill="currentColor"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(120 12 12)"/>'),
+  physio: SV('<path d="M12 20.5s-7.5-4.6-9.2-9.6C1.6 7.3 3.9 4 7.3 4c2 0 3.5 1.1 4.7 2.8C13.2 5.1 14.7 4 16.7 4c3.4 0 5.7 3.3 4.5 6.9-.3.9-.8 1.8-1.4 2.6"/><path d="M2.5 13h4l1.7-3 2.6 6 1.9-3.5h3.3"/>'),
+  bmi:    SV('<path d="M12 3s6.5 7 6.5 11.3A6.5 6.5 0 0 1 5.5 14.3C5.5 10 12 3 12 3z"/><path d="M9.2 15a3 3 0 0 0 2.8 2.5"/>'),
+  sommaire: SV('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>'),
+  programme: SV('<path d="M3 5.5C5.5 4.3 8.5 4.3 12 6c3.5-1.7 6.5-1.7 9-.5V19c-2.5-1.2-5.5-1.2-9 .5-3.5-1.7-6.5-1.7-9-.5z"/><path d="M12 6v13.5"/>'),
+  questions: SV('<path d="M4 6l1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17"/><path d="M11 6h9M11 12h9M11 18h9"/>'),
+  duree: SV('<circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.5 1.5M10 2.5h4M18.5 6l1.5-1.5"/>'),
+  fait: SV('<circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16.5 9"/>'),
+  fiches: SV('<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/>'),
+  info: SV('<path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6z"/><path d="M8.8 12l2.2 2.2 4.2-4.4"/>'),
+  cible: SV('<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/>'),
+};
+const CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
 
-/* suivi local (fait / note) — facultatif, ignoré si le navigateur le bloque */
+/* suivi local (fait / note / date) — facultatif, ignoré si le navigateur le bloque */
 function load(){ try{ return JSON.parse(localStorage.getItem("controles-suivi") || "{}"); }catch(e){ return {}; } }
 function save(s){ try{ localStorage.setItem("controles-suivi", JSON.stringify(s)); }catch(e){} }
 let SUIVI = load();
+let FILTRE = Object.assign({ mat:"all", statut:"all" }, SUIVI.__filtre || {});
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+const norm = s => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 function hl(text, q){
   if(!q) return esc(text);
   const i = norm(text).indexOf(q);
   if(i < 0) return esc(text);
   return esc(text.slice(0,i)) + "<mark>" + esc(text.slice(i, i+q.length)) + "</mark>" + esc(text.slice(i+q.length));
 }
+const MOIS = ["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."];
+function fdate(iso, court){
+  if(!iso) return "";
+  const [y,m,d] = iso.split("-").map(Number);
+  return court ? `${String(d).padStart(2,"0")}/${String(m).padStart(2,"0")}` : `${d} ${MOIS[m-1]} ${y}`;
+}
+function today(){
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
 
-function ctrlHTML(c, color, q){
-  const st = SUIVI[c.id] || {};
-  const meta = [
-    `<span><b>${c.nbQ}</b> questions</span>`,
-    (c.qrm != null ? `<span><b>${c.qrm}</b> QRM · <b>${c.qru}</b> QRU</span>` : ""),
-    (c.duree ? `<span>Durée <b>${esc(c.duree)}</b></span>` : ""),
-  ].join("");
-  const cours = c.cours.map((k,i) => `
-      <li><span class="n">${String(i+1).padStart(2,"0")}</span><span class="t">${hl(k.t, q)}</span>${k.q ? `<span class="q">${esc(k.q)}</span>` : ""}</li>`).join("");
-  const btns = c.pdfs.map(p =>
-    `<a class="btn${p.alt ? " alt" : ""}${p.tips ? " tips" : ""}" href="${esc(p.href)}" target="_blank" rel="noopener">${p.tips ? TIPS_ICON : PDF_ICON}${esc(p.label)}</a>`).join("");
+/* liste à plat des sujets d'un contrôle, officiel en tête */
+function sujets(C){
+  const M = MATIERES[C.matiere];
+  const base = `${M.code}-C${C.numero}`;
+  const out = C.officiel
+    ? [{ ...C.officiel, off:true, code:`${base}-OFF`, titre:"Sujet officiel Médisup", cours:C.programme }]
+    : [{ id:`${base}-OFF`, off:true, avenir:true, code:`${base}-OFF`, titre:"Sujet officiel Médisup", cours:C.programme }];
+  [...C.entrainements].sort((a,b) => a.n - b.n).forEach(e =>
+    out.push({ ...e, off:false, code:`${base}-E${e.n}`, titre:`Entraînement ${e.n}` }));
+  return out;
+}
+function matchSujet(s, q){
+  if(!q) return true;
+  return norm(s.titre).includes(q) || norm(s.code).includes(q) ||
+         (s.cours || []).some(k => norm(k.t).includes(q) || (k.d && norm(k.d).includes(q)));
+}
+
+function avenirHTML(s, color, C){
+  const quand = C.date ? (C.date >= today() ? ` · contrôle prévu le <b>${fdate(C.date)}</b>` : ` · contrôle passé le <b>${fdate(C.date)}</b>`) : "";
   return `
-    <article class="ctrl${st.done ? " done" : ""}" style="--c:${color}" data-id="${c.id}">
-      <div class="ctrl-top">
-        <h4>${hl(c.titre, q)}</h4>
-        <span class="src${c.source === "Modèle Médisup" ? " medisup" : ""}">${esc(c.source)}</span>
-      </div>
-      <div class="meta">${meta}</div>
-      <p class="cours-title">COURS CONCERNÉS</p>
-      <ul class="cours">${cours}</ul>
-      <div class="actions">
-        ${btns}
-        <div class="track">
-          <label><input type="checkbox" data-k="done" ${st.done ? "checked" : ""}> Fait</label>
-          <label>Note <input type="number" min="0" max="${c.nbQ}" step="0.5" data-k="note" value="${st.note ?? ""}"> / ${c.nbQ}</label>
-        </div>
-      </div>
-      ${c.note ? `<p class="note">${esc(c.note)}</p>` : ""}
+    <article class="sujet avenir" style="--c:${color}">
+      <div class="badge off"><small>MÉDISUP</small><span>OFF</span></div>
+      <div class="s-top"><h3>Sujet officiel Médisup</h3><span class="code">${esc(s.code)}</span><span class="src">pas encore disponible</span></div>
+      <div class="s-meta"><span>Sujet, corrigé et tips s'ajouteront ici dès qu'ils seront distribués${quand}.</span></div>
+      <div><p class="note">En attendant, les entraînements ci-dessous sont construits sur le programme annoncé par Médisup.</p></div>
     </article>`;
+}
+
+function sujetHTML(s, color, q){
+  const st = SUIVI[s.id] || {};
+  const qrmqru = s.qrm != null ? ` <span>(${s.qrm} QRM · ${s.qru} QRU)</span>` : "";
+  const when = s.off ? "" :
+    `<span class="when">${CAL_ICON} créé le <b>${fdate(s.date)}</b></span>`;
+  const btns = s.pdfs.map(p =>
+    `<a class="btn${p.alt ? " alt" : ""}${p.tips ? " tips" : ""}" href="${esc(p.href)}" target="_blank" rel="noopener">${p.tips ? TIPS_ICON : PDF_ICON}${esc(p.label)}</a>`).join("");
+  const det = s.off ? "" : (() => {
+    const open = q && s.cours.some(k => norm(k.t).includes(q) || (k.d && norm(k.d).includes(q)));
+    const li = s.cours.map(k => `
+        <li><span class="t">${hl(k.t, q)}${k.d ? ` <i>— ${hl(k.d, q)}</i>` : ""}</span>${k.q ? `<span class="q">${esc(k.q)}</span>` : ""}</li>`).join("");
+    return `<details class="det"${open ? " open" : ""}><summary>${CHEV} Notions abordées, question par question</summary><ul class="cours">${li}</ul>${s.note ? `<p class="note">${esc(s.note)}</p>` : ""}</details>`;
+  })();
+  return `
+    <article class="sujet${st.done ? " done" : ""}" style="--c:${color}" data-id="${s.id}">
+      <div class="badge${s.off ? " off" : ""}">${s.off ? "<small>MÉDISUP</small><span>OFF</span>" : `<small>ENTR.</small><span>${s.n}</span>`}</div>
+      <div class="s-top">
+        <h3>${hl(s.titre, q)}</h3>
+        <span class="code">${hl(s.code, q)}</span>
+        <span class="src">${s.off ? "contrôle officiel" : "généré par Claude"}</span>
+      </div>
+      <div class="s-meta">
+        <span class="m">${ICONS.questions}<span><b>${s.nbQ}</b> questions${qrmqru}</span></span>
+        <span class="m">${ICONS.duree}<span>Durée <b>${esc(s.duree)}</b></span></span>
+        ${when}
+      </div>
+      <div>
+        <div class="s-actions">
+          ${btns}
+          <div class="track">
+            <label><input type="checkbox" data-k="done" ${st.done ? "checked" : ""}> Fait</label>
+            ${st.done && st.doneDate ? `<span class="fait-le">le ${fdate(st.doneDate, true)}</span>` : ""}
+            <label>Note <input type="number" min="0" max="${s.nbQ}" step="0.5" data-k="note" value="${st.note ?? ""}"> / ${s.nbQ}</label>
+          </div>
+        </div>
+        ${s.off && s.note ? `<p class="note">${esc(s.note)}</p>` : ""}
+        ${det}
+      </div>
+    </article>`;
+}
+
+function filtersHTML(){
+  const mats = [["all","Toutes", null], ...Object.entries(MATIERES).map(([k,m]) => [k, m.code === "PHYSIO" ? "Physio" : m.code, m.color])];
+  const stat = [["all","Tous"],["todo","À faire"],["done","Faits"]];
+  return mats.map(([k,l,c]) => `<button class="chip${FILTRE.mat===k?" on":""}" data-f="mat" data-v="${k}"${c?` style="--c:${c}"`:""}>${c?`<span class="ico" style="width:15px;height:15px;color:${c}">${ICONS[k]}</span>`:""}${l}</button>`).join("")
+    + `<span class="sep"></span>`
+    + stat.map(([k,l]) => `<button class="chip${FILTRE.statut===k?" on":""}" data-f="statut" data-v="${k}">${l}</button>`).join("");
 }
 
 function render(){
   const q = norm(document.getElementById("searchBox").value.trim());
-  let html = "", nC = 0, nQ = 0, nDone = 0;
+  document.getElementById("filters").innerHTML = filtersHTML();
+  let som = "", blocs = "", nC = 0, nQ = 0, nDone = 0;
 
-  MODULES.forEach(mod => {
-    let modHTML = "";
-    mod.matieres.forEach(m => {
-      const groupes = m.groupes || [{ titre:null, controles:m.controles || [] }];
-      const matMatch = !q || norm(m.title).includes(q);
-      let grpHTML = "", nMat = 0;
-      groupes.forEach((g, gi) => {
-        g.controles.forEach(c => { nC++; nQ += c.nbQ; if((SUIVI[c.id]||{}).done) nDone++; });
-        const grpMatch = matMatch || (g.titre && norm(g.titre).includes(q));
-        const list = g.controles.filter(c =>
-          grpMatch || norm(c.titre).includes(q) || c.cours.some(k => norm(k.t).includes(q)));
-        if(!list.length) return;
-        nMat += list.length;
-        const cards = list.map(c => ctrlHTML(c, m.color, grpMatch ? "" : q)).join("");
-        if(!g.titre){ grpHTML += `<div class="list">${cards}</div>`; return; }
-        const gid = m.title + "::" + g.titre;
-        const closed = !q && (SUIVI.__closed || {})[gid];
-        grpHTML += `
-          <div class="groupe${closed ? " closed" : ""}" style="--c:${m.color}" data-gid="${esc(gid)}">
-            <div class="groupe-head">
-              <h5>${hl(g.titre, grpMatch ? "" : q)}</h5>
-              <span class="count">${list.length} sujet${list.length > 1 ? "s" : ""}</span>
-              ${CHEV}
-            </div>
-            ${g.sousTitre ? `<p class="groupe-sub">${esc(g.sousTitre)}</p>` : ""}
-            <div class="list">${cards}</div>
-          </div>`;
-      });
-      if(!nMat) return;
-      modHTML += `
-        <section class="matiere">
-          <div class="mat-head" style="--c:${m.color}">
-            <span class="dot"></span>
-            <h3>${esc(m.title)}</h3>
-            <span class="count">${nMat} contrôle${nMat > 1 ? "s" : ""}</span>
-            ${m.href ? `<a href="${m.href}">Fiches →</a>` : ""}
+  CONTROLES.forEach(C => {
+    const M = MATIERES[C.matiere];
+    const tous = sujets(C);
+    const all = tous.filter(s => !s.avenir);
+    all.forEach(s => { nC++; nQ += s.nbQ; if((SUIVI[s.id]||{}).done) nDone++; });
+    if(FILTRE.mat !== "all" && FILTRE.mat !== C.matiere) return;
+
+    const blocMatch = q && (norm(M.titre).includes(q) || norm(M.code).includes(q) || C.programme.some(k => norm(k.t).includes(q)));
+    let list = all.filter(s => blocMatch || matchSujet(s, q));
+    if(FILTRE.statut === "todo") list = list.filter(s => !(SUIVI[s.id]||{}).done);
+    if(FILTRE.statut === "done") list = list.filter(s => (SUIVI[s.id]||{}).done);
+    const avenir = tous.find(s => s.avenir);
+    if(!list.length && !(avenir && FILTRE.statut === "all" && (!q || blocMatch))) return;
+
+    const faits = all.filter(s => (SUIVI[s.id]||{}).done).length;
+    const pct = all.length ? Math.round(100 * faits / all.length) : 0;
+    const anchor = "ctrl-" + C.key;
+    const titre = `${M.code === "PHYSIO" ? "Physiologie" : M.code} · Contrôle n°${C.numero}`;
+
+    som += `
+      <a class="som" href="#${anchor}" style="--c:${M.color}">
+        <div class="som-top">
+          <span class="ico mat-ico">${ICONS[C.matiere]}</span>
+          <div><div class="k">${M.module} · ${esc(M.titre.toUpperCase())}</div>
+          <div class="t">${esc(titre)}</div></div>
+        </div>
+        <div class="s"><span>${ICONS.programme} ${C.programme.length} cours</span><span>${ICONS.questions} ${C.officiel ? "1 officiel" : "officiel à venir"} + ${C.entrainements.length} entr.</span><span>${ICONS.fait} <b>${faits}/${all.length}</b></span>${C.date ? `<span>${CAL_ICON} ${fdate(C.date)}</span>` : ""}</div>
+        <div class="bar-prog"><i style="width:${pct}%"></i></div>
+      </a>`;
+
+    const prog = C.programme.map((k,i) =>
+      `<li><span class="n">${i+1}</span><span>${hl(k.t, q)}</span></li>`).join("");
+    blocs += `
+      <section class="prog" id="${anchor}" style="--c:${M.color}">
+        <div class="prog-head">
+          <span class="ico mat-ico">${ICONS[C.matiere]}</span>
+          <div>
+            <div class="mod">${M.module} · ${esc(M.titre.toUpperCase())}</div>
+            <h2>${esc(titre)}</h2>
+            ${C.date ? `<div class="prog-date">Contrôle Médisup ${C.date >= today() ? "prévu le" : "passé le"} <b>${fdate(C.date)}</b></div>` : ""}
           </div>
-          ${grpHTML}
-        </section>`;
-    });
-    if(modHTML) html += `<div class="module"><h2>${mod.label}</h2>${modHTML}</div>`;
+          <div class="right">
+            <span><span class="ico">${ICONS.fait}</span><span class="pct">${faits}/${all.length}</span> faits</span>
+            ${M.href ? `<a href="${M.href}"><span class="ico" style="width:14px;height:14px">${ICONS.fiches}</span>Fiches →</a>` : ""}
+          </div>
+        </div>
+        <div class="programme">
+          <p class="label" title="Programme du contrôle"><span class="ico">${ICONS.programme}</span>Programme</p>
+          <ol>${prog}</ol>
+        </div>
+        ${avenir && FILTRE.statut === "all" ? avenirHTML(avenir, M.color, C) : ""}
+        ${list.map(s => sujetHTML(s, M.color, blocMatch ? "" : q)).join("")}
+      </section>`;
   });
 
-  document.getElementById("content").innerHTML = html ||
-    `<div class="empty">Aucun contrôle ne correspond à cette recherche.</div>`;
+  document.getElementById("content").innerHTML = blocs
+    ? `<p class="label"><span class="ico">${ICONS.sommaire}</span>Sommaire</p><div class="sommaire">${som}</div>
+       <div class="divider"><span class="pill">${Object.entries(MATIERES).map(([k,m]) => `<span class="ico" style="color:${m.color}">${ICONS[k]}</span>`).join('<i class="sep-dot"></i>')}</span></div>
+       ${blocs}
+       <div class="regles"><span class="ico">${ICONS.info}</span><div><b>Sujets générés par Claude</b> : contenu tiré uniquement des fiches de synthèse, programme strict. Annales ACC et contrôles Médisup servent seulement à calibrer le niveau et le type de questions : aucune question proche.</div></div>`
+    : `<div class="empty">Aucun sujet ne correspond à cette recherche ou à ce filtre.</div>`;
   document.getElementById("stCtrl").textContent = nC;
   document.getElementById("stQ").textContent = nQ;
   document.getElementById("stDone").textContent = nDone;
 }
 
 document.getElementById("searchBox").addEventListener("input", render);
+document.getElementById("filters").addEventListener("click", e => {
+  const b = e.target.closest(".chip");
+  if(!b) return;
+  FILTRE[b.dataset.f] = b.dataset.v;
+  SUIVI.__filtre = FILTRE; save(SUIVI);
+  render();
+});
 document.getElementById("content").addEventListener("change", e => {
-  const el = e.target, card = el.closest(".ctrl");
-  if(!card || !el.dataset.k) return;
-  const id = card.dataset.id;
+  const el = e.target, row = el.closest(".sujet");
+  if(!row || !el.dataset.k) return;
+  const id = row.dataset.id;
   SUIVI[id] = SUIVI[id] || {};
-  SUIVI[id][el.dataset.k] = el.type === "checkbox" ? el.checked : el.value;
+  if(el.type === "checkbox"){
+    SUIVI[id].done = el.checked;
+    SUIVI[id].doneDate = el.checked ? today() : null;
+  } else {
+    SUIVI[id][el.dataset.k] = el.value;
+  }
   save(SUIVI);
   if(el.type === "checkbox") render();
-});
-
-document.getElementById("content").addEventListener("click", e => {
-  const head = e.target.closest(".groupe-head");
-  if(!head) return;
-  const grp = head.parentElement, gid = grp.dataset.gid;
-  grp.classList.toggle("closed");
-  SUIVI.__closed = SUIVI.__closed || {};
-  SUIVI.__closed[gid] = grp.classList.contains("closed");
-  save(SUIVI);
 });
 
 render();
