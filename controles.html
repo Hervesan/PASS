@@ -333,6 +333,7 @@ const MATIERES = {
   physio: { code:"PHYSIO", module:"M1", titre:"Physiologie humaine",                              color:"var(--c-physiologie)", href:"physiologie.html" },
   bmi:    { code:"BMI",    module:"M2", titre:"Biophysique du milieu intérieur",                  color:"var(--c-milieu)",      href:"biophysique-milieu-interieur.html" },
   chimie: { code:"CHIMIE", module:"M2", titre:"Chimie",                                           color:"var(--c-chimie)",      href:"chimie.html" },
+  biochimie: { code:"BIOCHIMIE", module:"M2", titre:"Biochimie",                                     color:"var(--c-biochimie)",   href:"biochimie.html" },
 };
 
 const COURS_BMI = {
@@ -367,6 +368,14 @@ const COURS_CHIMIE = {
   nomencl:  "FC4 Règles générales de nomenclature",
   premier:  "FC5 1er principe de la thermodynamique",
   second:   "FC6 2nd principe de la thermodynamique et équilibres",
+};
+
+const COURS_BIOCHIMIE = {
+  peptides:  "FC3 Liaison peptidique et peptides",
+  proteines: "FC4 Protéines",
+  lipides:   "FC5 Lipides",
+  enzymo:    "FC6 Enzymologie",
+  nucleo1:   "FC7 Acides nucléiques – partie 1",
 };
 
 const NOTE_GEN = "Corrigé à partir de la page 6 ; chaque question y a son encadré « Tips réflexes ».";
@@ -555,6 +564,41 @@ const CONTROLES = [
       },
     ],
   },
+  /* ---------------- M2 · Biochimie · Contrôle n°1 ---------------- */
+  {
+    key:"biochimie-1", matiere:"biochimie", numero:1, date:"2026-10-07",
+    programme:[
+      { t:COURS_BIOCHIMIE.peptides }, { t:COURS_BIOCHIMIE.proteines }, { t:COURS_BIOCHIMIE.lipides },
+      { t:COURS_BIOCHIMIE.enzymo }, { t:COURS_BIOCHIMIE.nucleo1 },
+    ],
+    officiel:null,
+    entrainements:[
+      {
+        id:"biochimie-c1-e1", n:1, date:"2026-10-02", nbQ:18, qrm:11, qru:7, duree:"36 min",
+        cours:[
+          { t:COURS_BIOCHIMIE.peptides, d:"hydrolyse (demi-vie > 500 ans), séquençage d'un hexapeptide, SDS et Western blot, pI d'un tripeptide", q:"Q1–4" },
+          { t:COURS_BIOCHIMIE.proteines, d:"types d'interaction, 20ⁿ et 3ⁿ, fragments papaïne/pepsine et IgM, dénaturation et HSP", q:"Q5–8" },
+          { t:COURS_BIOCHIMIE.lipides, d:"acide arachidonique (ω ↔ Δ), triglycérides exogènes/endogènes, membranes et cardiolipine, sphingolipidoses", q:"Q9–12" },
+          { t:COURS_BIOCHIMIE.enzymo, d:"activité spécifique, Michaelis-Menten et Lineweaver-Burk, aspirine et équation de Hill", q:"Q13–15" },
+          { t:COURS_BIOCHIMIE.nucleo1, d:"pKa de l'acide phosphorique, thymine et nucléosides, oses et dérivés puriques", q:"Q16–18" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Biochimie_C1_entrainement1.pdf" } ],
+        note:"Corrigé à partir de la page 7 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+      {
+        id:"biochimie-c1-e2", n:2, date:"2026-10-02", nbQ:18, qrm:11, qru:7, duree:"36 min",
+        cours:[
+          { t:COURS_BIOCHIMIE.peptides, d:"formation (AA-AMP, ribosome, sites P/A), configuration cis, BNP et LH-RH, nombre de liaisons d'un polypeptide", q:"Q1–4" },
+          { t:COURS_BIOCHIMIE.proteines, d:"hélice α d'un RCPG (tours, palmitoylation), myristoylation, chaînes et classes d'Ig, conformation et doigt de zinc", q:"Q5–8" },
+          { t:COURS_BIOCHIMIE.lipides, d:"formule de l'acide linoléique (ω = x + 2), classement par température de fusion, phosphoinositides, bilan du cholestérol", q:"Q9–12" },
+          { t:COURS_BIOCHIMIE.enzymo, d:"conversion UI → katal, inhibition non compétitive chiffrée, classes EC, site actif et fumarase", q:"Q13–15" },
+          { t:COURS_BIOCHIMIE.nucleo1, d:"structure des bases, uricase et goutte, nomenclature des nucléosides et dérivés puriques", q:"Q16–18" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Biochimie_C1_entrainement2.pdf" } ],
+        note:"Autres parties du cours que l'entraînement 1. Corrigé à partir de la page 6.",
+      },
+    ],
+  },
 ];
 /* ===================================================================== */
 const PDF_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 14h6M9 17h4"/></svg>';
@@ -566,6 +610,7 @@ const ICONS = {
   physio: SV('<path d="M12 20.5s-7.5-4.6-9.2-9.6C1.6 7.3 3.9 4 7.3 4c2 0 3.5 1.1 4.7 2.8C13.2 5.1 14.7 4 16.7 4c3.4 0 5.7 3.3 4.5 6.9-.3.9-.8 1.8-1.4 2.6"/><path d="M2.5 13h4l1.7-3 2.6 6 1.9-3.5h3.3"/>'),
   bmi:    SV('<path d="M12 3s6.5 7 6.5 11.3A6.5 6.5 0 0 1 5.5 14.3C5.5 10 12 3 12 3z"/><path d="M9.2 15a3 3 0 0 0 2.8 2.5"/>'),
   chimie: SV('<path d="M9 3h6M10 3v6L4.5 18.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"/><path d="M7 15h10"/>'),
+  biochimie: SV('<path d="M7 3c0 4.5 10 4.5 10 9s-10 4.5-10 9"/><path d="M17 3c0 4.5-10 4.5-10 9s10 4.5 10 9"/><path d="M8.5 6.5h7M8.5 17.5h7M10 12h4"/>'),
   sommaire: SV('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>'),
   programme: SV('<path d="M3 5.5C5.5 4.3 8.5 4.3 12 6c3.5-1.7 6.5-1.7 9-.5V19c-2.5-1.2-5.5-1.2-9 .5-3.5-1.7-6.5-1.7-9-.5z"/><path d="M12 6v13.5"/>'),
   questions: SV('<path d="M4 6l1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17"/><path d="M11 6h9M11 12h9M11 18h9"/>'),
@@ -672,7 +717,7 @@ function sujetHTML(s, color, q){
 }
 
 function filtersHTML(){
-  const mats = [["all","Toutes", null], ...Object.entries(MATIERES).map(([k,m]) => [k, m.code === "PHYSIO" ? "Physio" : m.code, m.color])];
+  const mats = [["all","Toutes", null], ...Object.entries(MATIERES).map(([k,m]) => [k, m.code === "PHYSIO" ? "Physio" : m.code === "BIOCHIMIE" ? "Biochimie" : m.code, m.color])];
   const stat = [["all","Tous"],["todo","À faire"],["done","Faits"]];
   return mats.map(([k,l,c]) => `<button class="chip${FILTRE.mat===k?" on":""}" data-f="mat" data-v="${k}"${c?` style="--c:${c}"`:""}>${c?`<span class="ico" style="width:15px;height:15px;color:${c}">${ICONS[k]}</span>`:""}${l}</button>`).join("")
     + `<span class="sep"></span>`
@@ -701,7 +746,7 @@ function render(){
     const faits = all.filter(s => (SUIVI[s.id]||{}).done).length;
     const pct = all.length ? Math.round(100 * faits / all.length) : 0;
     const anchor = "ctrl-" + C.key;
-    const titre = `${M.code === "PHYSIO" ? "Physiologie" : M.code === "CHIMIE" ? "Chimie" : M.code} · Contrôle n°${C.numero}`;
+    const titre = `${M.code === "PHYSIO" ? "Physiologie" : M.code === "CHIMIE" ? "Chimie" : M.code === "BIOCHIMIE" ? "Biochimie" : M.code} · Contrôle n°${C.numero}`;
 
     som += `
       <a class="som" href="#${anchor}" style="--c:${M.color}">
