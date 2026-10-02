@@ -10,7 +10,7 @@
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
 --bg:#fff;--ink:#1d2330;--muted:#5b6474;--line:#e3e6ec;--frame:#b9c0cc;--star:#e8a900;--starbg:#fff6d6;--ded:#3f9a6a;
---A:#2f86a8;--B:#d0632e;--C:#c9971c;--D:#6f5aa8;--E:#a64b4b}
+--A:#2f86a8;--B:#d0632e;--C:#c9971c;--D:#6f5aa8;--E:#a64b4b;--F:#2e7d6b}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}}
 :root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}
 *,*::before,*::after{box-sizing:inherit}
@@ -190,7 +190,7 @@ body.hide .qc .ft,body.hide .qc .u{filter:none!important;user-select:auto}
 </head>
 <body>
 <div class="wrap">
-<header class="top"><p class="kicker">M2 · Biochimie</p><h1>Glucides</h1><p class="meta">24 formules · <span class="s">★</span> tombées au concours · <span class="g">🔁</span> formules déduites, reliées à leur formule de base</p></header>
+<header class="top"><p class="kicker">M2 · Biochimie</p><h1>Glucides</h1><p class="meta">36 formules · <span class="s">★</span> tombées au concours · <span class="g">🔁</span> formules déduites, reliées à leur formule de base</p></header>
 <div class="bar"><button id="bHide" aria-pressed="false">🙈 Cacher les formules</button><a class="blink" href="formules.html" style="margin-left:auto">← Cours</a><a class="blink" href="formules-glucides-explications.html">📖 Explications</a></div>
 <div class="cols"><span>Définition</span><span>Formule · unité · constante</span></div><div id="tb"></div>
 <div id="quiz" hidden>
@@ -249,7 +249,7 @@ const data = [
    x:"<p>Lors de la mise en solution ★, la fonction aldéhyde réagit avec une fonction alcool de la même molécule : le cycle se forme par <b>réorganisation de la molécule, sans perte d'atomes</b> ★. La réaction est <b>réversible</b> ★★ et spontanée.</p><span class='tip'>Forme linéaire et forme cyclique ont la <b>même formule brute</b> : pas d'eau libérée.</span><span class='trap'>À l'inverse, la liaison osidique (@osid) et la lactone (@lact) libèrent une molécule d'eau.</span>"},
   {k:"cycle", st:2, q:"Taille du cycle formé", d:"Pont hémiacétal entre C1 et un carbone C<sub>k</sub>",
    f:"Atomes du cycle = k + 1", u:"Pont C1–C5 : <b>6 atomes (pyrane)</b> · pont C1–C4 : <b>5 atomes (furane)</b>",
-   x:"<p>Le pont hémiacétal relie la fonction aldéhyde du C1 ★ à l'oxygène d'une fonction alcool secondaire : [OH du C1] – C1 – [O du C5] – C5. Le cycle contient les carbones C1 à C<sub>k</sub> plus cet oxygène.</p><span class='tip'>Glucose : pont en <b>C5</b> ★★ → 5 C + 1 O = 6 atomes → glucopyranose. Pont en <b>C4</b> ★★ → 5 atomes → furanose (ex. β-D-ribofuranose).</span><span class='trap'>Le C6 (CH<sub>2</sub>OH) reste en dehors du cycle du glucopyranose. Le décompte « k + 1 » se lit sur les schémas de la fiche, il n'y est pas écrit.</span>"},
+   x:"<p>Le pont hémiacétal relie la fonction aldéhyde du C1 ★ à l'oxygène d'une fonction alcool secondaire : [OH du C1] – C1 – [O du C5] – C5. Le cycle contient les carbones C1 à C<sub>k</sub> plus cet oxygène.</p><span class='tip'>Glucose : pont en <b>C5</b> ★★ → 5 C + 1 O = 6 atomes → glucopyranose. Pont en <b>C4</b> ★★ → 5 atomes → furanose (forme courante du ribose : β-D-ribofuranose).</span><span class='trap'>Le C6 (CH<sub>2</sub>OH) reste en dehors du cycle du glucopyranose. Le décompte « k + 1 » se lit sur les schémas de la fiche, il n'y est pas écrit.</span>"},
   {k:"rot", st:0, q:"Pouvoir rotatoire des anomères du glucose", d:"Angle de rotation de la lumière polarisée",
    f:"α-D-glucose : +113° · β-D-glucose : +18,7°", u:"Différent pour chaque anomère",
    x:"<p>La cyclisation fait apparaître un nouveau carbone asymétrique ★★ en <b>C1</b> (carbone anomérique) : deux anomères, α et β, qui ne dévient pas la lumière polarisée du même angle.</p><span class='tip'>Série D, anomère α : hydroxyle du C1 <b>en bas</b> (du même côté que l'hydroxyle de la série).</span><span class='trap'>Les anomères ne sont <b>pas</b> des énantiomères : un seul carbone est en jeu.</span>"},
@@ -268,11 +268,11 @@ const data = [
    f:"Charge = −2", u:"Groupement phosphate <b>ionisé</b>",
    x:"<p>Le groupement phosphate est ionisé à pH physiologique : le glucose-6-phosphate porte 2 charges négatives. C'est l'une de ses 2 propriétés fondamentales ; l'autre est un angle plus grand qui modifie la structure du glucose.</p><span class='tip'>Structure du glucose-6-phosphate ★★ : le phosphate (deux O<sup>−</sup>) est porté par le C6.</span>"},
   {k:"meth", st:1, q:"Méthylation du glucose", d:"Un méthyle remplace l'hydrogène d'un OH",
-   f:"α-D-glucose + CH<sub>3</sub>OH → α-1-méthyl-D-glucoside + H<sub>2</sub>O", u:"Sur l'OH <b>anomérique</b> (C1)",
+   f:"α-D-glucose + CH<sub>3</sub>OH → α-1-méthyl-D-glucoside + H<sub>2</sub>O", u:"Exemple de la fiche : méthyle sur le <b>C1</b> (α-1-méthyl-D-glucoside)",
    x:"<p>Le groupement méthyle remplace un hydrogène d'un OH ★ ; une molécule d'eau est libérée. Intérêt : <b>bloquer la réaction d'anomérisation</b> ★, ce qui permet de doser les anomères α et β.</p><span class='tip'>Bilan : + CH<sub>3</sub>OH, − H<sub>2</sub>O.</span>"},
   {k:"osid", st:0, q:"Formation de la liaison osidique", d:"Liaison entre deux oses",
    f:"Ose–OH + HO–Ose → Ose–O–Ose + H<sub>2</sub>O", u:"Au moins un des deux OH est <b>anomérique</b>",
-   x:"<p>La liaison osidique se forme par <b>élimination d'une molécule d'eau entre deux OH</b>, dont l'un au moins est anomérique. La méthylation (@meth) sert à la définir.</p><span class='tip'>Chaque liaison osidique formée libère 1 H<sub>2</sub>O.</span><span class='trap'>Elle se rompt en milieu acide (liaison particulièrement réversible) : ne pas la confondre avec la liaison éther, très résistante.</span>"},
+   x:"<p>La liaison osidique se forme par <b>élimination d'une molécule d'eau entre deux OH</b>, dont l'un au moins est anomérique. La méthylation (@meth) sert à la définir. Dans un diholoside, c'est une liaison O-glycosidique (@nom).</p><span class='tip'>Chaque liaison osidique formée libère 1 H<sub>2</sub>O.</span><span class='trap'>Elle se rompt en milieu acide (liaison particulièrement réversible) : ne pas la confondre avec la liaison éther, très résistante.</span>"},
   {k:"red", st:0, q:"Réduction du glucose", d:"Retrait de la double liaison de l'aldéhyde",
    f:"D-glucose → D-glucitol (= D-sorbitol)", u:"C1 : –CHO → –CH<sub>2</sub>OH",
    x:"<p>La réduction de la fonction aldéhyde donne le D-sorbitol, dérivé d'ose utilisé comme additif alimentaire.</p><span class='tip'>Diabète : excès de glucose → transformation en sorbitol → accumulation dans le <b>cristallin</b> ★ de l'œil → opacification = cataracte.</span>"},
@@ -285,6 +285,49 @@ const data = [
   {k:"interc", st:0, q:"Interconversion glucose / fructose", d:"Aldose ⇌ ène-diol ⇌ cétose",
    f:"D-glucose-6P ⇌ D-fructose-6P", u:"Glucose-6-phosphate isomérase · <b>2<sup>e</sup> réaction de la glycolyse</b>",
    x:"<p>Liée à la polarité des atomes : l'aldose passe par un intermédiaire <b>ène-diol</b> (C=C–OH, instable) pour donner le cétose, et inversement. Glucose et fructose sont isomères (@iso).</p><span class='tip'>Sens D-fructose → ène-diol → D-glucose : synthèse du glucose par le foie = <b>néoglucogenèse</b>.</span><span class='trap'>Même principe pour D-mannose ⇌ ène-diol ⇌ D-fructose.</span>"}
+ ]},
+ {id:"E", title:"Diholosides", pages:"p.12-15", rows:[
+  {k:"nom", st:0, q:"Nomenclature d'un diholoside", d:"Deux oses unis par une liaison osidique",
+   f:"[ose non réducteur]-<b>yl</b>-(a→b)-[ose réducteur]-<b>ose</b> ou -<b>oside</b>", u:"Flèche <b>de l'ose non réducteur vers l'ose réducteur</b> · a, b = numéros des carbones impliqués",
+   x:"<p>Le nom se lit en 3 morceaux : le nom de l'ose <b>non réducteur + -yl</b> (ex. α-D-glucopyranosyl-) ; la liaison, avec une flèche de l'ose non réducteur vers l'ose réducteur et le numéro des positions des carbones impliqués (ex. (1→4)) ; le nom de l'ose <b>réducteur + -ose ou -oside</b>.</p><span class='tip'>Exemple de la fiche : α-D-glucopyranosyl-(1→4)-α-D-glucopyranose. La liaison est O-glycosidique : entre l'OH <b>anomérique</b> d'un ose et l'OH anomérique ou non d'un autre ose (@osid).</span><span class='trap'>Le suffixe -yl désigne l'ose <b>non réducteur</b>, pas l'ose réducteur.</span>"},
+  {k:"malt", st:1, der:["nom"], q:"Maltose", d:"Dimère de glucose ★★",
+   f:"α-D-glucopyranosyl-(1→4)-α-D-glucopyranoside", u:"<b>Réducteur</b> au niveau du C1 de l'ose de droite",
+   x:"<p>Dimère de glucose ★★ uni par une liaison (1→4) ★. <b>Réducteur</b> ★ au niveau du C1 de l'ose de droite : mutarotation possible sur un des deux glucoses. Issu de l'hydrolyse partielle de l'amidon ★ au cours de la digestion (@amid) ; hydrolysé en milieu acide ou par la maltase de l'intestin, spécifique de la liaison 1-4 et de l'anomère α ★.</p><span class='trap'>La fiche écrit « glucoryranoside » (coquille pour glucopyranoside). En p.12, le même nom sert d'exemple avec la terminaison -glucopyranose : la règle admet -ose ou -oside.</span>"
+   + H(["Ose non réducteur : α-D-glucopyranose → <b>α-D-glucopyranosyl-</b>.","Liaison entre le C1 du premier glucose et le C4 du second : <b>(1→4)</b>.","Ose réducteur : <b>-α-D-glucopyranoside</b>."])},
+  {k:"sacc", st:1, der:["nom"], q:"Saccharose (sucre de cuisine)", d:"Dimère de glucose ★★★ et de fructose ★★",
+   f:"α-D-glucopyranosyl-(1→2)-β-D-fructofuranoside", u:"ou β-D-fructofuranosyl-(2→1) ou (2↔1)-α-D-glucopyranoside · <b>non réducteur</b>",
+   x:"<p>Sucre de cuisine ★, dimère de glucose ★★★ et de fructose ★★. La liaison osidique bloque les <b>2 hydroxyles anomériques</b> : diholoside <b>non réducteur</b> ★★, pas d'oxydation par la réaction de Fehling, pas de possibilité d'isomères optiques, <b>pas de mutarotation</b> ★★.</p><span class='tip'>La fiche donne 3 écritures du même saccharose : en partant du glucose (1→2), en partant du fructose (2→1), ou avec une double flèche (2↔1).</span><span class='trap'>Glucose sous forme <b>pyranose</b>, fructose sous forme <b>furanose</b>.</span>"
+   + H(["Ose 1 : α-D-glucopyranose → <b>α-D-glucopyranosyl-</b>.","Liaison entre le C1 du glucose et le C2 du fructose : <b>(1→2)</b>.","Ose 2 : β-D-fructofuranose → <b>-β-D-fructofuranoside</b>."])},
+  {k:"lacto", st:0, der:["nom"], q:"Lactose (sucre du lait)", d:"Dimère de glucose et de galactose",
+   f:"β-D-galactopyranosyl-(1→4)-α-D-glucopyranose", u:"ou β-D-galactopyranosyl-(1→4)-<b>β</b>-D-glucopyranose · <b>réducteur</b>",
+   x:"<p>Dimère de glucose et de galactose, apporté par le lait. <b>Réducteur</b>. Hydrolysé par la <b>lactase</b>, une β-galactosidase.</p><span class='tip'>Le galactose porte le suffixe -yl (ose non réducteur) ; la fiche donne deux écritures, avec un glucose α ou β.</span><span class='trap'>Lactose : liaison <b>β</b>(1→4) ; maltose : <b>α</b>(1→4) (@malt).</span>"
+   + H(["Ose non réducteur : β-D-galactopyranose → <b>β-D-galactopyranosyl-</b>.","Liaison entre le C1 du galactose et le C4 du glucose : <b>(1→4)</b>.","Ose réducteur : <b>-α-D-glucopyranose</b> (ou -β-D-glucopyranose)."])},
+  {k:"sol", st:1, q:"Solubilité du saccharose", d:"Saccharose très soluble dans l'eau",
+   f:"200 g de saccharose dans 100 g d'eau", u:"<b>Très soluble</b> dans l'eau",
+   x:"<p>200 g de saccharose peuvent se dissoudre dans 100 g d'eau : le saccharose est <b>très soluble dans l'eau</b> ★.</p><span class='tip'>Raisonne en proportion : la masse de saccharose qui peut se dissoudre vaut 2 fois la masse d'eau (ex. 50 g d'eau → 100 g de saccharose).</span><span class='trap'>200 g de saccharose pour 100 g d'eau, pas l'inverse.</span>"}
+ ]},
+ {id:"F", title:"Polyosides", pages:"p.16-20", rows:[
+  {k:"amid", st:0, q:"Amidon", d:"Stockage d'oses chez les plantes",
+   f:"Polymère linéaire d'α-D-glucose · liaisons α(1→4)", u:"Chaîne <b>linéaire</b>",
+   x:"<p>Chez les plantes, les oses sont stockés sous forme d'amidon ; chez les animaux, sous forme de glycogène (@glyc). Précision ajoutée à l'actualisation de la fiche.</p><span class='tip'>Son hydrolyse partielle au cours de la digestion donne le maltose (@malt).</span>"},
+  {k:"glyc", st:0, q:"Glycogène", d:"Polymère de glucose, stockage chez les animaux",
+   f:"α(1→4) entre les oses + ramifications α(1→6)", u:"Une extrémité <b>non réductrice</b> et une extrémité <b>réductrice</b>",
+   x:"<p>Structure 3D en spirale : ramification sur plusieurs niveaux, qui permet une mise en réserve et réduit les interactions avec l'eau. Début de la synthèse sur un noyau protéique, la <b>glycogénine</b> (activité glucosyltransférase) : fixation du carbone 1 d'un glucose sur un résidu tyrosine de la glycogénine.</p><span class='tip'>Stockage du glucose dans le foie et les muscles squelettiques · synthèse = glycogénogenèse · dégradation = glycogénolyse.</span><span class='trap'>Amidon : α(1→4) <b>linéaire</b> (@amid) ; glycogène : α(1→4) <b>+ ramifications α(1→6)</b>.</span>"},
+  {k:"cell", st:0, q:"Cellulose", d:"Polymère de glucose, structure des végétaux",
+   f:"β(1→4) · chaîne linéaire", u:"<b>Liaisons hydrogène</b> entre les chaînes",
+   x:"<p>Rôle structural chez les végétaux ; l'un des composés organiques les plus abondants ★. Chez les mammifères, pas de dégradation possible : pas de cellulase = β(1→4)glucosidase. Chez les herbivores, des bactéries du tube digestif possèdent l'enzyme.</p><span class='trap'>Amidon et glycogène : liaisons <b>α</b> ; cellulose : liaisons <b>β</b>(1→4).</span>"},
+  {k:"pgly", st:0, q:"Glycoprotéines et protéoglycanes", d:"Hétéropolysaccharides",
+   f:"Protéoglycane = protéine + glycosaminoglycane", u:"Partie glucidique : <b>90 %</b> · glycoprotéine : partie <b>protéique</b> plus importante",
+   x:"<p>Glycoprotéine : partie protéique + partie oligosaccharidique (= glycane), la partie protéique étant plus importante que la partie glucidique. Protéoglycane : protéine + glycosaminoglycane, partie glucidique importante (90 %), rôle dans la matrice extracellulaire (ex. décorine, perlécane).</p><span class='trap'>90 % de glucides : protéoglycanes, pas glycoprotéines.</span>"},
+  {k:"Ngly", st:1, q:"Liaison N-glycosidique", d:"Fixation d'un glycane sur une protéine",
+   f:"C–N–C : liaison des N-glycanes", u:"Sur la fonction <b>amide</b> d'un résidu <b>asparagine</b>",
+   x:"<p>Les liaisons glycane-protéines sont des liaisons covalentes qui correspondent à des modifications post-traductionnelles de protéines ★. La liaison N-glycosidique se fait sur la fonction amide d'un résidu asparagine ★.</p><span class='trap'>N : asparagine (amide) ; O : sérine ou thréonine (alcool) (@Ogly).</span>"},
+  {k:"Ogly", st:1, q:"Liaison O-glycosidique", d:"Fixation d'un glycane sur une protéine",
+   f:"C–O–C : liaison des O-glycanes", u:"Sur la fonction <b>alcool</b> d'un résidu <b>sérine</b> ou <b>thréonine</b>",
+   x:"<p>Sur la fonction alcool d'un résidu sérine ★ ou thréonine ★. Les glycanes jouent un rôle dans la conformation ★, la solubilité ★ et la reconnaissance ★ de la protéine.</p><span class='tip'>Moyen mnémotechnique (non tiré de la fiche) : <b>N</b> comme l'azote de la fonction amide, <b>O</b> comme l'oxygène de la fonction alcool.</span>"},
+  {k:"gag", st:2, q:"Acide hyaluronique", d:"Glycosaminoglycane du liquide synovial",
+   f:"[acide D-glucuronique + N-acétyl-D-glucosamine]<sub>n</sub>", u:"Deux <b>dérivés du glucose</b> · composant du <b>liquide synovial</b>",
+   x:"<p>Les glycosaminoglycanes sont des chaînes linéaires de deux sous-unités répétées : un ose chargé négativement (dérivé d'acide uronique) et un ose aminé. Ce sont des polyanions, très hydrophiles ★ (forte hydratation, rôle de lubrifiants). L'acide hyaluronique ★★, composant du liquide synovial (articulations), est composé d'acide D-glucuronique (dérivé du glucose) et de N-acétyl-D-glucosamine (dérivé de glucose) ★★.</p><span class='trap'>Chondroïtine sulfate : GAG comportant de la N-acétyl<b>galactos</b>amine (cartilage). Héparine : un anti-coagulant.</span>"}
  ]}
 ];
 

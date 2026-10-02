@@ -10,7 +10,7 @@
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
 --bg:#fff;--ink:#1d2330;--muted:#5b6474;--line:#e3e6ec;--frame:#b9c0cc;--star:#e8a900;--starbg:#fff6d6;--ded:#3f9a6a;
---A:#2f86a8;--B:#d0632e;--C:#c9971c;--D:#6f5aa8;--E:#a64b4b}
+--A:#2f86a8;--B:#d0632e;--C:#c9971c;--D:#6f5aa8;--E:#a64b4b;--F:#b0527f}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}}
 :root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}
 *,*::before,*::after{box-sizing:inherit}
@@ -190,7 +190,7 @@ body.hide .qc .ft,body.hide .qc .u{filter:none!important;user-select:auto}
 </head>
 <body>
 <div class="wrap">
-<header class="top"><p class="kicker">M2 · Chimie</p><h1>2nd principe de la thermodynamique et équilibres</h1><p class="meta">20 formules · <span class="s">★</span> tombées au concours · <span class="g">🔁</span> formules déduites, reliées à leur formule de base</p></header>
+<header class="top"><p class="kicker">M2 · Chimie</p><h1>2nd principe de la thermodynamique et équilibres</h1><p class="meta">53 formules · <span class="s">★</span> tombées au concours · <span class="g">🔁</span> formules déduites, reliées à leur formule de base</p></header>
 <div class="bar"><button id="bHide" aria-pressed="false">🙈 Cacher les formules</button><a class="blink" href="formules.html" style="margin-left:auto">← Cours</a><a class="blink" href="formules-second-principe-explications.html">📖 Explications</a></div>
 <div class="cols"><span>Définition</span><span>Formule · unité · constante</span></div><div id="tb"></div>
 <div id="quiz" hidden>
@@ -273,6 +273,123 @@ const data = [
   {k:"sec", st:1, q:"Second principe pour un système isolé", d:"L'entropie d'un système isolé ne peut que croître ou rester constante",
    f:"ΔS ≥ 0", u:"Irréversible : <b>ΔS &gt; 0</b> (augmentation) · réversible : ΔS = 0",
    x:"<p>C'est une formulation du second principe : dans un système isolé, S augmente lors d'une transformation irréversible et reste constante lors d'une transformation réversible. Avec des processus irréversibles, l'entropie créée est positive.</p><span class='tip'>Isolé → dS = δS<sup>c</sup> (@dSiso) et δS<sup>c</sup> ≥ 0 (@Sc).</span>"}
+ ]},
+ {id:"D", title:"Enthalpie libre G et sens d'évolution", pages:"p.6-7", rows:[
+  {k:"G", st:1, q:"Enthalpie libre (énergie libre de Gibbs)", d:"Fonction qui fournit un critère prédictif de spontanéité",
+   f:"G = U + PV − TS = H − TS", u:"avec H = U + PV · U = énergie interne · P = pression · V = volume",
+   x:"<p>Chacune des deux écritures est marquée ★ dans la fiche. G combine le facteur énergétique (H) et le facteur de désordre (TS) : c'est ce qui manquait au second principe seul, qui néglige le facteur énergétique des réactions.</p><span class='trap'>G = H − TS, et non U − TS : piège classique des annales (2026).</span>"},
+  {k:"dG", st:2, q:"Variation d'enthalpie libre à T et P constantes", d:"Deux forces motrices : enthalpie minimale et entropie maximale",
+   f:"ΔG = ΔH − TΔS", u:"ΔG et ΔH en <b>J</b> · ΔS en <b>J.K<sup>−1</sup></b> · T en <b>K</b>",
+   x:"<p>ΔH traduit la tendance à aller vers l'énergie la plus basse ; TΔS (enthalpie « liée ») est la chaleur nécessaire pour créer le désordre. ΔG fait le bilan des deux.</p><span class='trap'>ΔH est souvent donné en kJ.mol<sup>−1</sup> et ΔS en J.K<sup>−1</sup>.mol<sup>−1</sup> : convertis ΔH en J avant de calculer (annales 2025 : −50.10<sup>3</sup> − 600 × (−110) = +16 000 J.mol<sup>−1</sup>).</span>"},
+  {k:"eqHS", der:["dG"], q:"Relation entre ΔH et TΔS à l'état d'équilibre", d:"Réaction possible dans les deux sens",
+   f:"ΔG = 0 → ΔH = TΔS", u:"",
+   x:"<p>À l'équilibre entre produits et réactifs, les deux facteurs se compensent exactement.</p><span class='tip'>Pour une réaction dont ΔH et ΔS ont le même signe, cette égalité donne la température où la spontanéité change de sens.</span>"
+   + H(["Pars de ΔG = ΔH − TΔS.","À l'équilibre, ΔG = 0.","Il reste ΔH = TΔS."])},
+  {k:"sgn", st:3, q:"Sens d'évolution selon le signe de ΔG", d:"Système chimique à température constante",
+   f:"ΔG &lt; 0 : exergonique · ΔG &gt; 0 : endergonique · ΔG = 0 : équilibre", u:"Exergonique : ΔH &lt; TΔS, spontanée dans le <b>sens 1 (→)</b> · endergonique : ΔH &gt; TΔS, possible dans le <b>sens 2 (←)</b>",
+   x:"<p>ΔG &lt; 0 est la notion la plus fréquente au concours (★★★) ; « spontanée dans le sens 1 » (★★) et ΔG &gt; 0 (★★) sont aussi tombés. Le sens d'évolution irréversible est celui d'une diminution de l'enthalpie libre, jusqu'à l'équilibre (ΔG = 0).</p><span class='trap'>Endergonique ne veut pas dire « impossible » : la réaction est possible dans le sens inverse (sens 2).</span>"},
+  {k:"crit", st:2, q:"Critère de spontanéité d'une réaction", d:"À température constante",
+   f:"Δ<sub>r</sub>G = Δ<sub>r</sub>H − TΔ<sub>r</sub>S &lt; 0", u:"Conditions standards : <b>Δ<sub>r</sub>G° = Δ<sub>r</sub>H° − TΔ<sub>r</sub>S° &lt; 0</b>",
+   x:"<p>Δ<sub>r</sub>G &lt; 0 (★) est le critère ; son écriture avec Δ<sub>r</sub>H et Δ<sub>r</sub>S est ★★. Elle se retrouve avec @dG appliquée à une réaction.</p><span class='tip'>Les 4 cas : Δ<sub>r</sub>H &lt; 0 et Δ<sub>r</sub>S &gt; 0 → spontanée à toutes T ; Δ<sub>r</sub>H &gt; 0 et Δ<sub>r</sub>S &lt; 0 → jamais spontanée ; Δ<sub>r</sub>H &lt; 0 et Δ<sub>r</sub>S &lt; 0 → à basse T ; Δ<sub>r</sub>H &gt; 0 et Δ<sub>r</sub>S &gt; 0 → à haute T.</span><span class='trap'>Annales 2024 (Leu-Gly, Δ<sub>r</sub>H° = 21 kJ.mol<sup>−1</sup>, Δ<sub>r</sub>S° = 22 J.mol<sup>−1</sup>.K<sup>−1</sup>, 298 K) : Δ<sub>r</sub>G° ≈ +14 400 J.mol<sup>−1</sup> &gt; 0, réaction non spontanée.</span>"}
+ ]},
+ {id:"E", title:"Variation de G avec la pression et n · potentiel chimique μ", pages:"p.8-9", rows:[
+  {k:"dGPT", st:0, q:"Variation d'enthalpie libre pour un processus réversible", d:"P et T : variables indépendantes",
+   f:"dG = VdP − SdT", u:"V = volume · S = entropie",
+   x:"<p>G varie avec la pression (terme VdP) et avec la température (terme −SdT).</p>"},
+  {k:"dGgp", der:["dGPT"], q:"dG pour une mole de gaz parfait à T constante", d:"",
+   f:`dG = VdP = ${fr('RTdP','P')}`, u:"car PV = nRT avec n = 1",
+   x:"<p>À T constante, le terme SdT disparaît ; la loi des gaz parfaits remplace V.</p>"
+   + H(["Pars de dG = VdP − SdT avec dT = 0.","Une mole de gaz parfait : V = RT/P.","Remplace : dG = RTdP/P."])},
+  {k:"dGPfPi", der:["dGgp"], q:"ΔG d'une mole de gaz parfait entre P<sub>i</sub> et P<sub>f</sub> à T constante", d:"",
+   f:`ΔG = RT ln ${fr('P<sub>f</sub>','P<sub>i</sub>')}`, u:"P<sub>i</sub> = pression initiale · P<sub>f</sub> = pression finale",
+   x:"<p>Une compression (P<sub>f</sub> &gt; P<sub>i</sub>) donne ΔG &gt; 0, une détente ΔG &lt; 0.</p><span class='trap'>Final sur initial dans le logarithme, pas l'inverse.</span>"
+   + H(["Pars de dG = RTdP/P.","Intègre de P<sub>i</sub> à P<sub>f</sub> : la primitive de dP/P est ln P.","ΔG = RT (ln P<sub>f</sub> − ln P<sub>i</sub>) = RT ln(P<sub>f</sub>/P<sub>i</sub>)."])},
+  {k:"dGstd", der:["dGPfPi"], q:"ΔG à partir de l'état standard", d:"État initial standard (P<sub>i</sub> = 1 atm), P<sub>f</sub> = P = pression à l'équilibre",
+   f:"ΔG = RTln(P)", u:"À la température standard, ΔG varie de RTln(P)",
+   x:"<p>Avec P<sub>i</sub> = 1 atm, le dénominateur vaut 1 : seule reste la pression finale.</p>"
+   + H(["Pars de ΔG = RT ln(P<sub>f</sub>/P<sub>i</sub>).","P<sub>i</sub> = 1 atm et P<sub>f</sub> = P.","ΔG = RT ln(P)."])},
+  {k:"dGT", st:0, q:"Lien avec l'enthalpie libre standard ΔG° (une mole de gaz parfait)", d:"À une température T quelconque",
+   f:"ΔG = ΔG° + RTln(P)", u:"ΔG° = enthalpie libre standard d'une mole de gaz parfait",
+   x:"<p>ΔG° est la valeur de référence (état standard : 1 atmosphère, température de travail en K) ; le terme RTln(P) corrige selon la pression réelle.</p>"},
+  {k:"dG0P", der:["dGT"], q:"ΔG° d'une mole de gaz parfait à l'équilibre", d:"",
+   f:"ΔG° = −RT ln(P)", u:"",
+   x:"<p>C'est la forme la plus simple de la relation entre ΔG° et l'équilibre, généralisée plus loin par @dG0K.</p>"
+   + H(["Pars de ΔG = ΔG° + RTln(P).","À l'équilibre, ΔG = 0.","Isole ΔG° : ΔG° = −RT ln(P)."])},
+  {k:"dGtot", st:0, q:"Variation de G en fonction de p, T et n", d:"G fonction d'état : dépend aussi du nombre de moles n",
+   f:"dG = (∂G/∂p)<sub>T,n</sub>.dp + (∂G/∂T)<sub>p,n</sub>.dT + (∂G/∂n)<sub>p,T</sub>.dn", u:"(∂G/∂x)<sub>y,z</sub> = variation de G en fonction de x, à y et z constants",
+   x:"<p>Chaque terme mesure l'effet d'une seule variable, les deux autres étant fixées. ΔG ne dépend que de l'état initial et de l'état final.</p>"},
+  {k:"dGn", der:["dGtot"], q:"dG à p et T constantes", d:"",
+   f:"dG = (∂G/∂n)<sub>p,T</sub>.dn", u:"",
+   x:"<p>À pression et température fixées, seule la quantité de matière fait varier G.</p>"
+   + H(["Pars de la différentielle totale de G.","p et T constantes : dp = 0 et dT = 0.","Il reste le terme en dn."])},
+  {k:"mu", st:0, q:"Potentiel chimique", d:"Énergie liée aux molécules Δn que le système peut échanger",
+   f:"μ = (∂G/∂n)<sub>p,T</sub>", u:"μ = <b>enthalpie libre molaire</b> · unité : <b>J.mol<sup>−1</sup></b>",
+   x:"<p>Le potentiel chimique est la variation de G quand on ajoute une mole de constituant, à p et T constantes.</p>"},
+  {k:"dGmu", der:["mu","dGn"], q:"Lien entre dG et le potentiel chimique", d:"Un seul type de composé",
+   f:"dG = μ.dn", u:"i composés différents : <b>dG = Σ μ<sub>i</sub>.dn<sub>i</sub></b> (μ<sub>i</sub> = potentiel chimique partiel, de i)",
+   x:"<p>Avec plusieurs constituants, on additionne la contribution de chacun.</p>"
+   + H(["Pars de dG = (∂G/∂n)<sub>p,T</sub>.dn.","Remplace (∂G/∂n)<sub>p,T</sub> par μ.","dG = μ.dn ; avec plusieurs composés, la fiche donne la somme Σ μ<sub>i</sub>.dn<sub>i</sub>."])},
+  {k:"musol", st:0, q:"Potentiel chimique d'un constituant i en solution", d:"",
+   f:"μ<sub>i</sub> = μ<sub>i</sub><sup>0</sup> + RT.ln C<sub>i</sub>", u:"μ<sub>i</sub><sup>0</sup> = potentiel chimique standard de i · C<sub>i</sub> = concentration du constituant i",
+   x:"<p>Le potentiel chimique augmente avec la concentration : plus un constituant est concentré, plus il « pousse » à quitter la phase où il se trouve.</p>"},
+  {k:"gibbsch", st:0, q:"Relation fondamentale de Gibbs pour les systèmes chimiques", d:"",
+   f:"dU = TdS − pdV + <span style='white-space:nowrap'>Σ μ<sub>i</sub>.dn<sub>i</sub></span>", u:"T : potentiel de l'énergie thermique (Q) · p : de l'énergie mécanique (W) · μ<sub>i</sub> : de l'énergie chimique",
+   x:"<p>Elle complète @gibbs (ΔU = TΔS − PΔV) avec un terme chimique, dû aux variations de quantité de matière.</p><span class='tip'>Sens spontané d'évolution : p, T et μ <b>décroissantes</b> (de μ<sub>1</sub> à μ<sub>2</sub> si μ<sub>1</sub> &gt; μ<sub>2</sub>), jusqu'à l'égalité à l'équilibre.</span>"},
+  {k:"mueq", st:0, q:"Équilibre d'un corps distribué sous deux phases", d:"Corps dans deux solvants non miscibles",
+   f:"μ<sub>1</sub> = μ<sub>2</sub> (ΔG = 0)", u:"Liquide pur et sa vapeur : <b>μ<sub>liq</sub> = μ<sub>vap</sub></b> · réaction A → B : <b>μ<sub>A</sub> = μ<sub>B</sub></b>",
+   x:"<p>Le corps migre vers la phase où son potentiel chimique est le plus faible, jusqu'à ce que les potentiels deviennent égaux. ΔG du système = somme des ΔG des deux sous-systèmes.</p>"}
+ ]},
+ {id:"F", title:"Équilibres chimiques : quotient Q, constantes K et température", pages:"p.11-13", rows:[
+  {k:"Gi", st:0, q:"Enthalpie libre d'une espèce gazeuse", d:"Équilibre homogène gazeux aA + bB ⇆ cC + dD",
+   f:"G<sub>A</sub> = G<sub>A</sub>° + a.R.T.ln p<sub>A</sub>", u:"De même pour B, C, D · p<sub>i</sub> = pression partielle (&lt; 1 atm) · ΣP<sub>i</sub> = 1 atm",
+   x:"<p>Conditions standards : P = 1 atm, température de travail T en K.</p><span class='trap'>La fiche écrit le coefficient stœchiométrique (a) devant R.T.ln p<sub>A</sub> : formule reprise telle quelle.</span>"},
+  {k:"Gsum", st:0, q:"Variation d'enthalpie libre d'une réaction", d:"",
+   f:"ΔG = ΣG<sub>produits</sub> − ΣG<sub>réactifs</sub>", u:"",
+   x:"<p>Produits moins réactifs, comme pour ΔH.</p>"},
+  {k:"dGp", der:["Gi","Gsum"], q:"ΔG d'une réaction en phase gazeuse", d:"",
+   f:`ΔG = ΔG° + R.T.ln ${fr('p<sub>C</sub><sup>c</sup>.p<sub>D</sub><sup>d</sup>','p<sub>A</sub><sup>a</sup>.p<sub>B</sub><sup>b</sup>')}`, u:"ΔG° = variation d'enthalpie libre standard",
+   x:"<p>Les termes standards se regroupent dans ΔG° ; les logarithmes se regroupent en un seul quotient.</p>"
+   + H(["Écris G<sub>i</sub> = G<sub>i</sub>° + (coef).R.T.ln p<sub>i</sub> pour A, B, C, D.","Fais ΣG<sub>produits</sub> − ΣG<sub>réactifs</sub>.","Regroupe : les G° donnent ΔG°, les ln donnent ln(p<sub>C</sub><sup>c</sup>.p<sub>D</sub><sup>d</sup>/p<sub>A</sub><sup>a</sup>.p<sub>B</sub><sup>b</sup>)."])},
+  {k:"Q", st:0, q:"Quotient réactionnel", d:"",
+   f:`Q = ${fr('p<sub>C</sub><sup>c</sup>.p<sub>D</sub><sup>d</sup>','p<sub>A</sub><sup>a</sup>.p<sub>B</sub><sup>b</sup>')}`, u:"a, b, c, d = coefficients stœchiométriques de A, B, C, D",
+   x:"<p>Produits au numérateur, réactifs au dénominateur, chacun élevé à la puissance de son coefficient.</p>"},
+  {k:"dGQ", der:["dGp","Q"], q:"ΔG en fonction du quotient réactionnel", d:"",
+   f:"ΔG = ΔG° + R.T.ln Q", u:"",
+   x:"<p>Forme compacte : elle indique le sens d'évolution du système à un instant donné (ΔG &lt; 0 → sens 1).</p>"
+   + H(["Pars de ΔG = ΔG° + R.T.ln(p<sub>C</sub><sup>c</sup>.p<sub>D</sub><sup>d</sup>/p<sub>A</sub><sup>a</sup>.p<sub>B</sub><sup>b</sup>).","Reconnais Q dans le logarithme."])},
+  {k:"dGliq", st:0, q:"ΔG d'une réaction en phase liquide", d:"",
+   f:`ΔG = ΔG° + R.T.ln ${fr('[C]<sup>c</sup>[D]<sup>d</sup>','[A]<sup>a</sup>[B]<sup>b</sup>')}`, u:"[i] = concentration molaire de i",
+   x:"<p>Même forme qu'en phase gazeuse, avec les concentrations à la place des pressions partielles.</p>"},
+  {k:"Kp", st:0, q:"Constante d'équilibre relative aux pressions partielles", d:"Loi d'action de masse de Guldberg et Waage (1863)",
+   f:`K<sub>p</sub>(T) = ${fr('p<sub>C</sub><sup>c</sup>.p<sub>D</sub><sup>d</sup>','p<sub>A</sub><sup>a</sup>.p<sub>B</sub><sup>b</sup>')}`, u:"p<sub>i</sub> = pression partielle du gaz i <b>à l'équilibre</b> · sans unité",
+   x:"<p>À l'équilibre, ΔG = 0 et Q = K<sub>p</sub>. La constante d'équilibre dépend uniquement de la température (★★, p.11), d'où la notation K<sub>p</sub>(T).</p><span class='trap'>Q utilise les pressions à un instant quelconque, K<sub>p</sub> celles à l'équilibre.</span>"},
+  {k:"Kc", st:0, q:"Constante d'équilibre relative aux concentrations", d:"À appliquer en milieu liquide, pour des solutés",
+   f:`K<sub>c</sub> = ${fr('[C]<sup>c</sup>[D]<sup>d</sup>','[A]<sup>a</sup>[B]<sup>b</sup>')}`, u:"[i] = concentration molaire de i à l'équilibre, en <b>mol.L<sup>−1</sup></b> (molarités)",
+   x:"<p>Phase gazeuse : K<sub>éq</sub> = K<sub>p</sub> ; phase liquide (solutés) : K<sub>éq</sub> = K<sub>c</sub>. Ne dépend que de T, sans unité.</p>"},
+  {k:"dG0K", st:2, q:"Relation entre ΔG° et la constante d'équilibre", d:"",
+   f:"ΔG° = −R.T.ln K<sub>éq</sub>", u:"Phase gazeuse : ΔG° = −R.T.ln K<sub>p</sub>",
+   x:"<p>Se retrouve à partir de @dGQ : à l'équilibre ΔG = 0 et Q = K. ΔG° &lt; 0 ⇔ K &gt; 1 ; ΔG° &gt; 0 ⇔ 0 &lt; K &lt; 1.</p><span class='trap'>Signe « − » : « ΔG° = + RTln(K<sub>p</sub>) » est faux (annales 2025). K n'est jamais nulle (annales 2023, 2026).</span>"},
+  {k:"Kexp", st:2, q:"Expression de K<sub>p</sub> en fonction de ΔG°", d:"Ne dépend que de la température T",
+   f:"K<sub>p</sub>(T) = e<sup>−ΔG°/R.T</sup>", u:"Connaissant T : K<sub>p</sub> à partir de ΔG° et inversement",
+   x:"<p>C'est @dG0K écrite dans l'autre sens : on prend l'exponentielle des deux côtés.</p><span class='tip'>ΔG° en J.mol<sup>−1</sup>, R = constante des gaz parfaits, T en K.</span>"},
+  {k:"PiCi", st:0, q:"Relation pression partielle – concentration", d:"Mélange de gaz parfaits",
+   f:`P<sub>i</sub> = ${fr('n<sub>i</sub>','V')}.R.T = C<sub>i</sub>.R.T`, u:"n<sub>i</sub> = nombre de moles de i · V = volume total · C<sub>i</sub> = n<sub>i</sub>/V",
+   x:"<p>C'est la loi des gaz parfaits appliquée à un seul constituant du mélange.</p>"},
+  {k:"KpKc", der:["PiCi","Kp","Kc"], q:"Lien entre K<sub>p</sub> et K<sub>c</sub>", d:"Mélange de gaz parfaits",
+   f:"K<sub>p</sub> = K<sub>c</sub>.(RT)<sup>Δn</sup>", u:"Δn = c + d − a − b",
+   x:"<p>Δn est la variation du nombre de moles de gaz. Si Δn = 0, K<sub>p</sub> = K<sub>c</sub>.</p>"
+   + H(["Remplace chaque p<sub>i</sub> par C<sub>i</sub>.R.T dans K<sub>p</sub>.","Les C<sub>i</sub> redonnent K<sub>c</sub> ; il reste (RT) à la puissance c + d − a − b.","K<sub>p</sub> = K<sub>c</sub>.(RT)<sup>Δn</sup>."])},
+  {k:"KcKp", der:["KpKc"], q:"K<sub>c</sub> en fonction de K<sub>p</sub>", d:"",
+   f:"K<sub>c</sub> = K<sub>p</sub>.(RT)<sup>−Δn</sup>", u:"",
+   x:"<p>Même relation, isolée dans l'autre sens.</p>"
+   + H(["Pars de K<sub>p</sub> = K<sub>c</sub>.(RT)<sup>Δn</sup>.","Divise par (RT)<sup>Δn</sup>, c'est-à-dire multiplie par (RT)<sup>−Δn</sup>."])},
+  {k:"vh", st:0, q:"Équation de Van't Hoff", d:"Variation de la constante d'équilibre avec la température",
+   f:`${fr('dlnK','dT')} = ${fr('ΔH°<sub>T</sub>','RT²')}`, u:"ΔH°<sub>T</sub> = variation d'enthalpie à T",
+   x:"<p>Le signe de ΔH°<sub>T</sub> donne le sens de variation de K : réaction exothermique (ΔH°<sub>T</sub> &lt; 0), K diminue si T augmente ; endothermique (ΔH°<sub>T</sub> &gt; 0), K augmente si T augmente.</p><span class='tip'>Cohérent avec Le Chatelier : une augmentation de T déplace l'équilibre dans le sens endothermique (★★★).</span>"},
+  {k:"vhint", der:["vh"], q:"Forme intégrée de Van't Hoff", d:"Si ΔH°<sub>T</sub> est constante entre T<sub>1</sub> et T<sub>2</sub>",
+   f:`ln ${fr('K<sub>2</sub>','K<sub>1</sub>')} = ${fr('ΔH°<sub>T</sub>','R')}<span style='white-space:nowrap'>.[${fr('1','T<sub>1</sub>')} − ${fr('1','T<sub>2</sub>')}]</span>`, u:"K<sub>1</sub> = constante à T<sub>1</sub> · K<sub>2</sub> = constante à T<sub>2</sub>",
+   x:"<p>Permet de connaître K<sub>2</sub> connaissant K<sub>1</sub> et ΔH°<sub>T</sub>.</p><span class='trap'>1/T<sub>1</sub> − 1/T<sub>2</sub>, dans cet ordre.</span>"
+   + H(["Pars de dlnK/dT = ΔH°<sub>T</sub>/RT².","ΔH°<sub>T</sub> constante : intègre entre T<sub>1</sub> et T<sub>2</sub> (la primitive de 1/T² est −1/T).","ln K<sub>2</sub> − ln K<sub>1</sub> = (ΔH°<sub>T</sub>/R).[1/T<sub>1</sub> − 1/T<sub>2</sub>]."])}
  ]}
 ];
 

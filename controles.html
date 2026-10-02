@@ -94,7 +94,7 @@
     font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:11.5px;
     letter-spacing:.08em; color:var(--ink-soft); margin:0 0 10px; text-transform:uppercase;
   }
-  .sommaire{ display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:10px; margin-bottom:34px; }
+  .sommaire{ display:grid; grid-template-columns:1fr; gap:10px; margin-bottom:34px; }
   .som{
     display:block; text-decoration:none; color:inherit; position:relative; overflow:hidden;
     background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 14px 12px 18px;
@@ -129,11 +129,11 @@
   .prog-date b{ color:var(--ink); font-weight:600; }
 
   .programme{
-    display:flex; align-items:baseline; gap:10px;
+    display:flex; flex-direction:column; align-items:flex-start; gap:8px;
     padding:10px 20px; border-bottom:1px solid var(--line); background:#FCFBF8;
   }
   .programme .label{ margin:0; flex:none; position:relative; top:-1px; }
-  .programme ol{ list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:3px 16px; font-size:13px; line-height:1.45; }
+  .programme ol{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:5px; font-size:13px; line-height:1.45; }
   .programme li{ display:inline-flex; align-items:baseline; gap:6px; }
   .programme li .n{
     font-family:'IBM Plex Mono', monospace; font-size:10px; font-weight:600; color:#fff; background:var(--c);
@@ -212,17 +212,17 @@
 
   .s-actions{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:8px; }
   .btn{
-    display:inline-flex; align-items:center; gap:7px;
-    text-decoration:none; font-size:13px; font-weight:600;
-    padding:8px 12px; border-radius:11px;
+    display:inline-flex; align-items:center; gap:5px;
+    text-decoration:none; font-size:12px; font-weight:600;
+    padding:5px 9px; border-radius:9px;
     background:var(--ink); color:#fff;
     transition:transform .14s ease, box-shadow .14s ease;
   }
   .btn.alt{ background:var(--card); color:var(--ink); border:1.5px solid var(--line); }
   .btn:hover{ transform:translateY(-2px); box-shadow:0 8px 18px -10px rgba(21,27,46,0.5); }
-  .btn svg{ width:15px; height:15px; flex:none; }
+  .btn svg{ width:13px; height:13px; flex:none; }
   .btn.tips{ background:linear-gradient(135deg, #FFE08A, var(--gold)); color:var(--ink); }
-  .btn.tips svg{ width:17px; height:17px; transition:transform .25s ease; transform-origin:50% 90%; }
+  .btn.tips svg{ width:14px; height:14px; transition:transform .25s ease; transform-origin:50% 90%; }
   .btn.tips:hover svg{ transform:rotate(-14deg) scale(1.12); }
 
   .track{ margin-left:auto; display:flex; align-items:center; gap:10px; font-size:12.5px; color:var(--ink-soft); flex-wrap:wrap; }
@@ -273,7 +273,7 @@
     .wrap{ padding-left:16px; padding-right:16px; }
     .prog-head, .programme, .sujet{ padding-left:14px; padding-right:14px; }
     .programme{ flex-direction:column; gap:6px; }
-    .programme ol{ gap:3px 12px; font-size:12.5px; }
+    .programme ol{ gap:5px; font-size:12.5px; }
     .prog-head .right{ margin-left:0; width:100%; }
     .sujet{ grid-template-columns:42px 1fr; gap:4px 11px; }
     .badge{ width:40px; height:40px; border-radius:11px; }
@@ -364,7 +364,7 @@ const NOTE_GEN = "Corrigé à partir de la page 6 ; chaque question y a son enca
 const CONTROLES = [
   /* ---------------- M1 · BAM · Contrôle n°1 ---------------- */
   {
-    key:"bam-1", matiere:"bam", numero:1, date:null,
+    key:"bam-1", matiere:"bam", numero:1, date:"2026-09-30",
     programme:[
       { t:COURS_BAM.constitution, q:"Q1–2" }, { t:COURS_BAM.etats, q:"Q3–4" }, { t:COURS_BAM.gaz, q:"Q5–6" },
       { t:COURS_BAM.noyaux, q:"Q7–14" }, { t:COURS_BAM.interaction, q:"Q15–19" },
@@ -408,7 +408,7 @@ const CONTROLES = [
 
   /* ---------------- M1 · Physiologie · Contrôle n°2 ---------------- */
   {
-    key:"physio-2", matiere:"physio", numero:2, date:null,
+    key:"physio-2", matiere:"physio", numero:2, date:"2026-06-30",
     programme:[
       { t:COURS_PHYSIO.bioen, q:"Q19" }, { t:COURS_PHYSIO.digestive, q:"Q1–5" }, { t:COURS_PHYSIO.snc, q:"Q6" },
       { t:COURS_PHYSIO.synapse, q:"Q7–11" }, { t:COURS_PHYSIO.endoc, q:"Q12–18" }, { t:COURS_PHYSIO.acido, q:"Q20–22" },
@@ -457,7 +457,7 @@ const CONTROLES = [
 
   /* ---------------- M2 · BMI · Contrôle n°1 ---------------- */
   {
-    key:"bmi-1", matiere:"bmi", numero:1, date:null,
+    key:"bmi-1", matiere:"bmi", numero:1, date:"2026-09-23",
     programme:[
       { t:COURS_BMI.grandeurs }, { t:COURS_BMI.energie }, { t:COURS_BMI.ph },
       { t:COURS_BMI.colligatives }, { t:COURS_BMI.cinetiques }, { t:COURS_BMI.mecaniques },
