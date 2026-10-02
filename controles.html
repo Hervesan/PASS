@@ -332,6 +332,7 @@ const MATIERES = {
   bam:    { code:"BAM",    module:"M1", titre:"Biophysique appliquée aux méthodes exploratoires", color:"var(--c-biophysique)", href:"biophysique.html" },
   physio: { code:"PHYSIO", module:"M1", titre:"Physiologie humaine",                              color:"var(--c-physiologie)", href:"physiologie.html" },
   bmi:    { code:"BMI",    module:"M2", titre:"Biophysique du milieu intérieur",                  color:"var(--c-milieu)",      href:"biophysique-milieu-interieur.html" },
+  chimie: { code:"CHIMIE", module:"M2", titre:"Chimie",                                           color:"var(--c-chimie)",      href:"chimie.html" },
 };
 
 const COURS_BMI = {
@@ -357,6 +358,15 @@ const COURS_PHYSIO = {
   endoc:     "FC8 Système endocrinien",
   acido:     "FC9 Équilibre acido-basique",
   thermo:    "FC10 Thermorégulation",
+};
+
+const COURS_CHIMIE = {
+  atome:    "FC1 L'atome",
+  liaisons: "FC2 Liaisons chimiques et orbitales moléculaires",
+  isomerie: "FC3 Isomérie et stéréoisomérie",
+  nomencl:  "FC4 Règles générales de nomenclature",
+  premier:  "FC5 1er principe de la thermodynamique",
+  second:   "FC6 2nd principe de la thermodynamique et équilibres",
 };
 
 const NOTE_GEN = "Corrigé à partir de la page 6 ; chaque question y a son encadré « Tips réflexes ».";
@@ -495,8 +505,31 @@ const CONTROLES = [
       },
     ],
   },
+  /* ---------------- M2 · Chimie · Contrôle n°1 ---------------- */
+  {
+    key:"chimie-1", matiere:"chimie", numero:1, date:"2026-10-07",
+    programme:[
+      { t:COURS_CHIMIE.atome }, { t:COURS_CHIMIE.liaisons }, { t:COURS_CHIMIE.isomerie },
+      { t:COURS_CHIMIE.nomencl }, { t:COURS_CHIMIE.premier }, { t:COURS_CHIMIE.second },
+    ],
+    officiel:null,
+    entrainements:[
+      {
+        id:"chimie-c1-e1", n:1, date:"2026-10-02", nbQ:18, qrm:11, qru:7, duree:"36 min",
+        cours:[
+          { t:COURS_CHIMIE.atome, d:"hydrogénoïde Li²⁺, nombres quantiques, configuration, spectre de H", q:"Q1–4" },
+          { t:COURS_CHIMIE.liaisons, d:"VSEPR, ordre de liaison et magnétisme (O₂ et ions), interactions faibles", q:"Q5–7" },
+          { t:COURS_CHIMIE.isomerie, d:"C₄H₈O, Fischer et R/S, nombre de stéréoisomères", q:"Q8–10" },
+          { t:COURS_CHIMIE.nomencl, d:"chaîne de référence, fonction principale, acide aminé insaturé", q:"Q11–12" },
+          { t:COURS_CHIMIE.premier, d:"ΔU = Q + W, calorimétrie, loi de Hess", q:"Q13–15" },
+          { t:COURS_CHIMIE.second, d:"entropie, ΔS de fusion, équilibre NO₂/N₂O₄ et Le Chatelier", q:"Q16–18" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Chimie_C1_entrainement1.pdf" } ],
+        note:"Corrigé à partir de la page 6 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+    ],
+  },
 ];
-
 /* ===================================================================== */
 const PDF_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 14h6M9 17h4"/></svg>';
 const TIPS_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1.1 2V16h5v-.2c.1-.8.5-1.5 1.1-2A6 6 0 0 0 12 3z" fill="#FFF6D6"/><path d="M12 7.5l.8 1.7 1.8.3-1.3 1.2.3 1.8-1.6-.9-1.6.9.3-1.8-1.3-1.2 1.8-.3z" fill="currentColor" stroke="none"/></svg>';
@@ -506,6 +539,7 @@ const ICONS = {
   bam:    SV('<circle cx="12" cy="12" r="1.8" fill="currentColor"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(120 12 12)"/>'),
   physio: SV('<path d="M12 20.5s-7.5-4.6-9.2-9.6C1.6 7.3 3.9 4 7.3 4c2 0 3.5 1.1 4.7 2.8C13.2 5.1 14.7 4 16.7 4c3.4 0 5.7 3.3 4.5 6.9-.3.9-.8 1.8-1.4 2.6"/><path d="M2.5 13h4l1.7-3 2.6 6 1.9-3.5h3.3"/>'),
   bmi:    SV('<path d="M12 3s6.5 7 6.5 11.3A6.5 6.5 0 0 1 5.5 14.3C5.5 10 12 3 12 3z"/><path d="M9.2 15a3 3 0 0 0 2.8 2.5"/>'),
+  chimie: SV('<path d="M9 3h6M10 3v6L4.5 18.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"/><path d="M7 15h10"/>'),
   sommaire: SV('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>'),
   programme: SV('<path d="M3 5.5C5.5 4.3 8.5 4.3 12 6c3.5-1.7 6.5-1.7 9-.5V19c-2.5-1.2-5.5-1.2-9 .5-3.5-1.7-6.5-1.7-9-.5z"/><path d="M12 6v13.5"/>'),
   questions: SV('<path d="M4 6l1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17"/><path d="M11 6h9M11 12h9M11 18h9"/>'),
@@ -641,7 +675,7 @@ function render(){
     const faits = all.filter(s => (SUIVI[s.id]||{}).done).length;
     const pct = all.length ? Math.round(100 * faits / all.length) : 0;
     const anchor = "ctrl-" + C.key;
-    const titre = `${M.code === "PHYSIO" ? "Physiologie" : M.code} · Contrôle n°${C.numero}`;
+    const titre = `${M.code === "PHYSIO" ? "Physiologie" : M.code === "CHIMIE" ? "Chimie" : M.code} · Contrôle n°${C.numero}`;
 
     som += `
       <a class="som" href="#${anchor}" style="--c:${M.color}">
