@@ -212,6 +212,8 @@
     padding: 8px 14px; border-radius: 100px; cursor:pointer;
   }
   .top-back-btn:active{ transform: scale(0.96); }
+  a.top-back-btn{ text-decoration:none; }
+  .home-index-row{ margin: -30px 0 22px; }
 
   .search-row{ max-width: 780px; margin: -22px auto 0; padding: 0 22px; position:relative; z-index:2; }
   input#searchBox{
@@ -597,6 +599,7 @@
 <div id="homeView" class="light-screen" style="display:block;">
   <div class="hero">
     <div class="hero-inner">
+      <div class="home-index-row"><a class="top-back-btn" id="toIndexBtn" href="index.html">← Accueil</a></div>
       <div class="eyebrow"><span class="dot"></span>Médisup · M1</div>
       <h1>Réviser la physiologie, <span class="accent-word">un cours à la fois</span>.</h1>
       <p>Touchez un cours pour l'ouvrir, puis choisissez entre flashcards, QRM, récapitulatif ou fiche schémas (✦). Tout se passe dans cette page, aucun autre fichier n'est nécessaire.</p>
@@ -2908,7 +2911,8 @@ function serieProgressLabel(courseId, serie){
   for(let i=0;i<total;i++){
     if(`${courseId}::${serie.id}::${i}` in quizAnswered) done++;
   }
-  return done ? `${done}/${total} traitées` : `${total} questions`;
+  if(done) return `${done}/${total} traitées`;
+  return quizStarted[`${courseId}::${serie.id}`] ? `${total} questions · déjà entamée` : `${total} questions`;
 }
 
 function serieItemHTML(courseId, serie, idx){
@@ -3067,12 +3071,17 @@ let quizAnswered = {}; // key `${courseId}::${serieId}::${qIdx}` -> boolean
 let quizMode = 'exam'; // 'step' | 'exam'
 let examChecked = {};  // qIdx -> Set of checked letters (exam mode only)
 let examSubmitted = false;
+let quizStarted = {}; // key `${courseId}::${serieId}` -> true : série déjà entamée (conservé quand le score repart à zéro)
 
 function currentQrmCourse(){ return COURSES.find(c=>c.id===quizCourseId); }
 function currentQrmSerie(){ return currentQrmCourse().qrm.series.find(s=>s.id===quizSerieId); }
 function currentQuizQuestion(){ return currentQrmSerie().questions[quizQIdx]; }
 
 function resetSerieProgress(){
+  if(quizCourseId && quizSerieId){
+    const prefix = `${quizCourseId}::${quizSerieId}::`;
+    Object.keys(quizAnswered).forEach(k => { if(k.startsWith(prefix)) delete quizAnswered[k]; });
+  }
   quizQIdx = 0;
   quizChecked = new Set();
   quizRevealed = false;
@@ -3105,7 +3114,7 @@ function renderSeriePills(){
     const total = s.questions.length;
     let done = 0;
     for(let q=0;q<total;q++){ if(`${quizCourseId}::${s.id}::${q}` in quizAnswered) done++; }
-    return `<button class="serie-pill ${s.id===quizSerieId?'active':''}" data-serie="${s.id}">Série ${i+1}${done?`<span class="pip"></span>`:''}</button>`;
+    return `<button class="serie-pill ${s.id===quizSerieId?'active':''}" data-serie="${s.id}">Série ${i+1}${(done || quizStarted[`${quizCourseId}::${s.id}`])?`<span class="pip"></span>`:''}</button>`;
   }).join('');
   wrap.querySelectorAll('.serie-pill').forEach(btn=>{
     btn.addEventListener('click', ()=>{
@@ -3175,6 +3184,7 @@ function submitExam(){
       if(isVrai !== userChecked) allCorrect = false;
     }
     quizAnswered[`${quizCourseId}::${quizSerieId}::${i}`] = allCorrect;
+    quizStarted[`${quizCourseId}::${quizSerieId}`] = true;
   }
   examSubmitted = true;
   renderQuiz();
@@ -3191,6 +3201,7 @@ function revealCorrection(){
     if(isVrai !== userChecked) allCorrect = false;
   }
   quizAnswered[`${quizCourseId}::${quizSerieId}::${quizQIdx}`] = allCorrect;
+  quizStarted[`${quizCourseId}::${quizSerieId}`] = true;
   renderQuizCard();
   renderScoreRow();
   renderSeriePills();
@@ -3382,6 +3393,9 @@ function renderQuizNav(){
 
 function renderQuiz(){ renderModeToggle(); renderQuizProgress(); renderQuizCard(); renderQuizNav(); renderScoreRow(); }
 
+document.getElementById('toIndexBtn').addEventListener('click', (e) => {
+  if(document.referrer && /index\.html?([?#]|$)/i.test(document.referrer) && history.length > 1){ e.preventDefault(); history.back(); }
+});
 document.getElementById('quizResetBtn').addEventListener('click', () => { resetSerieProgress(); renderQuiz(); });
 document.getElementById('quizBackBtn').addEventListener('click', () => openSeriesList(quizCourseId));
 
