@@ -518,10 +518,18 @@ const CONTROLES = [
   {
     key:"chimie-1", matiere:"chimie", numero:1, date:"2026-10-07",
     programme:[
-      { t:COURS_CHIMIE.atome }, { t:COURS_CHIMIE.liaisons }, { t:COURS_CHIMIE.isomerie },
-      { t:COURS_CHIMIE.nomencl }, { t:COURS_CHIMIE.premier }, { t:COURS_CHIMIE.second },
+      { t:COURS_CHIMIE.atome, q:"Q1–3" }, { t:COURS_CHIMIE.liaisons, q:"Q3–5" }, { t:COURS_CHIMIE.isomerie, q:"Q11, Q12, Q14" },
+      { t:COURS_CHIMIE.nomencl, q:"Q13" }, { t:COURS_CHIMIE.premier, q:"Q7, Q9" }, { t:COURS_CHIMIE.second, q:"Q6, Q8, Q10" },
     ],
-    officiel:null,
+    officiel:{
+      id:"chimie-c1", nbQ:14, qrm:9, qru:5, duree:"30 min",
+      pdfs:[
+        { label:"Sujet", href:"controles/Chimie_Controle1_Medisup_sujet.pdf" },
+        { label:"Corrigé", href:"controles/Chimie_Controle1_Medisup_corrige.pdf", alt:true },
+        { label:"Tips", href:"controles/Chimie_Controle1_Medisup_tips.pdf", tips:true },
+      ],
+      note:"La fiche « Tips » donne les raisonnements réflexes question par question ; verdicts vérifiés sur le corrigé Médisup. Q11–14 : molécules dessinées (Cram, Fischer, formules topologiques).",
+    },
     entrainements:[
       {
         id:"chimie-c1-e1", n:1, date:"2026-10-02", nbQ:18, qrm:11, qru:7, duree:"36 min",
@@ -564,14 +572,22 @@ const CONTROLES = [
       },
     ],
   },
-  /* ---------------- M2 · Biochimie · Contrôle n°1 ---------------- */
+  /* ---------------- M2 · Biochimie · Contrôle n°2 ---------------- */
   {
-    key:"biochimie-1", matiere:"biochimie", numero:1, date:"2026-10-07",
+    key:"biochimie-2", matiere:"biochimie", numero:2, date:"2026-10-07",
     programme:[
-      { t:COURS_BIOCHIMIE.peptides }, { t:COURS_BIOCHIMIE.proteines }, { t:COURS_BIOCHIMIE.lipides },
-      { t:COURS_BIOCHIMIE.enzymo }, { t:COURS_BIOCHIMIE.nucleo1 },
+      { t:COURS_BIOCHIMIE.peptides, q:"Q1–6" }, { t:COURS_BIOCHIMIE.proteines, q:"Q7–10" }, { t:COURS_BIOCHIMIE.enzymo, q:"Q11–15" },
+      { t:COURS_BIOCHIMIE.nucleo1, q:"Q16–17" }, { t:COURS_BIOCHIMIE.lipides, q:"Q18–22" },
     ],
-    officiel:null,
+    officiel:{
+      id:"biochimie-c2", nbQ:22, qrm:18, qru:4, duree:"30 min",
+      pdfs:[
+        { label:"Sujet", href:"controles/Biochimie_Controle2_Medisup_sujet.pdf" },
+        { label:"Corrigé", href:"controles/Biochimie_Controle2_Medisup_corrige.pdf", alt:true },
+        { label:"Tips", href:"controles/Biochimie_Controle2_Medisup_tips.pdf", tips:true },
+      ],
+      note:"La fiche « Tips » donne les raisonnements réflexes question par question ; verdicts vérifiés sur le corrigé Médisup. Attention : deux QRM ont 5 propositions vraies (Q2, Q8).",
+    },
     entrainements:[
       {
         id:"biochimie-c1-e1", n:1, date:"2026-10-02", nbQ:18, qrm:11, qru:7, duree:"36 min",

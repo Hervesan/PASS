@@ -154,6 +154,13 @@
     --c-aly-red-partielle:#3C8D46;
     --c-aly-red-na:#8653B8;
     --c-aly-mecanisme:#B23F6C;
+    --c-hal-structure:#3A6FB0;
+    --c-hal-sn:#2A9D8F;
+    --c-hal-nucleophiles:#B8661F;
+    --c-hal-sn1:#C0392B;
+    --c-hal-e1:#C79A12;
+    --c-hal-sn2:#6C4BB4;
+    --c-hal-e2:#3E8E41;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
@@ -58275,6 +58282,5239 @@ const QRM_ALCYNES_P1_SERIES = [
  }
 ];
 
+const QRM_HALOGENURES_SERIES = [
+ {
+  "id": "hal-serie-1",
+  "title": "Les halogénures d'alkyle — entraînement 1",
+  "questions": [
+   {
+    "stem": "On fait réagir un dérivé bromé R-Br avec l'eau H₂O, utilisé comme nucléophile. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans R-Br, le nucléophile attaque l'atome de brome, qui porte une charge partielle δ⁺."
+     },
+     {
+      "letter": "B",
+      "text": "La liaison C-Br est conservée au cours de la réaction."
+     },
+     {
+      "letter": "C",
+      "text": "H₂O est un nucléophile neutre possédant deux électrons libres."
+     },
+     {
+      "letter": "D",
+      "text": "L'ion Br⁻ libéré est le nucléophile de la réaction."
+     },
+     {
+      "letter": "E",
+      "text": "La substitution nucléophile fonctionne très bien avec un dérivé bromé comme R-Br."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "C porte une charge partielle δ⁺ (cible des nucléophiles) ; X porte δ⁻.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "Réactivité : SN, liaison C-X brisée.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Nucléophiles neutres possédant deux électrons libres Nu: : R-OH ; H₂O ; RSH ; Ph₃P.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "X⁻ = nucléofuge = groupe partant.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "Nature du RX : RBr très bien.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la substitution nucléophile d'ordre 2 (SN2) :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "CN⁻, OH⁻ et RS⁻ sont des nucléophiles chargés de type Nu⁻."
+     },
+     {
+      "letter": "B",
+      "text": "Le bilan de la SN2 s'écrit : RX + Nu⁻ → RNu⁺ + X⁻, quel que soit le type de nucléophile."
+     },
+     {
+      "letter": "C",
+      "text": "SN1 signifie substitution nucléophile unimoléculaire."
+     },
+     {
+      "letter": "D",
+      "text": "La SN2 ne fonctionne pas du tout avec les halogénures d'alkyle primaires."
+     },
+     {
+      "letter": "E",
+      "text": "En SN2, le nucléophile attaque le centre électrophile Cδ⁺ de RX après la rupture complète de la liaison C-X."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "Nucléophiles chargés Nu⁻ : CN⁻ ; OH⁻ ; RS⁻ ; R-C≡C⁻ ; RO⁻ ; RCOO⁻.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN2 : RX + Nu⁻ (ou Nu) → RNu (ou RNu⁺) + X⁻.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "SN1 = substitution nucléophile unimoléculaire (SN2 = bimoléculaire).",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN2 : pas du tout avec les tertiaires ; très bien avec les primaires.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN2 : attaque du centre électrophile Cδ⁺ en même temps que la rupture de la liaison C-X.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "Concernant les nucléophiles et la nature du RX de départ :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans le schéma de la SN2 du cours, le réactif de configuration R conduit à un produit de configuration S."
+     },
+     {
+      "letter": "B",
+      "text": "L'ion carboxylate RCOO⁻ est un nucléophile neutre de type Nu:."
+     },
+     {
+      "letter": "C",
+      "text": "R-OH et RO⁻ font tous deux partie des nucléophiles chargés de type Nu⁻."
+     },
+     {
+      "letter": "D",
+      "text": "La substitution nucléophile ne fonctionne pas du tout avec les dérivés halogénés iodés RI."
+     },
+     {
+      "letter": "E",
+      "text": "Selon la règle de Zaytsev, l'E1 forme majoritairement l'alcène le moins substitué."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "Schéma de la SN2 : réactif R → produit S (inversion de Walden).",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "RCOO⁻ (= carboxylate) figure parmi les nucléophiles chargés Nu⁻.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "RO⁻ et R-C≡C⁻ sont des nucléophiles chargés ; R-OH est un nucléophile neutre.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "Nature du RX de départ : RI très très bien ; RBr très bien ; RCl bien ; RF pas du tout.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "Règle de Zaytsev : formation majoritaire de l'alcène le plus substitué.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "L'halogénure d'alkyle tertiaire (CH₃)₃C-Br est mis à réagir avec un nucléophile Nu⁻ ; on chauffe le milieu réactionnel. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La SN2 fonctionne très bien avec cet halogénure d'alkyle tertiaire."
+     },
+     {
+      "letter": "B",
+      "text": "La SN1 se déroule en 2 étapes."
+     },
+     {
+      "letter": "C",
+      "text": "Ces conditions augmentent la proportion de l'élimination E1."
+     },
+     {
+      "letter": "D",
+      "text": "La SN1, qui conduit à (CH₃)₃C-Nu, reste majoritaire."
+     },
+     {
+      "letter": "E",
+      "text": "Dans des conditions modérées, la proportion d'E1 serait plus faible, la SN1 restant majoritaire."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Tertiaires : SN1 très bien ; SN2 pas du tout.",
+      "page": "p.2-3"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "SN1 : en 2 étapes.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Augmentation de la température et nucléophiles très forts augmentent la proportion de E1.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Conditions qui augmentent la proportion de E1 mais SN1 toujours majoritaire.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN1 = réaction majoritaire dans des conditions modérées ; E1 minoritaire.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la substitution nucléophile d'ordre 1 (SN1) :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Les nucléophiles neutres de type Nu: possèdent une charge négative portée par l'atome nucléophile."
+     },
+     {
+      "letter": "B",
+      "text": "Dans l'élimination E2, l'alcène se forme par transélimination de HX."
+     },
+     {
+      "letter": "C",
+      "text": "Dans l'écriture de la SN1, l'halogénure d'alkyle de départ est obligatoirement de configuration R."
+     },
+     {
+      "letter": "D",
+      "text": "En SN1, en présence d'un carbone asymétrique, on obtient un seul énantiomère."
+     },
+     {
+      "letter": "E",
+      "text": "En SN1, en présence d'un carbone asymétrique, l'énantiomère R est obtenu en plus grande proportion que l'énantiomère S."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Nucléophiles neutres : ils possèdent deux électrons libres (Nu:).",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "E2 : formation de l'alcène le plus stable par transélimination de HX.",
+      "page": "p.4"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Écriture de la SN1 : réactif R ou S.",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN1 en présence d'un C asymétrique : mélange racémique.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN1 : énantiomères R et S dans les mêmes proportions.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "On fait réagir le 3-bromo-3-méthylhexane — halogénure d'alkyle tertiaire F dont le carbone portant l'halogène est asymétrique — avec l'ion hydroxyde OH⁻ (NaOH dilué), dans des conditions modérées. On obtient deux produits de substitution G et G'. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La formation de G et G' se déroule en 2 étapes, dont la première, la rupture de la liaison C-X, est l'étape lente."
+     },
+     {
+      "letter": "B",
+      "text": "La substitution nucléophile fonctionne très bien avec un dérivé bromé comme ce composé."
+     },
+     {
+      "letter": "C",
+      "text": "Une élimination E1 majoritaire accompagne la formation de G et G'."
+     },
+     {
+      "letter": "D",
+      "text": "Le nucléophile attaque exclusivement par l'arrière, à l'opposé de l'halogène."
+     },
+     {
+      "letter": "E",
+      "text": "La formation de G et G' passe par un carbocation intermédiaire."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN1 : 2 étapes ; 1re étape (R-X → R⁺ + X⁻) = étape lente.",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Nature du RX : dérivés bromés RBr → très bien.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "SN1 = réaction majoritaire dans des conditions modérées, accompagnée de l'E1 minoritaire.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN1 : attaque soit par l'avant, soit par l'arrière du carbocation plan.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN1 : 1re étape = rupture de C-X et formation d'un carbocation intermédiaire R⁺.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "Parmi les propositions suivantes, relatives à la SN2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "SN2 signifie substitution nucléophile unimoléculaire."
+     },
+     {
+      "letter": "B",
+      "text": "Dans le schéma de l'élimination E2, c'est l'halogène X qui arrache l'atome H."
+     },
+     {
+      "letter": "C",
+      "text": "L'élimination E2 applique la règle de Saytsev : formation de l'alcène le plus stable."
+     },
+     {
+      "letter": "D",
+      "text": "La SN2 se déroule en 2 étapes."
+     },
+     {
+      "letter": "E",
+      "text": "La SN2 s'accompagne d'une inversion de configuration appelée règle de Zaytsev."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "SN2 = substitution nucléophile bimoléculaire.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "Schéma de l'E2 : Nu⁻ arrache H (en trans de X) et X part.",
+      "page": "p.4"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "E2 : règle de Saytsev, formation de l'alcène le plus stable.",
+      "page": "p.4"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN2 : en 1 étape.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN2 : inversion de configuration appelée inversion de Walden (Zaytsev = régiosélectivité de l'élimination).",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "On fait réagir le (2R)-2-bromobutane (F), halogénure d'alkyle secondaire de configuration R dont le carbone portant l'halogène est asymétrique, avec l'ion hydroxyde OH⁻ (NaOH dilué), dans des conditions modérées. On obtient un seul composé G, et l'halogène est remplacé par OH. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Le mécanisme de la réaction de F à G ne passe pas par un carbocation intermédiaire."
+     },
+     {
+      "letter": "B",
+      "text": "La réaction de F à G est non stéréospécifique."
+     },
+     {
+      "letter": "C",
+      "text": "D'après le schéma de la SN2 du cours, G est de configuration S."
+     },
+     {
+      "letter": "D",
+      "text": "Le bilan de la réaction s'écrit : F + OH⁻ → G⁺ + X⁻, le produit G étant chargé positivement."
+     },
+     {
+      "letter": "E",
+      "text": "La réaction de F à G conduit aux énantiomères R et S dans les mêmes proportions."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN2 : absence de formation de carbocation intermédiaire.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN2 : réaction stéréospécifique (C portant le nucléofuge asymétrique).",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Schéma de la SN2 : réactif R → produit S (inversion de Walden).",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "Avec un nucléophile chargé Nu⁻ : Nu⁻ + R-X → R-Nu + X⁻ (R-Nu⁺ seulement avec un nucléophile neutre Nu:).",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN2 : obtention d'un seul énantiomère, soit le R, soit le S.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la substitution nucléophile (SN) des halogénures d'alkyle :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans le mécanisme de la substitution nucléophile, l'halogène X est attaqué par deux électrons d'un nucléophile."
+     },
+     {
+      "letter": "B",
+      "text": "Dans les conditions qui augmentent la proportion de E1, la SN1 reste toujours majoritaire."
+     },
+     {
+      "letter": "C",
+      "text": "La SN1 est favorisée lorsque le carbocation intermédiaire formé est stable."
+     },
+     {
+      "letter": "D",
+      "text": "Le bilan d'une substitution nucléophile avec un nucléophile neutre de type Nu: s'écrit : Nu: + R-X → R-Nu⁺ + X⁻."
+     },
+     {
+      "letter": "E",
+      "text": "Dans la substitution nucléophile, l'ion X⁻ libéré est appelé nucléofuge, ou groupe partant."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Mécanisme : attaque de R par deux électrons d'un nucléophile, puis rupture de la liaison C-X.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Conditions qui augmentent E1 « mais SN1 toujours majoritaire ».",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Conditions favorables à la SN1 : carbocation intermédiaire formé stable.",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Avec Nu: : Nu: + R-X → R-Nu⁺ + X⁻.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "X⁻ = nucléofuge = groupe partant.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la structure des halogénures d'alkyle :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "L'alcène formé majoritairement selon la règle de Zaytsev est le plus hydrogéné."
+     },
+     {
+      "letter": "B",
+      "text": "En nomenclature, l'halogène X d'un halogénure d'alkyle est traité comme un substituant alkyle."
+     },
+     {
+      "letter": "C",
+      "text": "La substitution nucléophile fonctionne bien avec les dérivés chlorés RCl."
+     },
+     {
+      "letter": "D",
+      "text": "Dans la liaison C-X polarisée, le carbone porte une charge partielle δ⁺ et constitue la cible des nucléophiles."
+     },
+     {
+      "letter": "E",
+      "text": "Le doublet de la liaison C-X est plus proche de X que de C, ce qui fragilise la liaison C-X."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Alcène de Zaytsev : le plus substitué = le moins hydrogéné = le plus stable.",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Nomenclature : X est traité comme un substituant alkyle (ex. du cours : 4-bromopentane).",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Nature du RX de départ : RCl bien, RI très très bien.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "C porte une charge partielle δ⁺ : il est la cible des nucléophiles.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "Doublet de la liaison C-X plus proche de X que de C ⇒ liaison C-X fragilisée.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "On fait réagir le 1-bromobutane, halogénure d'alkyle primaire, avec l'ion hydroxyde OH⁻ (NaOH dilué), dans des conditions modérées. On obtient un seul produit de substitution G. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Ce même halogénure d'alkyle primaire ne réagirait pas du tout par SN1."
+     },
+     {
+      "letter": "B",
+      "text": "La formation de G se déroule en une seule étape."
+     },
+     {
+      "letter": "C",
+      "text": "L'ion halogénure libéré au cours de la réaction est le nucléofuge, ou groupe partant."
+     },
+     {
+      "letter": "D",
+      "text": "La substitution nucléophile ne fonctionne pas du tout avec un dérivé bromé comme le 1-bromobutane."
+     },
+     {
+      "letter": "E",
+      "text": "Chauffer le milieu réactionnel augmenterait la proportion d'élimination E2."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN1 : ne fonctionne pas du tout avec les halogénures d'alkyle primaires.",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "SN2 : en 1 étape.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "X⁻ = nucléofuge = groupe partant.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "Nature du RX : dérivés bromés RBr → très bien.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "Augmentation de la température : augmente la proportion de E2.",
+      "page": "p.4"
+     }
+    }
+   },
+   {
+    "stem": "Parmi les propositions suivantes, relatives à la SN1 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La SN1 fonctionne très bien avec les halogénures d'alkyle tertiaires."
+     },
+     {
+      "letter": "B",
+      "text": "Le mécanisme de la substitution nucléophile conserve la liaison C-X et forme une liaison X-Nu."
+     },
+     {
+      "letter": "C",
+      "text": "Dans l'élimination E2, l'H arraché doit être en position cis du groupement C-X."
+     },
+     {
+      "letter": "D",
+      "text": "La SN1 fonctionne bien avec les halogénures d'alkyle secondaires."
+     },
+     {
+      "letter": "E",
+      "text": "La 2e étape de la SN1, attaque du nucléophile sur le carbocation, est l'étape lente."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN1 : très bien avec les tertiaires, bien avec les secondaires, pas du tout avec les primaires.",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "Mécanisme de la SN : rupture de la liaison C-X ; X⁻ part (groupe partant).",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "E2 : H arraché en position trans du groupement C-X.",
+      "page": "p.4"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "SN1 : bien avec les secondaires.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "L'étape lente de la SN1 est la 1re : R-X → R⁺ + X⁻.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "Deux halogénures d'alkyle F₁ et F₂, dont le carbone portant l'halogène est asymétrique, sont traités par OH⁻ dans des conditions modérées. F₁ donne un seul énantiomère, de configuration inversée ; F₂ donne les deux énantiomères R et S à 50 % chacun. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La réaction de F₁ se fait en deux étapes."
+     },
+     {
+      "letter": "B",
+      "text": "La réaction de F₂ est une SN1."
+     },
+     {
+      "letter": "C",
+      "text": "F₁ est nécessairement un halogénure d'alkyle tertiaire."
+     },
+     {
+      "letter": "D",
+      "text": "Dans le cas de F₂, l'étape lente est la formation du carbocation."
+     },
+     {
+      "letter": "E",
+      "text": "La réaction de F₁ est stéréospécifique, contrairement à celle de F₂."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "SN2 : en 1 étape.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Deux composés, R et S dans les mêmes proportions (mélange racémique) : SN1.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "SN2 : très bien avec les primaires, bien avec les secondaires, pas du tout avec les tertiaires.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "SN1 : 1re étape (rupture de C-X et formation de R⁺) = étape lente.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN2 stéréospécifique ; SN1 non stéréospécifique.",
+      "page": "p.2-3"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la réaction d'élimination E2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La réactivité des halogénures d'alkyle est l'addition nucléophile, au cours de laquelle la liaison C-X est conservée."
+     },
+     {
+      "letter": "B",
+      "text": "La réaction d'élimination E2 conduit à l'obtention d'un alcène."
+     },
+     {
+      "letter": "C",
+      "text": "L'augmentation de la température diminue la proportion de E2."
+     },
+     {
+      "letter": "D",
+      "text": "La SN1 est une réaction non stéréospécifique."
+     },
+     {
+      "letter": "E",
+      "text": "L'utilisation de nucléophiles très forts augmente la proportion de E2."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Réactivité : substitution nucléophile (SN), liaison C-X brisée.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "E2 : obtention d'un alcène.",
+      "page": "p.4"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Conditions qui augmentent la proportion de E2 : augmentation de la température, nucléophiles très forts.",
+      "page": "p.4"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "SN1 : réaction non stéréospécifique (la SN2 est stéréospécifique).",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "Conditions qui augmentent la proportion de E2 : augmentation de la température, utilisation de nucléophiles très forts.",
+      "page": "p.4"
+     }
+    }
+   },
+   {
+    "stem": "À propos du mécanisme et de la stéréochimie de la SN2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans la liaison C-X, l'halogène X est attracteur par effet inductif."
+     },
+     {
+      "letter": "B",
+      "text": "La SN2 fonctionne très bien avec les halogénures d'alkyle primaires."
+     },
+     {
+      "letter": "C",
+      "text": "L'ordre de stabilité et de réactivité des carbocations est : C⁺(I) > C⁺(II) > C⁺(III)."
+     },
+     {
+      "letter": "D",
+      "text": "Lorsque le carbone portant le nucléofuge est asymétrique, la SN2 est une réaction non stéréospécifique."
+     },
+     {
+      "letter": "E",
+      "text": "En SN2, le nucléophile attaque à l'opposé de la rupture de la liaison C-X."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "X est attracteur par effet inductif.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "SN2 : très bien avec les primaires, bien avec les secondaires, pas du tout avec les tertiaires.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Ordre de stabilité et de réactivité : C⁺(III) > C⁺(II) > C⁺(I).",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN2 : réaction stéréospécifique.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN2 : attaque du nucléophile à l'opposé de la rupture de la liaison C-X.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "Le 1-bromobutane, halogénure d'alkyle primaire, est mis à réagir avec un nucléophile Nu⁻ ; on chauffe le milieu réactionnel. Parmi les propositions suivantes, relatives à la compétition entre SN2 et élimination E2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans des conditions modérées, l'E2 serait la réaction majoritaire."
+     },
+     {
+      "letter": "B",
+      "text": "Dans l'E2, le nucléophile Nu⁻ se fixe sur le carbone qui portait X."
+     },
+     {
+      "letter": "C",
+      "text": "Dans l'E2, l'H arraché doit être en position trans du groupement C-X."
+     },
+     {
+      "letter": "D",
+      "text": "La substitution concurrente est une SN2, qui fonctionne très bien avec les halogénures d'alkyle primaires."
+     },
+     {
+      "letter": "E",
+      "text": "L'élimination E2 se fait sans formation intermédiaire d'un carbocation."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "SN2 = réaction majoritaire dans des conditions modérées, accompagnée de E2.",
+      "page": "p.4"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "Schéma de l'E2 : Nu⁻ arrache H (en trans de X), X part, formation de C=C.",
+      "page": "p.4"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "E2 : H arraché en position trans du groupement C-X (transélimination de HX).",
+      "page": "p.4"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Primaires : SN2 très bien ; SN1 pas du tout.",
+      "page": "p.2-3"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "E2 : pas de formation intermédiaire d'un carbocation.",
+      "page": "p.4"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la compétition E2 / SN2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "L'élimination E2 se fait sans formation intermédiaire d'un carbocation."
+     },
+     {
+      "letter": "B",
+      "text": "Dans des conditions modérées, l'E2 est la réaction majoritaire face à la SN2."
+     },
+     {
+      "letter": "C",
+      "text": "Pour (CH₃)₃C-X, la SN1 conduit à (CH₃)₂C=CH₂ et l'E1 conduit à (CH₃)₃C-Nu."
+     },
+     {
+      "letter": "D",
+      "text": "La SN2 est accompagnée de la réaction d'élimination E1."
+     },
+     {
+      "letter": "E",
+      "text": "L'augmentation de la température augmente la proportion de E1 dans la compétition E1 / SN1."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "E2 : pas de formation intermédiaire d'un carbocation.",
+      "page": "p.4"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN2 = réaction majoritaire dans des conditions modérées.",
+      "page": "p.4"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Exemple du cours : SN1 → (CH₃)₃C-Nu ; E1 → (CH₃)₂C=CH₂.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN2 accompagnée de E2 (la SN1 est accompagnée de E1).",
+      "page": "p.4"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "Conditions qui augmentent la proportion de E1 : augmentation de la température, nucléophiles très forts.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "À propos du mécanisme et de la stéréochimie de la SN1 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "L'alcène formé majoritairement selon la règle de Zaytsev est le plus stable."
+     },
+     {
+      "letter": "B",
+      "text": "La SN1 ne fonctionne pas du tout avec les halogénures d'alkyle tertiaires."
+     },
+     {
+      "letter": "C",
+      "text": "La 1re étape de la SN1 est l'attaque du nucléophile sur le carbone portant X."
+     },
+     {
+      "letter": "D",
+      "text": "Lorsque le C portant le nucléofuge est asymétrique, la SN2 conduit à un seul énantiomère : soit le R, soit le S."
+     },
+     {
+      "letter": "E",
+      "text": "Dans l'écriture de la SN1, l'un des deux produits est obtenu à 75 % et l'autre à 25 %."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "Alcène de Zaytsev : le plus stable.",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN1 : pas du tout avec les primaires ; très bien avec les tertiaires.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "SN1 : 1. rupture de C-X et formation du carbocation R⁺ ; 2. attaque du nucléophile sur le carbocation.",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "SN2 : obtention d'un seul énantiomère, soit le R, soit le S (le mélange R + S en mêmes proportions est propre à la SN1).",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN1 : deux produits à 50 % / 50 % (R et S si présence d'un C*).",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "Parmi les propositions suivantes, relatives au bilan et au mécanisme de la substitution nucléophile :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Le bilan d'une substitution nucléophile avec un nucléophile de type Nu⁻ s'écrit : Nu⁻ + R-X → R-Nu + X⁻."
+     },
+     {
+      "letter": "B",
+      "text": "La SN2 fonctionne bien avec les halogénures d'alkyle secondaires."
+     },
+     {
+      "letter": "C",
+      "text": "Dans le mécanisme de la substitution nucléophile, l'halogène X est attaqué par deux électrons d'un nucléophile."
+     },
+     {
+      "letter": "D",
+      "text": "Le mécanisme de la substitution nucléophile conserve la liaison C-X et forme une liaison X-Nu."
+     },
+     {
+      "letter": "E",
+      "text": "R-OH, H₂O, RSH et Ph₃P sont des nucléophiles chargés de type Nu⁻."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "Avec Nu⁻ : Nu⁻ + R-X → R-Nu + X⁻ (R-Nu⁺ n'est obtenu qu'avec un nucléophile neutre Nu:).",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "SN2 : bien avec les secondaires.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Mécanisme : attaque de R par deux électrons d'un nucléophile, puis rupture de la liaison C-X.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "Mécanisme de la SN : rupture de la liaison C-X ; X⁻ part (groupe partant).",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "Nucléophiles neutres possédant deux électrons libres : R-OH ; H₂O ; RSH ; Ph₃P.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "Parmi les propositions suivantes, relatives aux nucléophiles :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans la liaison C-X polarisée, l'halogène X porte une charge partielle δ⁻."
+     },
+     {
+      "letter": "B",
+      "text": "La substitution nucléophile fonctionne mieux avec les dérivés chlorés RCl qu'avec les dérivés bromés RBr."
+     },
+     {
+      "letter": "C",
+      "text": "La substitution nucléophile fonctionne très bien avec les dérivés bromés RBr."
+     },
+     {
+      "letter": "D",
+      "text": "La substitution nucléophile fonctionne très très bien avec les dérivés fluorés RF."
+     },
+     {
+      "letter": "E",
+      "text": "La SN1 est accompagnée de la réaction d'élimination E2, qui est minoritaire."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "X porte une charge partielle δ⁻ ; C porte une charge partielle δ⁺.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "RBr : très bien ; RCl : bien.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Nature du RX de départ : RBr très bien.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "Nature du RX de départ : RF pas du tout.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN1 accompagnée de la réaction d'élimination E1 (minoritaire) ; la SN2 est accompagnée de E2.",
+      "page": "p.3"
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "hal-serie-2",
+  "title": "Les halogénures d'alkyle — entraînement 2",
+  "questions": [
+   {
+    "stem": "Concernant la substitution nucléophile d'ordre 1 (SN1) :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La 2e étape de la SN1 est la rupture de la liaison C-X avec départ du nucléofuge X⁻."
+     },
+     {
+      "letter": "B",
+      "text": "Dans le bilan de l'E1 du cours, R-CH₂-CX(R')-R'' conduit à R-CH₂-C(Nu)(R')-R''."
+     },
+     {
+      "letter": "C",
+      "text": "La SN1 conduit à l'obtention d'un seul composé."
+     },
+     {
+      "letter": "D",
+      "text": "La réaction d'élimination d'ordre 1 (E1) d'un halogénure d'alkyle forme un alcène."
+     },
+     {
+      "letter": "E",
+      "text": "La SN1 se déroule en 1 étape."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "2e étape : attaque du nucléophile sur le carbocation, R⁺ + Nu⁻ (ou Nu) → RNu (ou RNu⁺).",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "Bilan E1 : R-CH₂-CX(R')-R'' → R-CH=C(R')-R'' (alcène).",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "SN1 : obtention de deux composés (SN2 : un seul composé).",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "E1 : composé formé = alcène.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN1 : en 2 étapes (SN2 : en 1 étape).",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "On réalise la même substitution nucléophile, avec l'ion hydroxyde OH⁻ et dans les mêmes conditions, sur quatre dérivés halogénés de même groupe alkyle (propyle) : R-I, R-Br, R-Cl et R-F. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La substitution nucléophile ne fonctionne pas du tout avec R-F."
+     },
+     {
+      "letter": "B",
+      "text": "La substitution nucléophile fonctionne très très bien avec R-I."
+     },
+     {
+      "letter": "C",
+      "text": "La substitution nucléophile ne fonctionne pas du tout avec R-Br."
+     },
+     {
+      "letter": "D",
+      "text": "Le nucléophile utilisé est un nucléophile chargé de type Nu⁻."
+     },
+     {
+      "letter": "E",
+      "text": "Dans les quatre composés, l'halogène porte une charge partielle δ⁺."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "Nature du RX : RF pas du tout.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Nature du RX : RI très très bien ; RCl bien.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Nature du RX : RBr très bien.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Nucléophiles chargés Nu⁻ : CN⁻ ; OH⁻ ; RS⁻ ; R-C≡C⁻ ; RO⁻ ; RCOO⁻.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "Polarisation de C-X : X δ⁻ ; C δ⁺.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "On fait réagir un dérivé bromé R-Br avec un alcool R-OH, utilisé comme nucléophile. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans R-Br, le nucléophile attaque l'atome de brome, qui porte une charge partielle δ⁺."
+     },
+     {
+      "letter": "B",
+      "text": "Si R-Br était un halogénure d'alkyle primaire, la substitution suivrait une SN1 et non une SN2."
+     },
+     {
+      "letter": "C",
+      "text": "L'ion carboxylate RCOO⁻ serait, comme R-OH, un nucléophile neutre."
+     },
+     {
+      "letter": "D",
+      "text": "Le remplacement de R-Br par le dérivé fluoré R-F empêcherait totalement la substitution."
+     },
+     {
+      "letter": "E",
+      "text": "Le bilan de la substitution s'écrit : Nu: + R-Br → R-Nu⁺ + Br⁻."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "C porte une charge partielle δ⁺ (cible des nucléophiles) ; X porte δ⁻.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "Primaires : SN2 très bien ; SN1 pas du tout.",
+      "page": "p.2-3"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "RCOO⁻ (= carboxylate) est un nucléophile chargé Nu⁻.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Nature du RX : RF pas du tout.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "Avec un nucléophile neutre Nu: : Nu: + R-X → R-Nu⁺ + X⁻.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "L'halogénure d'alkyle tertiaire (CH₃)₃C-Cl est mis à réagir avec un nucléophile Nu⁻ ; on utilise un nucléophile très fort. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "L'élimination concurrente de la SN1 est l'élimination E1."
+     },
+     {
+      "letter": "B",
+      "text": "Le produit de l'élimination E1 est l'alcène (CH₃)₂C=CH₂."
+     },
+     {
+      "letter": "C",
+      "text": "La SN1 fonctionne très bien avec cet halogénure d'alkyle tertiaire."
+     },
+     {
+      "letter": "D",
+      "text": "La SN1 passe par un carbocation tertiaire C⁺(III), le moins stable des carbocations."
+     },
+     {
+      "letter": "E",
+      "text": "Dans la SN1, la rupture de la liaison C-X est l'étape lente."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN1 accompagnée de la réaction d'élimination E1.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Exemple du cours : SN1 → (CH₃)₃C-Nu ; E1 → (CH₃)₂C=CH₂.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Tertiaires : SN1 très bien ; SN2 pas du tout.",
+      "page": "p.2-3"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "Ordre de stabilité et de réactivité : C⁺(III) > C⁺(II) > C⁺(I).",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN1 : 1re étape (rupture de C-X, formation de R⁺) = étape lente.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "On fait réagir le (2R)-2-iodopentane (F), halogénure d'alkyle secondaire de configuration R dont le carbone portant l'halogène est asymétrique, avec l'ion hydroxyde OH⁻ (KOH dilué), dans des conditions modérées. On obtient un seul composé G, et l'halogène est remplacé par OH. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La substitution nucléophile fonctionne très très bien avec un dérivé iodé comme le 2-iodopentane."
+     },
+     {
+      "letter": "B",
+      "text": "L'obtention d'un seul composé indique que la réaction de F à G est une SN1."
+     },
+     {
+      "letter": "C",
+      "text": "Si l'halogène de F est à l'avant du plan, le nucléophile attaque par l'arrière."
+     },
+     {
+      "letter": "D",
+      "text": "Un halogénure d'alkyle secondaire comme F ne fonctionne pas du tout en SN2."
+     },
+     {
+      "letter": "E",
+      "text": "G est obtenu avec inversion de configuration, appelée inversion de Walden."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "Nature du RX : dérivés iodés RI → très très bien.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN2 : obtention d'un seul composé ; SN1 : obtention de deux composés.",
+      "page": "p.2-3"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "SN2 : si X à l'avant du plan, attaque du nucléophile par l'arrière, et inversement.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "Secondaires : SN2 bien ; SN1 bien.",
+      "page": "p.2-3"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN2 : inversion de configuration appelée inversion de Walden ; un seul énantiomère.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la réaction d'élimination d'ordre 1 (E1) :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "L'utilisation de nucléophiles très forts diminue la proportion de E1 dans la compétition E1 / SN1."
+     },
+     {
+      "letter": "B",
+      "text": "L'alcène formé majoritairement selon la règle de Zaytsev est le plus stable."
+     },
+     {
+      "letter": "C",
+      "text": "La SN2 conduit à l'obtention de deux composés."
+     },
+     {
+      "letter": "D",
+      "text": "Dans des conditions modérées, la SN1 est la réaction majoritaire face à l'E1."
+     },
+     {
+      "letter": "E",
+      "text": "En SN2, si X est à l'avant du plan, le nucléophile attaque lui aussi par l'avant."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Conditions qui augmentent la proportion de E1 : augmentation de la température, utilisation de nucléophiles très forts.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Alcène de Zaytsev : le plus stable.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "SN2 : obtention d'un seul composé (SN1 : deux composés).",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "SN1 = réaction majoritaire dans des conditions modérées.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN2 : si X à l'avant du plan, attaque du nucléophile par l'arrière, et inversement.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la substitution nucléophile d'ordre 2 (SN2) :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "En SN1, le nucléophile attaque le carbocation plan soit par l'avant, soit par l'arrière."
+     },
+     {
+      "letter": "B",
+      "text": "Dans la représentation R-X d'un halogénure d'alkyle, X désigne un nucléophile."
+     },
+     {
+      "letter": "C",
+      "text": "En SN2, le nucléophile attaque du même côté que la liaison C-X qui se rompt."
+     },
+     {
+      "letter": "D",
+      "text": "Dans le schéma de la SN2 du cours, le réactif de configuration R conduit à un produit de configuration S."
+     },
+     {
+      "letter": "E",
+      "text": "La SN2 passe par la formation d'un carbocation intermédiaire."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN1 : attaque du nucléophile soit par l'avant, soit par l'arrière du carbocation plan.",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "Représentation R-X : X = halogène (I, Br, Cl, F).",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "SN2 : attaque du nucléophile à l'opposé de la rupture de la liaison C-X.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Schéma de la SN2 : réactif R → produit S (inversion de Walden).",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN2 : absence de formation de carbocation intermédiaire.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "On réalise la même substitution nucléophile, avec l'ion cyanure CN⁻ et dans les mêmes conditions, sur quatre dérivés halogénés de même groupe alkyle (butyle) : R-I, R-Br, R-Cl et R-F. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La substitution nucléophile ne fonctionne pas du tout avec R-Cl."
+     },
+     {
+      "letter": "B",
+      "text": "Dans les quatre composés, le doublet de la liaison C-X est plus proche de X que de C."
+     },
+     {
+      "letter": "C",
+      "text": "Dans les quatre composés, l'halogène est donneur par effet inductif."
+     },
+     {
+      "letter": "D",
+      "text": "Dans les quatre composés, l'halogène est la cible du nucléophile."
+     },
+     {
+      "letter": "E",
+      "text": "La substitution nucléophile fonctionne mieux avec R-Cl qu'avec R-Br."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Nature du RX : RCl bien.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Doublet de la liaison C-X plus proche de X que de C ⇒ liaison C-X fragilisée.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "X attracteur par effet inductif.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "C porte une charge partielle δ⁺ : cible des nucléophiles.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "RBr : très bien ; RCl : bien.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "Parmi les propositions suivantes, relatives à la SN2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "SN2 signifie substitution nucléophile bimoléculaire."
+     },
+     {
+      "letter": "B",
+      "text": "SN1 signifie substitution nucléophile bimoléculaire."
+     },
+     {
+      "letter": "C",
+      "text": "La substitution nucléophile fonctionne très bien avec les dérivés bromés RBr."
+     },
+     {
+      "letter": "D",
+      "text": "La SN2 se déroule en 2 étapes."
+     },
+     {
+      "letter": "E",
+      "text": "Lorsque le C portant le nucléofuge est asymétrique, la SN2 conduit à un seul énantiomère : soit le R, soit le S."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN2 = substitution nucléophile bimoléculaire.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN1 = substitution nucléophile unimoléculaire (SN2 = bimoléculaire).",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Nature du RX de départ : RBr très bien.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN2 : en 1 étape.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN2 : obtention d'un seul énantiomère, soit le R, soit le S (le mélange R + S en mêmes proportions est propre à la SN1).",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "On fait réagir le 3-chloro-3-méthylheptane — halogénure d'alkyle tertiaire F dont le carbone portant l'halogène est asymétrique — avec l'ion hydroxyde OH⁻ (KOH dilué), dans des conditions modérées. On obtient deux produits de substitution G et G'. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Le composé F réagirait très bien par SN2."
+     },
+     {
+      "letter": "B",
+      "text": "G et G' ne forment pas un mélange racémique, car la SN1 est stéréospécifique."
+     },
+     {
+      "letter": "C",
+      "text": "L'alcène issu de l'E1 concurrente serait majoritairement l'alcène le plus substitué."
+     },
+     {
+      "letter": "D",
+      "text": "G et G' sont des énantiomères obtenus dans les mêmes proportions."
+     },
+     {
+      "letter": "E",
+      "text": "Une augmentation de la température rendrait l'élimination E1 majoritaire devant la formation de G et G'."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "SN2 : pas du tout avec les halogénures d'alkyle tertiaires.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN1 : non stéréospécifique ; en présence d'un C asymétrique, mélange racémique.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Règle de Zaytsev : formation majoritaire de l'alcène le plus substitué.",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "SN1 en présence d'un C asymétrique : énantiomères R et S dans les mêmes proportions (50 % / 50 %).",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "Augmentation de la température : proportion de E1 augmentée, mais SN1 toujours majoritaire.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la compétition E1 / SN1 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "En SN2, le nucléophile attaque le centre électrophile Cδ⁺ de RX en même temps que la liaison C-X se rompt."
+     },
+     {
+      "letter": "B",
+      "text": "La substitution nucléophile fonctionne très très bien avec les dérivés halogénés iodés RI."
+     },
+     {
+      "letter": "C",
+      "text": "Dans le bilan de l'E1 du cours, R-CH₂-CX(R')-R'' conduit à R-CH₂-C(Nu)(R')-R''."
+     },
+     {
+      "letter": "D",
+      "text": "L'utilisation de nucléophiles très forts augmente la proportion de E1 dans la compétition E1 / SN1."
+     },
+     {
+      "letter": "E",
+      "text": "Dans les conditions qui augmentent la proportion de E1, l'E1 devient majoritaire."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN2 : attaque du centre électrophile Cδ⁺ en même temps que la rupture de la liaison C-X.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Nature du RX de départ : RI très très bien ; RBr très bien ; RCl bien ; RF pas du tout.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Bilan E1 : R-CH₂-CX(R')-R'' → R-CH=C(R')-R'' (alcène).",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Conditions qui augmentent la proportion de E1 : augmentation de la température, utilisation de nucléophiles très forts.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "Conditions qui augmentent E1 « mais SN1 toujours majoritaire ».",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "À propos de la substitution nucléophile :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Le bilan d'une substitution nucléophile avec un nucléophile neutre de type Nu: s'écrit : Nu: + R-X → R-Nu⁺ + X⁻."
+     },
+     {
+      "letter": "B",
+      "text": "L'augmentation de la température augmente la proportion de E2."
+     },
+     {
+      "letter": "C",
+      "text": "La SN2 ne fonctionne pas du tout avec les halogénures d'alkyle secondaires."
+     },
+     {
+      "letter": "D",
+      "text": "Dans la substitution nucléophile, l'ion X⁻ libéré est appelé nucléophile."
+     },
+     {
+      "letter": "E",
+      "text": "Le bilan d'une substitution nucléophile avec un nucléophile de type Nu⁻ s'écrit : Nu⁻ + R-X → R-Nu⁺ + X⁻."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "Avec Nu: : Nu: + R-X → R-Nu⁺ + X⁻.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Conditions qui augmentent la proportion de E2 : augmentation de la température, nucléophiles très forts.",
+      "page": "p.4"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "SN2 : bien avec les secondaires.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "X⁻ = nucléofuge = groupe partant.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "Avec Nu⁻ : Nu⁻ + R-X → R-Nu + X⁻ (R-Nu⁺ n'est obtenu qu'avec un nucléophile neutre Nu:).",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "Parmi les propositions suivantes, relatives à la SN1 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Pour (CH₃)₃C-X, la SN1 conduit à (CH₃)₂C=CH₂ et l'E1 conduit à (CH₃)₃C-Nu."
+     },
+     {
+      "letter": "B",
+      "text": "La 1re étape de la SN1, R-X → R⁺ + X⁻, est l'étape lente."
+     },
+     {
+      "letter": "C",
+      "text": "La 1re étape de la SN1 est l'attaque du nucléophile sur le carbone portant X."
+     },
+     {
+      "letter": "D",
+      "text": "La SN1 est une réaction stéréospécifique."
+     },
+     {
+      "letter": "E",
+      "text": "La substitution nucléophile fonctionne mieux avec les dérivés chlorés RCl qu'avec les dérivés iodés RI."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Exemple du cours : SN1 → (CH₃)₃C-Nu ; E1 → (CH₃)₂C=CH₂.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "L'étape lente de la SN1 est la 1re : R-X → R⁺ + X⁻.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "SN1 : 1. rupture de C-X et formation du carbocation R⁺ ; 2. attaque du nucléophile sur le carbocation.",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN1 : réaction non stéréospécifique (la SN2 est stéréospécifique).",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "Nature du RX de départ : RCl bien, RI très très bien.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "À propos du mécanisme et de la stéréochimie de la SN2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Les nucléophiles neutres de type Nu: possèdent une charge négative portée par l'atome nucléophile."
+     },
+     {
+      "letter": "B",
+      "text": "L'élimination E2 applique la règle de Saytsev : formation de l'alcène le moins stable."
+     },
+     {
+      "letter": "C",
+      "text": "En SN2, si X est à l'avant du plan, le nucléophile attaque par l'arrière."
+     },
+     {
+      "letter": "D",
+      "text": "Le bilan de la SN2 s'écrit : RX + Nu⁻ → RNu⁺ + X⁻, quel que soit le type de nucléophile."
+     },
+     {
+      "letter": "E",
+      "text": "Lorsque le carbone portant le nucléofuge est asymétrique, la SN2 est une réaction stéréospécifique."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Nucléophiles neutres : ils possèdent deux électrons libres (Nu:).",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "E2 : règle de Saytsev, formation de l'alcène le plus stable.",
+      "page": "p.4"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "SN2 : si X à l'avant du plan, attaque du nucléophile par l'arrière, et inversement.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN2 : RX + Nu⁻ (ou Nu) → RNu (ou RNu⁺) + X⁻.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN2 : réaction stéréospécifique.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "À propos du mécanisme et de la stéréochimie de la SN1 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "L'ordre de stabilité et de réactivité des carbocations est : C⁺(I) > C⁺(II) > C⁺(III)."
+     },
+     {
+      "letter": "B",
+      "text": "L'utilisation de nucléophiles très forts augmente la proportion de E2."
+     },
+     {
+      "letter": "C",
+      "text": "En SN1, le nucléophile attaque le carbocation plan soit par l'avant, soit par l'arrière."
+     },
+     {
+      "letter": "D",
+      "text": "La SN1 se déroule en 1 étape."
+     },
+     {
+      "letter": "E",
+      "text": "Dans le schéma de l'élimination E2, c'est le nucléophile Nu⁻ qui arrache l'atome H."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Ordre de stabilité et de réactivité : C⁺(III) > C⁺(II) > C⁺(I).",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Conditions qui augmentent la proportion de E2 : augmentation de la température, utilisation de nucléophiles très forts.",
+      "page": "p.4"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "SN1 : attaque du nucléophile soit par l'avant, soit par l'arrière du carbocation plan.",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN1 : en 2 étapes (SN2 : en 1 étape).",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "Schéma de l'E2 : Nu⁻ arrache H (en trans de X) et X part.",
+      "page": "p.4"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la substitution nucléophile d'ordre 2 (SN2) :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La substitution nucléophile ne fonctionne pas du tout avec les dérivés fluorés RF."
+     },
+     {
+      "letter": "B",
+      "text": "La SN2 ne fonctionne pas du tout avec les halogénures d'alkyle primaires."
+     },
+     {
+      "letter": "C",
+      "text": "La SN2 conduit à l'obtention d'un seul composé."
+     },
+     {
+      "letter": "D",
+      "text": "La SN1 fonctionne très bien avec les halogénures d'alkyle tertiaires."
+     },
+     {
+      "letter": "E",
+      "text": "La SN2 fonctionne très bien avec les halogénures d'alkyle primaires."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "Nature du RX de départ : RF pas du tout.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN2 : pas du tout avec les tertiaires ; très bien avec les primaires.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "SN2 : obtention d'un seul composé (SN1 : deux composés).",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "SN1 : très bien avec les tertiaires, bien avec les secondaires, pas du tout avec les primaires.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN2 : très bien avec les primaires, bien avec les secondaires, pas du tout avec les tertiaires.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "À propos de la nature du dérivé halogéné RX de départ :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "L'ion carboxylate RCOO⁻ est un nucléophile neutre de type Nu:."
+     },
+     {
+      "letter": "B",
+      "text": "La SN2 se fait sans formation de carbocation intermédiaire."
+     },
+     {
+      "letter": "C",
+      "text": "Dans la liaison C-X polarisée, l'halogène X porte une charge partielle δ⁺."
+     },
+     {
+      "letter": "D",
+      "text": "R-C≡C⁻ et RO⁻ font partie des nucléophiles chargés de type Nu⁻."
+     },
+     {
+      "letter": "E",
+      "text": "CN⁻, OH⁻ et RS⁻ sont des nucléophiles neutres possédant deux électrons libres."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "RCOO⁻ (= carboxylate) figure parmi les nucléophiles chargés Nu⁻.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "SN2 : absence de formation de carbocation intermédiaire.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "X porte une charge partielle δ⁻ ; C porte une charge partielle δ⁺.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "RO⁻ et R-C≡C⁻ sont des nucléophiles chargés ; R-OH est un nucléophile neutre.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "Nucléophiles chargés Nu⁻ : CN⁻ ; OH⁻ ; RS⁻ ; R-C≡C⁻ ; RO⁻ ; RCOO⁻.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "On fait réagir le 1-iodopropane, halogénure d'alkyle primaire, avec un nucléophile chargé de type RS⁻, dans des conditions modérées. On obtient un seul produit de substitution G. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Le nucléophile utilisé est un nucléophile neutre de type Nu: possédant deux électrons libres."
+     },
+     {
+      "letter": "B",
+      "text": "Le nucléophile attaque à l'opposé de la liaison C-X qui se rompt."
+     },
+     {
+      "letter": "C",
+      "text": "Dans ces conditions modérées, la SN2 est majoritaire et accompagnée de la réaction d'élimination E2."
+     },
+     {
+      "letter": "D",
+      "text": "La formation de G est une substitution nucléophile d'ordre 1 (SN1)."
+     },
+     {
+      "letter": "E",
+      "text": "Le nucléophile attaque le carbone Cδ⁺ en même temps que la liaison C-X se rompt."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Nucléophiles chargés Nu⁻ : CN⁻ ; OH⁻ ; RS⁻ ; R-C≡C⁻ ; RO⁻ ; RCOO⁻.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "SN2 : attaque du nucléophile à l'opposé de la rupture de la liaison C-X.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "SN2 = réaction majoritaire dans des conditions modérées, accompagnée de la réaction d'élimination E2.",
+      "page": "p.4"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "Halogénure primaire, un seul composé : SN2 (très bien avec les primaires) ; la SN1 ne fonctionne pas du tout avec les primaires.",
+      "page": "p.2-3"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN2 : attaque du centre électrophile Cδ⁺ en même temps que la rupture de la liaison C-X.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "Parmi les propositions suivantes, relatives à l'E1 et à la règle de Zaytsev :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "L'augmentation de la température augmente la proportion de E1 dans la compétition E1 / SN1."
+     },
+     {
+      "letter": "B",
+      "text": "Dans l'élimination E2, l'H arraché doit être en position trans du groupement C-X."
+     },
+     {
+      "letter": "C",
+      "text": "Selon la règle de Zaytsev, l'E1 forme majoritairement l'alcène le plus substitué."
+     },
+     {
+      "letter": "D",
+      "text": "La SN1 est accompagnée de la réaction d'élimination E2, qui est minoritaire."
+     },
+     {
+      "letter": "E",
+      "text": "La SN1 fonctionne bien avec les halogénures d'alkyle secondaires."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "Conditions qui augmentent la proportion de E1 : augmentation de la température, nucléophiles très forts.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "E2 : H arraché en position trans du groupement C-X.",
+      "page": "p.4"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Règle de Zaytsev : formation majoritaire de l'alcène le plus substitué.",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN1 accompagnée de la réaction d'élimination E1 (minoritaire) ; la SN2 est accompagnée de E2.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN1 : bien avec les secondaires.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la substitution nucléophile d'ordre 1 (SN1) :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans la liaison C-X, l'halogène X est donneur par effet inductif."
+     },
+     {
+      "letter": "B",
+      "text": "La réaction d'élimination E2 conduit à l'obtention d'un alcène."
+     },
+     {
+      "letter": "C",
+      "text": "Dans l'écriture de la SN1, l'un des deux produits est obtenu à 75 % et l'autre à 25 %."
+     },
+     {
+      "letter": "D",
+      "text": "Dans l'écriture de la SN1, l'halogénure d'alkyle de départ peut être R ou S."
+     },
+     {
+      "letter": "E",
+      "text": "La SN1 conduit à l'obtention d'un seul composé."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "X est attracteur par effet inductif.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "E2 : obtention d'un alcène.",
+      "page": "p.4"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "SN1 : deux produits à 50 % / 50 % (R et S si présence d'un C*).",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Écriture de la SN1 : réactif R ou S.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN1 : obtention de deux composés (SN2 : un seul composé).",
+      "page": "p.2"
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "hal-serie-3",
+  "title": "Les halogénures d'alkyle — entraînement 3",
+  "questions": [
+   {
+    "stem": "Concernant la polarisation de la liaison C-X :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La substitution nucléophile fonctionne mieux avec les dérivés bromés RBr qu'avec les dérivés chlorés RCl."
+     },
+     {
+      "letter": "B",
+      "text": "Le doublet de la liaison C-X est plus proche de X que de C, ce qui fragilise la liaison C-X."
+     },
+     {
+      "letter": "C",
+      "text": "En nomenclature, l'halogène X d'un halogénure d'alkyle est traité comme la fonction principale de la molécule."
+     },
+     {
+      "letter": "D",
+      "text": "Un halogénure d'alkyle se représente R-X, où X est un halogène : I, Br, Cl ou F."
+     },
+     {
+      "letter": "E",
+      "text": "L'élimination E2 passe par la formation intermédiaire d'un carbocation."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "RBr : très bien ; RCl : bien.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Doublet de la liaison C-X plus proche de X que de C ⇒ liaison C-X fragilisée.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Nomenclature : X est traité comme un substituant alkyle (ex. du cours : 4-bromopentane).",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Représentation R-X : X = halogène (I, Br, Cl, F).",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "E2 : pas de formation intermédiaire d'un carbocation.",
+      "page": "p.4"
+     }
+    }
+   },
+   {
+    "stem": "Le 1-chloropropane, halogénure d'alkyle primaire, est mis à réagir avec un nucléophile Nu⁻ ; on utilise un nucléophile très fort. Parmi les propositions suivantes, relatives à la compétition entre SN2 et élimination E2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "L'E2 forme l'alcène le moins stable, par transélimination de HX."
+     },
+     {
+      "letter": "B",
+      "text": "La SN2 concurrente se fait en deux étapes, via un carbocation intermédiaire."
+     },
+     {
+      "letter": "C",
+      "text": "Ces conditions augmentent la proportion de la réaction d'élimination E2."
+     },
+     {
+      "letter": "D",
+      "text": "L'élimination E2 passe par la formation intermédiaire d'un carbocation primaire."
+     },
+     {
+      "letter": "E",
+      "text": "La réaction d'élimination E2 conduit à un alcène."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Règle de Saytsev : formation de l'alcène le plus stable par transélimination de HX.",
+      "page": "p.4"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN2 : 1 étape, absence de formation de carbocation intermédiaire.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Conditions qui augmentent la proportion de E2 : augmentation de la température ; nucléophiles très forts.",
+      "page": "p.4"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "E2 : pas de formation intermédiaire d'un carbocation.",
+      "page": "p.4"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "E2 : obtention d'un alcène.",
+      "page": "p.4"
+     }
+    }
+   },
+   {
+    "stem": "Parmi les propositions suivantes, relatives à la liaison C-X des halogénures d'alkyle :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans la liaison C-X polarisée, le carbone porte une charge partielle δ⁻ et constitue la cible des nucléophiles."
+     },
+     {
+      "letter": "B",
+      "text": "La SN1 ne fonctionne pas du tout avec les halogénures d'alkyle primaires."
+     },
+     {
+      "letter": "C",
+      "text": "Dans la représentation R-X d'un halogénure d'alkyle, X désigne un nucléophile."
+     },
+     {
+      "letter": "D",
+      "text": "La SN2 s'accompagne d'une inversion de configuration appelée règle de Zaytsev."
+     },
+     {
+      "letter": "E",
+      "text": "La réactivité des halogénures d'alkyle est l'addition nucléophile, au cours de laquelle la liaison C-X est conservée."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "C porte une charge partielle δ⁺ : il est la cible des nucléophiles.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "SN1 : pas du tout avec les primaires ; très bien avec les tertiaires.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Représentation R-X : X = halogène (I, Br, Cl, F).",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN2 : inversion de configuration appelée inversion de Walden (Zaytsev = régiosélectivité de l'élimination).",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "Réactivité : substitution nucléophile (SN), liaison C-X brisée.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "Deux halogénures d'alkyle F₁ et F₂, dont le carbone portant l'halogène est asymétrique, sont traités par OH⁻ dans des conditions modérées. F₁ donne un seul composé, obtenu avec inversion de configuration ; F₂ donne deux composés en mêmes proportions (mélange racémique). Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La réaction de F₁ est une SN2."
+     },
+     {
+      "letter": "B",
+      "text": "La réaction de F₁ est stéréospécifique, contrairement à celle de F₂."
+     },
+     {
+      "letter": "C",
+      "text": "Pour F₁, le nucléophile a attaqué à l'opposé de la liaison C-X rompue."
+     },
+     {
+      "letter": "D",
+      "text": "La réaction de F₂ se fait sans carbocation intermédiaire."
+     },
+     {
+      "letter": "E",
+      "text": "F₂ est nécessairement un halogénure d'alkyle primaire."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "Un seul composé, inversion de configuration (Walden) : SN2.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "SN2 stéréospécifique ; SN1 non stéréospécifique.",
+      "page": "p.2-3"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "SN2 : attaque à l'opposé de la rupture de la liaison C-X.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN1 : carbocation intermédiaire ; attaque par l'avant ou par l'arrière du carbocation plan.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN1 : très bien avec les tertiaires, bien avec les secondaires, pas du tout avec les primaires.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "Parmi les propositions suivantes, relatives à l'élimination E2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La réaction d'élimination d'ordre 1 (E1) d'un halogénure d'alkyle forme un alcène."
+     },
+     {
+      "letter": "B",
+      "text": "La SN2 est accompagnée de la réaction d'élimination E2."
+     },
+     {
+      "letter": "C",
+      "text": "La 2e étape de la SN1 est l'attaque du nucléophile sur le carbocation : R⁺ + Nu⁻ (ou Nu) → RNu (ou RNu⁺)."
+     },
+     {
+      "letter": "D",
+      "text": "Dans des conditions modérées, l'E2 est la réaction majoritaire face à la SN2."
+     },
+     {
+      "letter": "E",
+      "text": "Dans l'élimination E2, l'alcène se forme par transélimination de HX."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "E1 : composé formé = alcène.",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "SN2 accompagnée de E2 (la SN1 est accompagnée de E1).",
+      "page": "p.4"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "2e étape : attaque du nucléophile sur le carbocation, R⁺ + Nu⁻ (ou Nu) → RNu (ou RNu⁺).",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN2 = réaction majoritaire dans des conditions modérées.",
+      "page": "p.4"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "E2 : formation de l'alcène le plus stable par transélimination de HX.",
+      "page": "p.4"
+     }
+    }
+   },
+   {
+    "stem": "On fait réagir le 3-iodo-3-méthyloctane — halogénure d'alkyle tertiaire F dont le carbone portant l'halogène est asymétrique — avec l'ion cyanure CN⁻, dans des conditions modérées. On obtient deux produits de substitution G et G'. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La formation de G et G' est une substitution nucléophile d'ordre 2 (SN2)."
+     },
+     {
+      "letter": "B",
+      "text": "Le composé F réagirait très bien par SN2."
+     },
+     {
+      "letter": "C",
+      "text": "Le carbocation formé à partir de F est un carbocation tertiaire C⁺(III), le plus stable."
+     },
+     {
+      "letter": "D",
+      "text": "Une augmentation de la température rendrait l'élimination E1 majoritaire devant la formation de G et G'."
+     },
+     {
+      "letter": "E",
+      "text": "Le mélange de G et G' est un mélange racémique."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Halogénure tertiaire et obtention de deux composés : SN1 (très bien avec les tertiaires ; la SN2 ne fonctionne pas du tout avec les tertiaires).",
+      "page": "p.2-3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN2 : pas du tout avec les halogénures d'alkyle tertiaires.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Ordre de stabilité et de réactivité : C⁺(III) > C⁺(II) > C⁺(I) ; SN1 favorisée si carbocation stable.",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "Augmentation de la température : proportion de E1 augmentée, mais SN1 toujours majoritaire.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN1 : non stéréospécifique ; en présence d'un C asymétrique, mélange racémique.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la réaction d'élimination d'ordre 1 (E1) :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans des conditions modérées, l'E1 est la réaction majoritaire face à la SN1."
+     },
+     {
+      "letter": "B",
+      "text": "L'alcène formé majoritairement selon la règle de Zaytsev est le moins hydrogéné."
+     },
+     {
+      "letter": "C",
+      "text": "R-OH, H₂O, RSH et Ph₃P sont des nucléophiles chargés de type Nu⁻."
+     },
+     {
+      "letter": "D",
+      "text": "Pour (CH₃)₃C-X, la SN1 conduit à (CH₃)₃C-Nu et l'E1 conduit à (CH₃)₂C=CH₂."
+     },
+     {
+      "letter": "E",
+      "text": "En SN1, en présence d'un carbone asymétrique, les énantiomères R et S sont obtenus dans les mêmes proportions."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "SN1 = réaction majoritaire dans des conditions modérées.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Alcène de Zaytsev : le plus substitué = le moins hydrogéné = le plus stable.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Nucléophiles neutres possédant deux électrons libres : R-OH ; H₂O ; RSH ; Ph₃P.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Exemple du cours : SN1 → (CH₃)₃C-Nu ; E1 → (CH₃)₂C=CH₂.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN1 : énantiomères R et S dans les mêmes proportions.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "Parmi les propositions suivantes, relatives à la SN1 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La SN1 est accompagnée de la réaction d'élimination E1, qui est minoritaire."
+     },
+     {
+      "letter": "B",
+      "text": "La SN1 est favorisée lorsque le carbocation intermédiaire formé est stable."
+     },
+     {
+      "letter": "C",
+      "text": "La SN2 se déroule en 1 étape."
+     },
+     {
+      "letter": "D",
+      "text": "En SN1, en présence d'un carbone asymétrique, on obtient un seul énantiomère."
+     },
+     {
+      "letter": "E",
+      "text": "En SN1, en présence d'un carbone asymétrique, les énantiomères R et S sont obtenus dans les mêmes proportions."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN1 accompagnée de la réaction d'élimination E1 (minoritaire) ; la SN2 est accompagnée de E2.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Conditions favorables à la SN1 : carbocation intermédiaire formé stable.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "SN2 : en 1 étape.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN1 en présence d'un C asymétrique : mélange racémique.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN1 : énantiomères R et S dans les mêmes proportions.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "Concernant les nucléophiles et la nature du RX de départ :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La substitution nucléophile fonctionne mieux avec les dérivés chlorés RCl qu'avec les dérivés iodés RI."
+     },
+     {
+      "letter": "B",
+      "text": "L'alcène formé majoritairement selon la règle de Zaytsev est le moins hydrogéné."
+     },
+     {
+      "letter": "C",
+      "text": "La substitution nucléophile ne fonctionne pas du tout avec les dérivés halogénés iodés RI."
+     },
+     {
+      "letter": "D",
+      "text": "La substitution nucléophile ne fonctionne pas du tout avec les dérivés fluorés RF."
+     },
+     {
+      "letter": "E",
+      "text": "SN1 signifie substitution nucléophile bimoléculaire."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Nature du RX de départ : RCl bien, RI très très bien.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Alcène de Zaytsev : le plus substitué = le moins hydrogéné = le plus stable.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Nature du RX de départ : RI très très bien ; RBr très bien ; RCl bien ; RF pas du tout.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Nature du RX de départ : RF pas du tout.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN1 = substitution nucléophile unimoléculaire (SN2 = bimoléculaire).",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "Parmi les propositions suivantes, relatives à la SN2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La SN2 conduit à l'obtention d'un seul composé."
+     },
+     {
+      "letter": "B",
+      "text": "La SN2 fonctionne très bien avec les halogénures d'alkyle tertiaires."
+     },
+     {
+      "letter": "C",
+      "text": "Dans le schéma de la SN2 du cours, le réactif de configuration R conduit à un produit de configuration S."
+     },
+     {
+      "letter": "D",
+      "text": "L'alcène formé majoritairement selon la règle de Zaytsev est le plus stable."
+     },
+     {
+      "letter": "E",
+      "text": "Dans la liaison C-X polarisée, le carbone porte une charge partielle δ⁻ et constitue la cible des nucléophiles."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN2 : obtention d'un seul composé (SN1 : deux composés).",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN2 : très bien avec les primaires, bien avec les secondaires, pas du tout avec les tertiaires.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Schéma de la SN2 : réactif R → produit S (inversion de Walden).",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Alcène de Zaytsev : le plus stable.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "C porte une charge partielle δ⁺ : il est la cible des nucléophiles.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "À propos du mécanisme et de la stéréochimie de la SN1 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La SN2 s'accompagne d'une inversion de configuration appelée règle de Zaytsev."
+     },
+     {
+      "letter": "B",
+      "text": "La 2e étape de la SN1 est la rupture de la liaison C-X avec départ du nucléofuge X⁻."
+     },
+     {
+      "letter": "C",
+      "text": "En SN1, le nucléophile attaque le carbocation plan uniquement par l'arrière, à l'opposé du nucléofuge."
+     },
+     {
+      "letter": "D",
+      "text": "R-OH, H₂O, RSH et Ph₃P sont des nucléophiles neutres."
+     },
+     {
+      "letter": "E",
+      "text": "La SN1 se déroule en 2 étapes."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "SN2 : inversion de configuration appelée inversion de Walden (Zaytsev = régiosélectivité de l'élimination).",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "2e étape : attaque du nucléophile sur le carbocation, R⁺ + Nu⁻ (ou Nu) → RNu (ou RNu⁺).",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "SN1 : attaque du nucléophile soit par l'avant, soit par l'arrière du carbocation plan.",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Nucléophiles neutres possédant deux électrons libres : R-OH ; H₂O ; RSH ; Ph₃P.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN1 : en 2 étapes (SN2 : en 1 étape).",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la substitution nucléophile d'ordre 1 (SN1) :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans l'écriture de la SN1, les deux produits sont obtenus chacun à 50 %."
+     },
+     {
+      "letter": "B",
+      "text": "L'élimination E2 passe par la formation intermédiaire d'un carbocation."
+     },
+     {
+      "letter": "C",
+      "text": "La SN1 conduit à l'obtention d'un seul composé."
+     },
+     {
+      "letter": "D",
+      "text": "En SN2, si X est à l'avant du plan, le nucléophile attaque par l'arrière."
+     },
+     {
+      "letter": "E",
+      "text": "La 1re étape de la SN1 est la rupture de la liaison C-X avec formation d'un carbocation intermédiaire R⁺."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN1 : deux produits à 50 % / 50 % (R et S si présence d'un C*).",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "E2 : pas de formation intermédiaire d'un carbocation.",
+      "page": "p.4"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "SN1 : obtention de deux composés (SN2 : un seul composé).",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "SN2 : si X à l'avant du plan, attaque du nucléophile par l'arrière, et inversement.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN1 : 1. rupture de C-X et formation du carbocation R⁺ ; 2. attaque du nucléophile sur le carbocation.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "L'halogénure d'alkyle tertiaire (CH₃)₃C-I est mis à réagir avec un nucléophile Nu⁻ ; on chauffe le milieu en présence d'un nucléophile très fort. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans des conditions modérées, l'E1 serait la réaction majoritaire."
+     },
+     {
+      "letter": "B",
+      "text": "La SN1 se déroule en 1 étape."
+     },
+     {
+      "letter": "C",
+      "text": "Le produit de l'élimination E1 est (CH₃)₃C-Nu."
+     },
+     {
+      "letter": "D",
+      "text": "La SN1 passe par un carbocation tertiaire C⁺(III), le plus stable des carbocations."
+     },
+     {
+      "letter": "E",
+      "text": "L'élimination E1 devient majoritaire devant la SN1."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "SN1 = réaction majoritaire dans des conditions modérées ; E1 minoritaire.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN1 : en 2 étapes.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Exemple du cours : SN1 → (CH₃)₃C-Nu ; E1 → (CH₃)₂C=CH₂.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Ordre de stabilité et de réactivité : C⁺(III) > C⁺(II) > C⁺(I).",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "Conditions qui augmentent la proportion de E1 mais SN1 toujours majoritaire.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "Parmi les propositions suivantes, relatives à la SN1 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La SN1 ne fonctionne pas du tout avec les halogénures d'alkyle secondaires."
+     },
+     {
+      "letter": "B",
+      "text": "La 1re étape de la SN1, R-X → R⁺ + X⁻, est l'étape lente."
+     },
+     {
+      "letter": "C",
+      "text": "Dans l'écriture de la SN1, l'halogénure d'alkyle de départ est obligatoirement de configuration R."
+     },
+     {
+      "letter": "D",
+      "text": "L'augmentation de la température augmente la proportion de E1 dans la compétition E1 / SN1."
+     },
+     {
+      "letter": "E",
+      "text": "La substitution nucléophile fonctionne mieux avec les dérivés bromés RBr qu'avec les dérivés chlorés RCl."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "SN1 : bien avec les secondaires.",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "L'étape lente de la SN1 est la 1re : R-X → R⁺ + X⁻.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Écriture de la SN1 : réactif R ou S.",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Conditions qui augmentent la proportion de E1 : augmentation de la température, nucléophiles très forts.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "RBr : très bien ; RCl : bien.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "On fait réagir le 1-chloropentane, halogénure d'alkyle primaire, avec l'ion cyanure CN⁻, dans des conditions modérées. On obtient un seul produit de substitution G. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Aucun carbocation intermédiaire n'est formé au cours de la formation de G."
+     },
+     {
+      "letter": "B",
+      "text": "La formation de G se déroule en une seule étape."
+     },
+     {
+      "letter": "C",
+      "text": "Le nucléophile attaque du même côté que la liaison C-X qui se rompt."
+     },
+     {
+      "letter": "D",
+      "text": "Dans ces conditions modérées, l'élimination E2 est majoritaire et accompagnée de la SN2."
+     },
+     {
+      "letter": "E",
+      "text": "La substitution nucléophile fonctionne mieux avec un dérivé chloré comme le 1-chloropentane qu'avec le dérivé iodé correspondant."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN2 : absence de formation de carbocation intermédiaire.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "SN2 : en 1 étape.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "SN2 : attaque du nucléophile à l'opposé de la rupture de la liaison C-X.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN2 = réaction majoritaire dans des conditions modérées, accompagnée de la réaction d'élimination E2.",
+      "page": "p.4"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "Nature du RX : RCl → bien ; RI → très très bien.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "On réalise la même substitution nucléophile, avec l'ion hydroxyde OH⁻ et dans les mêmes conditions, sur quatre dérivés halogénés de même groupe alkyle (éthyle) : R-I, R-Br, R-Cl et R-F. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans les quatre composés, le doublet de la liaison C-X est plus proche de C que de X."
+     },
+     {
+      "letter": "B",
+      "text": "Dans les quatre composés, l'halogène est attracteur par effet inductif."
+     },
+     {
+      "letter": "C",
+      "text": "La substitution nucléophile ne fonctionne pas du tout avec R-Cl."
+     },
+     {
+      "letter": "D",
+      "text": "La substitution nucléophile ne fonctionne pas du tout avec R-F."
+     },
+     {
+      "letter": "E",
+      "text": "Dans les quatre composés, l'halogène porte une charge partielle δ⁺."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Doublet de la liaison C-X plus proche de X que de C ⇒ liaison C-X fragilisée.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "X attracteur par effet inductif.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Nature du RX : RCl bien.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Nature du RX : RF pas du tout.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "Polarisation de C-X : X δ⁻ ; C δ⁺.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "Deux halogénures d'alkyle F₁ et F₂, dont le carbone portant l'halogène est asymétrique, sont traités par OH⁻ dans des conditions modérées. F₁ donne un seul énantiomère, de configuration inversée ; F₂ donne les deux énantiomères R et S à 50 % chacun. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La réaction de F₁ est une SN2."
+     },
+     {
+      "letter": "B",
+      "text": "Pour F₁, le nucléophile a attaqué à l'opposé de la liaison C-X rompue."
+     },
+     {
+      "letter": "C",
+      "text": "La réaction de F₂ est une SN1."
+     },
+     {
+      "letter": "D",
+      "text": "Dans le cas de F₂, l'étape lente est l'attaque du nucléophile sur le carbocation."
+     },
+     {
+      "letter": "E",
+      "text": "La réaction de F₁ se fait en deux étapes."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "Un seul composé, inversion de configuration (Walden) : SN2.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "SN2 : attaque à l'opposé de la rupture de la liaison C-X.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Deux composés, R et S dans les mêmes proportions (mélange racémique) : SN1.",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN1 : 1re étape (rupture de C-X et formation de R⁺) = étape lente.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN2 : en 1 étape.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la compétition E1 / SN1 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La SN1 est une réaction non stéréospécifique."
+     },
+     {
+      "letter": "B",
+      "text": "Dans des conditions modérées, la SN1 est la réaction majoritaire face à l'E1."
+     },
+     {
+      "letter": "C",
+      "text": "L'utilisation de nucléophiles très forts augmente la proportion de E1 dans la compétition E1 / SN1."
+     },
+     {
+      "letter": "D",
+      "text": "Dans des conditions modérées, la SN2 est la réaction majoritaire face à l'E2."
+     },
+     {
+      "letter": "E",
+      "text": "Dans le bilan de l'E1 du cours, R-CH₂-CX(R')-R'' conduit à R-CH₂-C(Nu)(R')-R''."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN1 : réaction non stéréospécifique (la SN2 est stéréospécifique).",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "SN1 = réaction majoritaire dans des conditions modérées.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Conditions qui augmentent la proportion de E1 : augmentation de la température, utilisation de nucléophiles très forts.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "SN2 = réaction majoritaire dans des conditions modérées.",
+      "page": "p.4"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "Bilan E1 : R-CH₂-CX(R')-R'' → R-CH=C(R')-R'' (alcène).",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "À propos du mécanisme et de la stéréochimie de la SN1 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La SN1 ne fonctionne pas du tout avec les halogénures d'alkyle primaires."
+     },
+     {
+      "letter": "B",
+      "text": "SN2 signifie substitution nucléophile bimoléculaire."
+     },
+     {
+      "letter": "C",
+      "text": "La SN1 est favorisée lorsque le carbocation intermédiaire formé est stable."
+     },
+     {
+      "letter": "D",
+      "text": "En SN1, en présence d'un carbone asymétrique, on obtient un seul énantiomère."
+     },
+     {
+      "letter": "E",
+      "text": "L'utilisation de nucléophiles très forts augmente la proportion de E2."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN1 : pas du tout avec les primaires ; très bien avec les tertiaires.",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "SN2 = substitution nucléophile bimoléculaire.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Conditions favorables à la SN1 : carbocation intermédiaire formé stable.",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN1 en présence d'un C asymétrique : mélange racémique.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "Conditions qui augmentent la proportion de E2 : augmentation de la température, utilisation de nucléophiles très forts.",
+      "page": "p.4"
+     }
+    }
+   },
+   {
+    "stem": "À propos du mécanisme et de la stéréochimie de la SN2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Selon la règle de Zaytsev, l'E1 forme majoritairement l'alcène le plus substitué."
+     },
+     {
+      "letter": "B",
+      "text": "L'augmentation de la température diminue la proportion de E2."
+     },
+     {
+      "letter": "C",
+      "text": "Lorsque le C portant le nucléofuge est asymétrique, la SN2 conduit à un seul énantiomère : soit le R, soit le S."
+     },
+     {
+      "letter": "D",
+      "text": "La SN2 ne fonctionne pas du tout avec les halogénures d'alkyle secondaires."
+     },
+     {
+      "letter": "E",
+      "text": "En SN2, le nucléophile attaque du même côté que la liaison C-X qui se rompt."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "Règle de Zaytsev : formation majoritaire de l'alcène le plus substitué.",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "Conditions qui augmentent la proportion de E2 : augmentation de la température, nucléophiles très forts.",
+      "page": "p.4"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "SN2 : obtention d'un seul énantiomère, soit le R, soit le S (le mélange R + S en mêmes proportions est propre à la SN1).",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN2 : bien avec les secondaires.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN2 : attaque du nucléophile à l'opposé de la rupture de la liaison C-X.",
+      "page": "p.3"
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "hal-serie-4",
+  "title": "Les halogénures d'alkyle — entraînement 4",
+  "questions": [
+   {
+    "stem": "Le 1-iodopentane, halogénure d'alkyle primaire, est mis à réagir avec un nucléophile Nu⁻ ; on chauffe le milieu en présence d'un nucléophile très fort. Parmi les propositions suivantes, relatives à la compétition entre SN2 et élimination E2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans l'E2, l'H arraché doit être en position trans du groupement C-X."
+     },
+     {
+      "letter": "B",
+      "text": "La SN2 concurrente se fait en deux étapes, via un carbocation intermédiaire."
+     },
+     {
+      "letter": "C",
+      "text": "Dans des conditions modérées, l'E2 serait la réaction majoritaire."
+     },
+     {
+      "letter": "D",
+      "text": "La substitution concurrente est une SN1, qui fonctionne très bien avec les halogénures d'alkyle primaires."
+     },
+     {
+      "letter": "E",
+      "text": "Dans l'E2, le nucléophile Nu⁻ se fixe sur le carbone qui portait X."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "E2 : H arraché en position trans du groupement C-X (transélimination de HX).",
+      "page": "p.4"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN2 : 1 étape, absence de formation de carbocation intermédiaire.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "SN2 = réaction majoritaire dans des conditions modérées, accompagnée de E2.",
+      "page": "p.4"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "Primaires : SN2 très bien ; SN1 pas du tout.",
+      "page": "p.2-3"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "Schéma de l'E2 : Nu⁻ arrache H (en trans de X), X part, formation de C=C.",
+      "page": "p.4"
+     }
+    }
+   },
+   {
+    "stem": "On fait réagir le (2R)-2-chlorohexane (F), halogénure d'alkyle secondaire de configuration R dont le carbone portant l'halogène est asymétrique, avec l'ion hydroxyde OH⁻ (NaOH dilué), dans des conditions modérées. On obtient un seul composé G, et l'halogène est remplacé par OH. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "D'après le schéma de la SN2 du cours, G est de configuration R."
+     },
+     {
+      "letter": "B",
+      "text": "La réaction de F à G est non stéréospécifique."
+     },
+     {
+      "letter": "C",
+      "text": "Un halogénure d'alkyle secondaire comme F fonctionne bien en SN2 comme en SN1."
+     },
+     {
+      "letter": "D",
+      "text": "La réaction de F à G est une substitution nucléophile bimoléculaire."
+     },
+     {
+      "letter": "E",
+      "text": "Le mécanisme de la réaction de F à G ne passe pas par un carbocation intermédiaire."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Schéma de la SN2 : réactif R → produit S (inversion de Walden).",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN2 : réaction stéréospécifique (C portant le nucléofuge asymétrique).",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Secondaires : SN2 bien ; SN1 bien.",
+      "page": "p.2-3"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "SN2 = substitution nucléophile bimoléculaire.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN2 : absence de formation de carbocation intermédiaire.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la substitution nucléophile d'ordre 2 (SN2) :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "En SN2, le nucléophile attaque le centre électrophile Cδ⁺ de RX en même temps que la liaison C-X se rompt."
+     },
+     {
+      "letter": "B",
+      "text": "Dans la liaison C-X polarisée, l'halogène X porte une charge partielle δ⁺."
+     },
+     {
+      "letter": "C",
+      "text": "Dans l'élimination E2, l'alcène se forme par élimination de X₂."
+     },
+     {
+      "letter": "D",
+      "text": "Lorsque le carbone portant le nucléofuge est asymétrique, la SN2 est une réaction non stéréospécifique."
+     },
+     {
+      "letter": "E",
+      "text": "Le bilan de la SN2 s'écrit : RX + Nu⁻ (ou Nu) → RNu (ou RNu⁺) + X⁻."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN2 : attaque du centre électrophile Cδ⁺ en même temps que la rupture de la liaison C-X.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "X porte une charge partielle δ⁻ ; C porte une charge partielle δ⁺.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "E2 : formation de l'alcène le plus stable par transélimination de HX.",
+      "page": "p.4"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN2 : réaction stéréospécifique.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN2 : RX + Nu⁻ (ou Nu) → RNu (ou RNu⁺) + X⁻.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la structure des halogénures d'alkyle :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "En nomenclature, l'halogène X d'un halogénure d'alkyle est traité comme la fonction principale de la molécule."
+     },
+     {
+      "letter": "B",
+      "text": "Dans la liaison C-X, l'halogène X est attracteur par effet inductif."
+     },
+     {
+      "letter": "C",
+      "text": "La réactivité des halogénures d'alkyle est la substitution nucléophile (SN), au cours de laquelle la liaison C-X est brisée."
+     },
+     {
+      "letter": "D",
+      "text": "Dans le mécanisme de la substitution nucléophile, l'halogène X est attaqué par deux électrons d'un nucléophile."
+     },
+     {
+      "letter": "E",
+      "text": "La substitution nucléophile fonctionne très bien avec les dérivés bromés RBr."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Nomenclature : X est traité comme un substituant alkyle (ex. du cours : 4-bromopentane).",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "X est attracteur par effet inductif.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Réactivité : substitution nucléophile (SN), liaison C-X brisée.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "Mécanisme : attaque de R par deux électrons d'un nucléophile, puis rupture de la liaison C-X.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "Nature du RX de départ : RBr très bien.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la substitution nucléophile d'ordre 1 (SN1) :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La SN1 fonctionne très bien avec les halogénures d'alkyle tertiaires."
+     },
+     {
+      "letter": "B",
+      "text": "Le bilan d'une substitution nucléophile avec un nucléophile de type Nu⁻ s'écrit : Nu⁻ + R-X → R-Nu + X⁻."
+     },
+     {
+      "letter": "C",
+      "text": "Les nucléophiles neutres de type Nu: possèdent une charge négative portée par l'atome nucléophile."
+     },
+     {
+      "letter": "D",
+      "text": "L'ordre de stabilité et de réactivité des carbocations est : C⁺(III) > C⁺(II) > C⁺(I)."
+     },
+     {
+      "letter": "E",
+      "text": "SN1 signifie substitution nucléophile unimoléculaire."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN1 : très bien avec les tertiaires, bien avec les secondaires, pas du tout avec les primaires.",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Avec Nu⁻ : Nu⁻ + R-X → R-Nu + X⁻ (R-Nu⁺ n'est obtenu qu'avec un nucléophile neutre Nu:).",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Nucléophiles neutres : ils possèdent deux électrons libres (Nu:).",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Ordre de stabilité et de réactivité : C⁺(III) > C⁺(II) > C⁺(I).",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN1 = substitution nucléophile unimoléculaire (SN2 = bimoléculaire).",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la polarisation de la liaison C-X :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Le mécanisme de la substitution nucléophile conserve la liaison C-X et forme une liaison X-Nu."
+     },
+     {
+      "letter": "B",
+      "text": "Dans la liaison C-X polarisée, l'halogène X porte une charge partielle δ⁺."
+     },
+     {
+      "letter": "C",
+      "text": "Le doublet de la liaison C-X est plus proche de X que de C, ce qui fragilise la liaison C-X."
+     },
+     {
+      "letter": "D",
+      "text": "La SN2 est accompagnée de la réaction d'élimination E1."
+     },
+     {
+      "letter": "E",
+      "text": "La réactivité des halogénures d'alkyle est l'addition nucléophile, au cours de laquelle la liaison C-X est conservée."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Mécanisme de la SN : rupture de la liaison C-X ; X⁻ part (groupe partant).",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "X porte une charge partielle δ⁻ ; C porte une charge partielle δ⁺.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Doublet de la liaison C-X plus proche de X que de C ⇒ liaison C-X fragilisée.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN2 accompagnée de E2 (la SN1 est accompagnée de E1).",
+      "page": "p.4"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "Réactivité : substitution nucléophile (SN), liaison C-X brisée.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "Parmi les propositions suivantes, relatives à la SN2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "En SN2, si X est à l'avant du plan, le nucléophile attaque par l'arrière."
+     },
+     {
+      "letter": "B",
+      "text": "L'ion carboxylate RCOO⁻ est un nucléophile neutre de type Nu:."
+     },
+     {
+      "letter": "C",
+      "text": "CN⁻, OH⁻ et RS⁻ sont des nucléophiles chargés de type Nu⁻."
+     },
+     {
+      "letter": "D",
+      "text": "La SN2 passe par la formation d'un carbocation intermédiaire."
+     },
+     {
+      "letter": "E",
+      "text": "La SN2 ne fonctionne pas du tout avec les halogénures d'alkyle primaires."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN2 : si X à l'avant du plan, attaque du nucléophile par l'arrière, et inversement.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "RCOO⁻ (= carboxylate) figure parmi les nucléophiles chargés Nu⁻.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Nucléophiles chargés Nu⁻ : CN⁻ ; OH⁻ ; RS⁻ ; R-C≡C⁻ ; RO⁻ ; RCOO⁻.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN2 : absence de formation de carbocation intermédiaire.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN2 : pas du tout avec les tertiaires ; très bien avec les primaires.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "On fait réagir un dérivé bromé R-Br avec un thiol RSH, utilisé comme nucléophile. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Le remplacement de R-Br par le dérivé fluoré R-F empêcherait totalement la substitution."
+     },
+     {
+      "letter": "B",
+      "text": "L'ion Br⁻ libéré est le groupe partant (nucléofuge)."
+     },
+     {
+      "letter": "C",
+      "text": "RSH est un nucléophile chargé de type Nu⁻."
+     },
+     {
+      "letter": "D",
+      "text": "L'ion carboxylate RCOO⁻ serait, contrairement à RSH, un nucléophile chargé."
+     },
+     {
+      "letter": "E",
+      "text": "Si R-Br était un halogénure d'alkyle primaire, la substitution suivrait une SN2 et non une SN1."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "Nature du RX : RF pas du tout.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "X⁻ = nucléofuge = groupe partant.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Nucléophiles neutres possédant deux électrons libres Nu: : R-OH ; H₂O ; RSH ; Ph₃P.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "RCOO⁻ (= carboxylate) est un nucléophile chargé Nu⁻.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "Primaires : SN2 très bien ; SN1 pas du tout.",
+      "page": "p.2-3"
+     }
+    }
+   },
+   {
+    "stem": "On fait réagir le (2R)-2-bromopentane (F), halogénure d'alkyle secondaire de configuration R dont le carbone portant l'halogène est asymétrique, avec l'ion hydroxyde OH⁻ (NaOH dilué), dans des conditions modérées. On obtient un seul composé G, et l'halogène est remplacé par OH. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La réaction de F à G conduit aux énantiomères R et S dans les mêmes proportions."
+     },
+     {
+      "letter": "B",
+      "text": "Le bilan de la réaction s'écrit : F + OH⁻ → G + X⁻, X⁻ étant le groupe partant."
+     },
+     {
+      "letter": "C",
+      "text": "Si l'halogène de F est à l'avant du plan, le nucléophile attaque lui aussi par l'avant."
+     },
+     {
+      "letter": "D",
+      "text": "La substitution nucléophile ne fonctionne pas du tout avec un dérivé bromé comme le 2-bromopentane."
+     },
+     {
+      "letter": "E",
+      "text": "G est obtenu sous la forme d'un mélange racémique."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "SN2 : obtention d'un seul énantiomère, soit le R, soit le S.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Avec un nucléophile chargé Nu⁻ : Nu⁻ + R-X → R-Nu + X⁻ (R-Nu⁺ seulement avec un nucléophile neutre Nu:).",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "SN2 : si X à l'avant du plan, attaque du nucléophile par l'arrière, et inversement.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "Nature du RX : dérivés bromés RBr → très bien.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN2 : inversion de configuration appelée inversion de Walden ; un seul énantiomère.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "Parmi les propositions suivantes, relatives à l'E1 et à la règle de Zaytsev :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans les conditions qui augmentent la proportion de E1, la SN1 reste toujours majoritaire."
+     },
+     {
+      "letter": "B",
+      "text": "Dans le schéma de l'élimination E2, c'est l'halogène X qui arrache l'atome H."
+     },
+     {
+      "letter": "C",
+      "text": "Selon la règle de Zaytsev, l'E1 forme majoritairement l'alcène le plus substitué."
+     },
+     {
+      "letter": "D",
+      "text": "La réaction d'élimination d'ordre 1 (E1) d'un halogénure d'alkyle forme un produit de substitution R-Nu."
+     },
+     {
+      "letter": "E",
+      "text": "Le bilan d'une substitution nucléophile avec un nucléophile neutre de type Nu: s'écrit : Nu: + R-X → R-Nu⁺ + X⁻."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "Conditions qui augmentent E1 « mais SN1 toujours majoritaire ».",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "Schéma de l'E2 : Nu⁻ arrache H (en trans de X) et X part.",
+      "page": "p.4"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Règle de Zaytsev : formation majoritaire de l'alcène le plus substitué.",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "E1 : composé formé = alcène.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "Avec Nu: : Nu: + R-X → R-Nu⁺ + X⁻.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la réaction d'élimination E2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "R-OH et RO⁻ font tous deux partie des nucléophiles chargés de type Nu⁻."
+     },
+     {
+      "letter": "B",
+      "text": "Dans la substitution nucléophile, l'ion X⁻ libéré est appelé nucléofuge, ou groupe partant."
+     },
+     {
+      "letter": "C",
+      "text": "L'élimination E2 applique la règle de Saytsev : formation de l'alcène le moins stable."
+     },
+     {
+      "letter": "D",
+      "text": "Dans l'élimination E2, l'H arraché doit être en position trans du groupement C-X."
+     },
+     {
+      "letter": "E",
+      "text": "La réaction d'élimination E2 conduit à l'obtention d'un alcène."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "RO⁻ et R-C≡C⁻ sont des nucléophiles chargés ; R-OH est un nucléophile neutre.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "X⁻ = nucléofuge = groupe partant.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "E2 : règle de Saytsev, formation de l'alcène le plus stable.",
+      "page": "p.4"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "E2 : H arraché en position trans du groupement C-X.",
+      "page": "p.4"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "E2 : obtention d'un alcène.",
+      "page": "p.4"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la réaction d'élimination d'ordre 1 (E1) :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Le bilan de la SN2 s'écrit : RX + Nu⁻ (ou Nu) → RNu (ou RNu⁺) + X⁻."
+     },
+     {
+      "letter": "B",
+      "text": "La SN1 est accompagnée de la réaction d'élimination E2, qui est minoritaire."
+     },
+     {
+      "letter": "C",
+      "text": "La SN1 se déroule en 2 étapes."
+     },
+     {
+      "letter": "D",
+      "text": "La réaction d'élimination d'ordre 1 (E1) d'un halogénure d'alkyle forme un alcène."
+     },
+     {
+      "letter": "E",
+      "text": "L'alcène formé majoritairement selon la règle de Zaytsev est le moins hydrogéné."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN2 : RX + Nu⁻ (ou Nu) → RNu (ou RNu⁺) + X⁻.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN1 accompagnée de la réaction d'élimination E1 (minoritaire) ; la SN2 est accompagnée de E2.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "SN1 : en 2 étapes (SN2 : en 1 étape).",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "E1 : composé formé = alcène.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "Alcène de Zaytsev : le plus substitué = le moins hydrogéné = le plus stable.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "Parmi les propositions suivantes, relatives à la SN1 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La SN1 est une réaction non stéréospécifique."
+     },
+     {
+      "letter": "B",
+      "text": "L'alcène formé majoritairement selon la règle de Zaytsev est le moins stable."
+     },
+     {
+      "letter": "C",
+      "text": "En SN2, le nucléophile attaque à l'opposé de la rupture de la liaison C-X."
+     },
+     {
+      "letter": "D",
+      "text": "La SN1 est favorisée lorsque le carbocation intermédiaire formé est stable."
+     },
+     {
+      "letter": "E",
+      "text": "La 2e étape de la SN1, attaque du nucléophile sur le carbocation, est l'étape lente."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN1 : réaction non stéréospécifique (la SN2 est stéréospécifique).",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "Alcène de Zaytsev : le plus stable.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "SN2 : attaque du nucléophile à l'opposé de la rupture de la liaison C-X.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Conditions favorables à la SN1 : carbocation intermédiaire formé stable.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "L'étape lente de la SN1 est la 1re : R-X → R⁺ + X⁻.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "On fait réagir le 1-bromohexane, halogénure d'alkyle primaire, avec un ion carboxylate RCOO⁻, dans des conditions modérées. On obtient un seul produit de substitution G. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Chauffer le milieu réactionnel diminuerait la proportion d'élimination E2."
+     },
+     {
+      "letter": "B",
+      "text": "Le nucléophile utilisé est un nucléophile chargé de type Nu⁻."
+     },
+     {
+      "letter": "C",
+      "text": "Aucun carbocation intermédiaire n'est formé au cours de la formation de G."
+     },
+     {
+      "letter": "D",
+      "text": "L'ion halogénure libéré au cours de la réaction est le nucléofuge, ou groupe partant."
+     },
+     {
+      "letter": "E",
+      "text": "Le nucléophile attaque le carbone Cδ⁺ après la rupture complète de la liaison C-X."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Augmentation de la température : augmente la proportion de E2.",
+      "page": "p.4"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Nucléophiles chargés Nu⁻ : CN⁻ ; OH⁻ ; RS⁻ ; R-C≡C⁻ ; RO⁻ ; RCOO⁻.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "SN2 : absence de formation de carbocation intermédiaire.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "X⁻ = nucléofuge = groupe partant.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN2 : attaque du centre électrophile Cδ⁺ en même temps que la rupture de la liaison C-X.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "Parmi les propositions suivantes, relatives à la liaison C-X des halogénures d'alkyle :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans la représentation R-X d'un halogénure d'alkyle, X désigne un nucléophile."
+     },
+     {
+      "letter": "B",
+      "text": "La substitution nucléophile fonctionne bien avec les dérivés chlorés RCl."
+     },
+     {
+      "letter": "C",
+      "text": "La SN2 se fait sans formation de carbocation intermédiaire."
+     },
+     {
+      "letter": "D",
+      "text": "Le doublet de la liaison C-X est plus proche de C que de X, ce qui fragilise la liaison C-X."
+     },
+     {
+      "letter": "E",
+      "text": "En nomenclature, l'halogène X d'un halogénure d'alkyle est traité comme la fonction principale de la molécule."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Représentation R-X : X = halogène (I, Br, Cl, F).",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Nature du RX de départ : RCl bien, RI très très bien.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "SN2 : absence de formation de carbocation intermédiaire.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "Doublet de la liaison C-X plus proche de X que de C ⇒ liaison C-X fragilisée.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "Nomenclature : X est traité comme un substituant alkyle (ex. du cours : 4-bromopentane).",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la compétition E2 / SN2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "L'élimination E2 passe par la formation intermédiaire d'un carbocation."
+     },
+     {
+      "letter": "B",
+      "text": "Dans des conditions modérées, l'E2 est la réaction majoritaire face à la SN2."
+     },
+     {
+      "letter": "C",
+      "text": "R-OH et RO⁻ font tous deux partie des nucléophiles chargés de type Nu⁻."
+     },
+     {
+      "letter": "D",
+      "text": "L'augmentation de la température augmente la proportion de E2."
+     },
+     {
+      "letter": "E",
+      "text": "La 1re étape de la SN1 est la rupture de la liaison C-X avec formation d'un carbocation intermédiaire R⁺."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "E2 : pas de formation intermédiaire d'un carbocation.",
+      "page": "p.4"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN2 = réaction majoritaire dans des conditions modérées.",
+      "page": "p.4"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "RO⁻ et R-C≡C⁻ sont des nucléophiles chargés ; R-OH est un nucléophile neutre.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Conditions qui augmentent la proportion de E2 : augmentation de la température, nucléophiles très forts.",
+      "page": "p.4"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN1 : 1. rupture de C-X et formation du carbocation R⁺ ; 2. attaque du nucléophile sur le carbocation.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la substitution nucléophile (SN) des halogénures d'alkyle :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans le mécanisme de la substitution nucléophile, R est attaqué par deux électrons d'un nucléophile."
+     },
+     {
+      "letter": "B",
+      "text": "Dans la liaison C-X, l'halogène X est donneur par effet inductif."
+     },
+     {
+      "letter": "C",
+      "text": "Le bilan d'une substitution nucléophile avec un nucléophile neutre de type Nu: s'écrit : Nu: + R-X → R-Nu + X⁺."
+     },
+     {
+      "letter": "D",
+      "text": "En SN1, en présence d'un carbone asymétrique, on obtient un mélange racémique."
+     },
+     {
+      "letter": "E",
+      "text": "Le mécanisme de la substitution nucléophile comporte la rupture de la liaison C-X."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "Mécanisme : attaque de R par deux électrons d'un nucléophile, puis rupture de la liaison C-X.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "X est attracteur par effet inductif.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Avec Nu: : Nu: + R-X → R-Nu⁺ + X⁻.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "SN1 en présence d'un C asymétrique : mélange racémique.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "Mécanisme de la SN : rupture de la liaison C-X ; X⁻ part (groupe partant).",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "Deux halogénures d'alkyle F₁ et F₂, dont le carbone portant l'halogène est asymétrique, sont traités par OH⁻ dans des conditions modérées. F₁ donne un seul composé, obtenu avec inversion de configuration ; F₂ donne deux composés en mêmes proportions (mélange racémique). Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "F₁ ne peut pas être un halogénure d'alkyle tertiaire."
+     },
+     {
+      "letter": "B",
+      "text": "Dans le cas de F₂, l'étape lente est l'attaque du nucléophile sur le carbocation."
+     },
+     {
+      "letter": "C",
+      "text": "Pour F₁, le nucléophile a attaqué du même côté que la liaison C-X rompue."
+     },
+     {
+      "letter": "D",
+      "text": "F₂ ne peut pas être un halogénure d'alkyle primaire."
+     },
+     {
+      "letter": "E",
+      "text": "La réaction de F₂ se fait sans carbocation intermédiaire."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN2 : très bien avec les primaires, bien avec les secondaires, pas du tout avec les tertiaires.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN1 : 1re étape (rupture de C-X et formation de R⁺) = étape lente.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "SN2 : attaque à l'opposé de la rupture de la liaison C-X.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "SN1 : très bien avec les tertiaires, bien avec les secondaires, pas du tout avec les primaires.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN1 : carbocation intermédiaire ; attaque par l'avant ou par l'arrière du carbocation plan.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "À propos du mécanisme et de la stéréochimie de la SN2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La SN2 se déroule en 1 étape."
+     },
+     {
+      "letter": "B",
+      "text": "La 2e étape de la SN1 est la rupture de la liaison C-X avec départ du nucléofuge X⁻."
+     },
+     {
+      "letter": "C",
+      "text": "La SN2 conduit à l'obtention de deux composés."
+     },
+     {
+      "letter": "D",
+      "text": "La SN2 ne fonctionne pas du tout avec les halogénures d'alkyle tertiaires."
+     },
+     {
+      "letter": "E",
+      "text": "Le bilan d'une substitution nucléophile avec un nucléophile de type Nu⁻ s'écrit : Nu⁻ + R-X → R-Nu⁺ + X⁻."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN2 : en 1 étape.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "2e étape : attaque du nucléophile sur le carbocation, R⁺ + Nu⁻ (ou Nu) → RNu (ou RNu⁺).",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "SN2 : obtention d'un seul composé (SN1 : deux composés).",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "SN2 : pas du tout avec les tertiaires ; très bien avec les primaires.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "Avec Nu⁻ : Nu⁻ + R-X → R-Nu + X⁻ (R-Nu⁺ n'est obtenu qu'avec un nucléophile neutre Nu:).",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "L'halogénure d'alkyle tertiaire (CH₃)₃C-Br est mis à réagir avec un nucléophile Nu⁻ ; on chauffe le milieu réactionnel. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans des conditions modérées, la proportion d'E1 serait plus faible, la SN1 restant majoritaire."
+     },
+     {
+      "letter": "B",
+      "text": "Dans la SN1, l'attaque du nucléophile sur le carbocation est l'étape lente."
+     },
+     {
+      "letter": "C",
+      "text": "Le produit de l'élimination E1 est l'alcène (CH₃)₂C=CH₂."
+     },
+     {
+      "letter": "D",
+      "text": "L'élimination concurrente de la SN1 est l'élimination E2."
+     },
+     {
+      "letter": "E",
+      "text": "Ces conditions augmentent la proportion de l'élimination E1."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN1 = réaction majoritaire dans des conditions modérées ; E1 minoritaire.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN1 : 1re étape (rupture de C-X, formation de R⁺) = étape lente.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Exemple du cours : SN1 → (CH₃)₃C-Nu ; E1 → (CH₃)₂C=CH₂.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN1 accompagnée de la réaction d'élimination E1.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "Augmentation de la température et nucléophiles très forts augmentent la proportion de E1.",
+      "page": "p.3"
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "hal-serie-5",
+  "title": "Les halogénures d'alkyle — entraînement 5",
+  "questions": [
+   {
+    "stem": "Parmi les propositions suivantes, relatives à l'élimination E2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans le schéma de l'élimination E2, c'est le nucléophile Nu⁻ qui arrache l'atome H."
+     },
+     {
+      "letter": "B",
+      "text": "La SN2 est accompagnée de la réaction d'élimination E2."
+     },
+     {
+      "letter": "C",
+      "text": "R-OH, H₂O, RSH et Ph₃P sont des nucléophiles chargés de type Nu⁻."
+     },
+     {
+      "letter": "D",
+      "text": "Dans l'élimination E2, l'H arraché doit être en position cis du groupement C-X."
+     },
+     {
+      "letter": "E",
+      "text": "La substitution nucléophile fonctionne mieux avec les dérivés chlorés RCl qu'avec les dérivés bromés RBr."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "Schéma de l'E2 : Nu⁻ arrache H (en trans de X) et X part.",
+      "page": "p.4"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "SN2 accompagnée de E2 (la SN1 est accompagnée de E1).",
+      "page": "p.4"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Nucléophiles neutres possédant deux électrons libres : R-OH ; H₂O ; RSH ; Ph₃P.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "E2 : H arraché en position trans du groupement C-X.",
+      "page": "p.4"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "RBr : très bien ; RCl : bien.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "À propos du mécanisme et de la stéréochimie de la SN1 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La SN1 ne fonctionne pas du tout avec les halogénures d'alkyle primaires."
+     },
+     {
+      "letter": "B",
+      "text": "Pour (CH₃)₃C-X, la SN1 conduit à (CH₃)₂C=CH₂ et l'E1 conduit à (CH₃)₃C-Nu."
+     },
+     {
+      "letter": "C",
+      "text": "La SN1 conduit à l'obtention de deux composés."
+     },
+     {
+      "letter": "D",
+      "text": "Dans l'élimination E2, l'alcène se forme par transélimination de HX."
+     },
+     {
+      "letter": "E",
+      "text": "La SN1 fonctionne très bien avec les halogénures d'alkyle tertiaires."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN1 : pas du tout avec les primaires ; très bien avec les tertiaires.",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "Exemple du cours : SN1 → (CH₃)₃C-Nu ; E1 → (CH₃)₂C=CH₂.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "SN1 : obtention de deux composés (SN2 : un seul composé).",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "E2 : formation de l'alcène le plus stable par transélimination de HX.",
+      "page": "p.4"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN1 : très bien avec les tertiaires, bien avec les secondaires, pas du tout avec les primaires.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la réaction d'élimination E2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La réaction d'élimination E2 conduit à l'obtention d'un alcène."
+     },
+     {
+      "letter": "B",
+      "text": "L'utilisation de nucléophiles très forts diminue la proportion de E2 au profit de la SN2."
+     },
+     {
+      "letter": "C",
+      "text": "L'élimination E2 applique la règle de Saytsev : formation de l'alcène le moins stable."
+     },
+     {
+      "letter": "D",
+      "text": "Dans les conditions qui augmentent la proportion de E1, la SN1 reste toujours majoritaire."
+     },
+     {
+      "letter": "E",
+      "text": "Dans le bilan de l'E1 du cours, R-CH₂-CX(R')-R'' conduit à R-CH₂-C(Nu)(R')-R''."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "E2 : obtention d'un alcène.",
+      "page": "p.4"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "Conditions qui augmentent la proportion de E2 : augmentation de la température, utilisation de nucléophiles très forts.",
+      "page": "p.4"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "E2 : règle de Saytsev, formation de l'alcène le plus stable.",
+      "page": "p.4"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Conditions qui augmentent E1 « mais SN1 toujours majoritaire ».",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "Bilan E1 : R-CH₂-CX(R')-R'' → R-CH=C(R')-R'' (alcène).",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la substitution nucléophile d'ordre 2 (SN2) :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans l'écriture de la SN1, l'halogénure d'alkyle de départ peut être R ou S."
+     },
+     {
+      "letter": "B",
+      "text": "La SN2 fonctionne très bien avec les halogénures d'alkyle primaires."
+     },
+     {
+      "letter": "C",
+      "text": "Lorsque le C portant le nucléofuge est asymétrique, la SN2 conduit aux deux énantiomères R et S dans les mêmes proportions."
+     },
+     {
+      "letter": "D",
+      "text": "Lorsque le carbone portant le nucléofuge est asymétrique, la SN2 est une réaction non stéréospécifique."
+     },
+     {
+      "letter": "E",
+      "text": "En SN1, le nucléophile attaque le carbocation plan soit par l'avant, soit par l'arrière."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "Écriture de la SN1 : réactif R ou S.",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "SN2 : très bien avec les primaires, bien avec les secondaires, pas du tout avec les tertiaires.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "SN2 : obtention d'un seul énantiomère, soit le R, soit le S (le mélange R + S en mêmes proportions est propre à la SN1).",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN2 : réaction stéréospécifique.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN1 : attaque du nucléophile soit par l'avant, soit par l'arrière du carbocation plan.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la compétition E1 / SN1 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "CN⁻, OH⁻ et RS⁻ sont des nucléophiles neutres possédant deux électrons libres."
+     },
+     {
+      "letter": "B",
+      "text": "L'augmentation de la température augmente la proportion de E1 dans la compétition E1 / SN1."
+     },
+     {
+      "letter": "C",
+      "text": "La SN2 s'accompagne d'une inversion de configuration appelée règle de Zaytsev."
+     },
+     {
+      "letter": "D",
+      "text": "Dans des conditions modérées, l'E1 est la réaction majoritaire face à la SN1."
+     },
+     {
+      "letter": "E",
+      "text": "L'utilisation de nucléophiles très forts augmente la proportion de E1 dans la compétition E1 / SN1."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Nucléophiles chargés Nu⁻ : CN⁻ ; OH⁻ ; RS⁻ ; R-C≡C⁻ ; RO⁻ ; RCOO⁻.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Conditions qui augmentent la proportion de E1 : augmentation de la température, nucléophiles très forts.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "SN2 : inversion de configuration appelée inversion de Walden (Zaytsev = régiosélectivité de l'élimination).",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN1 = réaction majoritaire dans des conditions modérées.",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "Conditions qui augmentent la proportion de E1 : augmentation de la température, utilisation de nucléophiles très forts.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "On réalise la même substitution nucléophile, avec l'ion hydroxyde OH⁻ et dans les mêmes conditions, sur quatre dérivés halogénés de même groupe alkyle (propyle) : R-I, R-Br, R-Cl et R-F. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La substitution nucléophile fonctionne très très bien avec R-I."
+     },
+     {
+      "letter": "B",
+      "text": "Le nucléophile utilisé est un nucléophile chargé de type Nu⁻."
+     },
+     {
+      "letter": "C",
+      "text": "Dans les quatre composés, l'halogène est la cible du nucléophile."
+     },
+     {
+      "letter": "D",
+      "text": "La substitution nucléophile ne fonctionne pas du tout avec R-Br."
+     },
+     {
+      "letter": "E",
+      "text": "La substitution nucléophile fonctionne mieux avec R-Br qu'avec R-Cl."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "Nature du RX : RI très très bien ; RCl bien.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Nucléophiles chargés Nu⁻ : CN⁻ ; OH⁻ ; RS⁻ ; R-C≡C⁻ ; RO⁻ ; RCOO⁻.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "C porte une charge partielle δ⁺ : cible des nucléophiles.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "Nature du RX : RBr très bien.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "RBr : très bien ; RCl : bien.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "On fait réagir un dérivé bromé R-Br avec la triphénylphosphine Ph₃P, utilisé comme nucléophile. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "L'ion carboxylate RCOO⁻ serait, contrairement à Ph₃P, un nucléophile chargé."
+     },
+     {
+      "letter": "B",
+      "text": "Le bilan de la substitution s'écrit : Nu: + R-Br → R-Nu + Br⁻, le produit étant neutre."
+     },
+     {
+      "letter": "C",
+      "text": "Ph₃P est un nucléophile neutre possédant deux électrons libres."
+     },
+     {
+      "letter": "D",
+      "text": "La substitution nucléophile fonctionne très bien avec un dérivé bromé comme R-Br."
+     },
+     {
+      "letter": "E",
+      "text": "La liaison C-Br est brisée au cours de la réaction."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "RCOO⁻ (= carboxylate) est un nucléophile chargé Nu⁻.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "Avec un nucléophile neutre Nu: : Nu: + R-X → R-Nu⁺ + X⁻.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Nucléophiles neutres possédant deux électrons libres Nu: : R-OH ; H₂O ; RSH ; Ph₃P.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Nature du RX : RBr très bien.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "Réactivité : SN, liaison C-X brisée.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "Le 1-bromobutane, halogénure d'alkyle primaire, est mis à réagir avec un nucléophile Nu⁻ ; on chauffe le milieu réactionnel. Parmi les propositions suivantes, relatives à la compétition entre SN2 et élimination E2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La réaction d'élimination E2 conduit à un alcène."
+     },
+     {
+      "letter": "B",
+      "text": "L'élimination E2 passe par la formation intermédiaire d'un carbocation primaire."
+     },
+     {
+      "letter": "C",
+      "text": "Dans des conditions modérées, l'E2 serait la réaction majoritaire."
+     },
+     {
+      "letter": "D",
+      "text": "L'E2 forme l'alcène le moins stable, par transélimination de HX."
+     },
+     {
+      "letter": "E",
+      "text": "Ces conditions diminuent la proportion de la réaction d'élimination E2."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "E2 : obtention d'un alcène.",
+      "page": "p.4"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "E2 : pas de formation intermédiaire d'un carbocation.",
+      "page": "p.4"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "SN2 = réaction majoritaire dans des conditions modérées, accompagnée de E2.",
+      "page": "p.4"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "Règle de Saytsev : formation de l'alcène le plus stable par transélimination de HX.",
+      "page": "p.4"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "Conditions qui augmentent la proportion de E2 : augmentation de la température ; nucléophiles très forts.",
+      "page": "p.4"
+     }
+    }
+   },
+   {
+    "stem": "On fait réagir le 3-bromo-3-méthylheptane — halogénure d'alkyle tertiaire F dont le carbone portant l'halogène est asymétrique — avec l'ion méthanolate CH₃O⁻ (de type RO⁻), dans des conditions modérées. On obtient deux produits de substitution G et G'. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La substitution nucléophile ne fonctionne pas du tout avec un dérivé bromé comme ce composé."
+     },
+     {
+      "letter": "B",
+      "text": "La formation de G et G' se déroule en 1 étape, le nucléophile attaquant pendant la rupture de la liaison C-X."
+     },
+     {
+      "letter": "C",
+      "text": "G et G' sont des énantiomères obtenus dans les mêmes proportions."
+     },
+     {
+      "letter": "D",
+      "text": "Le carbocation formé à partir de F est un carbocation tertiaire C⁺(III), le moins stable."
+     },
+     {
+      "letter": "E",
+      "text": "La formation de G et G' se fait sans carbocation intermédiaire."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Nature du RX : dérivés bromés RBr → très bien.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN1 : 2 étapes ; 1re étape (R-X → R⁺ + X⁻) = étape lente.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "SN1 en présence d'un C asymétrique : énantiomères R et S dans les mêmes proportions (50 % / 50 %).",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "Ordre de stabilité et de réactivité : C⁺(III) > C⁺(II) > C⁺(I) ; SN1 favorisée si carbocation stable.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN1 : 1re étape = rupture de C-X et formation d'un carbocation intermédiaire R⁺.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "Parmi les propositions suivantes, relatives aux nucléophiles :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La SN1 ne fonctionne pas du tout avec les halogénures d'alkyle secondaires."
+     },
+     {
+      "letter": "B",
+      "text": "La substitution nucléophile ne fonctionne pas du tout avec les dérivés halogénés iodés RI."
+     },
+     {
+      "letter": "C",
+      "text": "L'ion carboxylate RCOO⁻ est un nucléophile neutre de type Nu:."
+     },
+     {
+      "letter": "D",
+      "text": "Les nucléophiles neutres de type Nu: possèdent une charge négative portée par l'atome nucléophile."
+     },
+     {
+      "letter": "E",
+      "text": "La SN2 fonctionne bien avec les halogénures d'alkyle secondaires."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "SN1 : bien avec les secondaires.",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "Nature du RX de départ : RI très très bien ; RBr très bien ; RCl bien ; RF pas du tout.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "RCOO⁻ (= carboxylate) figure parmi les nucléophiles chargés Nu⁻.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "Nucléophiles neutres : ils possèdent deux électrons libres (Nu:).",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN2 : bien avec les secondaires.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "À propos de la nature du dérivé halogéné RX de départ :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "L'ion carboxylate RCOO⁻ est un nucléophile chargé de type Nu⁻."
+     },
+     {
+      "letter": "B",
+      "text": "La substitution nucléophile ne fonctionne pas du tout avec les dérivés bromés RBr."
+     },
+     {
+      "letter": "C",
+      "text": "La substitution nucléophile fonctionne très très bien avec les dérivés fluorés RF."
+     },
+     {
+      "letter": "D",
+      "text": "Dans l'écriture de la SN1, l'un des deux produits est obtenu à 75 % et l'autre à 25 %."
+     },
+     {
+      "letter": "E",
+      "text": "Dans la liaison C-X polarisée, le carbone porte une charge partielle δ⁻ et constitue la cible des nucléophiles."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "RCOO⁻ (= carboxylate) figure parmi les nucléophiles chargés Nu⁻.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "Nature du RX de départ : RBr très bien.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Nature du RX de départ : RF pas du tout.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN1 : deux produits à 50 % / 50 % (R et S si présence d'un C*).",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "C porte une charge partielle δ⁺ : il est la cible des nucléophiles.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "On fait réagir le 3-bromo-3-méthylhexane — halogénure d'alkyle tertiaire F dont le carbone portant l'halogène est asymétrique — avec l'ion hydroxyde OH⁻ (NaOH dilué), dans des conditions modérées. On obtient deux produits de substitution G et G'. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Une élimination E1 majoritaire accompagne la formation de G et G'."
+     },
+     {
+      "letter": "B",
+      "text": "G et G' ne forment pas un mélange racémique, car la SN1 est stéréospécifique."
+     },
+     {
+      "letter": "C",
+      "text": "La formation de G et G' est une substitution nucléophile d'ordre 1 (SN1)."
+     },
+     {
+      "letter": "D",
+      "text": "Le nucléophile attaque exclusivement par l'arrière, à l'opposé de l'halogène."
+     },
+     {
+      "letter": "E",
+      "text": "L'alcène issu de l'E1 concurrente serait majoritairement l'alcène le moins substitué."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "SN1 = réaction majoritaire dans des conditions modérées, accompagnée de l'E1 minoritaire.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN1 : non stéréospécifique ; en présence d'un C asymétrique, mélange racémique.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Halogénure tertiaire et obtention de deux composés : SN1 (très bien avec les tertiaires ; la SN2 ne fonctionne pas du tout avec les tertiaires).",
+      "page": "p.2-3"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN1 : attaque soit par l'avant, soit par l'arrière du carbocation plan.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "Règle de Zaytsev : formation majoritaire de l'alcène le plus substitué.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "Deux halogénures d'alkyle F₁ et F₂, dont le carbone portant l'halogène est asymétrique, sont traités par OH⁻ dans des conditions modérées. F₁ donne un seul énantiomère, de configuration inversée ; F₂ donne les deux énantiomères R et S à 50 % chacun. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La réaction de F₁ est une SN1."
+     },
+     {
+      "letter": "B",
+      "text": "La réaction de F₂ se fait sans carbocation intermédiaire."
+     },
+     {
+      "letter": "C",
+      "text": "La réaction de F₁ se fait en deux étapes."
+     },
+     {
+      "letter": "D",
+      "text": "La réaction de F₁ est stéréospécifique, contrairement à celle de F₂."
+     },
+     {
+      "letter": "E",
+      "text": "F₁ ne peut pas être un halogénure d'alkyle tertiaire."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Un seul composé, inversion de configuration (Walden) : SN2.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN1 : carbocation intermédiaire ; attaque par l'avant ou par l'arrière du carbocation plan.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "SN2 : en 1 étape.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "SN2 stéréospécifique ; SN1 non stéréospécifique.",
+      "page": "p.2-3"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN2 : très bien avec les primaires, bien avec les secondaires, pas du tout avec les tertiaires.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "Parmi les propositions suivantes, relatives à la SN2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "SN2 signifie substitution nucléophile unimoléculaire."
+     },
+     {
+      "letter": "B",
+      "text": "En SN1, en présence d'un carbone asymétrique, l'énantiomère R est obtenu en plus grande proportion que l'énantiomère S."
+     },
+     {
+      "letter": "C",
+      "text": "Dans la substitution nucléophile, l'ion X⁻ libéré est appelé nucléofuge, ou groupe partant."
+     },
+     {
+      "letter": "D",
+      "text": "Dans le schéma de la SN2 du cours, le réactif de configuration R conduit à un produit de configuration R."
+     },
+     {
+      "letter": "E",
+      "text": "En SN2, le nucléophile attaque le centre électrophile Cδ⁺ de RX après la rupture complète de la liaison C-X."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "SN2 = substitution nucléophile bimoléculaire.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "SN1 : énantiomères R et S dans les mêmes proportions.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "X⁻ = nucléofuge = groupe partant.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "Schéma de la SN2 : réactif R → produit S (inversion de Walden).",
+      "page": "p.3"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN2 : attaque du centre électrophile Cδ⁺ en même temps que la rupture de la liaison C-X.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la substitution nucléophile d'ordre 1 (SN1) :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "En SN1, le nucléophile attaque le carbocation plan uniquement par l'arrière, à l'opposé du nucléofuge."
+     },
+     {
+      "letter": "B",
+      "text": "L'ordre de stabilité et de réactivité des carbocations est : C⁺(III) > C⁺(II) > C⁺(I)."
+     },
+     {
+      "letter": "C",
+      "text": "Le bilan d'une substitution nucléophile avec un nucléophile neutre de type Nu: s'écrit : Nu: + R-X → R-Nu + X⁺."
+     },
+     {
+      "letter": "D",
+      "text": "Dans le schéma de l'élimination E2, c'est l'halogène X qui arrache l'atome H."
+     },
+     {
+      "letter": "E",
+      "text": "La SN1 ne fonctionne pas du tout avec les halogénures d'alkyle secondaires."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "SN1 : attaque du nucléophile soit par l'avant, soit par l'arrière du carbocation plan.",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "Ordre de stabilité et de réactivité : C⁺(III) > C⁺(II) > C⁺(I).",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Avec Nu: : Nu: + R-X → R-Nu⁺ + X⁻.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "Schéma de l'E2 : Nu⁻ arrache H (en trans de X) et X part.",
+      "page": "p.4"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN1 : bien avec les secondaires.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "Parmi les propositions suivantes, relatives à l'E1 et à la règle de Zaytsev :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans le bilan de l'E1 du cours, R-CH₂-CX(R')-R'' conduit à R-CH=C(R')-R''."
+     },
+     {
+      "letter": "B",
+      "text": "L'alcène formé majoritairement selon la règle de Zaytsev est le moins stable."
+     },
+     {
+      "letter": "C",
+      "text": "Selon la règle de Zaytsev, l'E1 forme majoritairement l'alcène le moins substitué."
+     },
+     {
+      "letter": "D",
+      "text": "En nomenclature, l'halogène X d'un halogénure d'alkyle est traité comme un substituant alkyle."
+     },
+     {
+      "letter": "E",
+      "text": "La SN2 passe par la formation d'un carbocation intermédiaire."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "Bilan E1 : R-CH₂-CX(R')-R'' → R-CH=C(R')-R'' (alcène).",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "Alcène de Zaytsev : le plus stable.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Règle de Zaytsev : formation majoritaire de l'alcène le plus substitué.",
+      "page": "p.2"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Nomenclature : X est traité comme un substituant alkyle (ex. du cours : 4-bromopentane).",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "SN2 : absence de formation de carbocation intermédiaire.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "À propos du mécanisme et de la stéréochimie de la SN2 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "En SN2, le nucléophile attaque le centre électrophile Cδ⁺ de RX en même temps que la liaison C-X se rompt."
+     },
+     {
+      "letter": "B",
+      "text": "SN2 signifie substitution nucléophile bimoléculaire."
+     },
+     {
+      "letter": "C",
+      "text": "La réaction d'élimination E2 conduit à l'obtention d'un alcène."
+     },
+     {
+      "letter": "D",
+      "text": "En SN1, en présence d'un carbone asymétrique, on obtient un seul énantiomère."
+     },
+     {
+      "letter": "E",
+      "text": "La SN2 ne fonctionne pas du tout avec les halogénures d'alkyle tertiaires."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN2 : attaque du centre électrophile Cδ⁺ en même temps que la rupture de la liaison C-X.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "SN2 = substitution nucléophile bimoléculaire.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "E2 : obtention d'un alcène.",
+      "page": "p.4"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "SN1 en présence d'un C asymétrique : mélange racémique.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "SN2 : pas du tout avec les tertiaires ; très bien avec les primaires.",
+      "page": "p.3"
+     }
+    }
+   },
+   {
+    "stem": "Parmi les propositions suivantes, relatives à la SN1 :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "La SN1 est une réaction non stéréospécifique."
+     },
+     {
+      "letter": "B",
+      "text": "Lorsque le carbone portant le nucléofuge est asymétrique, la SN2 est une réaction stéréospécifique."
+     },
+     {
+      "letter": "C",
+      "text": "La diminution de la température augmente la proportion de E1 dans la compétition E1 / SN1."
+     },
+     {
+      "letter": "D",
+      "text": "La 1re étape de la SN1 est la rupture de la liaison C-X avec formation d'un carbocation intermédiaire R⁺."
+     },
+     {
+      "letter": "E",
+      "text": "La 2e étape de la SN1, attaque du nucléophile sur le carbocation, est l'étape lente."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "VRAI",
+      "just": "SN1 : réaction non stéréospécifique (la SN2 est stéréospécifique).",
+      "page": "p.2"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "SN2 : réaction stéréospécifique.",
+      "page": "p.3"
+     },
+     "C": {
+      "verdict": "FAUX",
+      "just": "Conditions qui augmentent la proportion de E1 : augmentation de la température, nucléophiles très forts.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "SN1 : 1. rupture de C-X et formation du carbocation R⁺ ; 2. attaque du nucléophile sur le carbocation.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "FAUX",
+      "just": "L'étape lente de la SN1 est la 1re : R-X → R⁺ + X⁻.",
+      "page": "p.2"
+     }
+    }
+   },
+   {
+    "stem": "Concernant la réaction d'élimination d'ordre 1 (E1) :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans des conditions modérées, l'E1 est la réaction majoritaire face à la SN1."
+     },
+     {
+      "letter": "B",
+      "text": "La réaction d'élimination d'ordre 1 (E1) d'un halogénure d'alkyle forme un produit de substitution R-Nu."
+     },
+     {
+      "letter": "C",
+      "text": "En SN2, le nucléophile attaque à l'opposé de la rupture de la liaison C-X."
+     },
+     {
+      "letter": "D",
+      "text": "L'alcène formé majoritairement selon la règle de Zaytsev est le moins hydrogéné."
+     },
+     {
+      "letter": "E",
+      "text": "Dans la liaison C-X, l'halogène X est attracteur par effet inductif."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "SN1 = réaction majoritaire dans des conditions modérées.",
+      "page": "p.3"
+     },
+     "B": {
+      "verdict": "FAUX",
+      "just": "E1 : composé formé = alcène.",
+      "page": "p.2"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "SN2 : attaque du nucléophile à l'opposé de la rupture de la liaison C-X.",
+      "page": "p.3"
+     },
+     "D": {
+      "verdict": "VRAI",
+      "just": "Alcène de Zaytsev : le plus substitué = le moins hydrogéné = le plus stable.",
+      "page": "p.2"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "X est attracteur par effet inductif.",
+      "page": "p.1"
+     }
+    }
+   },
+   {
+    "stem": "On réalise la même substitution nucléophile, avec l'ion cyanure CN⁻ et dans les mêmes conditions, sur quatre dérivés halogénés de même groupe alkyle (butyle) : R-I, R-Br, R-Cl et R-F. Parmi les propositions suivantes :",
+    "opts": [
+     {
+      "letter": "A",
+      "text": "Dans les quatre composés, l'halogène porte une charge partielle δ⁺."
+     },
+     {
+      "letter": "B",
+      "text": "Dans les quatre composés, l'halogène est attracteur par effet inductif."
+     },
+     {
+      "letter": "C",
+      "text": "La substitution nucléophile fonctionne très bien avec R-Br."
+     },
+     {
+      "letter": "D",
+      "text": "Le nucléophile utilisé est un nucléophile neutre de type Nu:."
+     },
+     {
+      "letter": "E",
+      "text": "La substitution nucléophile fonctionne mieux avec R-Br qu'avec R-Cl."
+     }
+    ],
+    "ans": {
+     "A": {
+      "verdict": "FAUX",
+      "just": "Polarisation de C-X : X δ⁻ ; C δ⁺.",
+      "page": "p.1"
+     },
+     "B": {
+      "verdict": "VRAI",
+      "just": "X attracteur par effet inductif.",
+      "page": "p.1"
+     },
+     "C": {
+      "verdict": "VRAI",
+      "just": "Nature du RX : RBr très bien.",
+      "page": "p.1"
+     },
+     "D": {
+      "verdict": "FAUX",
+      "just": "Nucléophiles chargés Nu⁻ : CN⁻ ; OH⁻ ; RS⁻ ; R-C≡C⁻ ; RO⁻ ; RCOO⁻.",
+      "page": "p.1"
+     },
+     "E": {
+      "verdict": "VRAI",
+      "just": "RBr : très bien ; RCl : bien.",
+      "page": "p.1"
+     }
+    }
+   }
+  ]
+ }
+];
+
 const COURSES = [
 {
  "id": "atome",
@@ -63464,6 +68704,473 @@ const COURSES = [
   },
   "recapPdf": "Fiche_visuelle_Alcynes_Part1.pdf",
   "qrmPdf": "QRM_Alcynes_Part1.pdf"
+ },
+ {
+  "id": "halogenures",
+  "chapter": "Module 2 · Chimie",
+  "title": "Les halogénures d'alkyle",
+  "desc": "Fiche de cours n°9 (actualisation) : halogénures d'alkyle = halogénoalcanes. Structure et polarisation de la liaison C-X, substitution nucléophile (bilan, mécanisme, nucléophiles chargés et neutres, nature du RX de départ), SN₁ (2 étapes, carbocation, mélange racémique), élimination E₁ (règle de Zaytsev) et compétition E₁ / SN₁, SN₂ (1 étape, inversion de Walden), élimination E₂ et compétition E₂ / SN₂.",
+  "flashcards": {
+   "desc": "Cartes de révision du cours Les halogénures d'alkyle : les bases (notions ★ concours, formules, notions structurantes) puis le reste du cours regroupé par thèmes.",
+   "decks": [
+    {
+     "id": "hal-bases",
+     "part": "Série 1",
+     "title": "Bases du cours",
+     "desc": "Les notions structurantes : les 11 éléments marqués ★ dans la fiche de cours (bilan de la SN avec Nu⁻, SN<sub>1</sub> : tertiaires et mélange racémique, SN<sub>2</sub> : bimoléculaire, un seul composé, absence de carbocation, conditions favorisant E<sub>2</sub>), la polarisation de C-X, les nucléophiles, la nature du RX, les mécanismes SN<sub>1</sub> / SN<sub>2</sub>, E<sub>1</sub> / E<sub>2</sub> et leurs compétitions.",
+     "pairId": "hal-suite",
+     "cards": [
+      {
+       "cat": "hal-structure",
+       "label": "Structure & polarisation de C-X",
+       "q": "Comment représente-t-on un halogénure d'alkyle ?",
+       "a": "<b>R-X</b>, avec X = halogène : <b>I, Br, Cl, F</b>.",
+       "star": false,
+       "page": "p.1"
+      },
+      {
+       "cat": "hal-structure",
+       "label": "Structure & polarisation de C-X",
+       "q": "Quel est l'effet de l'halogène X sur la liaison C-X ?",
+       "a": "X est <b>attracteur</b> par effet inductif.",
+       "star": false,
+       "page": "p.1"
+      },
+      {
+       "cat": "hal-structure",
+       "label": "Structure & polarisation de C-X",
+       "q": "Où se situe le doublet de la liaison C-X et quelle en est la conséquence ?",
+       "a": "Le doublet de la liaison C-X est <b>plus proche de X que de C</b> ⇒ <b>liaison C-X fragilisée</b>.",
+       "star": false,
+       "page": "p.1"
+      },
+      {
+       "cat": "hal-structure",
+       "label": "Structure & polarisation de C-X",
+       "q": "Quelle est la réactivité des halogénures d'alkyle ?",
+       "a": "La <b>substitution nucléophile (SN)</b>.",
+       "star": false,
+       "page": "p.1"
+      },
+      {
+       "cat": "hal-sn",
+       "label": "Substitution nucléophile : bilan & mécanisme",
+       "q": "Quel est le bilan d'une substitution nucléophile avec un nucléophile de type Nu⁻ ?",
+       "a": "<b>Nu⁻ + R-X → R-Nu + X⁻</b>",
+       "star": 1,
+       "page": "p.1"
+      },
+      {
+       "cat": "hal-sn",
+       "label": "Substitution nucléophile : bilan & mécanisme",
+       "q": "Comment est appelé X⁻ dans le mécanisme de la substitution nucléophile ?",
+       "a": "X⁻ = <b>nucléofuge</b> = <b>groupe partant</b>.",
+       "star": false,
+       "page": "p.1"
+      },
+      {
+       "cat": "hal-nucleophiles",
+       "label": "Nucléophiles & nature du RX",
+       "q": "Citer les nucléophiles chargés Nu⁻ donnés dans le cours.",
+       "a": "CN⁻ ; <b>OH⁻</b> ; RS⁻ ; R-C≡C⁻ ; RO⁻ ; RCOO⁻ (= <b>carboxylate</b>).",
+       "star": false,
+       "page": "p.1"
+      },
+      {
+       "cat": "hal-nucleophiles",
+       "label": "Nucléophiles & nature du RX",
+       "q": "Citer les nucléophiles neutres Nu: donnés dans le cours.",
+       "a": "Nucléophiles neutres possédant <b>deux électrons libres</b> : R-OH ; H<sub>2</sub>O ; RSH ; Ph<sub>3</sub>P.",
+       "star": false,
+       "page": "p.1"
+      },
+      {
+       "cat": "hal-nucleophiles",
+       "label": "Nucléophiles & nature du RX",
+       "q": "Comment la substitution nucléophile fonctionne-t-elle selon la nature du RX de départ ?",
+       "a": "<b>Très très bien</b> avec les dérivés iodés <b>RI</b> ; <b>très bien</b> avec les dérivés bromés <b>RBr</b> ; <b>bien</b> avec les dérivés chlorés <b>RCl</b> ; <b>pas du tout</b> avec les dérivés fluorés <b>RF</b>.",
+       "star": false,
+       "page": "p.1"
+      },
+      {
+       "cat": "hal-sn1",
+       "label": "SN1",
+       "q": "Dans l'écriture de la réaction de SN1, quelle est la configuration de l'halogénure d'alkyle de départ ?",
+       "a": "<b>R ou S</b>.",
+       "star": 1,
+       "page": "p.2"
+      },
+      {
+       "cat": "hal-sn1",
+       "label": "SN1",
+       "q": "Combien de composés obtient-on par SN1 ?",
+       "a": "Obtention <b>de deux composés</b> (50 % / 50 % : R et S si présence d'un C*).",
+       "star": false,
+       "page": "p.2"
+      },
+      {
+       "cat": "hal-sn1",
+       "label": "SN1",
+       "q": "Que signifie SN1 ?",
+       "a": "Substitution <b>nucléophile unimoléculaire</b>.",
+       "star": false,
+       "page": "p.2"
+      },
+      {
+       "cat": "hal-sn1",
+       "label": "SN1",
+       "q": "En combien d'étapes se déroule la SN1 ?",
+       "a": "En <b>2 étapes</b>.",
+       "star": false,
+       "page": "p.2"
+      },
+      {
+       "cat": "hal-sn1",
+       "label": "SN1",
+       "q": "Quelle est la 1<sup>re</sup> étape de la SN1 ?",
+       "a": "Rupture de la liaison C-X et formation d'un <b>carbocation intermédiaire R⁺</b> (R-X → R⁺ + X⁻) : <b>étape lente</b>.",
+       "star": false,
+       "page": "p.2"
+      },
+      {
+       "cat": "hal-sn1",
+       "label": "SN1",
+       "q": "Quel est l'ordre de stabilité et de réactivité des carbocations ?",
+       "a": "<b>C⁺(III) > C⁺(II) > C⁺(I)</b>",
+       "star": false,
+       "page": "p.2"
+      },
+      {
+       "cat": "hal-sn1",
+       "label": "SN1",
+       "q": "Avec quels halogénures d'alkyle la SN1 fonctionne-t-elle très bien ?",
+       "a": "Avec les halogénures d'alkyle <b>tertiaires</b>.",
+       "star": 2,
+       "page": "p.2"
+      },
+      {
+       "cat": "hal-sn1",
+       "label": "SN1",
+       "q": "Comment la SN1 fonctionne-t-elle avec les halogénures d'alkyle secondaires et primaires ?",
+       "a": "<b>Bien</b> avec les <b>secondaires</b> ; <b>pas du tout</b> avec les <b>primaires</b>.",
+       "star": false,
+       "page": "p.2"
+      },
+      {
+       "cat": "hal-sn1",
+       "label": "SN1",
+       "q": "La SN1 est-elle stéréospécifique ?",
+       "a": "Non : réaction <b>non stéréospécifique</b>.",
+       "star": false,
+       "page": "p.2"
+      },
+      {
+       "cat": "hal-sn1",
+       "label": "SN1",
+       "q": "En présence d'un carbone asymétrique, quel type de mélange obtient-on par SN1 ?",
+       "a": "Un mélange <b>racémique</b>.",
+       "star": 2,
+       "page": "p.2"
+      },
+      {
+       "cat": "hal-sn1",
+       "label": "SN1",
+       "q": "En présence d'un carbone asymétrique, quels produits obtient-on par SN1 et dans quelles proportions ?",
+       "a": "Les <b>énantiomères R et S</b> dans les <b>mêmes proportions</b>.",
+       "star": 2,
+       "page": "p.2"
+      },
+      {
+       "cat": "hal-e1",
+       "label": "E1 & compétition E1 / SN1",
+       "q": "Quel composé est formé par la réaction d'élimination d'ordre 1 (E1) ?",
+       "a": "Un <b>alcène</b>.",
+       "star": false,
+       "page": "p.2"
+      },
+      {
+       "cat": "hal-e1",
+       "label": "E1 & compétition E1 / SN1",
+       "q": "Que dit la règle de Zaytsev (régiosélectivité de l'E1) ?",
+       "a": "Formation majoritaire de l'alcène <b>le plus substitué</b>.",
+       "star": false,
+       "page": "p.2"
+      },
+      {
+       "cat": "hal-e1",
+       "label": "E1 & compétition E1 / SN1",
+       "q": "Dans des conditions modérées, quelle réaction est majoritaire entre SN1 et E1 ?",
+       "a": "La <b>SN1</b> est <b>majoritaire</b>, accompagnée de la réaction d'élimination E1, <b>minoritaire</b>.",
+       "star": false,
+       "page": "p.3"
+      },
+      {
+       "cat": "hal-e1",
+       "label": "E1 & compétition E1 / SN1",
+       "q": "Quelles conditions augmentent la proportion de E1 ?",
+       "a": "<b>Augmentation de la température</b> ; utilisation de <b>nucléophiles très forts</b> — la SN1 reste toujours <b>majoritaire</b>.",
+       "star": false,
+       "page": "p.3"
+      },
+      {
+       "cat": "hal-sn2",
+       "label": "SN2",
+       "q": "Comment s'écrit la réaction de SN2 ?",
+       "a": "Le nucléophile Nu⁻ attaque le carbone portant X <b>du côté opposé à X</b>, qui part ; on obtient R<sub>1</sub>R<sub>2</sub>R<sub>3</sub>C-Nu.",
+       "star": 1,
+       "page": "p.3"
+      },
+      {
+       "cat": "hal-sn2",
+       "label": "SN2",
+       "q": "Dans le schéma de la SN2 du cours, quelle est la configuration du produit obtenu à partir d'un réactif R ?",
+       "a": "<b>S</b>.",
+       "star": 2,
+       "page": "p.3"
+      },
+      {
+       "cat": "hal-sn2",
+       "label": "SN2",
+       "q": "Combien de composés obtient-on par SN2 ?",
+       "a": "Obtention <b>d'un seul composé</b>.",
+       "star": 1,
+       "page": "p.3"
+      },
+      {
+       "cat": "hal-sn2",
+       "label": "SN2",
+       "q": "Que signifie SN2 ?",
+       "a": "<b>Substitution nucléophile bimoléculaire</b>.",
+       "star": 3,
+       "page": "p.3"
+      },
+      {
+       "cat": "hal-sn2",
+       "label": "SN2",
+       "q": "En combien d'étapes se déroule la SN2 ?",
+       "a": "En <b>1 étape</b> : RX + Nu⁻ (ou Nu) → RNu (ou RNu⁺) + X⁻.",
+       "star": false,
+       "page": "p.3"
+      },
+      {
+       "cat": "hal-sn2",
+       "label": "SN2",
+       "q": "La SN2 passe-t-elle par un carbocation intermédiaire ?",
+       "a": "Non : <b>absence</b> de formation de carbocation intermédiaire.",
+       "star": 3,
+       "page": "p.3"
+      },
+      {
+       "cat": "hal-sn2",
+       "label": "SN2",
+       "q": "Avec quels halogénures d'alkyle la SN2 fonctionne-t-elle ?",
+       "a": "<b>Très bien</b> avec les <b>primaires</b> ; <b>bien</b> avec les <b>secondaires</b> ; <b>pas du tout</b> avec les <b>tertiaires</b>.",
+       "star": false,
+       "page": "p.3"
+      },
+      {
+       "cat": "hal-sn2",
+       "label": "SN2",
+       "q": "La SN2 est-elle stéréospécifique (C portant le nucléofuge asymétrique) ?",
+       "a": "Oui : réaction <b>stéréospécifique</b>.",
+       "star": false,
+       "page": "p.3"
+      },
+      {
+       "cat": "hal-sn2",
+       "label": "SN2",
+       "q": "Quelle est la conséquence stéréochimique de la SN2 (C portant le nucléofuge asymétrique) ?",
+       "a": "<b>Inversion de configuration</b> appelée <b>inversion de Walden</b>.",
+       "star": false,
+       "page": "p.3"
+      },
+      {
+       "cat": "hal-e2",
+       "label": "E2 & compétition E2 / SN2",
+       "q": "Qu'obtient-on par la réaction d'élimination E2 et selon quelle règle ?",
+       "a": "Obtention d'un <b>alcène</b> ; application de la règle de <b>Saytsev</b> : formation de <b>l'alcène le plus stable</b> par transélimination de HX.",
+       "star": false,
+       "page": "p.4"
+      },
+      {
+       "cat": "hal-e2",
+       "label": "E2 & compétition E2 / SN2",
+       "q": "Quelles conditions augmentent la proportion de E2 ?",
+       "a": "<b>Augmentation de la température</b> ; utilisation de <b>nucléophiles très forts</b>.",
+       "star": 1,
+       "page": "p.4"
+      }
+     ]
+    },
+    {
+     "id": "hal-suite",
+     "part": "Série 2",
+     "title": "Pour continuer...",
+     "desc": "Le reste du cours : nomenclature, charges partielles, bilan avec un nucléophile neutre, détail des étapes et de la stéréochimie de la SN<sub>1</sub> et de la SN<sub>2</sub>, bilan de l'E<sub>1</sub> et exemple (CH<sub>3</sub>)<sub>3</sub>C-X, mécanisme de l'E<sub>2</sub> et comparaison SN<sub>1</sub> / SN<sub>2</sub>.",
+     "pairId": "hal-bases",
+     "cards": [
+      {
+       "cat": "hal-structure",
+       "label": "Structure & polarisation de C-X",
+       "q": "Comment l'halogène X est-il traité en nomenclature ?",
+       "a": "X est traité comme un <b>substituant alkyle</b> (exemple du cours : 4-bromopentane).",
+       "star": false,
+       "page": "p.1"
+      },
+      {
+       "cat": "hal-structure",
+       "label": "Structure & polarisation de C-X",
+       "q": "Quelles charges partielles portent X et C dans la liaison C-X, et quel atome est la cible des nucléophiles ?",
+       "a": "X porte une charge partielle <b>δ⁻</b> ; C porte une charge partielle <b>δ⁺</b> : C est la <b>cible des nucléophiles</b>.",
+       "star": false,
+       "page": "p.1"
+      },
+      {
+       "cat": "hal-structure",
+       "label": "Structure & polarisation de C-X",
+       "q": "Que devient la liaison C-X lors de la substitution nucléophile ?",
+       "a": "La liaison C-X est <b>brisée</b>.",
+       "star": false,
+       "page": "p.1"
+      },
+      {
+       "cat": "hal-sn",
+       "label": "Substitution nucléophile : bilan & mécanisme",
+       "q": "Quel est le bilan d'une substitution nucléophile avec un nucléophile neutre de type Nu: ?",
+       "a": "<b>Nu: + R-X → R-Nu⁺ + X⁻</b>",
+       "star": false,
+       "page": "p.1"
+      },
+      {
+       "cat": "hal-sn",
+       "label": "Substitution nucléophile : bilan & mécanisme",
+       "q": "Comment se déroule le mécanisme de la substitution nucléophile ?",
+       "a": "<b>Attaque de R par deux électrons d'un nucléophile</b> ; rupture de la liaison C-X ; X⁻ = nucléofuge = groupe partant.",
+       "star": false,
+       "page": "p.1"
+      },
+      {
+       "cat": "hal-sn1",
+       "label": "SN1",
+       "q": "À quoi ressemble l'écriture de la réaction de SN1 ?",
+       "a": "R<sub>1</sub>R<sub>2</sub>R<sub>3</sub>C-X (R ou S) + Nu⁻ → deux produits à <b>50 %</b> chacun, l'un avec Nu en arrière du plan, l'autre avec Nu en avant du plan : <b>R et S si présence d'un C*</b>.",
+       "star": false,
+       "page": "p.2"
+      },
+      {
+       "cat": "hal-sn1",
+       "label": "SN1",
+       "q": "Quelle est la 2<sup>e</sup> étape de la SN1 ?",
+       "a": "<b>Attaque du nucléophile sur le carbocation</b> : R⁺ + Nu⁻ (ou Nu) → RNu (ou RNu⁺).",
+       "star": false,
+       "page": "p.2"
+      },
+      {
+       "cat": "hal-sn1",
+       "label": "SN1",
+       "q": "Dans quelle situation générale la SN1 est-elle favorisée ?",
+       "a": "Lorsque le <b>carbocation intermédiaire formé est stable</b>.",
+       "star": false,
+       "page": "p.2"
+      },
+      {
+       "cat": "hal-sn1",
+       "label": "SN1",
+       "q": "Comment le nucléophile attaque-t-il le carbocation en SN1 ?",
+       "a": "Soit <b>par l'avant</b>, soit <b>par l'arrière</b> du <b>carbocation plan</b>.",
+       "star": false,
+       "page": "p.2"
+      },
+      {
+       "cat": "hal-e1",
+       "label": "E1 & compétition E1 / SN1",
+       "q": "Quel est le bilan de l'élimination E1 donné dans le cours ?",
+       "a": "R-CH<sub>2</sub>-CX(R')-R'' → R-CH=C(R')-R''",
+       "star": false,
+       "page": "p.2"
+      },
+      {
+       "cat": "hal-e1",
+       "label": "E1 & compétition E1 / SN1",
+       "q": "Quelles sont les caractéristiques de l'alcène formé majoritairement selon la règle de Zaytsev ?",
+       "a": "L'alcène <b>le plus substitué</b> = <b>le moins hydrogéné</b> = <b>le plus stable</b>.",
+       "star": false,
+       "page": "p.2"
+      },
+      {
+       "cat": "hal-e1",
+       "label": "E1 & compétition E1 / SN1",
+       "q": "Quels produits donne l'exemple (CH<sub>3</sub>)<sub>3</sub>C-X de la compétition E1 / SN1 ?",
+       "a": "SN<sub>1</sub> → (CH<sub>3</sub>)<sub>3</sub>C-Nu ; E<sub>1</sub> → (CH<sub>3</sub>)<sub>2</sub>C=CH<sub>2</sub>.",
+       "star": false,
+       "page": "p.3"
+      },
+      {
+       "cat": "hal-sn2",
+       "label": "SN2",
+       "q": "Comment le nucléophile attaque-t-il RX au cours de l'étape unique de la SN2 ?",
+       "a": "Attaque du <b>centre électrophile C<sup>δ+</sup></b> de RX par le nucléophile <b>en même temps</b> que la rupture de la liaison C-X.",
+       "star": false,
+       "page": "p.3"
+      },
+      {
+       "cat": "hal-sn2",
+       "label": "SN2",
+       "q": "De quel côté le nucléophile attaque-t-il en SN2 (C portant le nucléofuge asymétrique) ?",
+       "a": "<b>À l'opposé</b> de la rupture de la liaison C-X : si X est à l'avant du plan, attaque du nucléophile par l'arrière, et inversement.",
+       "star": false,
+       "page": "p.3"
+      },
+      {
+       "cat": "hal-sn2",
+       "label": "SN2",
+       "q": "Combien d'énantiomères obtient-on par SN2 lorsque le C portant le nucléofuge est asymétrique ?",
+       "a": "Obtention d'<b>un seul énantiomère</b> : soit le <b>R</b> ; soit le <b>S</b>.",
+       "star": false,
+       "page": "p.3"
+      },
+      {
+       "cat": "hal-sn1",
+       "label": "SN1",
+       "q": "Comparer les conditions favorables de la SN1 et de la SN2 selon la classe de l'halogénure d'alkyle.",
+       "a": "<b>Tertiaires</b> : SN1 très bien, SN2 pas du tout. <b>Secondaires</b> : bien dans les deux cas. <b>Primaires</b> : SN1 pas du tout, SN2 très bien.",
+       "star": false,
+       "page": "p.2-3"
+      },
+      {
+       "cat": "hal-e2",
+       "label": "E2 & compétition E2 / SN2",
+       "q": "Quelles sont les deux caractéristiques mécanistiques de l'élimination E2 ?",
+       "a": "<b>Pas de formation intermédiaire d'un carbocation</b> ; H arraché doit être en position <b>trans</b> du groupement C-X.",
+       "star": false,
+       "page": "p.4"
+      },
+      {
+       "cat": "hal-e2",
+       "label": "E2 & compétition E2 / SN2",
+       "q": "Que montre le schéma de l'élimination E2 ?",
+       "a": "Le nucléophile <b>Nu⁻ arrache l'atome H</b> situé en position trans de X ; <b>X part</b> ; formation de l'alcène (C=CH<sub>2</sub>).",
+       "star": false,
+       "page": "p.4"
+      },
+      {
+       "cat": "hal-e2",
+       "label": "E2 & compétition E2 / SN2",
+       "q": "Dans des conditions modérées, quelle réaction est majoritaire entre SN2 et E2 ?",
+       "a": "La <b>SN2</b> est <b>majoritaire</b>, accompagnée de la réaction d'élimination E2.",
+       "star": false,
+       "page": "p.4"
+      }
+     ]
+    }
+   ]
+  },
+  "qrm": {
+   "desc": "5 séries de 20 QRM (5 propositions vrai/faux indépendantes) sur le cours Les halogénures d'alkyle, dans le style des annales : questions conceptuelles et problèmes scénarisés (halogénure tertiaire, secondaire ou primaire traité par un nucléophile, nombre de produits, SN<sub>1</sub> ou SN<sub>2</sub>, carbocation, mélange racémique ou inversion de Walden, nature du RX, nucléophiles neutres, compétitions E<sub>1</sub> / SN<sub>1</sub> et E<sub>2</sub> / SN<sub>2</sub>).",
+   "series": QRM_HALOGENURES_SERIES
+  },
+  "recapPdf": "Fiche_visuelle_Halogenures_alkyle.pdf",
+  "qrmPdf": "QRM_Halogenures_alkyle.pdf"
  }
 ];
 
@@ -63560,6 +69267,13 @@ const CATS = [
   {key:"aly-red-partielle", label:"Réduction partielle (Pd de Lindlar)", color:"var(--c-aly-red-partielle)"},
   {key:"aly-red-na", label:"Réduction par transfert d'électrons", color:"var(--c-aly-red-na)"},
   {key:"aly-mecanisme", label:"Mécanisme du transfert d'électrons", color:"var(--c-aly-mecanisme)"},
+  {key:"hal-structure", label:"Structure & polarisation de C-X", color:"var(--c-hal-structure)"},
+  {key:"hal-sn", label:"Substitution nucléophile : bilan & mécanisme", color:"var(--c-hal-sn)"},
+  {key:"hal-nucleophiles", label:"Nucléophiles & nature du RX", color:"var(--c-hal-nucleophiles)"},
+  {key:"hal-sn1", label:"SN1", color:"var(--c-hal-sn1)"},
+  {key:"hal-e1", label:"E1 & compétition E1 / SN1", color:"var(--c-hal-e1)"},
+  {key:"hal-sn2", label:"SN2", color:"var(--c-hal-sn2)"},
+  {key:"hal-e2", label:"E2 & compétition E2 / SN2", color:"var(--c-hal-e2)"},
 ];
 const CAT_COLOR = Object.fromEntries(CATS.filter(c=>c.key!=="all").map(c=>[c.key,c.color]));
 const CAT_LABEL = Object.fromEntries(CATS.filter(c=>c.key!=="all").map(c=>[c.key,c.label]));
