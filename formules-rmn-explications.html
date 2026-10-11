@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules — Résonance magnétique nucléaire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#ffffff; --ink:#1d2330; --muted:#5b6474; --line:#e3e6ec;
+  --star:#e8a900; --starbg:#fff6d6; --fbg:#f4f6fb; --ded:#3f9a6a; --dedbg:#eef6f1;
+  --A:#2f86a8; --B:#d0632e; --C:#c9971c; --D:#6f5aa8; --E:#a64b4b; --F:#b0527f;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.4}
+.wrap{max-width:860px;margin:0 auto;padding:18px 14px 40px}
+h1{font-size:1.6rem;font-weight:800;margin:0}
+.sub{color:var(--muted);font-size:.9rem;margin:2px 0 0}
+.s{color:var(--star);letter-spacing:1px;white-space:nowrap}
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 0;margin:12px 0 4px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.toolbar button{font:inherit;font-size:.88rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 11px;border-radius:999px;cursor:pointer}
+.toolbar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.toolbar button:focus-visible,.card:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.count{margin-left:auto;color:var(--muted);font-size:.82rem}
+section{margin-top:22px}
+h2{font-size:1rem;margin:0 0 8px;padding:6px 12px;color:#fff;border-radius:6px}
+.card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:stretch;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.def{padding:10px 12px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.def .top{display:flex;gap:8px;align-items:baseline;font-size:.8rem;font-weight:800}
+.def .q{font-weight:700;font-size:1rem}
+.def .d{color:var(--muted);font-size:.86rem}
+.fm{background:var(--fbg);border-left:5px solid var(--sec);padding:12px 14px;display:flex;flex-direction:column;justify-content:center}
+.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.35rem;line-height:1.25}
+.f sub{font-size:.62em}
+.u{margin-top:6px;font-size:.9rem;font-weight:600;color:var(--ink)}
+.u b{color:var(--sec)}
+.card.starred .def{background:linear-gradient(90deg,var(--starbg),transparent 70%)}
+.card.derived{border-style:dashed}
+.card.derived .fm{border-left-color:var(--ded)}
+.card.derived .top .tag{color:var(--ded)}
+#A{--sec:var(--A)} #B{--sec:var(--B)} #C{--sec:var(--C)} #D{--sec:var(--D)} #E{--sec:var(--E)} #F{--sec:var(--F)}
+#A h2{background:var(--A)} #B h2{background:var(--B)} #C h2{background:var(--C)} #D h2{background:var(--D)} #E h2{background:var(--E)} #F h2{background:var(--F)}
+section .top .code{color:var(--sec)}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+body.hide .card{cursor:pointer}
+body.stars .card:not(.starred){display:none}
+body.base .card.derived{display:none}
+.hint{display:none;color:var(--muted);font-size:.85rem;margin:6px 0 0}
+body.hide .hint{display:block}
+@media (max-width:600px){
+  .card{grid-template-columns:1fr}
+  .fm{border-left:0;border-top:4px solid var(--sec)}
+  .card.derived .fm{border-top-color:var(--ded)}
+}
+@media (prefers-reduced-motion:no-preference){.f,.u{transition:filter .2s}}
+@media print{.toolbar,.hint{display:none}body.hide .fm .f,body.hide .fm .u{filter:none}.card{break-inside:avoid}}
+
+/* Cartes plus isolées */
+section{margin-top:34px}
+h2{margin-bottom:14px}
+.card{margin-bottom:18px;border:1.5px solid var(--line);border-radius:12px;box-shadow:0 2px 0 var(--line),0 6px 14px -8px rgba(29,35,48,.25)}
+.def{padding:14px 16px}
+.fm{padding:16px 18px}
+.card.derived{border-width:1.5px}
+@media (max-width:600px){.card{margin-bottom:16px}}
+
+/* Couple définition/formule plus serré, séparation légère */
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.def{padding:14px 12px 14px 16px}
+.fm{padding:14px 16px 14px 14px}
+.card{margin-bottom:28px}
+section{margin-top:40px}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px dashed var(--line)!important}
+  .def{padding:14px 16px 8px}
+  .fm{padding:10px 16px 14px}
+  .card{margin-bottom:26px}
+}
+
+.wrap{max-width:980px}
+.legend{margin-top:6px;font-size:.88rem;color:var(--muted)}
+.chain{margin:14px 0 4px;padding:12px 14px;border-left:4px solid var(--star);background:var(--starbg);border-radius:0 8px 8px 0;font-size:.95rem}
+.mnemo{margin:12px 0 4px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:.92rem}
+.mnemo strong{display:block;margin-bottom:6px}
+.mnemo ul{margin:0;padding-left:18px;columns:2;column-gap:28px}
+.mnemo li{margin-bottom:4px;break-inside:avoid}
+.chain .f,.mnemo .f{font-size:1rem}
+.card{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
+.x{grid-column:1 / -1;border-top:1px dashed var(--line);padding:12px 16px 14px;font-size:.9rem;color:var(--muted)}
+.x p{margin:0 0 5px}
+.x b,.x .tip,.x .trap{color:var(--ink)}
+.tip,.trap{display:block;margin-top:5px}
+.tip::before{content:"💡 "}
+.trap::before{content:"⚠️ "}
+.ded{margin-top:8px;padding:8px 10px;background:var(--dedbg);border-left:3px solid var(--ded);border-radius:0 6px 6px 0;font-size:.86rem;color:var(--ink)}
+.ded strong{display:block;margin-bottom:3px}
+.ded ol{margin:0;padding-left:20px}
+.from{display:block;margin-top:4px;font-size:.84rem;color:var(--ded);font-weight:600}
+.gives{display:block;margin-top:8px;font-size:.86rem;color:var(--ded);font-weight:600}
+.chip{display:inline-block;text-decoration:none;font-size:.78rem;font-weight:700;border:1px solid var(--line);border-radius:5px;padding:0 5px;background:var(--bg);color:var(--ink)}
+.card{scroll-margin-top:70px}
+.card:target{box-shadow:0 0 0 3px var(--star)}
+/* mode test : seul le titre reste visible */
+body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:blur(8px);user-select:none}
+body.hide .card.show .def .d,body.hide .card.show .def .from,body.hide .card.show .fm,body.hide .card.show .x{filter:none;user-select:auto}
+@media (max-width:600px){.mnemo ul{columns:1}.x{padding:10px 16px 14px}}
+@media print{body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:none}}
+
+/* Traits pleins fins à l'intérieur, cadre plus marqué */
+:root{--frame:#b9c0cc}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--frame:#4a5263}}
+:root[data-theme="dark"]{--frame:#4a5263}
+.card{border:2px solid var(--frame)!important}
+.card.derived{border:2px solid var(--ded)!important}
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.x{border-top:1px solid var(--line)!important}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px solid var(--line)!important}
+}
+
+/* Traits intérieurs un peu plus épais */
+.fm,.card.derived .fm{border-left:1.5px solid var(--frame)!important;border-top:0!important}
+.x{border-top:1.5px solid var(--frame)!important}
+@media (max-width:600px){.fm,.card.derived .fm{border-left:0!important;border-top:1.5px solid var(--frame)!important}}
+
+/* Cadre d'épaisseur identique sur les 4 côtés */
+.card{box-shadow:0 6px 14px -10px rgba(29,35,48,.28)!important}
+
+/* Mobile : carte empilée comme la page épurée (évite le trait doublé en haut de la formule) */
+@media (max-width:600px){.card{grid-template-columns:1fr!important}}
+
+/* Fractions : numérateur au-dessus du dénominateur */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor;padding-bottom:.08em}
+.frac>span:last-child{padding-top:.08em}
+
+/* Arbre : formule de base → formules déduites (comme la page arbre) */
+.grp{margin-bottom:28px}
+.grp .card{margin-bottom:0}
+.tree{list-style:none;margin:0 0 0 26px;padding:0}
+.tree > li{position:relative;padding:12px 0 0 30px}
+.tree > li::before{content:"";position:absolute;left:0;top:0;bottom:0;border-left:2px solid var(--ded)}
+.tree > li:last-child::before{bottom:auto;height:36px}
+.tree > li::after{content:"";position:absolute;left:0;top:36px;width:24px;border-top:2px solid var(--ded)}
+.tree .card{box-shadow:none!important}
+.tree .card .f{font-size:1.18rem}
+body.stars .grp:not(.gstar){display:none}
+body.stars .tree{display:none}
+body.base .tree{display:none}
+@media (max-width:600px){
+  .tree{margin-left:12px}
+  .tree > li{padding-left:22px}
+  .tree > li::after{width:18px}
+}
+
+/* Singe = bascule vers la vue épurée floutée (définition → formule) */
+body.hide .x,body.hide .chain,body.hide .mnemo,body.hide .legend,body.hide .from{display:none}
+body.hide .def .d{filter:none!important;user-select:auto}
+body.hide .fm{filter:none!important}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+@media (prefers-reduced-motion:no-preference){.fm .f,.fm .u{transition:filter .2s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Résonance magnétique nucléaire : les formules</h1>
+<p class="sub">M1 · Biophysique Appliquée · formules expliquées</p>
+<div class="legend"><span class="s">★</span> = tombée au concours (d'après la fiche de cours) · <span class="s">★★★</span> = la plus fréquente · <span style="color:var(--ded);font-weight:700">🔁</span> = formule déduite d'une autre (cadre vert)</div>
+<div class="toolbar" role="toolbar" aria-label="Options">
+  <a href="formules-rmn.html" style="font-size:.88rem;font-weight:600;text-decoration:none;color:var(--ink);border:1.5px solid var(--line);padding:6px 11px;border-radius:999px">← Tableau des formules</a>
+  <button id="bHide" aria-pressed="false">🙈 Réviser (vue épurée)</button>
+  <button id="bStars" aria-pressed="false"><span class="s">★</span> Concours</button>
+  <button id="bBase" aria-pressed="false">Sans les déduites</button>
+  <span class="count" id="count"></span>
+</div>
+<p class="hint">Vue épurée : touche une carte pour révéler la formule. Retouche 🙈 pour revenir aux explications.</p>
+<div class="chain">Le fil qui relie tout : <span class="f">μ<sub>J</sub> = γJ</span> → dans B₀ : <span class="f">ω₀ = γB₀</span> → <span class="f">ν₀ = γB₀ / 2π</span> → <span class="f">ΔE = γħB₀ = hν₀</span> → résonance : <span class="f">E<sub>RF</sub> = hν<sub>RF</sub> = ΔE</span>, <span class="f">λ<sub>RF</sub> = c / ν₀</span> → relaxation : <span class="f">M<sub>z</sub>(t) = M<sub>z0</sub>(1 − e<sup>−t/T₁</sup>)</span> et <span class="f">M<sub>x,y</sub>(t) = − M<sub>x,y,0</sub> e<sup>−t/T₂</sup></span> → IRM : <span class="f">I = K B₀ ρ (1 − e<sup>−TR/T₁</sup>) e<sup>−TE/T₂</sup></span>, une image de N lignes en <span class="f">N × TR</span>.</div>
+
+<div class="mnemo">
+  <strong>Moyens mnémotechniques</strong>
+  <ul>
+    <li><b>γ en MHz.T⁻¹ ?</b> alors ν₀ = γ × B₀ ; γ en rad.s⁻¹.T⁻¹ → ν₀ = γB₀ / 2π.</li>
+    <li>¹H : <b>42,5 MHz par tesla</b> ; ν₀ ∝ B₀ et ∝ γ.</li>
+    <li><b>ω₀ (rad/s) = 2π ν₀ (Hz)</b> : la pulsation porte le 2π.</li>
+    <li>ν₀, ω₀, ΔE augmentent avec B₀ ; <b>λ<sub>RF</sub> diminue</b> quand B₀ augmente (λ = c / ν₀).</li>
+    <li>Résonance : <b>E<sub>RF</sub> = hν<sub>RF</sub> = ΔE = hν₀</b> → l'onde RF oscille à ν₀.</li>
+    <li><b>2J + 1 états</b> : J = ½ → 2 · 1 → 3 · 3/2 → 4 · 5/2 → 6.</li>
+    <li><b>63 % repoussé à T₁</b> (87 % à 2T₁, total à 5T₁) ; <b>37 % restant à T₂</b> (13 % à 2T₂).</li>
+    <li>Tissus : T₁ <b>500-1000 ms</b>, T₂ <b>50-100 ms</b> (÷ 10).</li>
+    <li>SES : <b>90° à 0 · 180° à TE/2 · mesure à TE</b> ; image de N lignes = <b>N × TR</b>.</li>
+    <li>Dans I : <b>TR va avec T₁</b>, <b>TE va avec T₂</b>.</li>
+  </ul>
+</div>
+
+<main id="main"></main>
+<footer style="margin-top:30px;color:var(--muted);font-size:.8rem;text-align:center">Source : fiche de cours n°11 Médisup Tours/Orléans 2026-2027 (actualisation) ; exemples tirés des annales classées et des QCM supplémentaires.</footer>
+</div>
+<script>
+const S = n => n ? '<span class="s">' + '★'.repeat(n) + '</span>' : '';
+const H = steps => `<div class="ded"><strong>🔁 Comment la retrouver</strong><ol>${steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>`;
+const fr=(a,b)=>`<span class='frac'><span>${a}</span><span>${b}</span></span>`;
+const data = [
+ {id:"A", title:"Nucléons et spin", pages:"p.3", rows:[
+  {k:"q", st:0, q:"Charges des quarks", d:"Proton et neutron sont constitués de quarks", 
+   f:"q<sub>up</sub> = + (2/3) e · q<sub>down</sub> = − (1/3) e", u:"e = <b>charge élémentaire</b>", 
+   x:"<p>Les nucléons sont eux-mêmes constitués de quarks ; leur charge s'obtient en additionnant celles de leurs quarks (@qp, @qn).</p><span class='trap'>Up = <b>+ 2/3</b>, down = <b>− 1/3</b> (pas l'inverse).</span>"},
+  {k:"qp", der:["q"], q:"Charge du proton", d:"Proton = 2 quarks up + 1 quark down", 
+   f:"q<sub>p</sub> = 2 × (2/3) e − (1/3) e = + e", u:"", 
+   x:"<p>Le proton a une charge totale de + e.</p>"
+   + H(["Proton = 2 quarks up + 1 quark down.", "Additionne les charges : 2 × (+ 2/3 e) + (− 1/3 e) = + e."])},
+  {k:"qn", der:["q"], q:"Charge du neutron", d:"Neutron = 1 quark up + 2 quarks down", 
+   f:"q<sub>n</sub> = (2/3) e − 2 × (1/3) e = 0", u:"", 
+   x:"<p>Le neutron a une charge totale nulle.</p>"
+   + H(["Neutron = 1 quark up + 2 quarks down.", "Additionne les charges : (+ 2/3 e) + 2 × (− 1/3 e) = 0."])},
+  {k:"hb", st:0, q:"Constante de Planck réduite ħ", d:"", 
+   f:"ħ = <span class='frac'><span>h</span><span>2π</span></span>", u:"h = <b>constante de Planck</b> = <b>6,62.10⁻³⁴ J.s</b>", 
+   x:"<p>ħ (« h barre ») apparaît dans toutes les formules de spin et de moment magnétique ; h = 6,62.10⁻³⁴ J.s est la seule valeur numérique de constante du poly.</p><span class='tip'>Les annales donnent parfois h = 6,61.10⁻³⁴ J.s (2016, QCM supplémentaires) : prendre la valeur de l'énoncé.</span>"},
+  {k:"S", st:0, q:"Norme du moment cinétique intrinsèque (spin)", d:"Grandeur vectorielle de valeurs discrètes", 
+   f:"|S| = <span class='frac'><span>h</span><span>2π</span></span>√(s(s+1)) = ħ√(s(s+1))", u:"s = <b>nombre quantique de spin</b> · s = ½ pour proton, neutron et électron", 
+   x:"<p>Le spin concerne toute particule élémentaire en mouvement (protons et neutrons ont un mouvement de rotation sur eux-mêmes) ; sa norme ne prend que des valeurs discrètes, fixées par s.</p><span class='trap'>On prend la racine de <b>s(s+1)</b>, pas de s².</span>"},
+  {k:"Sh", der:["S"], q:"Norme du spin pour s = ½", d:"Proton, neutron, électron", 
+   f:"|S| = ħ√(3/4) ≈ 0,87 ħ", u:"", 
+   x:"<p>Valeur numérique obtenue pour toutes les particules de spin ½ citées par le poly.</p>"
+   + H(["Pars de |S| = ħ√(s(s+1)).", "Remplace s par ½ : s(s+1) = ½ × 3/2 = 3/4.", "√(3/4) ≈ 0,87 : |S| ≈ 0,87 ħ."])},
+  {k:"Sz", st:0, q:"Projection du spin sur l'axe (Oz)", d:"Axe de référence (Oz) vertical", 
+   f:"S<sub>z</sub> = <span class='frac'><span>h</span><span>2π</span></span>·m<sub>s</sub> = ħ·m<sub>s</sub>", u:"m<sub>s</sub> = <b>nombre quantique magnétique</b> · m<sub>s</sub> ∈ [−S, −S+1, …, S] : <b>(2s+1) valeurs</b>", 
+   x:"<p>La projection du spin est quantifiée : elle vaut ħ multiplié par m<sub>s</sub>, qui prend 2s + 1 valeurs.</p><span class='trap'>Le poly note la borne « S » dans m<sub>s</sub> ∈ [−S, …, S] alors qu'il s'agit du nombre quantique s.</span>"},
+  {k:"Szp", der:["Sz", "S"], q:"Projection du spin du proton et du neutron", d:"", 
+   f:"S<sub>z</sub> = ± ½ ħ", u:"", 
+   x:"<p>Pour s = ½, m<sub>s</sub> ne prend que 2 valeurs (2s + 1 = 2) : + ½ et − ½.</p>"
+   + H(["Pars de S<sub>z</sub> = ħ·m<sub>s</sub>.", "Pour s = ½ : m<sub>s</sub> ∈ [−½, +½] (2s + 1 = 2 valeurs).", "D'où S<sub>z</sub> = ± ½ ħ."])},
+  {k:"mun", st:0, q:"Moment magnétique du neutron", d:"Moments magnétiques intrinsèques", 
+   f:"μ<sub>neutron</sub> ≅ <span class='frac'><span>2</span><span>3</span></span> μ<sub>proton</sub>", u:"", 
+   x:"<p>Le moment magnétique intrinsèque vient du mouvement d'une charge ponctuelle (création d'un courant à l'origine d'un champ magnétique). Proton et neutron sont des dipôles magnétiques animés d'un mouvement de rotation.</p><span class='trap'>Le neutron a une charge nulle (@qn) mais un moment magnétique non nul : environ 2/3 de celui du proton.</span>"},
+  {k:"muS", st:0, q:"Moment magnétique associé au spin, selon z", d:"", 
+   f:"μ<sub>Sz</sub> = g<sub>p</sub>·<span class='frac'><span>e</span><span>2 m<sub>p</sub></span></span>·S<sub>z</sub> = g<sub>p</sub>·<span class='frac'><span>e ħ</span><span>2 m<sub>p</sub></span></span>·m<sub>s</sub> = g<sub>p</sub> μ<sub>p</sub> m<sub>s</sub>", u:"g<sub>p</sub> = <b>facteur de Landé</b> · m<sub>p</sub> = <b>masse du proton</b> · μ<sub>p</sub> = <b>magnéton nucléaire</b>", 
+   x:"<p>Le moment magnétique est proportionnel au spin : on passe de S<sub>z</sub> à m<sub>s</sub> en remplaçant S<sub>z</sub> par ħ·m<sub>s</sub> (@Sz).</p><span class='trap'>Le poly ne donne pas les valeurs numériques de g<sub>p</sub>, m<sub>p</sub> et μ<sub>p</sub>.</span>"},
+  {k:"mup", der:["muS", "Sz"], q:"Magnéton nucléaire", d:"", 
+   f:"μ<sub>p</sub> = <span class='frac'><span>e ħ</span><span>2 m<sub>p</sub></span></span>", u:"", 
+   x:"<p>Le magnéton nucléaire regroupe les constantes de la formule du moment magnétique.</p>"
+   + H(["Pars de μ<sub>Sz</sub> = g<sub>p</sub>·(e ħ / 2 m<sub>p</sub>)·m<sub>s</sub> = g<sub>p</sub> μ<sub>p</sub> m<sub>s</sub>.", "Identifie les deux dernières écritures : μ<sub>p</sub> = e ħ / 2 m<sub>p</sub>."])}
+ ]},
+ {id:"B", title:"Moment cinétique et moment magnétique du noyau", pages:"p.4", rows:[
+  {k:"J", st:0, q:"Norme du moment cinétique du noyau (spin du noyau)", d:"Spin du noyau = moment cinétique du noyau J", 
+   f:"|J| = ħ√(J(J+1))", u:"J = <b>nombre quantique de spin du noyau</b>", 
+   x:"<p>Même forme que pour une particule (@S), avec le nombre quantique de spin du noyau J. Le spin du noyau est la <b>somme des moments cinétiques des nucléons qui le composent</b> <span class='s'>★</span> (notion étoilée du poly, non calculatoire).</p>"},
+  {k:"Jz", st:0, q:"Projection du moment cinétique du noyau", d:"", 
+   f:"J<sub>z</sub> = ħ m<sub>j</sub>", u:"m<sub>j</sub> = <b>nombre quantique magnétique du noyau</b> · m<sub>j</sub> ∈ [−J, −J+1, … J]", 
+   x:"<p>La projection est quantifiée par m<sub>j</sub>, qui va de −J à +J par pas de 1.</p><span class='tip'>Exemples du poly : J = 1 (²H, ¹⁴N) → m<sub>j</sub> : [−1, 0, +1] ; J = 3/2 (²³Na, ⁹B) → [−3/2, −1/2, +1/2, +3/2].</span>"},
+  {k:"n", st:0, q:"Nombre d'états énergétiques du noyau", d:"", 
+   f:"2 J + 1", u:"= nombre de valeurs possibles de m<sub>j</sub>", 
+   x:"<p>Un noyau de spin J placé dans un champ possède <b>2 J + 1 états énergétiques possibles</b>.</p><span class='tip'>J = ½ → 2 états ; J = 1 → 3 ; J = 3/2 → 4 ; J = 5/2 → 6. QCM supplémentaires (Q2) : ¹⁴N (J = 1) → <b>3</b> états, pas 4.</span><span class='trap'>Annales 2018 (Q23) : l'énoncé attribue un spin 3/2 au ³²S → 2 × 3/2 + 1 = <b>4</b> niveaux. Mais le poly classe ³²S parmi les noyaux de <b>spin nul</b> : en QCM, appliquer la donnée de l'énoncé pour le calcul, retenir le poly pour le cours.</span>"},
+  {k:"muJ", st:0, q:"Moment magnétique du noyau", d:"", 
+   f:"μ<sub>J</sub> = γ J", u:"γ = <b>rapport gyromagnétique du noyau</b>, en <b>rad.T⁻¹.s⁻¹</b>, caractéristique du noyau", 
+   x:"<p>Le moment magnétique du noyau est proportionnel à son moment cinétique, par le rapport gyromagnétique γ, propre à chaque noyau.</p><span class='trap'>Il n'existe <b>que si J ≠ 0</b> <span class='s'>★</span> : un noyau de spin nul n'a pas de moment magnétique et est inutilisable en RMN. γ ne dépend pas de B₀ (QCM supplémentaires Q13).</span>"},
+  {k:"muJn", der:["muJ", "J"], q:"Norme du moment magnétique du noyau", d:"", 
+   f:"|μ<sub>J</sub>| = γ ħ √(J(J+1))", u:"", 
+   x:"<p>Même relation que μ<sub>J</sub> = γ J, écrite avec la norme de J.</p>"
+   + H(["Pars de μ<sub>J</sub> = γ J.", "Remplace |J| par ħ√(J(J+1)) : |μ<sub>J</sub>| = γ ħ √(J(J+1))."])},
+  {k:"muJz", der:["muJ", "Jz"], q:"Projection du moment magnétique du noyau", d:"", 
+   f:"μ<sub>Jz</sub> = γ ħ m<sub>j</sub>", u:"", 
+   x:"<p>La projection prend autant de valeurs que m<sub>j</sub>, d'où les 2 J + 1 états énergétiques (@n).</p>"
+   + H(["Pars de μ<sub>J</sub> = γ J.", "Projette sur z : remplace J<sub>z</sub> par ħ m<sub>j</sub> : μ<sub>Jz</sub> = γ ħ m<sub>j</sub>."])}
+ ]},
+ {id:"C", title:"Précession et énergie dans B₀", pages:"p.5-6", rows:[
+  {k:"w0", st:0, q:"Vitesse angulaire de précession (pulsation)", d:"μ en précession autour de B₀", 
+   f:"ω₀ = γ B₀", u:"ω₀ en <b>rad/s</b>", 
+   x:"<p>Dans un champ statique B₀, μ décrit un <b>mouvement de précession</b> <span class='s'>★</span> autour de B₀, selon un angle θ constant ; sa vitesse angulaire est proportionnelle à B₀.</p><span class='tip'>Annales 2015 (Q31) : ω₀ = 2π × 42,57.10⁶ ≈ <b>2,67.10⁸ rad.s⁻¹</b> pour le proton à 1 T. QCM supplémentaires (Q8) : γ = 27.10⁷, B₀ = 2 T → ω₀ = <b>5,4.10⁸ rad.s⁻¹</b>.</span>"},
+  {k:"T0", st:0, q:"Période de précession", d:"", 
+   f:"T₀ = <span class='frac'><span>2π</span><span>ω₀</span></span> = <span class='frac'><span>2π</span><span>γB₀</span></span>", u:"= temps pour une rotation de <b>2π rad = 1 tour</b>", 
+   x:"<p>Temps mis par μ pour faire un tour complet autour de B₀.</p>"},
+  {k:"nu0", st:3, q:"Fréquence de Larmor", d:"", 
+   f:"ν₀ = <span class='frac'><span>1</span><span>T₀</span></span> = <span class='frac'><span>γB₀</span><span>2π</span></span>", u:"ν₀ en <b>Hz</b> (1 Hz = 1 tour/s) · dépend du <b>champ appliqué B₀</b> et du <b>noyau</b>", 
+   x:"<p>La formule la plus tombée du cours : nombre de tours par seconde du moment magnétique autour de B₀. Elle est <b>proportionnelle à B₀ et à γ</b>.</p><span class='tip'>Annales (corrections 2019 à 2026) : quand γ est donné en <b>MHz.T⁻¹</b> (ou Hz.T⁻¹), c'est déjà γ/2π : <b>ν₀ = γ × B₀</b>. Ex. 2026 (Q34) : 43 × 10 = 430 MHz = <b>4,3.10⁸ Hz</b> ; 2019 (Q10) : 42,6 × 5 = <b>213 MHz</b>.</span><span class='trap'>Ne pas diviser une seconde fois par 2π un γ déjà donné en Hz.T⁻¹ ; diviser par 2π seulement si γ est en rad.s⁻¹.T⁻¹.</span>"},
+  {k:"w2pi", der:["nu0", "w0"], q:"Pulsation et fréquence de Larmor", d:"", 
+   f:"ω₀ = 2π ν₀", u:"", 
+   x:"<p>La pulsation (rad/s) et la fréquence (Hz) diffèrent d'un facteur 2π.</p><span class='trap'>ω₀ en rad/s, ν₀ en Hz : ne pas les confondre.</span>"
+   + H(["Pars de ν₀ = γB₀ / 2π.", "Remplace γB₀ par ω₀ (@w0) : ν₀ = ω₀ / 2π.", "Multiplie par 2π : ω₀ = 2π ν₀."])},
+  {k:"nuB", der:["nu0"], q:"Fréquence de Larmor dans un autre champ ou pour un autre noyau", d:"", 
+   f:"ν₀' = ν₀ × <span class='frac'><span>γ'</span><span>γ</span></span> × <span class='frac'><span>B₀'</span><span>B₀</span></span>", u:"", 
+   x:"<p>Comme ν₀ est proportionnelle à γ et à B₀, on passe d'une situation à l'autre par de simples rapports.</p><span class='tip'>Annales 2022 (Q1) : ¹³C (γ 4 fois plus faible) à 3 T → 42,6 × 3 / 4 = <b>31,95 MHz</b>. Annales 2023 (Q53) : ¹³C à 4 T → 42,5 × 4 / 4 = <b>42,5 MHz</b> (inchangée). QCM supplémentaires (Q6) : ²H (γ × 0,15) à 2,5 T au lieu de 5 T → 200 × 0,15 / 2 = <b>15 MHz</b>.</span>"
+   + H(["Écris ν₀ = γB₀ / 2π pour les deux situations.", "Fais le rapport : ν₀' / ν₀ = (γ' / γ) × (B₀' / B₀).", "Multiplie par ν₀."])},
+  {k:"nu1T", st:0, q:"Fréquences de Larmor pour B₀ = 1 tesla", d:"", 
+   f:"ν₀(¹H) = 42,5 MHz · ν₀(¹³C) = 17,24 MHz · ν₀(¹⁹F) = 40,06 MHz · ν₀(³¹P) = 9,71 MHz", u:"", 
+   x:"<p>Valeurs de référence du poly : avec @nuB, on obtient ν₀ dans n'importe quel champ (ν₀ ∝ B₀).</p><span class='tip'>¹H : <b>42,5 MHz par tesla</b> → 1,5 T : 63,75 MHz ; 3 T : 127,5 MHz.</span>"},
+  {k:"gH", st:0, q:"Rapport gyromagnétique du proton", d:"", 
+   f:"γ = 2,67.10⁸ rad.s⁻¹.T⁻¹ = 42,57.10⁶ Hz.T⁻¹", u:"", 
+   x:"<p>Valeur du poly pour le proton ¹H, en deux unités.</p><span class='trap'>Le poly écrit un « = » entre les deux valeurs : en réalité 42,57.10⁶ Hz.T⁻¹ = 2,67.10⁸ / 2π, c'est-à-dire γ/2π. Avec la valeur en Hz.T⁻¹ : ν₀ = γ × B₀ ; avec la valeur en rad.s⁻¹.T⁻¹ : ν₀ = γB₀ / 2π (@nu0).</span>"},
+  {k:"muz", st:0, q:"Moment magnétique et spin du proton selon z", d:"Proton ¹H (J = ½)", 
+   f:"μ<sub>z</sub> = ± ½ γħ · S<sub>z</sub> = ± ½ ħ", u:"", 
+   x:"<p>Deux valeurs seulement pour le proton : état « up » (α, parallèle) et état « down » (β, antiparallèle).</p>"},
+  {k:"E", st:0, q:"Énergie des deux états du proton", d:"", 
+   f:"E = ± ½ γ ħ B₀", u:"« up » = α, parallèle, <b>basse énergie</b> · « down » = β, antiparallèle, <b>haute énergie</b>", 
+   x:"<p>L'énergie d'un proton « down » est plus élevée que celle d'un proton « up » : le proton est préférentiellement en « up ».</p><span class='trap'>QCM supplémentaires (Q9) : les protons up ont une énergie <b>moins</b> élevée que les down.</span>"},
+  {k:"dE", st:1, q:"Écart énergétique entre « up » et « down »", d:"", 
+   f:"ΔE = γ ħ B₀", u:"Écart énergétique <b>proportionnel à B₀</b>", 
+   x:"<p>Différence entre les deux énergies (@E) : + ½ γħB₀ − (− ½ γħB₀) = γħB₀. Il augmente avec B₀ (annales 2022, Q2).</p><span class='trap'>Annales 2016 (Q9) : l'écart n'est jamais nul dans un champ non nul (proposition « nul à 3 T » fausse).</span>"},
+  {k:"dEh", der:["dE", "nu0", "hb"], q:"Écart énergétique et fréquence de Larmor", d:"", 
+   f:"ΔE = h ν₀", u:"", 
+   x:"<p>Forme pratique pour le calcul : h × fréquence de Larmor.</p><span class='tip'>Si γ est donné en Hz.T⁻¹ : ΔE = h × γ × B₀ (QCM supplémentaires Q10 : 42,6.10⁶ × 6,61.10⁻³⁴ × 5 ≈ <b>14.10⁻²⁶ J</b>). Annales 2016 (Q9) : à 1 T, 6,61.10⁻³⁴ × 42,57.10⁶ ≈ 2,8.10⁻²⁶ J, donc la proposition 10,22.10⁻³⁰ J est fausse.</span>"
+   + H(["Pars de ΔE = γ ħ B₀ et remplace ħ par h / 2π : ΔE = h × γB₀ / 2π.", "Reconnais ν₀ = γB₀ / 2π : ΔE = h ν₀."])},
+  {k:"bol", st:0, q:"Relation de Boltzmann", d:"Rapport des populations de protons β (down) et α (up)", 
+   f:"N<sub>β</sub> / N<sub>α</sub> = e<sup>−ΔE / kT</sup>", u:"T = <b>température</b> · k = <b>constante de Boltzmann</b>", 
+   x:"<p>Elle explique l'<b>excès de protons en position « up »</b>. La proportion de protons « up » augmente avec ΔE, donc avec B₀ : l'aimantation longitudinale Mz augmente avec B₀ <span class='s'>★</span>.</p><span class='trap'>Le poly ne donne pas la valeur de k. Ne pas confondre avec les équations de <b>Bloch</b> (relaxation) : QCM supplémentaires (Q14).</span>"}
+ ]},
+ {id:"D", title:"Résonance : champ tournant B₁", pages:"p.7", rows:[
+  {k:"res", st:0, q:"Condition de résonance", d:"B₁ tourne dans le plan xOy, B₀ selon Oz", 
+   f:"ω₁ = ω₀", u:"Rotation de B₁ à la <b>fréquence de Larmor</b>", 
+   x:"<p>Il y a transfert d'énergie (passage « up » → « down ») seulement si B₁ tourne à la fréquence de Larmor.</p><span class='trap'>Le poly emploie aussi ω₁ = γB₁ pour la précession de M autour de B₁ (@w1) : deux usages du même symbole.</span>"},
+  {k:"ERF", st:0, q:"Énergie des photons de l'onde radiofréquence", d:"", 
+   f:"E<sub>RF</sub> = h ν<sub>RF</sub> = ΔE", u:"E<sub>RF</sub> = énergie des photons de l'OEM associée à B₁ · ν<sub>RF</sub> = sa fréquence", 
+   x:"<p>À la résonance, l'énergie d'un photon RF est exactement l'écart entre les deux niveaux.</p>"},
+  {k:"nuRF", der:["ERF", "dEh"], q:"Fréquence de l'onde radiofréquence", d:"", 
+   f:"ν<sub>RF</sub> = ν₀", u:"", 
+   x:"<p>L'onde RF doit osciller à la fréquence de Larmor (QCM supplémentaires Q9).</p>"
+   + H(["Pars de h ν<sub>RF</sub> = ΔE.", "Remplace ΔE par h ν₀ (@dEh) : h ν<sub>RF</sub> = h ν₀.", "Simplifie par h : ν<sub>RF</sub> = ν₀."])},
+  {k:"lam", st:0, q:"Longueur d'onde de l'onde radiofréquence", d:"", 
+   f:"λ<sub>RF</sub> = <span class='frac'><span>2πc</span><span>γB₀</span></span>", u:"c = <b>vitesse de la lumière dans le vide</b> · protons dans B₀ = 1 T : <b>λ<sub>RF</sub> ≈ 7 m</b>", 
+   x:"<p>λ<sub>RF</sub> est <b>inversement proportionnelle</b> à γ et à B₀ : champ plus intense ou noyau de γ plus grand → longueur d'onde plus courte.</p><span class='tip'>Annales 2019 (Q7) : la bonne réponse est λ = 2πc / (γ.B₀). QCM supplémentaires (Q7) : ³¹P (γ 2,5 fois plus faible) à 10 T → 7 × 2,5 / 10 = <b>1,75 m</b>.</span>"},
+  {k:"lamc", der:["lam", "nu0"], q:"Longueur d'onde RF et fréquence de Larmor", d:"", 
+   f:"λ<sub>RF</sub> = <span class='frac'><span>c</span><span>ν₀</span></span>", u:"", 
+   x:"<p>Forme la plus rapide quand ν₀ est connue.</p><span class='tip'>Annales 2020 (Q9) : ν₀ = 40 × 1,5 = 60 MHz → λ = 3.10⁸ / 60.10⁶ = <b>5 m</b>.</span><span class='trap'>Le poly ne donne pas la valeur de c ; les annales prennent c = 3.10⁸ m/s.</span>"
+   + H(["Pars de λ<sub>RF</sub> = 2πc / γB₀.", "Écris 2π / γB₀ = 1 / ν₀ (car ν₀ = γB₀ / 2π).", "D'où λ<sub>RF</sub> = c / ν₀."])},
+  {k:"w1", st:0, q:"Précession de M autour de B₁", d:"Fréquence angulaire autour de B₁ (plan Oxy)", 
+   f:"ω₁ = γ B₁", u:"M suit aussi la précession autour de B₀ à <b>ω₀ = γB₀</b>", 
+   x:"<p>Pendant la perturbation, le vecteur d'aimantation M suit 2 mouvements de précession : autour de B₀ et autour de B₁.</p>"},
+  {k:"al", st:0, q:"Angle d'impulsion", d:"", 
+   f:"α = ω.t", u:"", 
+   x:"<p>L'angle de bascule augmente avec la durée de l'impulsion et avec la vitesse angulaire.</p><span class='tip'>Impulsion à 90° : égalisation des populations up/down, M<sub>z</sub> = 0 ; impulsion à 180° : composante longitudinale selon (−z).</span>"},
+  {k:"a180", der:["al", "w1"], q:"Bascule à 180° comparée à 90°", d:"", 
+   f:"t<sub>180°</sub> = 2 × t<sub>90°</sub> (ou intensité RF × 2)", u:"", 
+   x:"<p>Le poly le dit directement : une bascule à 180° nécessite <b>2 fois plus de temps</b> qu'à 90° ou une <b>intensité RF 2 fois plus forte</b>.</p>"
+   + H(["Pars de α = ω.t : pour doubler α (90° → 180°), double t…", "… ou double ω, c'est-à-dire B₁ (ω₁ = γB₁) : intensité RF 2 fois plus forte."])}
+ ]},
+ {id:"E", title:"Relaxation T₁ et T₂", pages:"p.8-9", rows:[
+  {k:"bl1", st:0, q:"Repousse de l'aimantation longitudinale (équation de Bloch)", d:"D'après les équations de Bloch", 
+   f:"dM<sub>z</sub> = <span class='frac'><span>1</span><span>T₁</span></span>(M<sub>z0</sub> − M<sub>z</sub>) dt", u:"Après une impulsion θ", 
+   x:"<p>M<sub>z</sub> repousse de 0 à sa valeur initiale M<sub>z0</sub> ; la vitesse de repousse est d'autant plus grande que T₁ est court.</p>"},
+  {k:"Mz", st:0, q:"Repousse de Mz après une impulsion de 90°", d:"θ = 90°", 
+   f:"M<sub>z</sub>(t) = M<sub>z0</sub>(1 − e<sup>−t/T₁</sup>)", u:"Exponentielle <b>croissante</b>", 
+   x:"<p>Relaxation longitudinale (type spin-réseau) : restitution de l'énergie au milieu environnant.</p><span class='trap'>Exponentielle croissante (1 − e<sup>…</sup>) pour M<sub>z</sub>, décroissante pour M<sub>x,y</sub> (@Mxy).</span>"},
+  {k:"T1a", der:["Mz"], q:"Repousse au temps T₁", d:"", 
+   f:"t = T₁ → M<sub>z</sub> = 63 % de M<sub>z0</sub>", u:"", 
+   x:"<p>Repère à connaître : à t = T₁, 63 % de l'aimantation longitudinale a repoussé.</p><span class='trap'>Annales 2017 (Q9) : T₁ ne correspond <b>pas</b> à 37 % de la composante longitudinale. QCM supplémentaires (Q12) : 900 ms après l'impulsion pour T₁ = 900 ms → <b>63 %</b>.</span>"
+   + H(["Pars de M<sub>z</sub>(t) = M<sub>z0</sub>(1 − e<sup>−t/T₁</sup>).", "À t = T₁ : 1 − e<sup>−1</sup> ≈ 0,63."])},
+  {k:"T1b", der:["Mz"], q:"Repousse au temps 2T₁", d:"", 
+   f:"t = 2T₁ → M<sub>z</sub> = 87 % de M<sub>z0</sub>", u:"", 
+   x:"<p>Deuxième repère de la courbe de repousse.</p>"
+   + H(["Pars de M<sub>z</sub>(t) = M<sub>z0</sub>(1 − e<sup>−t/T₁</sup>).", "À t = 2T₁ : 1 − e<sup>−2</sup> ≈ 0,87."])},
+  {k:"T1c", der:["Mz"], q:"Relaxation longitudinale totale", d:"", 
+   f:"t = 5 T₁", u:"", 
+   x:"<p>Le poly considère la relaxation comme <b>totale</b> pour t = 5T₁.</p><span class='tip'>QCM supplémentaires (Q12) : T₁ = 500 ms → relaxation totale à 5 × 500 = <b>2,5 s</b>.</span>"
+   + H(["Pars de M<sub>z</sub>(t) = M<sub>z0</sub>(1 − e<sup>−t/T₁</sup>).", "À t = 5T₁ : e<sup>−5</sup> ≈ 0,007, donc M<sub>z</sub> ≈ M<sub>z0</sub>."])},
+  {k:"T1v", st:0, q:"T₁ des tissus biologiques", d:"", 
+   f:"T₁ = 500 – 1000 ms", u:"Exprimée en <b>millisecondes</b>", 
+   x:"<p>T₁ varie selon la structure moléculaire et l'état de la matière : liquides T₁ long (LCR), solides T₁ court (tissus graisseux), gaz T₁ long. T₁ est court quand la fréquence des collisions moléculaires ν<sub>c</sub> ≈ ν₀.</p>"},
+  {k:"bl2", st:0, q:"Diminution de l'aimantation transversale (équation de Bloch)", d:"D'après les équations de Bloch", 
+   f:"dM<sub>x,y</sub> = − <span class='frac'><span>1</span><span>T₂</span></span> M<sub>x,y</sub> dt", u:"Après une impulsion θ", 
+   x:"<p>M<sub>x,y</sub> décroît de M<sub>x,y,0</sub> jusqu'à 0 (décroissance en spirale).</p>"},
+  {k:"Mxy", st:0, q:"Décroissance de Mxy après une impulsion de 90°", d:"θ = 90°", 
+   f:"M<sub>x,y</sub>(t) = − M<sub>x,y,0</sub> e<sup>−t/T₂</sup>", u:"Décroissance <b>exponentielle</b>", 
+   x:"<p>Relaxation transversale (type spin-spin), beaucoup plus rapide que la relaxation longitudinale.</p><span class='trap'>Le poly écrit un signe « − » devant M<sub>x,y,0</sub> : retenir surtout la décroissance exponentielle (37 % à T₂, @T2a). Le signal FID décroît selon T₂* (= T₂ + inhomogénéité de B₀), pas selon T₂.</span>"},
+  {k:"T2a", der:["Mxy"], q:"Aimantation transversale restante au temps T₂", d:"", 
+   f:"t = T₂ → reste 37 % de M<sub>x,y,0</sub>", u:"= diminution de 63 %", 
+   x:"<p>Repère symétrique de celui de T₁ : 63 % <b>repoussé</b> à T₁, 37 % <b>restant</b> à T₂.</p>"
+   + H(["Pars de |M<sub>x,y</sub>(t)| = M<sub>x,y,0</sub> e<sup>−t/T₂</sup>.", "À t = T₂ : e<sup>−1</sup> ≈ 0,37."])},
+  {k:"T2b", der:["Mxy"], q:"Aimantation transversale restante au temps 2T₂", d:"", 
+   f:"t = 2T₂ → reste 13 %", u:"", 
+   x:"<p>Deuxième repère de la décroissance.</p>"
+   + H(["Pars de |M<sub>x,y</sub>(t)| = M<sub>x,y,0</sub> e<sup>−t/T₂</sup>.", "À t = 2T₂ : e<sup>−2</sup> ≈ 0,13."])},
+  {k:"T2v", st:0, q:"T₂ des tissus biologiques", d:"", 
+   f:"T₂ = 50 – 100 ms", u:"<b>10 fois plus rapide</b> que le T₁ · tissus biologiques : généralement <b>T₁ &gt; T₂</b>", 
+   x:"<p>Plus T₂ est court, plus la relaxation transversale est rapide. Liquides : T₂ long <span class='s'>★</span> (œdème) ; solides et gaz : T₂ court.</p><span class='trap'>Annales 2015 (Q33) et 2017 (Q9) : T₂ n'est <b>jamais</b> présenté comme plus long que T₁ dans les tissus.</span>"}
+ ]},
+ {id:"F", title:"IRM : séquence d'écho de spin, signal et image", pages:"p.11-14", rows:[
+  {k:"t90", st:2, q:"Instant de l'impulsion à 90°", d:"Séquence d'écho de spin (SES)", 
+   f:"t = T₀", u:"Signal transversal maximal = M<sub>T0</sub>", 
+   x:"<p>La SES commence par l'impulsion à 90° : signal longitudinal nul, signal transversal maximal.</p>"},
+  {k:"t180", st:2, q:"Instant de l'impulsion à 180°", d:"", 
+   f:"t = <span class='frac'><span>TE</span><span>2</span></span>", u:"Inversion des déphasages", 
+   x:"<p>À mi-chemin du temps d'écho, l'impulsion à 180° inverse les déphasages ; le gradient de phase est appliqué avant, entre T₀ et TE/2.</p><span class='tip'>QCM supplémentaires (Q22) : TE = 20 ms → impulsion à 180° à <b>t = 10 ms</b>.</span>"},
+  {k:"tTE", st:1, q:"Instant de la mesure du signal (écho)", d:"", 
+   f:"t = TE", u:"TE = <b>temps d'écho</b>", 
+   x:"<p>Les spins arrivent en phase au temps TE : on mesure le signal RMN (écho). La SES permet de s'affranchir des inhomogénéités dues à B₀ <span class='s'>★</span>.</p><span class='trap'>Annales 2023 (Q45) : la mesure se fait à TE, pas à TE/2.</span>"},
+  {k:"TR", st:0, q:"Temps de répétition", d:"", 
+   f:"TR = temps entre 2 impulsions de 90°", u:"= temps entre deux séquences", 
+   x:"<p>TR détermine le taux de repousse de l'aimantation longitudinale M<sub>L</sub>, donc le signal disponible ; TR long = repousse importante entre 2 SES.</p><span class='trap'>QCM supplémentaires (Q19) : TR est toujours plus long que TE.</span>"},
+  {k:"lig", st:1, q:"Lignes de la matrice image et séquences", d:"", 
+   f:"1 SES = 1 ligne de la matrice image", u:"", 
+   x:"<p><b>Une séquence</b> permet d'obtenir <b>une ligne</b> de matrice image <span class='s'>★</span> : une image de N lignes demande N séquences.</p><span class='tip'>QCM supplémentaires (Q19) : image 512 × 512 → <b>512</b> séquences (pas 1024). Annales 2021 (Q29) : une SES ne donne pas une image 128 × 128 entière.</span>"},
+  {k:"acq", der:["lig", "TR"], q:"Durée d'acquisition d'une image", d:"", 
+   f:"t<sub>acq</sub> = N<sub>lignes</sub> × TR", u:"", 
+   x:"<p>Calcul classique des annales : chaque ligne demande une séquence de durée TR.</p><span class='tip'>Annales 2017 (Q7) : 256 lignes × 300 ms = 76,8 s ≈ <b>1,3 min</b>. QCM supplémentaires (Q22) : une ligne = TR = <b>620 ms</b>.</span>"
+   + H(["1 séquence = 1 ligne de la matrice image.", "Chaque séquence dure TR (temps entre deux impulsions de 90°).", "N lignes → N × TR."])},
+  {k:"I", st:0, q:"Intensité du signal", d:"", 
+   f:"I = K B₀ ρ (1 − e<sup>−TR/T₁</sup>) e<sup>−TE/T₂</sup>", u:"ρ = <b>densité protonique</b> (élevée dans les milieux aqueux) · K = <b>constante</b>", 
+   x:"<p>Le signal dépend des paramètres tissulaires (T₁, T₂, ρ), des paramètres de la SES (TR, TE) et de B₀. TR n'intervient que dans le terme en T₁, TE que dans le terme en T₂ : pondération T₁ = TR et TE courts <span class='s'>★★★</span> ; pondération T₂ = TR et TE longs ; densité de protons = TR long et TE court.</p><span class='tip'>QCM supplémentaires (Q25) : I augmente quand TR est long, quand TE est court et quand ρ est grand ; I diminue quand T₁ est long ou T₂ court.</span><span class='trap'>Annales 2024 (Q49) : plus T₁ est court, plus le signal est intense en pondération T₁ (hypersignal = blanc).</span>"},
+  {k:"res2", st:0, q:"Résolution d'une image", d:"", 
+   f:"Résolution = n × p pixels par unité de longueur", u:"Champ de vue (FOV) = matrice de <b>p lignes</b> et <b>n colonnes</b>", 
+   x:"<p>Plus il y a de pixels, meilleure est la résolution.</p>"},
+  {k:"ctr", st:0, q:"Origine du contraste en IRM", d:"", 
+   f:"Densité de proton entre les tissus : 20 % · différence de temps de relaxation : jusqu'à 500 %", u:"Contraste = différence d'intensité de signal détectable entre 2 points", 
+   x:"<p>Le contraste en IRM vient surtout des différences de temps de relaxation (QCM supplémentaires Q20 : pas principalement des densités de protons).</p>"}
+ ]}
+];
+
+
+const code={}, gives={};
+data.forEach(sec=>sec.rows.forEach((r,i)=>{code[r.k]=sec.id+(i+1);}));
+data.forEach(sec=>sec.rows.forEach(r=>(r.der||[]).forEach(p=>{(gives[p]=gives[p]||[]).push(r.k);})));
+const chip=k=>`<a class="chip" href="#r-${code[k]}">${code[k]}</a>`;
+const refs=t=>t.replace(/@(\w+)/g,(m,k)=>code[k]?chip(k):m);
+const main=document.getElementById('main');
+let total=0,starred=0,derived=0;
+const cardHTML=(r,extra='')=>{
+  const from=r.der?`<span class="from">🔁 Déduite de ${r.der.map(chip).join(' ')}</span>`:'';
+  return `<div class="card${r.st?' starred':''}${r.der?' derived':''}" id="r-${code[r.k]}" tabindex="0">
+      <div class="def"><div class="top"><span class="code">${code[r.k]}</span>${S(r.st)}${r.der?'<span class="tag">🔁</span>':''}</div>
+      <div class="q">${r.q}</div>${r.d?`<div class="d">${r.d}</div>`:''}${from}</div>
+      <div class="fm"><span class="f">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div>
+      <div class="x">${refs(r.x)}</div></div>`;
+};
+data.forEach(sec=>{
+  let h=`<section id="${sec.id}"><h2>${sec.id} · ${sec.title} <small style="opacity:.85;font-weight:600">${sec.pages}</small></h2>`;
+  const groups=[];
+  sec.rows.forEach(r=>{ if(r.der&&groups.length) groups[groups.length-1].kids.push(r); else groups.push({r,kids:[]}); });
+  groups.forEach(({r,kids})=>{
+    total++; if(r.st)starred++;
+    h+=`<div class="grp${r.st?' gstar':''}">`+cardHTML(r);
+    if(kids.length){ h+=`<ul class="tree">`+kids.map(k=>{total++;derived++;return `<li>${cardHTML(k)}</li>`;}).join('')+`</ul>`; }
+    h+=`</div>`;
+  });
+  main.insertAdjacentHTML('beforeend',h+'</section>');
+});
+const B=document.body.classList,count=document.getElementById('count');
+const upd=()=>{count.textContent=B.contains('stars')?`${starred} ★`:B.contains('base')?`${total-derived} formules`:`${total} formules`;};
+upd();
+const tog=(id,c)=>{const b=document.getElementById(id);b.addEventListener('click',()=>{const on=B.toggle(c);b.setAttribute('aria-pressed',on);upd();if(c==='hide')document.querySelectorAll('.card.show').forEach(x=>x.classList.remove('show'));});};
+tog('bHide','hide');document.getElementById('bHide').addEventListener('click',()=>window.scrollTo({top:0}));tog('bStars','stars');tog('bBase','base');
+const flip=ev=>{if(ev.target.closest('a'))return;const c=ev.target.closest('.card');if(c&&B.contains('hide'))c.classList.toggle('show');};
+main.addEventListener('click',flip);
+main.addEventListener('keydown',ev=>{if(ev.target.classList.contains('card')&&(ev.key==='Enter'||ev.key===' ')){ev.preventDefault();flip(ev);}});
+
+</script>
+</body>
+</html>

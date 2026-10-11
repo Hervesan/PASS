@@ -352,6 +352,10 @@ const COURS_BAM = {
   interaction:  "Interaction des rayonnements ionisants avec la matière",
 };
 const COURS_PHYSIO = {
+  compart:   "FC1 Compartiments liquidiens",
+  canaux:    "FC2 Canaux ioniques",
+  intro:     "FC3 Introduction à la physiologie",
+  snc_org:   "FC6 Organisation générale du système nerveux central",
   bioen:     "FC4 Bioénergétique",
   digestive: "FC5 Physiologie digestive",
   snc:       "FC6 Organisation du système nerveux",
@@ -421,6 +425,44 @@ const CONTROLES = [
         ],
         pdfs:[ { label:"Sujet + corrigé", href:"controles/BAM_C1_entrainement2.pdf" } ],
         note:NOTE_GEN,
+      },
+    ],
+  },
+
+  /* ---------------- M1 · Physiologie · Contrôle n°1 (ECB n°1) ---------------- */
+  {
+    key:"physio-1", matiere:"physio", numero:1, date:"2026-10-17",
+    programme:[
+      { t:COURS_PHYSIO.compart }, { t:COURS_PHYSIO.canaux }, { t:COURS_PHYSIO.intro },
+      { t:COURS_PHYSIO.bioen }, { t:COURS_PHYSIO.digestive }, { t:COURS_PHYSIO.snc_org },
+    ],
+    officiel:null,
+    entrainements:[
+      {
+        id:"physio-c1-e1", n:1, date:"2026-10-11", nbQ:30, qrm:20, qru:10, duree:"60 min",
+        cours:[
+          { t:COURS_PHYSIO.compart, d:"osmolarité et équivalents, bilan hydrique, capital hydrique du sujet âgé, déshydratation hypotonique, œdèmes, potomanie", q:"Q1–7" },
+          { t:COURS_PHYSIO.canaux, d:"états des canaux, PA vs potentiel gradué, patch-clamp, diffusion et KCl", q:"Q8–11" },
+          { t:COURS_PHYSIO.intro, d:"Claude Bernard, OMS, rétrocontrôle au froid, systèmes, boucles sensori-gnosi-praxiques", q:"Q12–14" },
+          { t:COURS_PHYSIO.bioen, d:"ATP et rendements, chambre calorimétrique, rendement net (escalier), sac de Douglas à rebours, QR, voies et fibres", q:"Q15–20" },
+          { t:COURS_PHYSIO.digestive, d:"troubles, œsophage, stress et sympathique, salive et déglutition, phases gastriques, sécrétions, absorption", q:"Q21–27" },
+          { t:COURS_PHYSIO.snc_org, d:"anatomie et latéralisation, couches et colonnes, plasticité après AVC", q:"Q28–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Physiologie_C1_entrainement1.pdf" } ],
+        note:"Corrigé à partir de la page 8 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+      {
+        id:"physio-c1-e2", n:2, date:"2026-10-11", nbQ:30, qrm:20, qru:10, duree:"60 min",
+        cours:[
+          { t:COURS_PHYSIO.compart, d:"barrières, ingestion de sel (osmolarité finale et volumes), déshydratation hypertonique, Starling, examen clinique, gradation des œdèmes et OAP", q:"Q1–7" },
+          { t:COURS_PHYSIO.canaux, d:"genèse du potentiel de repos (Gibbs-Donnan), phases du PA, transports membranaires, myéline", q:"Q8–11" },
+          { t:COURS_PHYSIO.intro, d:"critères du vivant, volume interstitiel, chronobiologie et environnements, intéroception", q:"Q12–14" },
+          { t:COURS_PHYSIO.bioen, d:"bombe calorimétrique, puissance d'une manivelle (C × ω), thermochimie alimentaire, stocks d'ATP et de glycogène, dépense quotidienne", q:"Q15–20" },
+          { t:COURS_PHYSIO.digestive, d:"péritoine et microbiote, ondes lentes et péristaltisme, dents et glandes, vidange, muqueuse gastrique, bile et pancréas, grêle et CMM", q:"Q21–27" },
+          { t:COURS_PHYSIO.snc_org, d:"troubles neurodéveloppementaux, ordres de grandeur, plasticité selon l'âge", q:"Q28–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Physiologie_C1_entrainement2.pdf" } ],
+        note:"Autres parties du cours que l'entraînement 1. Corrigé à partir de la page 8.",
       },
     ],
   },
