@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules en 2 colonnes — Ondes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff;--ink:#1d2330;--muted:#5b6474;--line:#e3e6ec;--frame:#b9c0cc;--star:#e8a900;--starbg:#fff6d6;--ded:#3f9a6a;
+--A:#2f86a8;--B:#d0632e;--C:#c9971c;--D:#6f5aa8;--E:#a64b4b}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.35}
+.wrap{max-width:820px;margin:0 auto;padding:16px 12px 40px}
+h1{font-size:1.4rem;margin:0 0 10px;font-weight:800}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:6px 0 8px;z-index:2;display:flex;gap:8px;align-items:center}
+.bar button{font:inherit;font-size:.9rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+.bar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.bar button:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.bar span{font-size:.8rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;border:2px solid var(--frame)}
+th{text-align:left;font-size:.78rem;color:var(--muted);font-weight:700;padding:6px 10px;border-bottom:2px solid var(--frame)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+td.d{width:42%;font-weight:700;font-size:.95rem;border-right:1.5px solid var(--frame)}
+td.d .s{color:var(--star);font-size:.8rem;margin-left:4px;white-space:nowrap}
+td.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.12rem}
+td.f .u{display:block;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.82rem;color:var(--muted);margin-top:2px}
+td.f .u b{color:var(--ink)}
+tr.sec td{background:var(--c);color:#fff;font-weight:800;font-size:.95rem;padding:6px 10px;border-bottom:0}
+tr.der td.d{padding-left:24px;color:var(--ded);font-weight:600;font-size:.9rem}
+tr.der td.d::before{content:"↳ ";font-weight:800}
+tr.der td.f{font-size:1rem;color:var(--ded)}
+sub{font-size:.65em}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor}
+body.hide td.f .ft,body.hide td.f .u{filter:blur(7px)}
+body.hide tr:not(.sec){cursor:pointer}
+body.hide tr.show td.f .ft,body.hide tr.show td.f .u{filter:none}
+@media (prefers-reduced-motion:no-preference){.ft,.u{transition:filter .2s}}
+@media (max-width:480px){td{padding:8px 7px}td.d{font-size:.88rem}td.f{font-size:1rem}tr.der td.d{padding-left:16px}}
+@media print{.bar{display:none}body.hide .ft,body.hide .u{filter:none}tr{break-inside:avoid}}
+
+/* ---- Mise en page soignée ---- */
+body{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0)}
+.wrap{max-width:860px;padding:22px 14px 50px}
+.top{padding:4px 2px 6px}
+.kicker{margin:0;font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--muted)}
+.top h1{font-size:1.9rem;margin:2px 0 4px;letter-spacing:-.01em}
+.meta{margin:0;font-size:.88rem;color:var(--muted)}
+.meta .s{color:var(--star)} .meta .g{color:var(--ded);font-weight:800}
+.bar{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0);padding:10px 0}
+.bar button{background:var(--bg);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.cols{display:grid;grid-template-columns:42% 58%;font-size:.72rem;font-weight:700;letter-spacing:.03em;color:var(--muted);padding:4px 16px 6px}
+.blk{background:var(--bg);border-radius:16px;margin:0 0 22px;overflow:hidden;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25);border:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.blk header{display:flex;align-items:center;gap:10px;padding:12px 16px;font-weight:800;font-size:1.02rem;color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--bg));border-bottom:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.letter{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--c);color:#fff;font-size:.95rem}
+.row{display:grid;grid-template-columns:42% 58%;align-items:stretch;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .d{padding:12px 12px 12px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.code{font-size:.72rem;font-weight:800;color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg));border-radius:5px;padding:1px 6px}
+.name{font-weight:700;font-size:.95rem;flex-basis:100%}
+.row .d .s{color:var(--star);font-size:.82rem;letter-spacing:1px}
+.row .f{padding:12px 16px;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line));display:flex;flex-direction:column;justify-content:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.2rem}
+.row .f .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px;line-height:1.3}
+.row .f .u b{color:var(--c)}
+.row.star .d{background:linear-gradient(90deg,var(--starbg),transparent 75%)}
+.row.der .d{padding-left:30px;position:relative}
+.row.der .d::before{content:"↳";position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ded);font-weight:800}
+.row.der .name{color:var(--ded);font-weight:600;font-size:.9rem}
+.row.der .code{color:var(--ded);background:color-mix(in srgb,var(--ded) 12%,var(--bg))}
+.row.der .f{font-size:1.05rem;color:var(--ded);background:color-mix(in srgb,var(--ded) 6%,var(--bg))}
+body.hide .ft,body.hide .u{filter:blur(7px);user-select:none}
+body.hide .row{cursor:pointer}
+body.hide .row.show .ft,body.hide .row.show .u{filter:none}
+.row:focus-visible{outline:3px solid var(--star);outline-offset:-3px}
+@media (max-width:480px){
+  .cols,.row{grid-template-columns:44% 56%}
+  .row .d{padding:10px 8px 10px 12px}.row .f{padding:10px 12px;font-size:1.05rem}
+  .name{font-size:.88rem}.row.der .d{padding-left:24px}.row.der .d::before{left:8px}
+  .top h1{font-size:1.6rem}
+}
+@media print{body{background:#fff}.blk{box-shadow:none;break-inside:avoid}}
+
+
+/* Option 1 : groupe encadré (formule mère + filles dans une bande verte) */
+.grp{border-top:1px solid var(--line)}
+.grp:first-child{border-top:0}
+.grp > .row{border-top:0}
+.kids{background:color-mix(in srgb,var(--ded) 13%,var(--bg));padding:8px 10px 10px;display:flex;flex-direction:column;gap:7px;border-top:1px solid color-mix(in srgb,var(--ded) 30%,var(--line))}
+.kids .row{border:1px solid color-mix(in srgb,var(--ded) 30%,var(--line));border-radius:10px;overflow:hidden;background:var(--bg);grid-template-columns:calc(42% - 4px) auto}
+.kids .row .d{padding:9px 10px}
+.kids .row .f{background:color-mix(in srgb,var(--ded) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--ded) 25%,var(--line))}
+.row.der .d{padding-left:10px}
+.row.der .d::before{content:none}
+@media (max-width:480px){.kids{padding:7px 7px 8px}.kids .row .d{padding:8px}}
+
+/* Formules déduites : mêmes couleurs que les autres (seul le regroupement les distingue) */
+.kids{background:color-mix(in srgb,var(--ink) 5%,var(--bg));border-top:1px solid var(--line)}
+.kids .row{border-color:var(--line)}
+.row.der .name{color:var(--ink);font-weight:700;font-size:.95rem}
+.row.der .code{color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg))}
+.row.der .code::before{content:none}
+.row.der .f,.kids .row .f{color:var(--ink);font-size:1.2rem;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line))}
+@media (max-width:480px){.row.der .f,.kids .row .f{font-size:1.05rem}.row.der .name{font-size:.88rem}}
+
+/* Comme la page explication : filles décalées, reliées par un trait à leur formule mère */
+.kids{background:transparent;border-top:0;padding:0 12px 14px 38px;gap:10px;position:relative}
+.kids .row{position:relative;overflow:visible;border:1.5px solid color-mix(in srgb,var(--ded) 60%,var(--line));border-radius:10px;background:var(--bg)}
+.kids .row .d{border-radius:9px 0 0 9px}
+.kids .row .f{border-radius:0 9px 9px 0}
+.kids .row::before{content:"";position:absolute;left:-24px;top:-12px;bottom:-12px;border-left:2px solid var(--ded)}
+.kids .row:first-child::before{top:-2px}
+.kids .row:last-child::before{bottom:50%}
+.kids .row::after{content:"";position:absolute;left:-24px;top:50%;width:22px;border-top:2px solid var(--ded)}
+.grp:has(.kids) > .row{border-bottom:0}
+.from{flex-basis:100%;font-size:.76rem;font-weight:700;color:var(--ded)}
+.from b{font-weight:800}
+@media (max-width:480px){
+  .kids{padding:0 8px 12px 28px}
+  .kids .row::before,.kids .row::after{left:-18px}
+  .kids .row::after{width:16px}
+}
+
+/* Colonnes alignées partout + petit espace entre formules principales + cadres déduits plus étroits */
+.blk{container-type:inline-size}
+.row{grid-template-columns:42cqw minmax(0,1fr)!important}
+.kids .row{grid-template-columns:calc(42cqw - 39.5px) minmax(0,1fr)!important}
+.cols{grid-template-columns:42% 58%}
+.rows{display:flex;flex-direction:column;gap:6px;background:color-mix(in srgb,var(--ink) 6%,var(--bg))}
+.grp{border-top:0!important;background:var(--bg)}
+.kids{padding:0 34px 14px 38px}
+@media (max-width:480px){
+  .kids{padding:0 22px 12px 38px}
+  .kids .row::before,.kids .row::after{left:-24px}
+  .kids .row::after{width:22px}
+}
+.from{white-space:nowrap;font-size:.7rem}
+@media (max-width:480px){.kids .row .d{padding:8px 6px 8px 8px}}
+
+/* Tableau neutre (mode singe) : sans sections, sans codes, sans étoiles, mélangé */
+.neutral{--c:var(--muted);border-color:var(--line)}
+.neutral .row .f{background:color-mix(in srgb,var(--ink) 4%,var(--bg));border-left:1px solid var(--line)}
+.neutral .row .u b{color:var(--ink)}
+.neutral .row .u [style]{color:inherit!important}
+.qbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin:0 0 10px;font-size:.85rem;color:var(--muted)}
+.qbar button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer}
+[hidden]{display:none!important}
+body.hide .meta{display:none}
+
+/* ---- Mode entraînement (singe) ---- */
+.qhead{background:var(--bg);border-radius:16px;padding:14px 16px;margin:0 0 16px;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25)}
+.qtop{display:flex;justify-content:space-between;align-items:baseline}
+.qtitle{font-weight:800;font-size:1.1rem}
+.qcount{font-size:.85rem;color:var(--muted);font-weight:600}
+.prog{height:8px;border-radius:99px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));margin:10px 0 12px;overflow:hidden}
+.prog span{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#f5c542,var(--star));transition:width .3s}
+.qbtns{display:flex;gap:8px;flex-wrap:wrap}
+.qbtns button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 13px;border-radius:999px;cursor:pointer}
+.qlist{display:flex;flex-direction:column;gap:10px;container-type:inline-size}
+.qc{display:grid;grid-template-columns:42cqw minmax(0,1fr);background:var(--bg);border-radius:14px;overflow:hidden;cursor:pointer;
+  border:1px solid var(--line);box-shadow:0 1px 2px rgba(20,30,50,.05),0 6px 16px -10px rgba(20,30,50,.3);transition:transform .15s}
+.qc:active{transform:scale(.99)}
+.qc:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.qc.star{border-color:color-mix(in srgb,var(--star) 45%,var(--line))}
+.qd{padding:12px 12px 12px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.qc.star .qd{background:linear-gradient(90deg,var(--starbg),transparent 85%)}
+.qn{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:7px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));color:var(--muted);font-size:.75rem;font-weight:800}
+.qs{color:var(--star);font-size:.85rem;letter-spacing:1px}
+.qq{flex-basis:100%;font-weight:700;font-size:.95rem}
+.qf{position:relative;padding:12px 14px;background:color-mix(in srgb,var(--ink) 3.5%,var(--bg));border-left:1px solid var(--line);display:flex;align-items:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.15rem}
+.qans{display:flex;flex-direction:column;filter:blur(8px);opacity:.6;transition:filter .25s,opacity .25s;user-select:none}
+.qans .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px}
+.qans .u b,.qans .u [style]{color:var(--ink)!important}
+.qhint{position:absolute;inset:0;display:grid;place-items:center;font-family:"Source Sans 3",system-ui,sans-serif;font-size:.8rem;font-weight:700;color:var(--muted)}
+.qc.show .qans{filter:none;opacity:1;user-select:auto}
+.qc.show .qhint{display:none}
+.qc.show .qf{background:color-mix(in srgb,#3f9a6a 7%,var(--bg))}
+.qc.show .qn{background:#3f9a6a;color:#fff}
+@media (max-width:480px){.qf{font-size:1.02rem;padding:10px 12px}.qq{font-size:.88rem}}
+body.hide .qc .ft,body.hide .qc .u{filter:none!important;user-select:auto}
+.bar{flex-wrap:wrap}
+.blink{font-size:.9rem;font-weight:600;text-decoration:none;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);padding:6px 12px;border-radius:999px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.blink:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><p class="kicker">M1 · Biophysique Appliquée</p><h1>Ondes</h1><p class="meta">37 formules · <span class="s">★</span> tombées au concours · <span class="g">🔁</span> formules déduites, reliées à leur formule de base</p></header>
+<div class="bar"><button id="bHide" aria-pressed="false">🙈 Cacher les formules</button><a class="blink" href="formules.html" style="margin-left:auto">← Cours</a><a class="blink" href="formules-ondes-explications.html">📖 Explications</a></div>
+<div class="cols"><span>Définition</span><span>Formule · unité · constante</span></div><div id="tb"></div>
+<div id="quiz" hidden>
+<div class="qhead"><div class="qtop"><span class="qtitle">Entraînement</span><span id="qcount" class="qcount"></span></div>
+<div class="prog"><span id="qbar"></span></div>
+<div class="qbtns"><button id="bShuffle">🔀 Mélanger</button><button id="bReset">🙈 Tout recacher</button></div></div>
+<div id="qrows" class="qlist"></div></div>
+</div>
+<script>
+const H=()=>'';
+const fr=(n,d)=>`<span class='frac'><span>${n}</span><span>${d}</span></span>`;
+const data = [
+ {id:"A", title:"Onde périodique : fréquence, célérité, retard", pages:"p.2, p.4", rows:[
+  {k:"f", st:1, q:"Fréquence et période", d:"Nombre de fois où le motif élémentaire se reproduit en 1 seconde", f:"f = <span class='frac'><span>1</span><span>T</span></span>", u:"f en <b>hertz : Hz = s⁻¹</b> · T en <b>secondes</b>", x:"<p>La période T est le temps de passage d'un motif élémentaire ; la fréquence f est son inverse : le nombre de motifs par seconde. Plus la période est courte, plus la fréquence est grande.</p><span class='tip'>Hz = s⁻¹ : une fréquence, c'est « des fois par seconde ».</span><span class='trap'>Annale 2026 : au changement de milieu, f est imposée par la source et reste constante, donc <b>T = 1/f reste constante aussi</b>.</span>"},
+  {k:"c", st:0, q:"Célérité d'une onde périodique", d:"Vitesse de propagation de l'onde", f:"c = <span class='frac'><span>λ</span><span>T</span></span> = λ × f", u:"λ (période spatiale) en <b>m</b> · T en <b>s</b> · f en <b>Hz</b>", x:"<p>Pendant une période T, l'onde avance d'une longueur d'onde λ : sa vitesse est donc λ / T, ou λ × f puisque f = 1/T (@f). C'est la formule centrale du cours.</p><span class='tip'>Le son dans l'air : c = 340 m.s⁻¹ (@cson).</span><span class='trap'>λ est une <b>distance</b> (m), T un <b>temps</b> (s) : ne pas les confondre.</span>"},
+  {k:"lf", der:["c"], q:"Longueur d'onde à partir de la fréquence", d:"", f:"λ = <span class='frac'><span>c</span><span>f</span></span>", u:"", x:"<p>La forme la plus utilisée en exercice : on connaît la célérité du milieu et la fréquence de la source.</p><span class='tip'>Annale 2019 : son à 680 Hz dans l'air → λ = 340 / 680 = <b>0,5 m</b>.</span>"
+   + H(["Pars de c = λ × f.", "Divise les deux côtés par f."])},
+  {k:"lT", der:["c"], q:"Longueur d'onde à partir de la période", d:"", f:"λ = c × T", u:"", x:"<p>Utile quand l'énoncé donne une période plutôt qu'une fréquence.</p><span class='tip'>Annale 2020 : T = 10 fs dans le vide → λ = 3.10⁸ × 10.10⁻¹⁵ = 3.10⁻⁶ m = <b>3 µm</b>.</span>"
+   + H(["Pars de c = λ / T.", "Multiplie les deux côtés par T."])},
+  {k:"clum", st:0, q:"Célérité de la lumière dans le vide", d:"Vitesse de propagation des OEM dans le vide (ou dans l'air)", f:"c ≈ 3.10<sup>8</sup> m/s", u:"<b>Constante physique universelle</b>", x:"<p>Valeur à connaître : elle sert dans c = λ × f (@c) pour les OEM et dans l'indice de réfraction (@n).</p><span class='tip'>Le cours donne la même valeur dans le vide <b>et dans l'air</b>.</span>"},
+  {k:"cson", st:0, q:"Célérité du son", d:"Valeurs données par le cours", f:"c<sub>air</sub> = 340 m.s⁻¹<br>c<sub>eau</sub> ≈ 1500 m.s⁻¹", u:"Air : à <b>25 °C, 1 bar</b> ; dépend peu de la température et de la pression", x:"<p>Dans un autre milieu, le son se propage à une autre vitesse : environ 1500 m.s⁻¹ dans l'eau. Le cours précise que la célérité permet d'estimer la distance d'un orage, en comptant le temps entre la vision de l'éclair et le tonnerre (voir @tau).</p><span class='trap'>Ne pas confondre avec la célérité de la lumière (@clum).</span>"},
+  {k:"tau", st:0, q:"Retard de l'onde entre deux points", d:"Durée pour qu'une perturbation se propage d'un point A à un point B", f:"τ<sub>AB</sub> = <span class='frac'><span>AB</span><span>v</span></span>", u:"AB en <b>m</b> · v = célérité de l'onde en <b>m/s</b> · τ<sub>AB</sub> en <b>s</b>", x:"<p>Plus les points sont éloignés, ou plus l'onde est lente, plus le retard est grand.</p>"},
+  {k:"dist", der:["tau"], q:"Distance à partir du retard", d:"", f:"AB = v × τ<sub>AB</sub>", u:"", x:"<p>Permet de remonter à une distance quand on a mesuré un retard (exemple de l'orage, avec la célérité du son @cson).</p>"
+   + H(["Pars de τ<sub>AB</sub> = AB / v.", "Multiplie les deux côtés par v."])}
+ ]},
+ {id:"B", title:"Onde monochromatique et changement de milieu", pages:"p.5", rows:[
+  {k:"y", st:0, q:"Expression d'une onde monochromatique", d:"Unique fréquence / longueur d'onde : fonction sinusoïdale du temps", f:"y(t) = A sin(ωt + φ) = A sin(ωt − kx)", u:"A = amplitude (élongation maximale) : <b>−A ≤ y ≤ A</b> · φ = phase à l'origine des temps t = 0 (rad) · ωt + φ = phase à l'instant t (rad) · x = distance parcourue par l'onde (m)", x:"<p>Le poly appelle y(t) « l'amplitude de l'onde à l'instant t » ; l'amplitude au sens strict est <b>A</b>, la valeur maximale de y. L'écriture A sin(ωt − kx) est un ajout de l'actualisation (surligné en cyan).</p><span class='tip'>Annale 2019 : y = 3 sin[2π(10³t − x/5)] → par identification <b>A = 3</b> et <b>ω = 2π.10³ rad/s</b>.</span><span class='trap'>Le poly écrit y(t) = A sin(ωt + φ) = A sin(ωt − kx) : les deux écritures ne sont égales que si φ = −kx, et y dépend alors aussi de x. Retenir les deux écritures du poly.</span>"},
+  {k:"T", st:1, q:"Période et pulsation", d:"ω = pulsation de l'onde", f:"T = <span class='frac'><span>2π</span><span>ω</span></span>", u:"ω en <b>rad.s⁻¹</b> · T en <b>s</b>", x:"<p>La pulsation ω (en rad.s⁻¹) apparaît dans la phase ωt + φ de l'onde ; la période s'en déduit : plus ω est grande, plus T est courte.</p><span class='tip'>Annale 2019 : ω = 2π.10³ rad/s → T = 2π / ω = 10⁻³ s = <b>1 ms</b>.</span>"},
+  {k:"w", der:["T", "f"], q:"Pulsation à partir de la fréquence", d:"", f:"ω = 2π f", u:"", x:"<p>Forme pratique quand on connaît la fréquence. Annale 2026 : f, T et ω restent constantes au changement de milieu.</p><span class='tip'>Annale 2019 : ω = 2π.10³ rad/s → f = <b>10³ Hz</b>.</span>"
+   + H(["Pars de T = 2π / ω, donc ω = 2π / T.", "Remplace 1 / T par f (@f)."])},
+  {k:"k", st:0, q:"Nombre d'onde", d:"Relie la pulsation à la célérité", f:"k = <span class='frac'><span>ω</span><span>c</span></span>", u:"k en <b>rad.m⁻¹</b>", x:"<p>k joue pour l'espace le rôle que ω joue pour le temps : il apparaît devant x dans A sin(ωt − kx) (@y). Ajout de l'actualisation (surligné en cyan).</p>"},
+  {k:"k2", der:["k", "T", "c"], q:"Nombre d'onde à partir de la longueur d'onde", d:"", f:"k = <span class='frac'><span>2π</span><span>λ</span></span>", u:"", x:"<p>Même forme que ω = 2π / T, avec λ à la place de T : le « 2π sur la période », dans l'espace.</p>"
+   + H(["Pars de k = ω / c.", "Remplace ω par 2π / T et c par λ / T.", "Les T se simplifient : k = 2π / λ."])},
+  {k:"cP", st:0, q:"Célérité d'une onde longitudinale (onde P)", d:"Onde de compression : déplacement parallèle à la propagation", f:"c² = <span class='frac'><span>K</span><span>ρ</span></span>", u:"K = module d'élasticité pour une onde P · ρ = masse volumique", x:"<p>Exemple du cours : ondes de compression sur un ressort.</p><span class='trap'>Le poly ne donne pas les unités de K et ρ.</span>"},
+  {k:"cS", st:0, q:"Célérité d'une onde transversale (onde S)", d:"Onde de cisaillement : déplacement perpendiculaire à la propagation", f:"c² = <span class='frac'><span>μ</span><span>ρ</span></span>", u:"μ = module d'élasticité pour une onde S · ρ = masse volumique", x:"<p>Même forme que pour l'onde P : on remplace K par μ.</p><span class='tip'><b>P</b> = com<b>P</b>ression (parallèle, K) ; <b>S</b> = ci<b>S</b>aillement (perpendiculaire, μ).</span>"},
+  {k:"chg", st:1, q:"Changement de milieu", d:"Ce qui reste constant et ce qui change", f:"f<sub>milieu 2</sub> = f<sub>milieu 1</sub> · c et λ modifiées", u:"Dans un <b>milieu homogène</b> : célérité constante", x:"<p>Le poly étoile les trois points : <b>célérité modifiée</b> ★, <b>fréquence constante</b> ★, <b>longueur d'onde modifiée</b> ★.</p><span class='tip'>Annale 2026 : la fréquence est imposée par la source ; la célérité dépend du milieu.</span><span class='trap'>Piège classique : croire que la fréquence change. C'est λ qui s'adapte.</span>"},
+  {k:"l2", der:["chg", "lf"], q:"Nouvelle longueur d'onde après changement de milieu", d:"", f:"λ<sub>2</sub> = <span class='frac'><span>c<sub>2</sub></span><span>f</span></span>", u:"", x:"<p>On garde la même f et on divise par la célérité du nouveau milieu.</p><span class='tip'>Annale 2026 : λ = c / f ; f reste constante, donc si c change, λ change.</span>"
+   + H(["f est la même dans les deux milieux (@chg).", "Dans le milieu 2 : λ<sub>2</sub> = c<sub>2</sub> / f (@lf)."])}
+ ]},
+ {id:"C", title:"Domaines de fréquences et de longueurs d'onde", pages:"p.2-3, p.6", rows:[
+  {k:"vis", st:0, q:"Domaine perçu par l'œil", d:"Ondes lumineuses (OEM visibles)", f:"400 nm ≤ λ ≤ 750 nm", u:"Fréquences comprises entre les <b>infrarouges</b> et les <b>UV</b>", x:"<p>L'œil ne perçoit les OEM qu'entre 400 et 750 nm, soit 6 couleurs : rouge, orange, vert, jaune, bleu et violet.</p><span class='trap'>Incohérence du poly : la figure du spectre (p.2) indique le visible de <b>400 à 800 nm</b>, le texte (p.6) de <b>400 à 750 nm</b>. Retenir <b>400–750 nm</b> pour l'œil.</span>"},
+  {k:"visf", st:0, q:"Fréquences limites du visible (figure du spectre)", d:"Figure du spectre électromagnétique", f:"ν = 7,5.10<sup>14</sup> Hz (400 nm)<br>ν = 3,75.10<sup>14</sup> Hz (800 nm)", u:"", x:"<p>Valeurs lues sur la figure du poly. Elles vérifient c = λ × f (@c) : 3.10⁸ / 400.10⁻⁹ = 7,5.10¹⁴ Hz et 3.10⁸ / 800.10⁻⁹ = 3,75.10¹⁴ Hz.</p><span class='trap'>Sur cette figure, le visible va jusqu'à 800 nm (voir @vis).</span>"},
+  {k:"aud", st:0, q:"Domaine perçu par l'oreille", d:"Fréquences audibles", f:"20 Hz ≤ f ≤ 20 kHz", u:"f &lt; 20 Hz : <b>infrasons</b> · f &gt; 20 kHz : <b>ultrasons</b> (inaudibles)", x:"<p>La gamme audible varie avec l'âge. Sons graves : petites fréquences, λ élevées ; sons aigus : hautes fréquences, λ faibles. Un son de niveau trop faible (amplitude trop faible) est aussi inaudible.</p><span class='tip'>Après un calcul de fréquence, situe-la : &lt; 20 Hz, entre les deux, ou &gt; 20 kHz.</span>"},
+  {k:"seis", st:0, q:"Fréquence des tremblements de terre", d:"Ondes sismiques", f:"0,1 Hz à 1 Hz", u:"", x:"<p>Ondes mécaniques issues de la rupture de l'équilibre des forces stabilisant le manteau terrestre ; deux types : longitudinales et transversales.</p><span class='tip'>0,1 à 1 Hz &lt; 20 Hz : domaine des infrasons (@aud).</span>"}
+ ]},
+ {id:"D", title:"Indice de réfraction et lois de Snell-Descartes", pages:"p.8-9", rows:[
+  {k:"n", st:1, q:"Indice absolu de réfraction", d:"Milieu homogène et isotrope, faisceau de lumière monochromatique", f:"v = <span class='frac'><span>c</span><span>n</span></span>", u:"v = célérité dans le milieu · c = célérité de la lumière dans le vide · <b>n sans dimension</b>", x:"<p>Dans un milieu, la lumière va moins vite que dans le vide : <b>n &gt; 1 car v &lt; c</b> (relativité restreinte). Un milieu est plus « réfringent » si son n est plus grand. Dans le verre, n dépend de la fréquence de l'onde.</p><span class='tip'>« n est sans dimension » est aussi une notion étoilée ★ du poly.</span>"},
+  {k:"nv", der:["n"], q:"Indice à partir des célérités", d:"", f:"n = <span class='frac'><span>c</span><span>v</span></span>", u:"", x:"<p>L'indice est le rapport de deux vitesses : il n'a donc pas d'unité.</p><span class='tip'>Annale 2024 : n = c / c<sub>n</sub> (célérité dans le vide ÷ célérité dans le milieu).</span>"
+   + H(["Pars de v = c / n.", "Multiplie par n et divise par v."])},
+  {k:"ln", st:0, q:"Longueur d'onde dans un milieu d'indice n", d:"La longueur d'onde dépend aussi de n", f:"λ = <span class='frac'><span>λ<sub>vide</sub></span><span>n</span></span>", u:"", x:"<p>Comme n &gt; 1, la longueur d'onde est plus courte dans le milieu que dans le vide ; la fréquence, elle, ne change pas (@chg).</p>"},
+  {k:"n12", st:0, q:"Indice relatif d'un milieu 1 par rapport à un milieu 2", d:"", f:"n<sub>12</sub> = <span class='frac'><span>n<sub>1</sub></span><span>n<sub>2</sub></span></span>", u:"", x:"<p>Rapport des indices absolus des deux milieux.</p>"},
+  {k:"refl", st:1, q:"Loi de la réflexion", d:"Angle d'incidence et angle de réflexion", f:"i'<sub>1</sub> = i<sub>1</sub>", u:"Rayons incident, réfléchi, réfracté et normale au dioptre : dans un <b>même plan</b>", x:"<p>Le rayon réfléchi repart avec le même angle par rapport à la normale que le rayon incident, de l'autre côté de la normale.</p><span class='tip'>Annale 2025 : incidence 45° → réflexion <b>45°</b>.</span>"},
+  {k:"snell", st:1, q:"Loi de Snell-Descartes (réfraction)", d:"Passage d'un milieu d'indice n1 à un milieu d'indice n2", f:"n<sub>1</sub> sin(i<sub>1</sub>) = n<sub>2</sub> sin(i<sub>2</sub>)", u:"Angles i<sub>1</sub> et i<sub>2</sub> repérés par rapport à la normale (schéma du poly)", x:"<p>La réfraction est un changement de direction lors d'une discontinuité de n. Cette loi relie l'angle de réfraction à l'angle d'incidence.</p><span class='tip'>Annale 2024 : l'angle de réfraction <b>dépend</b> de l'angle d'incidence, via cette relation.</span>"},
+  {k:"i2", der:["snell"], q:"Calcul de l'angle de réfraction", d:"", f:"sin(i<sub>2</sub>) = <span class='frac'><span>n<sub>1</sub> sin(i<sub>1</sub>)</span><span>n<sub>2</sub></span></span>", u:"", x:"<p>On calcule sin(i<sub>2</sub>), puis on lit l'angle dans la table d'aide numérique de l'énoncé.</p>"
+   + H(["Pars de n<sub>1</sub> sin(i<sub>1</sub>) = n<sub>2</sub> sin(i<sub>2</sub>).", "Divise les deux côtés par n<sub>2</sub>."])},
+  {k:"i0", der:["snell"], q:"Incidence normale au dioptre", d:"", f:"i<sub>1</sub> = 0 → i<sub>2</sub> = 0", u:"", x:"<p>Le rayon réfracté n'est <b>pas dévié</b>.</p>"
+   + H(["Pars de n<sub>1</sub> sin(i<sub>1</sub>) = n<sub>2</sub> sin(i<sub>2</sub>).", "Avec i<sub>1</sub> = 0 : sin(0) = 0, donc n<sub>2</sub> sin(i<sub>2</sub>) = 0.", "D'où sin(i<sub>2</sub>) = 0 et i<sub>2</sub> = 0."])},
+  {k:"sens", st:1, q:"Sens de déviation du rayon réfracté", d:"Comparer les indices des deux milieux", f:"n<sub>2</sub> &gt; n<sub>1</sub> ⇒ i<sub>2</sub> &lt; i<sub>1</sub> · n<sub>2</sub> &lt; n<sub>1</sub> ⇒ i<sub>2</sub> &gt; i<sub>1</sub>", u:"", x:"<p>Si n<sub>2</sub> &gt; n<sub>1</sub>, le rayon réfracté <b>se rapproche</b> de la normale ; si n<sub>2</sub> &lt; n<sub>1</sub>, il <b>s'éloigne</b> de la normale. L'étoile ★ du poly porte sur le cas n<sub>2</sub> &lt; n<sub>1</sub>. Se retrouve à partir de Snell-Descartes (@snell) : si n<sub>2</sub> est plus grand, sin(i<sub>2</sub>) doit être plus petit.</p><span class='tip'>Annale 2025 : n<sub>2</sub> &lt; n<sub>1</sub> et i<sub>1</sub> = 45° → <b>i<sub>2</sub> &gt; 45°</b>.</span>"},
+  {k:"iL", st:0, q:"Angle limite de réflexion totale", d:"Au-delà : pas de rayon réfracté", f:"sin(i<sub>L</sub>) = <span class='frac'><span>n<sub>2</sub></span><span>n<sub>1</sub></span></span>", u:"Réflexion totale <b>systématique</b> au-delà de i<sub>1</sub> = i<sub>L</sub>", x:"<p>Applications : fibres optiques ; médicales : endoscopie et fibroscopie.</p><span class='trap'>L'ordre : <b>n<sub>2</sub> / n<sub>1</sub></b> (milieu d'arrivée sur milieu de départ).</span>"}
+ ]},
+ {id:"E", title:"Ondes sonores : célérité et impédance acoustique", pages:"p.10", rows:[
+  {k:"ct", st:0, q:"Célérité mesurée sur un son transmis", d:"Émetteur → récepteur à la distance d", f:"c = <span class='frac'><span>d</span><span>τ</span></span>", u:"", x:"<p>L'onde fait un seul trajet, de l'émetteur au récepteur.</p>"},
+  {k:"ce", st:0, q:"Célérité mesurée sur un écho", d:"Émetteur et récepteur au même endroit ; onde réfléchie par un objet à la distance d", f:"c = <span class='frac'><span>2d</span><span>τ</span></span>", u:"Base de l'<b>échographie</b>, de la mesure de la vitesse du sang par <b>effet Doppler</b>, du <b>sonar</b> des animaux et des bateaux", x:"<p>L'onde fait l'<b>aller-retour</b> : elle parcourt 2d pendant τ.</p><span class='trap'>Écho : <b>2d</b>, pas d (voir @ct).</span>"},
+  {k:"dE", der:["ce"], q:"Distance de l'objet à partir d'un écho", d:"", f:"d = <span class='frac'><span>c × τ</span><span>2</span></span>", u:"", x:"<p>On mesure le temps de retour de l'écho et on en déduit la profondeur de l'interface.</p>"
+   + H(["Pars de c = 2d / τ.", "Multiplie par τ : 2d = c × τ.", "Divise par 2."])},
+  {k:"Z", st:0, q:"Impédance acoustique", d:"Résistance du milieu au passage de l'onde", f:"Z = ρ × c", u:"ρ = masse volumique du milieu · c = célérité de l'onde acoustique", x:"<p>Caractéristique du milieu. L'échographie utilise la réfraction et la réflexion des ultrasons, qui dépendent des <b>contrastes de Z</b>.</p><span class='trap'>Le poly définit aussi Z comme « le coefficient de proportionnalité reliant les variations de pression au sein du milieu dues au mouvement des molécules » : la phrase est incomplète (elle ne dit pas à quoi la pression est reliée). Retenir la phrase du poly et Z = ρ × c.</span>"},
+  {k:"ra", st:0, q:"Unité d'impédance acoustique", d:"Le rayl, en l'honneur du baron Rayleigh", f:"1 rayl = 1 Ra = 1 Pa.s.m⁻¹", u:"", x:"<p>Les valeurs du cours sont données en <b>MRa</b> (méga-rayls).</p>"},
+  {k:"zv", st:0, q:"Valeurs d'impédance acoustique", d:"Exemples du cours", f:"air ≈ 0,0004 MRa<br>aqueux et gras ≈ 1,65 MRa<br>polyamide ≈ 3 MRa<br>os ≈ 4 – 8 MRa", u:"Poumons : Z <b>faible</b> (non chiffrée) · milieux aqueux et gras : sang, foie, rein, muscle, cerveau, graisse", x:"<p>L'air a une impédance très faible ; l'os une impédance élevée. Ce sont ces écarts entre milieux qui font les réflexions utilisées en échographie (@Z).</p>"}
+ ]}
+];
+
+
+
+const tb=document.getElementById('tb');let h='';
+const rowHTML=(r,code,par)=>`<div class="row${r.der?' der':''}${r.st?' star':''}" tabindex="0">
+      <div class="d"><span class="code">${code}</span>${par?`<span class="from">🔁 Déduite de <b>${par}</b></span>`:''}<span class="name">${r.q}</span>${r.st?`<span class="s">${'★'.repeat(r.st)}</span>`:''}</div>
+      <div class="f"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div></div>`;
+data.forEach(sec=>{
+  h+=`<section class="blk" style="--c:var(--${sec.id})"><header><span class="letter">${sec.id}</span>${sec.title}</header><div class="rows">`;
+  const groups=[];
+  sec.rows.forEach((r,i)=>{const c=sec.id+(i+1); if(r.der&&groups.length) groups[groups.length-1].kids.push([r,c]); else groups.push({r,c,kids:[]});});
+  groups.forEach(g=>{
+    h+=`<div class="grp">`+rowHTML(g.r,g.c);
+    if(g.kids.length) h+=`<div class="kids">`+g.kids.map(([r,c])=>rowHTML(r,c,g.c)).join('')+`</div>`;
+    h+=`</div>`;
+  });
+  h+=`</div></section>`;
+});
+tb.innerHTML=h;
+const b=document.getElementById('bHide'),quiz=document.getElementById('quiz'),qrows=document.getElementById('qrows');
+const all=[];data.forEach(sec=>sec.rows.forEach(r=>all.push(r)));
+const upd=()=>{const n=qrows.querySelectorAll('.qc.show').length,t=all.length;
+  document.getElementById('qcount').textContent=`${n} / ${t} révélées`;document.getElementById('qbar').style.width=(100*n/t)+'%';};
+const shuffle=()=>{
+  const a=all.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  qrows.innerHTML=a.map((r,i)=>`<div class="qc${r.st?' star':''}" tabindex="0">
+    <div class="qd"><span class="qn">${i+1}</span>${r.st?`<span class="qs">${'★'.repeat(r.st)}</span>`:''}<span class="qq">${r.q}</span></div>
+    <div class="qf"><div class="qans"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div><span class="qhint">👁 Révéler</span></div></div>`).join('');
+  upd();
+};
+document.getElementById('bShuffle').onclick=()=>{shuffle();window.scrollTo({top:0});};
+document.getElementById('bReset').onclick=()=>{qrows.querySelectorAll('.qc.show').forEach(c=>c.classList.remove('show'));upd();};
+b.onclick=()=>{
+  const on=document.body.classList.toggle('hide');b.setAttribute('aria-pressed',on);
+  b.textContent=on?'↩ Revenir à la page de référence':'🙈 Cacher les formules';
+  if(on)shuffle();
+  quiz.hidden=!on;tb.hidden=on;document.querySelector('.cols').hidden=on;
+  window.scrollTo({top:0});
+};
+const flip=e=>{const t=e.target.closest('.qc');if(t){t.classList.toggle('show');upd();}};
+qrows.addEventListener('click',flip);
+qrows.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip(e);}});
+</script>
+</body>
+</html>

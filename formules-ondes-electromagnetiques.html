@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules en 2 colonnes — Ondes électromagnétiques</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff;--ink:#1d2330;--muted:#5b6474;--line:#e3e6ec;--frame:#b9c0cc;--star:#e8a900;--starbg:#fff6d6;--ded:#3f9a6a;
+--A:#2f86a8;--B:#d0632e;--C:#c9971c;--D:#6f5aa8;--E:#a64b4b}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--frame:#4a5263;--starbg:#3a300f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.35}
+.wrap{max-width:820px;margin:0 auto;padding:16px 12px 40px}
+h1{font-size:1.4rem;margin:0 0 10px;font-weight:800}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:6px 0 8px;z-index:2;display:flex;gap:8px;align-items:center}
+.bar button{font:inherit;font-size:.9rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+.bar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.bar button:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.bar span{font-size:.8rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;border:2px solid var(--frame)}
+th{text-align:left;font-size:.78rem;color:var(--muted);font-weight:700;padding:6px 10px;border-bottom:2px solid var(--frame)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+td.d{width:42%;font-weight:700;font-size:.95rem;border-right:1.5px solid var(--frame)}
+td.d .s{color:var(--star);font-size:.8rem;margin-left:4px;white-space:nowrap}
+td.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.12rem}
+td.f .u{display:block;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.82rem;color:var(--muted);margin-top:2px}
+td.f .u b{color:var(--ink)}
+tr.sec td{background:var(--c);color:#fff;font-weight:800;font-size:.95rem;padding:6px 10px;border-bottom:0}
+tr.der td.d{padding-left:24px;color:var(--ded);font-weight:600;font-size:.9rem}
+tr.der td.d::before{content:"↳ ";font-weight:800}
+tr.der td.f{font-size:1rem;color:var(--ded)}
+sub{font-size:.65em}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor}
+body.hide td.f .ft,body.hide td.f .u{filter:blur(7px)}
+body.hide tr:not(.sec){cursor:pointer}
+body.hide tr.show td.f .ft,body.hide tr.show td.f .u{filter:none}
+@media (prefers-reduced-motion:no-preference){.ft,.u{transition:filter .2s}}
+@media (max-width:480px){td{padding:8px 7px}td.d{font-size:.88rem}td.f{font-size:1rem}tr.der td.d{padding-left:16px}}
+@media print{.bar{display:none}body.hide .ft,body.hide .u{filter:none}tr{break-inside:avoid}}
+
+/* ---- Mise en page soignée ---- */
+body{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0)}
+.wrap{max-width:860px;padding:22px 14px 50px}
+.top{padding:4px 2px 6px}
+.kicker{margin:0;font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--muted)}
+.top h1{font-size:1.9rem;margin:2px 0 4px;letter-spacing:-.01em}
+.meta{margin:0;font-size:.88rem;color:var(--muted)}
+.meta .s{color:var(--star)} .meta .g{color:var(--ded);font-weight:800}
+.bar{background:color-mix(in srgb,var(--bg) 94%,#8ea0c0);padding:10px 0}
+.bar button{background:var(--bg);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.cols{display:grid;grid-template-columns:42% 58%;font-size:.72rem;font-weight:700;letter-spacing:.03em;color:var(--muted);padding:4px 16px 6px}
+.blk{background:var(--bg);border-radius:16px;margin:0 0 22px;overflow:hidden;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25);border:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.blk header{display:flex;align-items:center;gap:10px;padding:12px 16px;font-weight:800;font-size:1.02rem;color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--bg));border-bottom:1px solid color-mix(in srgb,var(--c) 25%,var(--line))}
+.letter{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--c);color:#fff;font-size:.95rem}
+.row{display:grid;grid-template-columns:42% 58%;align-items:stretch;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .d{padding:12px 12px 12px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.code{font-size:.72rem;font-weight:800;color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg));border-radius:5px;padding:1px 6px}
+.name{font-weight:700;font-size:.95rem;flex-basis:100%}
+.row .d .s{color:var(--star);font-size:.82rem;letter-spacing:1px}
+.row .f{padding:12px 16px;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line));display:flex;flex-direction:column;justify-content:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.2rem}
+.row .f .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px;line-height:1.3}
+.row .f .u b{color:var(--c)}
+.row.star .d{background:linear-gradient(90deg,var(--starbg),transparent 75%)}
+.row.der .d{padding-left:30px;position:relative}
+.row.der .d::before{content:"↳";position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ded);font-weight:800}
+.row.der .name{color:var(--ded);font-weight:600;font-size:.9rem}
+.row.der .code{color:var(--ded);background:color-mix(in srgb,var(--ded) 12%,var(--bg))}
+.row.der .f{font-size:1.05rem;color:var(--ded);background:color-mix(in srgb,var(--ded) 6%,var(--bg))}
+body.hide .ft,body.hide .u{filter:blur(7px);user-select:none}
+body.hide .row{cursor:pointer}
+body.hide .row.show .ft,body.hide .row.show .u{filter:none}
+.row:focus-visible{outline:3px solid var(--star);outline-offset:-3px}
+@media (max-width:480px){
+  .cols,.row{grid-template-columns:44% 56%}
+  .row .d{padding:10px 8px 10px 12px}.row .f{padding:10px 12px;font-size:1.05rem}
+  .name{font-size:.88rem}.row.der .d{padding-left:24px}.row.der .d::before{left:8px}
+  .top h1{font-size:1.6rem}
+}
+@media print{body{background:#fff}.blk{box-shadow:none;break-inside:avoid}}
+
+
+/* Option 1 : groupe encadré (formule mère + filles dans une bande verte) */
+.grp{border-top:1px solid var(--line)}
+.grp:first-child{border-top:0}
+.grp > .row{border-top:0}
+.kids{background:color-mix(in srgb,var(--ded) 13%,var(--bg));padding:8px 10px 10px;display:flex;flex-direction:column;gap:7px;border-top:1px solid color-mix(in srgb,var(--ded) 30%,var(--line))}
+.kids .row{border:1px solid color-mix(in srgb,var(--ded) 30%,var(--line));border-radius:10px;overflow:hidden;background:var(--bg);grid-template-columns:calc(42% - 4px) auto}
+.kids .row .d{padding:9px 10px}
+.kids .row .f{background:color-mix(in srgb,var(--ded) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--ded) 25%,var(--line))}
+.row.der .d{padding-left:10px}
+.row.der .d::before{content:none}
+@media (max-width:480px){.kids{padding:7px 7px 8px}.kids .row .d{padding:8px}}
+
+/* Formules déduites : mêmes couleurs que les autres (seul le regroupement les distingue) */
+.kids{background:color-mix(in srgb,var(--ink) 5%,var(--bg));border-top:1px solid var(--line)}
+.kids .row{border-color:var(--line)}
+.row.der .name{color:var(--ink);font-weight:700;font-size:.95rem}
+.row.der .code{color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--bg))}
+.row.der .code::before{content:none}
+.row.der .f,.kids .row .f{color:var(--ink);font-size:1.2rem;background:color-mix(in srgb,var(--c) 5%,var(--bg));border-left:1px solid color-mix(in srgb,var(--c) 20%,var(--line))}
+@media (max-width:480px){.row.der .f,.kids .row .f{font-size:1.05rem}.row.der .name{font-size:.88rem}}
+
+/* Comme la page explication : filles décalées, reliées par un trait à leur formule mère */
+.kids{background:transparent;border-top:0;padding:0 12px 14px 38px;gap:10px;position:relative}
+.kids .row{position:relative;overflow:visible;border:1.5px solid color-mix(in srgb,var(--ded) 60%,var(--line));border-radius:10px;background:var(--bg)}
+.kids .row .d{border-radius:9px 0 0 9px}
+.kids .row .f{border-radius:0 9px 9px 0}
+.kids .row::before{content:"";position:absolute;left:-24px;top:-12px;bottom:-12px;border-left:2px solid var(--ded)}
+.kids .row:first-child::before{top:-2px}
+.kids .row:last-child::before{bottom:50%}
+.kids .row::after{content:"";position:absolute;left:-24px;top:50%;width:22px;border-top:2px solid var(--ded)}
+.grp:has(.kids) > .row{border-bottom:0}
+.from{flex-basis:100%;font-size:.76rem;font-weight:700;color:var(--ded)}
+.from b{font-weight:800}
+@media (max-width:480px){
+  .kids{padding:0 8px 12px 28px}
+  .kids .row::before,.kids .row::after{left:-18px}
+  .kids .row::after{width:16px}
+}
+
+/* Colonnes alignées partout + petit espace entre formules principales + cadres déduits plus étroits */
+.blk{container-type:inline-size}
+.row{grid-template-columns:42cqw minmax(0,1fr)!important}
+.kids .row{grid-template-columns:calc(42cqw - 39.5px) minmax(0,1fr)!important}
+.cols{grid-template-columns:42% 58%}
+.rows{display:flex;flex-direction:column;gap:6px;background:color-mix(in srgb,var(--ink) 6%,var(--bg))}
+.grp{border-top:0!important;background:var(--bg)}
+.kids{padding:0 34px 14px 38px}
+@media (max-width:480px){
+  .kids{padding:0 22px 12px 38px}
+  .kids .row::before,.kids .row::after{left:-24px}
+  .kids .row::after{width:22px}
+}
+.from{white-space:nowrap;font-size:.7rem}
+@media (max-width:480px){.kids .row .d{padding:8px 6px 8px 8px}}
+
+/* Tableau neutre (mode singe) : sans sections, sans codes, sans étoiles, mélangé */
+.neutral{--c:var(--muted);border-color:var(--line)}
+.neutral .row .f{background:color-mix(in srgb,var(--ink) 4%,var(--bg));border-left:1px solid var(--line)}
+.neutral .row .u b{color:var(--ink)}
+.neutral .row .u [style]{color:inherit!important}
+.qbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin:0 0 10px;font-size:.85rem;color:var(--muted)}
+.qbar button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer}
+[hidden]{display:none!important}
+body.hide .meta{display:none}
+
+/* ---- Mode entraînement (singe) ---- */
+.qhead{background:var(--bg);border-radius:16px;padding:14px 16px;margin:0 0 16px;box-shadow:0 1px 2px rgba(20,30,50,.06),0 8px 24px -12px rgba(20,30,50,.25)}
+.qtop{display:flex;justify-content:space-between;align-items:baseline}
+.qtitle{font-weight:800;font-size:1.1rem}
+.qcount{font-size:.85rem;color:var(--muted);font-weight:600}
+.prog{height:8px;border-radius:99px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));margin:10px 0 12px;overflow:hidden}
+.prog span{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#f5c542,var(--star));transition:width .3s}
+.qbtns{display:flex;gap:8px;flex-wrap:wrap}
+.qbtns button{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 13px;border-radius:999px;cursor:pointer}
+.qlist{display:flex;flex-direction:column;gap:10px;container-type:inline-size}
+.qc{display:grid;grid-template-columns:42cqw minmax(0,1fr);background:var(--bg);border-radius:14px;overflow:hidden;cursor:pointer;
+  border:1px solid var(--line);box-shadow:0 1px 2px rgba(20,30,50,.05),0 6px 16px -10px rgba(20,30,50,.3);transition:transform .15s}
+.qc:active{transform:scale(.99)}
+.qc:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.qc.star{border-color:color-mix(in srgb,var(--star) 45%,var(--line))}
+.qd{padding:12px 12px 12px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.qc.star .qd{background:linear-gradient(90deg,var(--starbg),transparent 85%)}
+.qn{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:7px;background:color-mix(in srgb,var(--ink) 8%,var(--bg));color:var(--muted);font-size:.75rem;font-weight:800}
+.qs{color:var(--star);font-size:.85rem;letter-spacing:1px}
+.qq{flex-basis:100%;font-weight:700;font-size:.95rem}
+.qf{position:relative;padding:12px 14px;background:color-mix(in srgb,var(--ink) 3.5%,var(--bg));border-left:1px solid var(--line);display:flex;align-items:center;font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.15rem}
+.qans{display:flex;flex-direction:column;filter:blur(8px);opacity:.6;transition:filter .25s,opacity .25s;user-select:none}
+.qans .u{align-self:flex-start;margin-top:6px;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:600;font-size:.78rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 8px}
+.qans .u b,.qans .u [style]{color:var(--ink)!important}
+.qhint{position:absolute;inset:0;display:grid;place-items:center;font-family:"Source Sans 3",system-ui,sans-serif;font-size:.8rem;font-weight:700;color:var(--muted)}
+.qc.show .qans{filter:none;opacity:1;user-select:auto}
+.qc.show .qhint{display:none}
+.qc.show .qf{background:color-mix(in srgb,#3f9a6a 7%,var(--bg))}
+.qc.show .qn{background:#3f9a6a;color:#fff}
+@media (max-width:480px){.qf{font-size:1.02rem;padding:10px 12px}.qq{font-size:.88rem}}
+body.hide .qc .ft,body.hide .qc .u{filter:none!important;user-select:auto}
+.bar{flex-wrap:wrap}
+.blink{font-size:.9rem;font-weight:600;text-decoration:none;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);padding:6px 12px;border-radius:999px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.blink:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><p class="kicker">M1 · Biophysique Appliquée</p><h1>Ondes électromagnétiques</h1><p class="meta">24 formules · <span class="s">★</span> tombées au concours · <span class="g">🔁</span> formules déduites, reliées à leur formule de base</p></header>
+<div class="bar"><button id="bHide" aria-pressed="false">🙈 Cacher les formules</button><a class="blink" href="formules.html" style="margin-left:auto">← Cours</a><a class="blink" href="formules-ondes-electromagnetiques-explications.html">📖 Explications</a></div>
+<div class="cols"><span>Définition</span><span>Formule · unité · constante</span></div><div id="tb"></div>
+<div id="quiz" hidden>
+<div class="qhead"><div class="qtop"><span class="qtitle">Entraînement</span><span id="qcount" class="qcount"></span></div>
+<div class="prog"><span id="qbar"></span></div>
+<div class="qbtns"><button id="bShuffle">🔀 Mélanger</button><button id="bReset">🙈 Tout recacher</button></div></div>
+<div id="qrows" class="qlist"></div></div>
+</div>
+<script>
+const H=()=>'';
+const fr=(a,b)=>`<span class='frac'><span>${a}</span><span>${b}</span></span>`;
+const data = [
+ {id:"A", title:"Propagation des OEM", pages:"p.2", rows:[
+  {k:"c", st:0, q:"Célérité de la lumière dans le vide", d:"Vitesse de propagation des OEM dans le vide",
+   f:"c ≈ 3.10⁸ m/s", u:"Unité : <b>m/s</b> · les OEM se propagent dans tous les milieux, <b>même dans le vide</b>",
+   x:"<p>C'est la vitesse de toutes les ondes électromagnétiques dans le vide, quelle que soit leur longueur d'onde. Elle intervient dans presque tous les calculs du cours (@nu, @Ehc).</p><span class='tip'>QCM supplémentaires (Q7) : 3.10⁸ m/s = <b>300 000 km.s⁻¹</b>.</span><span class='trap'>Le poly écrit « c ≈ » : c'est une valeur approchée.</span>"},
+  {k:"v", st:0, q:"Célérité de la lumière dans un milieu", d:"Milieu d'indice de réfraction n",
+   f:"v = "+fr("c","n"), u:"n = <b>indice de réfraction</b> du milieu · c = célérité dans le vide",
+   x:"<p>Dans un milieu matériel, la lumière ne va plus à c : sa célérité est c <b>divisée</b> par l'indice de réfraction du milieu.</p><span class='trap'>On divise par n, on ne multiplie pas : v = c / n et non c × n.</span><span class='trap'>Le poly ne donne pas d'unité pour n.</span>"},
+  {k:"n", der:["v"], q:"Indice de réfraction d'un milieu", d:"À partir des deux célérités",
+   f:"n = "+fr("c","v"), u:"",
+   x:"<p>Si l'on connaît la célérité de la lumière dans le milieu, on retrouve l'indice de réfraction.</p>"
+   + H(["Pars de v = c / n.","Multiplie les deux côtés par n : n × v = c.","Divise par v : n = c / v."])}
+ ]},
+ {id:"B", title:"Grandeurs de l'onde", pages:"p.3", rows:[
+  {k:"nu", st:0, q:"Fréquence d'une OEM", d:"OEM vue comme une onde",
+   f:"ν = "+fr("c","λ"), u:"ν en <b>Hz</b> · c en <b>m/s</b> · λ = longueur d'onde en <b>m</b>",
+   x:"<p>La fréquence et la longueur d'onde varient en <b>sens inverse</b> : plus λ est grande, plus ν est petite. C'est la formule de base de tous les exercices.</p><span class='tip'>QCM supplémentaires (Q5) : λ = 200 nm → ν = 3.10⁸ / 200.10⁻⁹ = <b>1,5.10¹⁵ Hz</b>.</span><span class='tip'>QCM supplémentaires (Q10) : 400 nm → 0,75.10¹⁵ Hz ; 800 nm = 2 × 400 nm → fréquence divisée par 2.</span><span class='trap'>λ doit être en <b>mètres</b> : 1 nm = 10⁻⁹ m.</span>"},
+  {k:"lam", der:["nu"], q:"Longueur d'onde à partir de la fréquence", d:"",
+   f:"λ = "+fr("c","ν"), u:"",
+   x:"<p>Quand l'énoncé donne une fréquence, on retrouve la longueur d'onde, puis le domaine du spectre (section D).</p><span class='tip'>QCM supplémentaires (Q4) : wifi à 5.10⁹ Hz → λ = 3.10⁸ / 5.10⁹ = 6.10⁻² m = 6.10⁷ nm.</span>"
+   + H(["Pars de ν = c / λ.","Multiplie par λ : ν × λ = c.","Divise par ν : λ = c / ν."])},
+  {k:"w", st:0, q:"Pulsation d'une OEM", d:"T = période de l'onde",
+   f:"ω = 2πν = "+fr("2π","T"), u:"Le poly ne donne pas d'unité pour ω",
+   x:"<p>La pulsation se calcule à partir de la fréquence ou de la période : les deux écritures sont égales.</p><span class='trap'>2π <b>divisé</b> par T, mais 2π <b>multiplié</b> par ν.</span>"},
+  {k:"nuT", der:["w"], q:"Fréquence et période", d:"",
+   f:"ν = "+fr("1","T"), u:"",
+   x:"<p>La fréquence est l'inverse de la période.</p>"
+   + H(["Pars de 2πν = 2π / T.","Divise les deux côtés par 2π : ν = 1 / T."])},
+  {k:"lamT", der:["w","nu"], q:"Longueur d'onde et période", d:"",
+   f:"λ = c × T", u:"",
+   x:"<p>La longueur d'onde est la distance parcourue à la célérité c pendant une période.</p>"
+   + H(["Pars de ν = 1 / T (tirée de ω = 2πν = 2π / T).","Utilise λ = c / ν.","Remplace ν par 1 / T : λ = c × T."])},
+  {k:"k", st:0, q:"Nombre d'onde", d:"",
+   f:"k = "+fr("2π","λ"), u:"Le poly ne donne pas d'unité pour k",
+   x:"<p>Même forme que la pulsation, mais avec la longueur d'onde à la place de la période.</p><span class='tip'>ω = 2π / T (le temps) ; k = 2π / λ (l'espace).</span>"}
+ ]},
+ {id:"C", title:"Énergie d'un photon", pages:"p.3", rows:[
+  {k:"E", st:0, q:"Énergie d'un photon", d:"OEM vue comme un flux de photons",
+   f:"E = hν", u:"E en <b>J</b> · h = <b>constante de Planck</b> en <b>J.s</b> · ν en <b>Hz</b>",
+   x:"<p>Les photons sont des <b>grains énergétiques sans masse et sans charge</b>. L'énergie de chacun est <b>proportionnelle à la fréquence</b>.</p><span class='tip'>QCM supplémentaires (Q3) : « l'énergie des photons est proportionnelle à la fréquence : E = hν ».</span><span class='trap'>Le poly ne donne pas la valeur numérique de h : pour un calcul chiffré, passer par Duane et Hunt (@dh).</span>"},
+  {k:"Ehc", der:["E","nu"], q:"Énergie d'un photon en fonction de λ", d:"",
+   f:"E = "+fr("h × c","λ"), u:"",
+   x:"<p>L'énergie est <b>inversement proportionnelle</b> à la longueur d'onde : plus λ est courte, plus le photon est énergétique.</p><span class='tip'>QCM supplémentaires (Q8) : λ<sub>IR</sub> &gt; λ<sub>UV</sub>, donc E<sub>IR</sub> &lt; E<sub>UV</sub>.</span>"
+   + H(["Pars de E = hν.","Remplace ν par c / λ : E = h × c / λ."])},
+  {k:"lamhc", der:["E","nu"], q:"Longueur d'onde en fonction de l'énergie", d:"",
+   f:"λ = "+fr("h × c","E"), u:"",
+   x:"<p>Même relation, retournée pour obtenir la longueur d'onde.</p><span class='tip'>QCM supplémentaires (Q1) : « E = hν = h × c / λ, soit λ = h × c / E ».</span>"
+   + H(["Pars de E = hν et ν = c / λ : E = h × c / λ.","Multiplie par λ et divise par E : λ = h × c / E."])},
+  {k:"dh", st:2, q:"Relation de Duane et Hunt", d:"Relie longueur d'onde et énergie d'un photon",
+   f:"λ(nm) = "+fr("1240","E(eV)"), u:"λ en <b>nm</b> · E en <b>eV</b>",
+   x:"<p>C'est la relation la plus utile du cours : elle donne directement la longueur d'onde d'un photon à partir de son énergie, sans passer par h ni c. Elle a la même forme que @lamhc (λ inversement proportionnelle à E).</p><span class='tip'>QCM supplémentaires (Q6) : E = 10 eV → λ = 1240 / 10 = <b>124 nm</b>.</span><span class='trap'>Unités imposées : λ en <b>nm</b> et E en <b>eV</b>. QCM supplémentaires (Q11) : 0,62 MeV = 620.10³ eV → λ = 1240 / 620.10³ = <b>2.10⁻³ nm</b>. Convertir d'abord MeV ou keV en eV.</span>"},
+  {k:"dhE", der:["dh"], q:"Énergie à partir de la longueur d'onde (Duane et Hunt)", d:"",
+   f:"E(eV) = "+fr("1240","λ(nm)"), u:"",
+   x:"<p>La forme utilisée quand l'énoncé donne la longueur d'onde.</p><span class='tip'>Annales 2021 (Q25) : λ = 0,1 nm → E = 1240 / 0,1 = 12 400 eV = <b>12,4.10³ eV</b>.</span><span class='tip'>Annales 2023 (Q35) : E = 2,55 eV → λ = 1240 / 2,55 ≈ 2400 / 5 ≈ <b>480 nm</b>. Astuce de la correction : arrondir pour calculer de tête.</span><span class='trap'>QCM supplémentaires (Q4) : pour le wifi, λ = 6.10⁷ nm → E ≈ 2.10⁻⁵ eV. Il faut λ en <b>nm</b>, pas en m.</span>"
+   + H(["Pars de λ(nm) = 1240 / E(eV).","Multiplie par E et divise par λ : E(eV) = 1240 / λ(nm)."])},
+  {k:"ev", st:0, q:"Électronvolt et joule", d:"Conversion d'énergie",
+   f:"1 eV = 1,6.10⁻¹⁹ J", u:"",
+   x:"<p>Duane et Hunt donne une énergie en eV ; E = hν donne une énergie en joules. Ce facteur fait le lien entre les deux.</p><span class='tip'>eV → J : <b>multiplier</b> par 1,6.10⁻¹⁹ ; J → eV : <b>diviser</b>.</span>"}
+ ]},
+ {id:"D", title:"Domaines du spectre électromagnétique", pages:"p.2-4", rows:[
+  {k:"gam", st:0, q:"Longueur d'onde des rayons γ", d:"Hautes fréquences",
+   f:"λ : 10⁻¹⁴ m à 10⁻¹² m", u:"",
+   x:"<p>Les plus courtes longueurs d'onde du spectre, donc les plus hautes fréquences (@nu).</p><span class='tip'>Frontière γ / X à <b>10⁻¹² m = 1 pm</b> (figure du spectre).</span>"},
+  {k:"x", st:0, q:"Longueur d'onde des rayons X", d:"Hautes fréquences",
+   f:"λ : 10⁻¹² m à 10⁻⁸ m", u:"",
+   x:"<p>Juste après les γ sur l'échelle des longueurs d'onde.</p><span class='trap'>La figure du spectre (p.2) indique « 0,1 nm » à la frontière X / UV, alors que le texte (p.3-4) et le repère 3.10¹⁶ Hz de la figure donnent 10⁻⁸ m (10 nm). <b>Retenir 10⁻⁸ m.</b></span>"},
+  {k:"uv", st:0, q:"Longueur d'onde des ultraviolets (UV)", d:"Fréquences intermédiaires",
+   f:"λ : 10⁻⁸ m à 4.10⁻⁷ m", u:"",
+   x:"<p>Les UV sont juste en dessous du visible : leur longueur d'onde est <b>inférieure à 400 nm</b>.</p><span class='tip'>QCM supplémentaires (Q5) : λ = 200 nm appartient au domaine ultraviolet.</span><span class='trap'>QCM supplémentaires (Q3) : les UV ont une longueur d'onde <b>inférieure</b> à celle du visible, pas supérieure.</span>"},
+  {k:"vis", st:0, q:"Longueur d'onde de la lumière visible", d:"Fréquences intermédiaires",
+   f:"λ : 4.10⁻⁷ m à 8.10⁻⁷ m", u:"4.10⁻⁷ m = <b>400 nm</b> : lumière bleue · 8.10⁻⁷ m = <b>800 nm</b> : lumière rouge",
+   x:"<p>Partie très étroite du spectre, perceptible par l'œil : du bleu (400 nm) au rouge (800 nm).</p><span class='trap'>400 nm = <b>bleu</b>, 800 nm = <b>rouge</b> (pas l'inverse).</span>"},
+  {k:"sol", st:0, q:"Maximum du rayonnement solaire", d:"Domaine visible",
+   f:"0,5 µm = 500 nm", u:"",
+   x:"<p>Le rayonnement solaire atteint son maximum dans le domaine visible.</p><span class='tip'>Conversion : 1 µm = 1000 nm.</span>"},
+  {k:"ir", st:0, q:"Longueur d'onde de l'infrarouge (IR)", d:"Fréquences intermédiaires",
+   f:"λ : 8.10⁻⁷ m à 10⁻³ m", u:"Émis par tous les corps de température supérieure au zéro absolu = <b>−273 °C</b>",
+   x:"<p>L'IR commence juste après le rouge (800 nm) et va jusqu'au millimètre.</p><span class='tip'>QCM supplémentaires (Q8) : λ<sub>IR</sub> &gt; 800 nm et λ<sub>UV</sub> &lt; 400 nm, donc λ<sub>IR</sub> &gt; λ<sub>UV</sub>.</span>"},
+  {k:"hyp", st:0, q:"Longueur d'onde des hyperfréquences (micro-ondes)", d:"Basses fréquences",
+   f:"λ : de l'ordre du cm jusqu'au mètre", u:"",
+   x:"<p>Domaine utilisé par le radar.</p><span class='trap'>Sur la figure du spectre, les micro-ondes commencent à <b>1 mm</b> et s'arrêtent à <b>1 m</b> ; le texte dit « de l'ordre du cm jusqu'au mètre ». Retenir la formulation du texte.</span>"},
+  {k:"rad", st:0, q:"Longueur d'onde des ondes radio", d:"Basses fréquences (les plus basses)",
+   f:"λ : de quelques cm à plusieurs km", u:"Bande FM : de l'ordre du <b>mètre</b> · téléphones cellulaires : de l'ordre de <b>10 cm</b> environ",
+   x:"<p>Les ondes de plus basses fréquences, donc de plus grandes longueurs d'onde.</p><span class='trap'>Le texte fait se recouvrir hyperfréquences (cm → m) et ondes radio (quelques cm → km) ; la figure place la frontière à 1 m. Retenir les deux plages telles qu'écrites dans le texte.</span>"},
+  {k:"rep", st:0, q:"Repères de fréquence du spectre", d:"Figure du spectre, p.2",
+   f:"1 pm ↔ 3.10²⁰ Hz · 1 mm ↔ 3.10¹¹ Hz · 1 m ↔ 3.10⁸ Hz", u:"Autres repères de la figure : <b>3.10¹⁶</b>, <b>3.10¹⁵</b>, <b>3.10¹⁴ Hz</b>",
+   x:"<p>Chaque repère se retrouve avec @nu : ν = 3.10⁸ / λ(m). Par exemple 1 m → 3.10⁸ Hz ; 1 pm = 10⁻¹² m → 3.10²⁰ Hz.</p><span class='trap'>Le repère 3.10¹⁶ Hz correspond à 10⁻⁸ m (frontière X / UV du texte), et non au « 0,1 nm » écrit sous la figure (voir @x).</span>"}
+ ]}
+];
+
+
+
+const tb=document.getElementById('tb');let h='';
+const rowHTML=(r,code,par)=>`<div class="row${r.der?' der':''}${r.st?' star':''}" tabindex="0">
+      <div class="d"><span class="code">${code}</span>${par?`<span class="from">🔁 Déduite de <b>${par}</b></span>`:''}<span class="name">${r.q}</span>${r.st?`<span class="s">${'★'.repeat(r.st)}</span>`:''}</div>
+      <div class="f"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div></div>`;
+data.forEach(sec=>{
+  h+=`<section class="blk" style="--c:var(--${sec.id})"><header><span class="letter">${sec.id}</span>${sec.title}</header><div class="rows">`;
+  const groups=[];
+  sec.rows.forEach((r,i)=>{const c=sec.id+(i+1); if(r.der&&groups.length) groups[groups.length-1].kids.push([r,c]); else groups.push({r,c,kids:[]});});
+  groups.forEach(g=>{
+    h+=`<div class="grp">`+rowHTML(g.r,g.c);
+    if(g.kids.length) h+=`<div class="kids">`+g.kids.map(([r,c])=>rowHTML(r,c,g.c)).join('')+`</div>`;
+    h+=`</div>`;
+  });
+  h+=`</div></section>`;
+});
+tb.innerHTML=h;
+const b=document.getElementById('bHide'),quiz=document.getElementById('quiz'),qrows=document.getElementById('qrows');
+const all=[];data.forEach(sec=>sec.rows.forEach(r=>all.push(r)));
+const upd=()=>{const n=qrows.querySelectorAll('.qc.show').length,t=all.length;
+  document.getElementById('qcount').textContent=`${n} / ${t} révélées`;document.getElementById('qbar').style.width=(100*n/t)+'%';};
+const shuffle=()=>{
+  const a=all.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  qrows.innerHTML=a.map((r,i)=>`<div class="qc${r.st?' star':''}" tabindex="0">
+    <div class="qd"><span class="qn">${i+1}</span>${r.st?`<span class="qs">${'★'.repeat(r.st)}</span>`:''}<span class="qq">${r.q}</span></div>
+    <div class="qf"><div class="qans"><span class="ft">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div><span class="qhint">👁 Révéler</span></div></div>`).join('');
+  upd();
+};
+document.getElementById('bShuffle').onclick=()=>{shuffle();window.scrollTo({top:0});};
+document.getElementById('bReset').onclick=()=>{qrows.querySelectorAll('.qc.show').forEach(c=>c.classList.remove('show'));upd();};
+b.onclick=()=>{
+  const on=document.body.classList.toggle('hide');b.setAttribute('aria-pressed',on);
+  b.textContent=on?'↩ Revenir à la page de référence':'🙈 Cacher les formules';
+  if(on)shuffle();
+  quiz.hidden=!on;tb.hidden=on;document.querySelector('.cols').hidden=on;
+  window.scrollTo({top:0});
+};
+const flip=e=>{const t=e.target.closest('.qc');if(t){t.classList.toggle('show');upd();}};
+qrows.addEventListener('click',flip);
+qrows.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip(e);}});
+</script>
+</body>
+</html>

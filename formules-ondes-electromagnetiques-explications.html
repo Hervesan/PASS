@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Formules — Ondes électromagnétiques</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=STIX+Two+Text:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#ffffff; --ink:#1d2330; --muted:#5b6474; --line:#e3e6ec;
+  --star:#e8a900; --starbg:#fff6d6; --fbg:#f4f6fb; --ded:#3f9a6a; --dedbg:#eef6f1;
+  --A:#2f86a8; --B:#d0632e; --C:#c9971c; --D:#6f5aa8; --E:#a64b4b;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+}
+:root[data-theme="dark"]{--bg:#15181f;--ink:#e7eaf0;--muted:#9aa3b2;--line:#2b313d;--starbg:#3a300f;--fbg:#1f2430;--dedbg:#17291f}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.4}
+.wrap{max-width:860px;margin:0 auto;padding:18px 14px 40px}
+h1{font-size:1.6rem;font-weight:800;margin:0}
+.sub{color:var(--muted);font-size:.9rem;margin:2px 0 0}
+.s{color:var(--star);letter-spacing:1px;white-space:nowrap}
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 0;margin:12px 0 4px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.toolbar button{font:inherit;font-size:.88rem;font-weight:600;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 11px;border-radius:999px;cursor:pointer}
+.toolbar button[aria-pressed="true"]{background:var(--starbg);border-color:var(--star)}
+.toolbar button:focus-visible,.card:focus-visible{outline:3px solid var(--star);outline-offset:2px}
+.count{margin-left:auto;color:var(--muted);font-size:.82rem}
+section{margin-top:22px}
+h2{font-size:1rem;margin:0 0 8px;padding:6px 12px;color:#fff;border-radius:6px}
+.card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:stretch;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.def{padding:10px 12px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.def .top{display:flex;gap:8px;align-items:baseline;font-size:.8rem;font-weight:800}
+.def .q{font-weight:700;font-size:1rem}
+.def .d{color:var(--muted);font-size:.86rem}
+.fm{background:var(--fbg);border-left:5px solid var(--sec);padding:12px 14px;display:flex;flex-direction:column;justify-content:center}
+.f{font-family:"STIX Two Text",Georgia,serif;font-weight:700;font-size:1.35rem;line-height:1.25}
+.f sub{font-size:.62em}
+.u{margin-top:6px;font-size:.9rem;font-weight:600;color:var(--ink)}
+.u b{color:var(--sec)}
+.card.starred .def{background:linear-gradient(90deg,var(--starbg),transparent 70%)}
+.card.derived{border-style:dashed}
+.card.derived .fm{border-left-color:var(--ded)}
+.card.derived .top .tag{color:var(--ded)}
+#A{--sec:var(--A)} #B{--sec:var(--B)} #C{--sec:var(--C)} #D{--sec:var(--D)} #E{--sec:var(--E)}
+#A h2{background:var(--A)} #B h2{background:var(--B)} #C h2{background:var(--C)} #D h2{background:var(--D)} #E h2{background:var(--E)}
+section .top .code{color:var(--sec)}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+body.hide .card{cursor:pointer}
+body.stars .card:not(.starred){display:none}
+body.base .card.derived{display:none}
+.hint{display:none;color:var(--muted);font-size:.85rem;margin:6px 0 0}
+body.hide .hint{display:block}
+@media (max-width:600px){
+  .card{grid-template-columns:1fr}
+  .fm{border-left:0;border-top:4px solid var(--sec)}
+  .card.derived .fm{border-top-color:var(--ded)}
+}
+@media (prefers-reduced-motion:no-preference){.f,.u{transition:filter .2s}}
+@media print{.toolbar,.hint{display:none}body.hide .fm .f,body.hide .fm .u{filter:none}.card{break-inside:avoid}}
+
+/* Cartes plus isolées */
+section{margin-top:34px}
+h2{margin-bottom:14px}
+.card{margin-bottom:18px;border:1.5px solid var(--line);border-radius:12px;box-shadow:0 2px 0 var(--line),0 6px 14px -8px rgba(29,35,48,.25)}
+.def{padding:14px 16px}
+.fm{padding:16px 18px}
+.card.derived{border-width:1.5px}
+@media (max-width:600px){.card{margin-bottom:16px}}
+
+/* Couple définition/formule plus serré, séparation légère */
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.def{padding:14px 12px 14px 16px}
+.fm{padding:14px 16px 14px 14px}
+.card{margin-bottom:28px}
+section{margin-top:40px}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px dashed var(--line)!important}
+  .def{padding:14px 16px 8px}
+  .fm{padding:10px 16px 14px}
+  .card{margin-bottom:26px}
+}
+
+.wrap{max-width:980px}
+.legend{margin-top:6px;font-size:.88rem;color:var(--muted)}
+.chain{margin:14px 0 4px;padding:12px 14px;border-left:4px solid var(--star);background:var(--starbg);border-radius:0 8px 8px 0;font-size:.95rem}
+.mnemo{margin:12px 0 4px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:.92rem}
+.mnemo strong{display:block;margin-bottom:6px}
+.mnemo ul{margin:0;padding-left:18px;columns:2;column-gap:28px}
+.mnemo li{margin-bottom:4px;break-inside:avoid}
+.chain .f,.mnemo .f{font-size:1rem}
+.card{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
+.x{grid-column:1 / -1;border-top:1px dashed var(--line);padding:12px 16px 14px;font-size:.9rem;color:var(--muted)}
+.x p{margin:0 0 5px}
+.x b,.x .tip,.x .trap{color:var(--ink)}
+.tip,.trap{display:block;margin-top:5px}
+.tip::before{content:"💡 "}
+.trap::before{content:"⚠️ "}
+.ded{margin-top:8px;padding:8px 10px;background:var(--dedbg);border-left:3px solid var(--ded);border-radius:0 6px 6px 0;font-size:.86rem;color:var(--ink)}
+.ded strong{display:block;margin-bottom:3px}
+.ded ol{margin:0;padding-left:20px}
+.from{display:block;margin-top:4px;font-size:.84rem;color:var(--ded);font-weight:600}
+.gives{display:block;margin-top:8px;font-size:.86rem;color:var(--ded);font-weight:600}
+.chip{display:inline-block;text-decoration:none;font-size:.78rem;font-weight:700;border:1px solid var(--line);border-radius:5px;padding:0 5px;background:var(--bg);color:var(--ink)}
+.card{scroll-margin-top:70px}
+.card:target{box-shadow:0 0 0 3px var(--star)}
+/* mode test : seul le titre reste visible */
+body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:blur(8px);user-select:none}
+body.hide .card.show .def .d,body.hide .card.show .def .from,body.hide .card.show .fm,body.hide .card.show .x{filter:none;user-select:auto}
+@media (max-width:600px){.mnemo ul{columns:1}.x{padding:10px 16px 14px}}
+@media print{body.hide .def .d,body.hide .def .from,body.hide .fm,body.hide .x{filter:none}}
+
+/* Traits pleins fins à l'intérieur, cadre plus marqué */
+:root{--frame:#b9c0cc}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--frame:#4a5263}}
+:root[data-theme="dark"]{--frame:#4a5263}
+.card{border:2px solid var(--frame)!important}
+.card.derived{border:2px solid var(--ded)!important}
+.fm,.card.derived .fm{border-left:1px solid var(--line)!important;border-top:0!important}
+.x{border-top:1px solid var(--line)!important}
+@media (max-width:600px){
+  .fm,.card.derived .fm{border-left:0!important;border-top:1px solid var(--line)!important}
+}
+
+/* Traits intérieurs un peu plus épais */
+.fm,.card.derived .fm{border-left:1.5px solid var(--frame)!important;border-top:0!important}
+.x{border-top:1.5px solid var(--frame)!important}
+@media (max-width:600px){.fm,.card.derived .fm{border-left:0!important;border-top:1.5px solid var(--frame)!important}}
+
+/* Cadre d'épaisseur identique sur les 4 côtés */
+.card{box-shadow:0 6px 14px -10px rgba(29,35,48,.28)!important}
+
+/* Mobile : carte empilée comme la page épurée (évite le trait doublé en haut de la formule) */
+@media (max-width:600px){.card{grid-template-columns:1fr!important}}
+
+/* Fractions : numérateur au-dessus du dénominateur */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1.15}
+.frac>span{padding:0 .25em}
+.frac>span:first-child{border-bottom:2px solid currentColor;padding-bottom:.08em}
+.frac>span:last-child{padding-top:.08em}
+
+/* Arbre : formule de base → formules déduites (comme la page arbre) */
+.grp{margin-bottom:28px}
+.grp .card{margin-bottom:0}
+.tree{list-style:none;margin:0 0 0 26px;padding:0}
+.tree > li{position:relative;padding:12px 0 0 30px}
+.tree > li::before{content:"";position:absolute;left:0;top:0;bottom:0;border-left:2px solid var(--ded)}
+.tree > li:last-child::before{bottom:auto;height:36px}
+.tree > li::after{content:"";position:absolute;left:0;top:36px;width:24px;border-top:2px solid var(--ded)}
+.tree .card{box-shadow:none!important}
+.tree .card .f{font-size:1.18rem}
+body.stars .grp:not(.gstar){display:none}
+body.stars .tree{display:none}
+body.base .tree{display:none}
+@media (max-width:600px){
+  .tree{margin-left:12px}
+  .tree > li{padding-left:22px}
+  .tree > li::after{width:18px}
+}
+
+/* Singe = bascule vers la vue épurée floutée (définition → formule) */
+body.hide .x,body.hide .chain,body.hide .mnemo,body.hide .legend,body.hide .from{display:none}
+body.hide .def .d{filter:none!important;user-select:auto}
+body.hide .fm{filter:none!important}
+body.hide .fm .f,body.hide .fm .u{filter:blur(8px);user-select:none}
+body.hide .card.show .fm .f,body.hide .card.show .fm .u{filter:none;user-select:auto}
+@media (prefers-reduced-motion:no-preference){.fm .f,.fm .u{transition:filter .2s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Ondes électromagnétiques : les formules</h1>
+<p class="sub">M1 · Biophysique Appliquée · formules expliquées</p>
+<div class="legend"><span class="s">★</span> = tombée au concours (d'après la fiche de cours) · <span class="s">★★★</span> = la plus fréquente · <span style="color:var(--ded);font-weight:700">🔁</span> = formule déduite d'une autre (cadre vert)</div>
+<div class="toolbar" role="toolbar" aria-label="Options">
+  <a href="formules-ondes-electromagnetiques.html" style="font-size:.88rem;font-weight:600;text-decoration:none;color:var(--ink);border:1.5px solid var(--line);padding:6px 11px;border-radius:999px">← Tableau des formules</a>
+  <button id="bHide" aria-pressed="false">🙈 Réviser (vue épurée)</button>
+  <button id="bStars" aria-pressed="false"><span class="s">★</span> Concours</button>
+  <button id="bBase" aria-pressed="false">Sans les déduites</button>
+  <span class="count" id="count"></span>
+</div>
+<p class="hint">Vue épurée : touche une carte pour révéler la formule. Retouche 🙈 pour revenir aux explications.</p>
+<div class="chain">Le fil qui relie tout : <span class="f">c ≈ 3.10⁸ m/s</span> → <span class="f">ν = c / λ</span> → <span class="f">E = hν</span> → <span class="f">E = h × c / λ</span> → en unités pratiques <span class="f">λ(nm) = 1240 / E(eV)</span> → la valeur de λ situe le rayonnement dans le <b>spectre</b> (γ → X → UV → visible → IR → micro-ondes → radio).</div>
+
+<div class="mnemo">
+  <strong>Moyens mnémotechniques</strong>
+  <ul>
+    <li><b>λ × E = 1240</b> (λ en nm, E en eV) : quand l'un double, l'autre est divisé par 2.</li>
+    <li>Duane et Hunt : <b>nm et eV</b>, jamais m et J ; MeV et keV → convertir en eV d'abord.</li>
+    <li><b>ν = c / λ</b> : λ ↑ ⇒ ν ↓ ; et <b>E = hν</b> : ν ↑ ⇒ E ↑.</li>
+    <li><b>2π au numérateur</b> : ω = 2π / T (le temps), k = 2π / λ (l'espace).</li>
+    <li><b>v = c / n</b> : on divise c par l'indice, on ne multiplie jamais.</li>
+    <li><b>eV → J</b> : × 1,6.10⁻¹⁹ ; J → eV : ÷ 1,6.10⁻¹⁹.</li>
+    <li>Frontières du spectre en puissances de 10 : <b>10⁻¹²</b> (γ/X) · <b>10⁻⁸</b> (X/UV) · <b>4 et 8.10⁻⁷</b> (visible) · <b>10⁻³</b> (IR).</li>
+    <li>Visible : <b>400 bleu → 800 rouge</b> (le rouge, c'est le double) ; soleil au maximum à <b>500 nm</b>.</li>
+    <li>Repères de la figure : <b>ν = 3.10⁸ / λ(m)</b> ; 1 m → 3.10⁸ Hz, 1 pm → 3.10²⁰ Hz.</li>
+  </ul>
+</div>
+
+<main id="main"></main>
+<footer style="margin-top:30px;color:var(--muted);font-size:.8rem;text-align:center">Source : fiche de cours Médisup Tours/Orléans 2026-2027 (actualisation) ; exemples tirés des annales et des QCM supplémentaires.</footer>
+</div>
+<script>
+const S = n => n ? '<span class="s">' + '★'.repeat(n) + '</span>' : '';
+const H = steps => `<div class="ded"><strong>🔁 Comment la retrouver</strong><ol>${steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>`;
+const fr=(a,b)=>`<span class='frac'><span>${a}</span><span>${b}</span></span>`;
+const data = [
+ {id:"A", title:"Propagation des OEM", pages:"p.2", rows:[
+  {k:"c", st:0, q:"Célérité de la lumière dans le vide", d:"Vitesse de propagation des OEM dans le vide",
+   f:"c ≈ 3.10⁸ m/s", u:"Unité : <b>m/s</b> · les OEM se propagent dans tous les milieux, <b>même dans le vide</b>",
+   x:"<p>C'est la vitesse de toutes les ondes électromagnétiques dans le vide, quelle que soit leur longueur d'onde. Elle intervient dans presque tous les calculs du cours (@nu, @Ehc).</p><span class='tip'>QCM supplémentaires (Q7) : 3.10⁸ m/s = <b>300 000 km.s⁻¹</b>.</span><span class='trap'>Le poly écrit « c ≈ » : c'est une valeur approchée.</span>"},
+  {k:"v", st:0, q:"Célérité de la lumière dans un milieu", d:"Milieu d'indice de réfraction n",
+   f:"v = "+fr("c","n"), u:"n = <b>indice de réfraction</b> du milieu · c = célérité dans le vide",
+   x:"<p>Dans un milieu matériel, la lumière ne va plus à c : sa célérité est c <b>divisée</b> par l'indice de réfraction du milieu.</p><span class='trap'>On divise par n, on ne multiplie pas : v = c / n et non c × n.</span><span class='trap'>Le poly ne donne pas d'unité pour n.</span>"},
+  {k:"n", der:["v"], q:"Indice de réfraction d'un milieu", d:"À partir des deux célérités",
+   f:"n = "+fr("c","v"), u:"",
+   x:"<p>Si l'on connaît la célérité de la lumière dans le milieu, on retrouve l'indice de réfraction.</p>"
+   + H(["Pars de v = c / n.","Multiplie les deux côtés par n : n × v = c.","Divise par v : n = c / v."])}
+ ]},
+ {id:"B", title:"Grandeurs de l'onde", pages:"p.3", rows:[
+  {k:"nu", st:0, q:"Fréquence d'une OEM", d:"OEM vue comme une onde",
+   f:"ν = "+fr("c","λ"), u:"ν en <b>Hz</b> · c en <b>m/s</b> · λ = longueur d'onde en <b>m</b>",
+   x:"<p>La fréquence et la longueur d'onde varient en <b>sens inverse</b> : plus λ est grande, plus ν est petite. C'est la formule de base de tous les exercices.</p><span class='tip'>QCM supplémentaires (Q5) : λ = 200 nm → ν = 3.10⁸ / 200.10⁻⁹ = <b>1,5.10¹⁵ Hz</b>.</span><span class='tip'>QCM supplémentaires (Q10) : 400 nm → 0,75.10¹⁵ Hz ; 800 nm = 2 × 400 nm → fréquence divisée par 2.</span><span class='trap'>λ doit être en <b>mètres</b> : 1 nm = 10⁻⁹ m.</span>"},
+  {k:"lam", der:["nu"], q:"Longueur d'onde à partir de la fréquence", d:"",
+   f:"λ = "+fr("c","ν"), u:"",
+   x:"<p>Quand l'énoncé donne une fréquence, on retrouve la longueur d'onde, puis le domaine du spectre (section D).</p><span class='tip'>QCM supplémentaires (Q4) : wifi à 5.10⁹ Hz → λ = 3.10⁸ / 5.10⁹ = 6.10⁻² m = 6.10⁷ nm.</span>"
+   + H(["Pars de ν = c / λ.","Multiplie par λ : ν × λ = c.","Divise par ν : λ = c / ν."])},
+  {k:"w", st:0, q:"Pulsation d'une OEM", d:"T = période de l'onde",
+   f:"ω = 2πν = "+fr("2π","T"), u:"Le poly ne donne pas d'unité pour ω",
+   x:"<p>La pulsation se calcule à partir de la fréquence ou de la période : les deux écritures sont égales.</p><span class='trap'>2π <b>divisé</b> par T, mais 2π <b>multiplié</b> par ν.</span>"},
+  {k:"nuT", der:["w"], q:"Fréquence et période", d:"",
+   f:"ν = "+fr("1","T"), u:"",
+   x:"<p>La fréquence est l'inverse de la période.</p>"
+   + H(["Pars de 2πν = 2π / T.","Divise les deux côtés par 2π : ν = 1 / T."])},
+  {k:"lamT", der:["w","nu"], q:"Longueur d'onde et période", d:"",
+   f:"λ = c × T", u:"",
+   x:"<p>La longueur d'onde est la distance parcourue à la célérité c pendant une période.</p>"
+   + H(["Pars de ν = 1 / T (tirée de ω = 2πν = 2π / T).","Utilise λ = c / ν.","Remplace ν par 1 / T : λ = c × T."])},
+  {k:"k", st:0, q:"Nombre d'onde", d:"",
+   f:"k = "+fr("2π","λ"), u:"Le poly ne donne pas d'unité pour k",
+   x:"<p>Même forme que la pulsation, mais avec la longueur d'onde à la place de la période.</p><span class='tip'>ω = 2π / T (le temps) ; k = 2π / λ (l'espace).</span>"}
+ ]},
+ {id:"C", title:"Énergie d'un photon", pages:"p.3", rows:[
+  {k:"E", st:0, q:"Énergie d'un photon", d:"OEM vue comme un flux de photons",
+   f:"E = hν", u:"E en <b>J</b> · h = <b>constante de Planck</b> en <b>J.s</b> · ν en <b>Hz</b>",
+   x:"<p>Les photons sont des <b>grains énergétiques sans masse et sans charge</b>. L'énergie de chacun est <b>proportionnelle à la fréquence</b>.</p><span class='tip'>QCM supplémentaires (Q3) : « l'énergie des photons est proportionnelle à la fréquence : E = hν ».</span><span class='trap'>Le poly ne donne pas la valeur numérique de h : pour un calcul chiffré, passer par Duane et Hunt (@dh).</span>"},
+  {k:"Ehc", der:["E","nu"], q:"Énergie d'un photon en fonction de λ", d:"",
+   f:"E = "+fr("h × c","λ"), u:"",
+   x:"<p>L'énergie est <b>inversement proportionnelle</b> à la longueur d'onde : plus λ est courte, plus le photon est énergétique.</p><span class='tip'>QCM supplémentaires (Q8) : λ<sub>IR</sub> &gt; λ<sub>UV</sub>, donc E<sub>IR</sub> &lt; E<sub>UV</sub>.</span>"
+   + H(["Pars de E = hν.","Remplace ν par c / λ : E = h × c / λ."])},
+  {k:"lamhc", der:["E","nu"], q:"Longueur d'onde en fonction de l'énergie", d:"",
+   f:"λ = "+fr("h × c","E"), u:"",
+   x:"<p>Même relation, retournée pour obtenir la longueur d'onde.</p><span class='tip'>QCM supplémentaires (Q1) : « E = hν = h × c / λ, soit λ = h × c / E ».</span>"
+   + H(["Pars de E = hν et ν = c / λ : E = h × c / λ.","Multiplie par λ et divise par E : λ = h × c / E."])},
+  {k:"dh", st:2, q:"Relation de Duane et Hunt", d:"Relie longueur d'onde et énergie d'un photon",
+   f:"λ(nm) = "+fr("1240","E(eV)"), u:"λ en <b>nm</b> · E en <b>eV</b>",
+   x:"<p>C'est la relation la plus utile du cours : elle donne directement la longueur d'onde d'un photon à partir de son énergie, sans passer par h ni c. Elle a la même forme que @lamhc (λ inversement proportionnelle à E).</p><span class='tip'>QCM supplémentaires (Q6) : E = 10 eV → λ = 1240 / 10 = <b>124 nm</b>.</span><span class='trap'>Unités imposées : λ en <b>nm</b> et E en <b>eV</b>. QCM supplémentaires (Q11) : 0,62 MeV = 620.10³ eV → λ = 1240 / 620.10³ = <b>2.10⁻³ nm</b>. Convertir d'abord MeV ou keV en eV.</span>"},
+  {k:"dhE", der:["dh"], q:"Énergie à partir de la longueur d'onde (Duane et Hunt)", d:"",
+   f:"E(eV) = "+fr("1240","λ(nm)"), u:"",
+   x:"<p>La forme utilisée quand l'énoncé donne la longueur d'onde.</p><span class='tip'>Annales 2021 (Q25) : λ = 0,1 nm → E = 1240 / 0,1 = 12 400 eV = <b>12,4.10³ eV</b>.</span><span class='tip'>Annales 2023 (Q35) : E = 2,55 eV → λ = 1240 / 2,55 ≈ 2400 / 5 ≈ <b>480 nm</b>. Astuce de la correction : arrondir pour calculer de tête.</span><span class='trap'>QCM supplémentaires (Q4) : pour le wifi, λ = 6.10⁷ nm → E ≈ 2.10⁻⁵ eV. Il faut λ en <b>nm</b>, pas en m.</span>"
+   + H(["Pars de λ(nm) = 1240 / E(eV).","Multiplie par E et divise par λ : E(eV) = 1240 / λ(nm)."])},
+  {k:"ev", st:0, q:"Électronvolt et joule", d:"Conversion d'énergie",
+   f:"1 eV = 1,6.10⁻¹⁹ J", u:"",
+   x:"<p>Duane et Hunt donne une énergie en eV ; E = hν donne une énergie en joules. Ce facteur fait le lien entre les deux.</p><span class='tip'>eV → J : <b>multiplier</b> par 1,6.10⁻¹⁹ ; J → eV : <b>diviser</b>.</span>"}
+ ]},
+ {id:"D", title:"Domaines du spectre électromagnétique", pages:"p.2-4", rows:[
+  {k:"gam", st:0, q:"Longueur d'onde des rayons γ", d:"Hautes fréquences",
+   f:"λ : 10⁻¹⁴ m à 10⁻¹² m", u:"",
+   x:"<p>Les plus courtes longueurs d'onde du spectre, donc les plus hautes fréquences (@nu).</p><span class='tip'>Frontière γ / X à <b>10⁻¹² m = 1 pm</b> (figure du spectre).</span>"},
+  {k:"x", st:0, q:"Longueur d'onde des rayons X", d:"Hautes fréquences",
+   f:"λ : 10⁻¹² m à 10⁻⁸ m", u:"",
+   x:"<p>Juste après les γ sur l'échelle des longueurs d'onde.</p><span class='trap'>La figure du spectre (p.2) indique « 0,1 nm » à la frontière X / UV, alors que le texte (p.3-4) et le repère 3.10¹⁶ Hz de la figure donnent 10⁻⁸ m (10 nm). <b>Retenir 10⁻⁸ m.</b></span>"},
+  {k:"uv", st:0, q:"Longueur d'onde des ultraviolets (UV)", d:"Fréquences intermédiaires",
+   f:"λ : 10⁻⁸ m à 4.10⁻⁷ m", u:"",
+   x:"<p>Les UV sont juste en dessous du visible : leur longueur d'onde est <b>inférieure à 400 nm</b>.</p><span class='tip'>QCM supplémentaires (Q5) : λ = 200 nm appartient au domaine ultraviolet.</span><span class='trap'>QCM supplémentaires (Q3) : les UV ont une longueur d'onde <b>inférieure</b> à celle du visible, pas supérieure.</span>"},
+  {k:"vis", st:0, q:"Longueur d'onde de la lumière visible", d:"Fréquences intermédiaires",
+   f:"λ : 4.10⁻⁷ m à 8.10⁻⁷ m", u:"4.10⁻⁷ m = <b>400 nm</b> : lumière bleue · 8.10⁻⁷ m = <b>800 nm</b> : lumière rouge",
+   x:"<p>Partie très étroite du spectre, perceptible par l'œil : du bleu (400 nm) au rouge (800 nm).</p><span class='trap'>400 nm = <b>bleu</b>, 800 nm = <b>rouge</b> (pas l'inverse).</span>"},
+  {k:"sol", st:0, q:"Maximum du rayonnement solaire", d:"Domaine visible",
+   f:"0,5 µm = 500 nm", u:"",
+   x:"<p>Le rayonnement solaire atteint son maximum dans le domaine visible.</p><span class='tip'>Conversion : 1 µm = 1000 nm.</span>"},
+  {k:"ir", st:0, q:"Longueur d'onde de l'infrarouge (IR)", d:"Fréquences intermédiaires",
+   f:"λ : 8.10⁻⁷ m à 10⁻³ m", u:"Émis par tous les corps de température supérieure au zéro absolu = <b>−273 °C</b>",
+   x:"<p>L'IR commence juste après le rouge (800 nm) et va jusqu'au millimètre.</p><span class='tip'>QCM supplémentaires (Q8) : λ<sub>IR</sub> &gt; 800 nm et λ<sub>UV</sub> &lt; 400 nm, donc λ<sub>IR</sub> &gt; λ<sub>UV</sub>.</span>"},
+  {k:"hyp", st:0, q:"Longueur d'onde des hyperfréquences (micro-ondes)", d:"Basses fréquences",
+   f:"λ : de l'ordre du cm jusqu'au mètre", u:"",
+   x:"<p>Domaine utilisé par le radar.</p><span class='trap'>Sur la figure du spectre, les micro-ondes commencent à <b>1 mm</b> et s'arrêtent à <b>1 m</b> ; le texte dit « de l'ordre du cm jusqu'au mètre ». Retenir la formulation du texte.</span>"},
+  {k:"rad", st:0, q:"Longueur d'onde des ondes radio", d:"Basses fréquences (les plus basses)",
+   f:"λ : de quelques cm à plusieurs km", u:"Bande FM : de l'ordre du <b>mètre</b> · téléphones cellulaires : de l'ordre de <b>10 cm</b> environ",
+   x:"<p>Les ondes de plus basses fréquences, donc de plus grandes longueurs d'onde.</p><span class='trap'>Le texte fait se recouvrir hyperfréquences (cm → m) et ondes radio (quelques cm → km) ; la figure place la frontière à 1 m. Retenir les deux plages telles qu'écrites dans le texte.</span>"},
+  {k:"rep", st:0, q:"Repères de fréquence du spectre", d:"Figure du spectre, p.2",
+   f:"1 pm ↔ 3.10²⁰ Hz · 1 mm ↔ 3.10¹¹ Hz · 1 m ↔ 3.10⁸ Hz", u:"Autres repères de la figure : <b>3.10¹⁶</b>, <b>3.10¹⁵</b>, <b>3.10¹⁴ Hz</b>",
+   x:"<p>Chaque repère se retrouve avec @nu : ν = 3.10⁸ / λ(m). Par exemple 1 m → 3.10⁸ Hz ; 1 pm = 10⁻¹² m → 3.10²⁰ Hz.</p><span class='trap'>Le repère 3.10¹⁶ Hz correspond à 10⁻⁸ m (frontière X / UV du texte), et non au « 0,1 nm » écrit sous la figure (voir @x).</span>"}
+ ]}
+];
+
+
+const code={}, gives={};
+data.forEach(sec=>sec.rows.forEach((r,i)=>{code[r.k]=sec.id+(i+1);}));
+data.forEach(sec=>sec.rows.forEach(r=>(r.der||[]).forEach(p=>{(gives[p]=gives[p]||[]).push(r.k);})));
+const chip=k=>`<a class="chip" href="#r-${code[k]}">${code[k]}</a>`;
+const refs=t=>t.replace(/@(\w+)/g,(m,k)=>code[k]?chip(k):m);
+const main=document.getElementById('main');
+let total=0,starred=0,derived=0;
+const cardHTML=(r,extra='')=>{
+  const from=r.der?`<span class="from">🔁 Déduite de ${r.der.map(chip).join(' ')}</span>`:'';
+  return `<div class="card${r.st?' starred':''}${r.der?' derived':''}" id="r-${code[r.k]}" tabindex="0">
+      <div class="def"><div class="top"><span class="code">${code[r.k]}</span>${S(r.st)}${r.der?'<span class="tag">🔁</span>':''}</div>
+      <div class="q">${r.q}</div>${r.d?`<div class="d">${r.d}</div>`:''}${from}</div>
+      <div class="fm"><span class="f">${r.f}</span>${r.u?`<span class="u">${r.u}</span>`:''}</div>
+      <div class="x">${refs(r.x)}</div></div>`;
+};
+data.forEach(sec=>{
+  let h=`<section id="${sec.id}"><h2>${sec.id} · ${sec.title} <small style="opacity:.85;font-weight:600">${sec.pages}</small></h2>`;
+  const groups=[];
+  sec.rows.forEach(r=>{ if(r.der&&groups.length) groups[groups.length-1].kids.push(r); else groups.push({r,kids:[]}); });
+  groups.forEach(({r,kids})=>{
+    total++; if(r.st)starred++;
+    h+=`<div class="grp${r.st?' gstar':''}">`+cardHTML(r);
+    if(kids.length){ h+=`<ul class="tree">`+kids.map(k=>{total++;derived++;return `<li>${cardHTML(k)}</li>`;}).join('')+`</ul>`; }
+    h+=`</div>`;
+  });
+  main.insertAdjacentHTML('beforeend',h+'</section>');
+});
+const B=document.body.classList,count=document.getElementById('count');
+const upd=()=>{count.textContent=B.contains('stars')?`${starred} ★`:B.contains('base')?`${total-derived} formules`:`${total} formules`;};
+upd();
+const tog=(id,c)=>{const b=document.getElementById(id);b.addEventListener('click',()=>{const on=B.toggle(c);b.setAttribute('aria-pressed',on);upd();if(c==='hide')document.querySelectorAll('.card.show').forEach(x=>x.classList.remove('show'));});};
+tog('bHide','hide');document.getElementById('bHide').addEventListener('click',()=>window.scrollTo({top:0}));tog('bStars','stars');tog('bBase','base');
+const flip=ev=>{if(ev.target.closest('a'))return;const c=ev.target.closest('.card');if(c&&B.contains('hide'))c.classList.toggle('show');};
+main.addEventListener('click',flip);
+main.addEventListener('keydown',ev=>{if(ev.target.classList.contains('card')&&(ev.key==='Enter'||ev.key===' ')){ev.preventDefault();flip(ev);}});
+
+</script>
+</body>
+</html>
