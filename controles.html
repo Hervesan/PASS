@@ -321,6 +321,8 @@
    - Pour ajouter un entraînement : copier un bloc dans "entrainements",
      incrémenter n, mettre la date de création (AAAA-MM-JJ) et déposer le PDF
      dans controles/ sous le nom MATIERE_Cx_entrainementN.pdf.
+   - "nom" (facultatif) : intitulé affiché à la place de « Contrôle n°x »
+     (ex. nom:"ECB n°1", code:"ECB1" pour le code des sujets PHYSIO-ECB1-E1).
    - "date" du contrôle : date de passage du contrôle Médisup (facultatif,
      ex. "2026-10-06") ; elle s'affiche dans l'en-tête du bloc.
    - Contrôle Médisup pas encore disponible : mettre officiel:null et remplir
@@ -350,6 +352,7 @@ const COURS_BAM = {
   gaz:          "Systèmes gazeux",
   noyaux:       "Noyaux et rayonnements",
   interaction:  "Interaction des rayonnements ionisants avec la matière",
+  effets:       "Effets biologiques des rayonnements ionisants (partie 1)",
 };
 const COURS_PHYSIO = {
   compart:   "FC1 Compartiments liquidiens",
@@ -363,6 +366,13 @@ const COURS_PHYSIO = {
   endoc:     "FC8 Système endocrinien",
   acido:     "FC9 Équilibre acido-basique",
   thermo:    "FC10 Thermorégulation",
+  extero:    "FC11 Extéroception",
+  cognition: "FC12 Cognition",
+  couplage:  "FC13 Couplage excitation-contraction",
+  cycle:     "FC14 Cycle cardiaque",
+  renale:    "FC15 Physiologie rénale",
+  debit:     "FC16 Débit cardiaque : déterminants et régulation",
+  effort:    "FC17 Adaptation cardiovasculaire à l'effort",
 };
 
 const COURS_CHIMIE = {
@@ -429,12 +439,54 @@ const CONTROLES = [
     ],
   },
 
-  /* ---------------- M1 · Physiologie · Contrôle n°1 (ECB n°1) ---------------- */
+  /* ---------------- M1 · BAM · ECB n°1 du 17.10 ---------------- */
   {
-    key:"physio-1", matiere:"physio", numero:1, date:"2026-10-17",
+    key:"bam-ecb1", matiere:"bam", numero:1, nom:"ECB n°1 du 17.10", code:"ECB1", date:"2026-10-17",
+    programme:[
+      { t:COURS_BAM.constitution }, { t:COURS_BAM.etats }, { t:COURS_BAM.gaz },
+      { t:COURS_BAM.noyaux }, { t:COURS_BAM.interaction }, { t:COURS_BAM.effets },
+    ],
+    officiel:null,
+    entrainements:[
+      {
+        id:"bam-ecb1-e1", n:1, date:"2026-10-12", nbQ:30, qrm:24, qru:6, duree:"60 min",
+        cours:[
+          { t:COURS_BAM.constitution, d:"quarks et hadrons, bosons vecteurs, intensité et portée des 4 forces, Coulomb en 1/r², interaction faible et Van der Waals", q:"Q1–4" },
+          { t:COURS_BAM.etats, d:"états fondamentaux, systèmes dispersés et plasma, vapeur d'eau inspirée/alvéolaire (calcul), changements d'état et chaleur latente", q:"Q5–8" },
+          { t:COURS_BAM.gaz, d:"unités de pression, perfusion et pression hydrostatique (calcul), plongée au nitrox, P₁V₁/T₁ = P₂V₂/T₂ (calcul), gaz réels", q:"Q9–13" },
+          { t:COURS_BAM.noyaux, d:"isotopes/isotones/isobares/isomères, stabilité, énergie de liaison par nucléon (calcul), bilans α/β/CE, spectres, β⁺ et annihilation, période effective (calcul), activité et usages", q:"Q14–21" },
+          { t:COURS_BAM.interaction, d:"caractère ionisant, électrons (TLE, DLI, portée), α et pic de Bragg, effets photoélectrique/Compton/paires, μ et CDA avec aide numérique, neutrons et dose", q:"Q22–27" },
+          { t:COURS_BAM.effets, d:"radiolyse et radicaux libres, effets direct/indirect, radiosensibilité et D₀, nécrose/apoptose, dose efficace W_R × W_T (calcul)", q:"Q28–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/BAM_ECB1_entrainement1.pdf" } ],
+        note:"Programme complet de l'ECB (6 cours). Corrigé à partir de la page 9 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+      {
+        id:"bam-ecb1-e2", n:2, date:"2026-10-12", nbQ:30, qrm:23, qru:7, duree:"60 min",
+        cours:[
+          { t:COURS_BAM.constitution, d:"dimensions et masses de l'atome, générations, charge de couleur et confinement, force de Coulomb (calcul), énergie potentielle, liaison hydrogène", q:"Q1–4" },
+          { t:COURS_BAM.etats, d:"corps purs et mélanges, préfixes iso-, point triple et critique, évaporation de la sueur (calcul Q = L × m), ébullition/évaporation et hygrométrie", q:"Q5–8" },
+          { t:COURS_BAM.gaz, d:"PV = nRT et unités, quantité de matière d'une seringue (calcul), apnée et bouteille, pression relative en cmH₂O (calcul), héliox et Dalton", q:"Q9–13" },
+          { t:COURS_BAM.noyaux, d:"isotopes de H et C, défaut de masse et ordres d'énergie, cobalt 60 non pur, β⁺/β⁻ et neutrinos, ⁹⁹Mo à T/2 (aide numérique), Ci et A = λN, historique et usages, CE/Auger/métastables", q:"Q14–21" },
+          { t:COURS_BAM.interaction, d:"E = hc/λ (calcul), RX de freinage/caractéristique, excitation et TLE, effets selon Z et E, tablier de plomb en CDA, neutrons et dose", q:"Q22–27" },
+          { t:COURS_BAM.effets, d:"facteurs de gravité, TLE/W_R/W_T et unités, dose équivalente aux neutrons (calcul)", q:"Q28–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/BAM_ECB1_entrainement2.pdf" } ],
+        note:"Autres parties du cours que l'entraînement 1. Corrigé à partir de la page 8.",
+      },
+    ],
+  },
+
+  /* ---------------- M1 · Physiologie · ECB n°1 du 17.10 ---------------- */
+  {
+    key:"physio-1", matiere:"physio", numero:1, nom:"ECB n°1 du 17.10", code:"ECB1", date:"2026-10-17",
     programme:[
       { t:COURS_PHYSIO.compart }, { t:COURS_PHYSIO.canaux }, { t:COURS_PHYSIO.intro },
       { t:COURS_PHYSIO.bioen }, { t:COURS_PHYSIO.digestive }, { t:COURS_PHYSIO.snc_org },
+      { t:COURS_PHYSIO.synapse }, { t:COURS_PHYSIO.endoc }, { t:COURS_PHYSIO.acido },
+      { t:COURS_PHYSIO.thermo }, { t:COURS_PHYSIO.extero }, { t:COURS_PHYSIO.cognition },
+      { t:COURS_PHYSIO.couplage }, { t:COURS_PHYSIO.cycle }, { t:COURS_PHYSIO.renale },
+      { t:COURS_PHYSIO.debit }, { t:COURS_PHYSIO.effort },
     ],
     officiel:null,
     entrainements:[
@@ -463,6 +515,56 @@ const CONTROLES = [
         ],
         pdfs:[ { label:"Sujet + corrigé", href:"controles/Physiologie_C1_entrainement2.pdf" } ],
         note:"Autres parties du cours que l'entraînement 1. Corrigé à partir de la page 8.",
+      },
+      {
+        id:"physio-c1-e3", n:3, date:"2026-10-12", nbQ:30, qrm:20, qru:10, duree:"60 min",
+        cours:[
+          { t:COURS_PHYSIO.synapse, d:"types de synapses, ordre des étapes, quanta et codage, ionotropiques/RCPG, psychotropes, intégration et EEG", q:"Q1–6" },
+          { t:COURS_PHYSIO.endoc, d:"glandes, classes d'hormones, ADH et aldostérone, complexe hypothalamo-hypophysaire, rythmes, diabète, axe thyréotrope", q:"Q7–13" },
+          { t:COURS_PHYSIO.acido, d:"pH et [H+], origine de la charge acide, tampons et rein, alcalose sur vomissements (avec aide), HCO3− à rebours, diarrhée", q:"Q14–19" },
+          { t:COURS_PHYSIO.thermo, d:"échanges noyau-écorce, frisson et UCP1, fièvre, temps de perte (radiation + convection), sudation et évaporation", q:"Q20–24" },
+          { t:COURS_PHYSIO.extero, d:"boucle sensori-gnosi-praxique en situation, physiologie des 5 sens, vision et voies du où/quoi", q:"Q25–27" },
+          { t:COURS_PHYSIO.cognition, d:"cortex primaire/secondaire/associatif, mémoire et QI, fonctions exécutives et gnosies", q:"Q28–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Physiologie_C1_entrainement3.pdf" } ],
+        note:"Partie FC7 à FC12 du programme. Corrigé à partir de la page 9 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+      {
+        id:"physio-c1-e4", n:4, date:"2026-10-12", nbQ:30, qrm:20, qru:10, duree:"60 min",
+        cours:[
+          { t:COURS_PHYSIO.synapse, d:"morphologie et couplages, inhibition présynaptique axo-axonique, critères d'un NT, arrêt de la transmission, PPSE/PPSI, fréquence et quanta", q:"Q1–6" },
+          { t:COURS_PHYSIO.endoc, d:"SN vs SE, seconds messagers, stimuli et rétroactions, axes corticotrope/somatotrope/lactation, cycle menstruel, repas et insuline, pathologies", q:"Q7–13" },
+          { t:COURS_PHYSIO.acido, d:"pH optimal des enzymes, pouvoir tampon à rebours, HCO3− filtrés par jour, PaCO2 à rebours et acidose respiratoire (questions liées), seuil ventilatoire, acidose mixte", q:"Q14–19" },
+          { t:COURS_PHYSIO.thermo, d:"température centrale et classification, définitions des échanges, convection air/eau, conduction à rebours (surface), comportement et sudation", q:"Q20–24" },
+          { t:COURS_PHYSIO.extero, d:"proprio/intéroception et SPGO, étapes sensorielles, cortex primaire/secondaire et ceinture auditive", q:"Q25–27" },
+          { t:COURS_PHYSIO.cognition, d:"définition et familles de fonctions, praxies/langage/visuo-spatial, efférences, QI, inhibition, attention, oubli", q:"Q28–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Physiologie_C1_entrainement4.pdf" } ],
+        note:"Autres parties de FC7 à FC12 que l'entraînement 3. Corrigé à partir de la page 8.",
+      },
+      {
+        id:"physio-c3-e1", n:5, date:"2026-10-12", nbQ:30, qrm:20, qru:10, duree:"60 min",
+        cours:[
+          { t:COURS_PHYSIO.couplage, d:"organisation du myocarde, bandes du sarcomère, cycle actine-myosine sans ATP, étapes du couplage, bloqueur calcique, voie β1 et catécholamines", q:"Q1–6" },
+          { t:COURS_PHYSIO.cycle, d:"petite et grande circulations, tropismes, Wiggers et valves, diastole, durée de la diastole (calcul), pathologies et modulation", q:"Q7–12" },
+          { t:COURS_PHYSIO.renale, d:"néphrons, DFG à partir du DSR (calcul), PNF, segments tubulaires, clairance UV/P (calcul), cellules principales et intercalaires, SRAA lors d'une hémorragie, miction", q:"Q13–20" },
+          { t:COURS_PHYSIO.debit, d:"Qc = FC × VES (calcul), déterminants du VES, courbe pression-volume, résistance et rayon⁴, SNA et FC, orthostatisme et Swan-Ganz", q:"Q21–26" },
+          { t:COURS_PHYSIO.effort, d:"Qc max avec Astrand (calcul), hémodynamique centrale, PAM et résistances (calcul), mécanismes et HVG", q:"Q27–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Physiologie_C1_entrainement5.pdf" } ],
+        note:"Partie FC13 à FC17 du programme. Corrigé à partir de la page 9 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+      {
+        id:"physio-c3-e2", n:6, date:"2026-10-12", nbQ:30, qrm:20, qru:10, duree:"60 min",
+        cours:[
+          { t:COURS_PHYSIO.couplage, d:"performances et ultrastructure, VES à partir de 360 L/h (calcul), phases du cycle ATPasique, relaxation (SERCA, échangeur Na⁺/Ca²⁺), jonctions et BAV, synthèse des catécholamines", q:"Q1–6" },
+          { t:COURS_PHYSIO.cycle, d:"cœur et valves, bruit B1, ECG, diastole en tachycardie (calcul), régulation de la PA et antihypertenseurs, explorations", q:"Q7–12" },
+          { t:COURS_PHYSIO.renale, d:"rôles, calcitriol et EPO, cellules juxtaglomérulaires, quantité excrétée (calcul), membrane de filtration, autorégulation, gradient cortico-médullaire, clairance nulle, urine et miction", q:"Q13–20" },
+          { t:COURS_PHYSIO.debit, d:"répartition du débit, principe de Fick (calcul), Frank-Starling et L₀, index cardiaque (calcul), postcharge et résistances, compliance et techniques de mesure", q:"Q21–26" },
+          { t:COURS_PHYSIO.effort, d:"VO₂ = Qc × DAV (calcul), statique/dynamique et sports, redistribution et PA, baroréflexe et entraînement", q:"Q27–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Physiologie_C1_entrainement6.pdf" } ],
+        note:"Autres parties de FC13 à FC17 que l'entraînement 5. Corrigé à partir de la page 8.",
       },
     ],
   },
@@ -708,7 +810,7 @@ function today(){
 /* liste à plat des sujets d'un contrôle, officiel en tête */
 function sujets(C){
   const M = MATIERES[C.matiere];
-  const base = `${M.code}-C${C.numero}`;
+  const base = `${M.code}-${C.code || "C" + C.numero}`;
   const out = C.officiel
     ? [{ ...C.officiel, off:true, code:`${base}-OFF`, titre:"Sujet officiel Médisup", cours:C.programme }]
     : [{ id:`${base}-OFF`, off:true, avenir:true, code:`${base}-OFF`, titre:"Sujet officiel Médisup", cours:C.programme }];
@@ -723,7 +825,8 @@ function matchSujet(s, q){
 }
 
 function avenirHTML(s, color, C){
-  const quand = C.date ? (C.date >= today() ? ` · contrôle prévu le <b>${fdate(C.date)}</b>` : ` · contrôle passé le <b>${fdate(C.date)}</b>`) : "";
+  const qui = C.nom ? esc(C.nom) : "contrôle";
+  const quand = C.date ? (C.date >= today() ? ` · ${qui} prévu le <b>${fdate(C.date)}</b>` : ` · ${qui} passé le <b>${fdate(C.date)}</b>`) : "";
   return `
     <article class="sujet avenir" style="--c:${color}">
       <div class="badge off"><small>MÉDISUP</small><span>OFF</span></div>
@@ -804,7 +907,7 @@ function render(){
     const faits = all.filter(s => (SUIVI[s.id]||{}).done).length;
     const pct = all.length ? Math.round(100 * faits / all.length) : 0;
     const anchor = "ctrl-" + C.key;
-    const titre = `${M.code === "PHYSIO" ? "Physiologie" : M.code === "CHIMIE" ? "Chimie" : M.code === "BIOCHIMIE" ? "Biochimie" : M.code} · Contrôle n°${C.numero}`;
+    const titre = `${M.code === "PHYSIO" ? "Physiologie" : M.code === "CHIMIE" ? "Chimie" : M.code === "BIOCHIMIE" ? "Biochimie" : M.code} · ${C.nom || "Contrôle n°" + C.numero}`;
 
     som += `
       <a class="som" href="#${anchor}" style="--c:${M.color}">
@@ -826,7 +929,7 @@ function render(){
           <div>
             <div class="mod">${M.module} · ${esc(M.titre.toUpperCase())}</div>
             <h2>${esc(titre)}</h2>
-            ${C.date ? `<div class="prog-date">Contrôle Médisup ${C.date >= today() ? "prévu le" : "passé le"} <b>${fdate(C.date)}</b></div>` : ""}
+            ${C.date ? `<div class="prog-date">${C.nom ? esc(C.nom) + " Médisup" : "Contrôle Médisup"} ${C.date >= today() ? "prévu le" : "passé le"} <b>${fdate(C.date)}</b></div>` : ""}
           </div>
           <div class="right">
             <span><span class="ico">${ICONS.fait}</span><span class="pct">${faits}/${all.length}</span> faits</span>
