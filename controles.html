@@ -87,6 +87,18 @@
   .chip .dot{ width:9px; height:9px; border-radius:50%; background:var(--c); }
   .chip:hover{ color:var(--ink); }
   .chip.on{ background:var(--ink); border-color:var(--ink); color:#fff; }
+  .chip.rub svg{ width:14px; height:14px; }
+  .rubrique{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px 20px;
+    border:1px solid var(--line); border-left:5px solid var(--ink); border-radius:14px; background:#fff; padding:14px 18px; margin-bottom:22px; }
+  .rubrique .k{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); }
+  .rubrique h2{ font-family:'Fraunces', serif; font-size:22px; margin:2px 0 4px; }
+  .rubrique h2 span{ font-family:'IBM Plex Sans', sans-serif; font-size:14px; font-weight:400; color:var(--ink-soft); }
+  .rubrique p{ margin:0; font-size:13px; color:var(--ink-soft); }
+  .rubrique p b{ color:var(--ink); }
+  .rubrique .mats{ display:flex; gap:8px; flex-wrap:wrap; }
+  .rubrique .mats a{ display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:999px; text-decoration:none; color:var(--ink);
+    font-size:13px; border:1px solid color-mix(in srgb, var(--c) 40%, #fff); background:color-mix(in srgb, var(--c) 12%, #fff); }
+  .rubrique .mats a svg{ width:15px; height:15px; }
 
   /* ============ SOMMAIRE ============ */
   .content{ padding-top:22px; padding-bottom:50px; }
@@ -139,6 +151,22 @@
     font-family:'IBM Plex Mono', monospace; font-size:10px; font-weight:600; color:#fff; background:var(--c);
     min-width:17px; height:17px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;
     position:relative; top:-1px;
+  }
+
+  .programme li .ent{ display:inline-flex; gap:3px; margin-left:4px; }
+  .programme li .ent b{
+    font-family:'IBM Plex Mono', monospace; font-size:10px; font-weight:600; color:var(--ink-soft);
+    border:1px solid var(--line); border-radius:4px; padding:0 4px; background:#fff;
+  }
+  .s-prog{ display:flex; flex-wrap:wrap; align-items:center; gap:5px; margin:2px 0 8px; font-size:12px; }
+  .s-prog .lbl{ color:var(--ink-soft); margin-right:2px; }
+  .s-prog .pc{
+    display:inline-flex; align-items:center; gap:5px; padding:2px 8px 2px 3px; border-radius:999px;
+    background:color-mix(in srgb, var(--c) 14%, #fff); border:1px solid color-mix(in srgb, var(--c) 35%, #fff);
+  }
+  .s-prog .pc .n{
+    font-family:'IBM Plex Mono', monospace; font-size:9.5px; font-weight:600; color:#fff; background:var(--c);
+    min-width:15px; height:15px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;
   }
 
   /* icônes */
@@ -353,6 +381,11 @@ const COURS_BAM = {
   noyaux:       "Noyaux et rayonnements",
   interaction:  "Interaction des rayonnements ionisants avec la matière",
   effets:       "Effets biologiques des rayonnements ionisants (partie 1)",
+  radiopharma:  "Aspects radiopharmaceutiques",
+  radioprot:    "Bases de radioprotection",
+  ondes:        "Ondes",
+  oem:          "Ondes électromagnétiques",
+  rmn:          "RMN",
 };
 const COURS_PHYSIO = {
   compart:   "FC1 Compartiments liquidiens",
@@ -445,6 +478,8 @@ const CONTROLES = [
     programme:[
       { t:COURS_BAM.constitution }, { t:COURS_BAM.etats }, { t:COURS_BAM.gaz },
       { t:COURS_BAM.noyaux }, { t:COURS_BAM.interaction }, { t:COURS_BAM.effets },
+      { t:COURS_BAM.radiopharma }, { t:COURS_BAM.radioprot }, { t:COURS_BAM.ondes },
+      { t:COURS_BAM.oem }, { t:COURS_BAM.rmn },
     ],
     officiel:null,
     entrainements:[
@@ -473,6 +508,30 @@ const CONTROLES = [
         ],
         pdfs:[ { label:"Sujet + corrigé", href:"controles/BAM_ECB1_entrainement2.pdf" } ],
         note:"Autres parties du cours que l'entraînement 1. Corrigé à partir de la page 8.",
+      },
+      {
+        id:"bam-ecb1-e3", n:3, date:"2026-10-12", nbQ:30, qrm:23, qru:7, duree:"60 min",
+        cours:[
+          { t:COURS_BAM.radiopharma, d:"loi de désintégration et Xofigo, activité du ¹⁸F en mCi/MBq (calcul), schéma du cobalt 60, filiations et équilibres, T₂ à rebours en équilibre transitoire (calcul), générateur Mo/Tc et élution, MRP et vecteurs", q:"Q1–7" },
+          { t:COURS_BAM.radioprot, d:"sources d'exposition en France, dose selon temps et 1/d² (calcul), principes et limites réglementaires, dosimètres, catégories A/B, irradiation homogène", q:"Q8–11" },
+          { t:COURS_BAM.ondes, d:"types d'ondes, y = A sin(ωt − kx) (calcul λ et c), profondeur en échographie (calcul), sons et dB, réflexion totale à rebours (angle limite), impédance Z = ρc", q:"Q12–17" },
+          { t:COURS_BAM.oem, d:"historique et structure des OEM, ν → λ → E par Duane-Hunt (calcul), domaines du spectre, téléphone 3 GHz, production et détection", q:"Q18–21" },
+          { t:COURS_BAM.rmn, d:"spin selon les parités, B₀ à rebours par Larmor du ¹⁹F (calcul), équilibre et aimantation, λ RF du ³¹P (aide numérique), impulsions 90°/180° et IR, relaxation T₁/T₂, ν_c et état de la matière, SES et gradients, pondérations", q:"Q22–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/BAM_ECB1_entrainement3.pdf" } ],
+        note:"Cours 7 à 11 de l'ECB (radiopharmacie, radioprotection, ondes, OEM, RMN). Corrigé à partir de la page 9 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+      {
+        id:"bam-ecb1-e4", n:4, date:"2026-10-12", nbQ:30, qrm:22, qru:8, duree:"60 min",
+        cours:[
+          { t:COURS_BAM.radiopharma, d:"TEMP/TEP/RTM et périodes, iode 131 à mi-période (aide numérique), filiation et radon 222, générateur ⁸¹Rb/⁸¹ᵐKr, A = λN et curie (calcul), lecture d'un schéma de désintégration, réglementation des MRP et vecteur", q:"Q1–7" },
+          { t:COURS_BAM.radioprot, d:"irradiation homogène et facteurs de réaction, distance minimale selon débit et durée (calcul), sources naturelles et artificielles, démarche préventive, écrans, seuil de 100 mSv, limites aux extrémités", q:"Q8–11" },
+          { t:COURS_BAM.ondes, d:"ondes mécaniques, houle et séismes, distance d'un orage (calcul), ondes P et S et c² = K/ρ, perception de la lumière et du son, devenir d'un faisceau à une interface, célérité à partir de Z (calcul)", q:"Q12–17" },
+          { t:COURS_BAM.oem, d:"Faraday et Hertz, production et détection, λ d'un photon γ de 2,48 MeV (calcul), γ/X/UV/IR, radiation de 300 nm (ν, ω, E)", q:"Q18–21" },
+          { t:COURS_BAM.rmn, d:"Rabi, Bloch et Purcell, quarks et |S|, écart énergétique à 3 T (aide numérique), m_J et 2J + 1, protons à 0,5 T (ν₀, ω₀, T₀, λ_RF), durée et intensité des impulsions, relaxation selon l'état et FID, chronologie de l'écho de spin, lecture de la formule du signal, voxels, contraste et double transformée de Fourier", q:"Q22–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/BAM_ECB1_entrainement4.pdf" } ],
+        note:"2e série sur les cours 7 à 11 : autres parties des fiches que l'entraînement 3, avec 2 QRU à affirmations (Q4, Q28). Corrigé à partir de la page 9 ; chaque question y a son encadré « Tips réflexes ».",
       },
     ],
   },
@@ -658,6 +717,31 @@ const CONTROLES = [
       },
     ],
   },
+
+  /* ---------------- M2 · BMI · ECB n°1 du 17.10 ---------------- */
+  {
+    key:"bmi-ecb1", matiere:"bmi", numero:1, nom:"ECB n°1 du 17.10", code:"ECB1", date:"2026-10-17",
+    programme:[
+      { t:COURS_BMI.grandeurs }, { t:COURS_BMI.energie }, { t:COURS_BMI.ph },
+      { t:COURS_BMI.colligatives }, { t:COURS_BMI.cinetiques }, { t:COURS_BMI.mecaniques },
+    ],
+    officiel:null,
+    entrainements:[
+      {
+        id:"bmi-ecb1-e1", n:1, date:"2026-10-12", nbQ:30, qrm:20, qru:10, duree:"60 min",
+        cours:[
+          { t:COURS_BMI.grandeurs, d:"définitions des unités de base, mesurable/repérable et écriture des unités, dimension de k (Stokes-Einstein), log/exp, incertitude relative sur ½mv², kWh/J et bar/atm", q:"Q1–6" },
+          { t:COURS_BMI.energie, d:"travail d'une force oblique et TEC à vitesse constante, frottements sur un toboggan (calcul), Coulomb/gravitation et Ep = qU d'un électron, équilibre stable/instable et énergie de liaison", q:"Q7–10" },
+          { t:COURS_BMI.ph, d:"Ke, activité, Ostwald, tampon après ajout de base forte (aide numérique), indicateur coloré et acide aminé, Henderson-Hasselbalch et acidose métabolique compensée, pH d'une base forte, tampons ouverts/fermés", q:"Q11–16" },
+          { t:COURS_BMI.colligatives, d:"molalité/molarité/-émie, i_osm avec dissociation partielle (calcul), MgCl₂ + glucose + urée (iso-osmolaire mais hypotonique), masse molaire par cryoscopie, osmomètre Δπ = ρgΔh, osmolalité calculée et trou osmolaire", q:"Q17–22" },
+          { t:COURS_BMI.cinetiques, d:"brownien et sens de variation de D, Fick à travers une membrane sélective (calcul), Poiseuille en a⁴/η, convection et DFG, σ, état stationnaire et aquaporines", q:"Q23–26" },
+          { t:COURS_BMI.mecaniques, d:"ΔW = σΔS (calcul), bulles reliées en 4σ/R, surfactant et alvéoles, Jurin en mouillage imparfait (calcul)", q:"Q27–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/BMI_ECB1_entrainement1.pdf" } ],
+        note:"Programme complet de l'ECB (6 cours). Corrigé à partir de la page 8 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+    ],
+  },
   /* ---------------- M2 · Chimie · Contrôle n°1 ---------------- */
   {
     key:"chimie-1", matiere:"chimie", numero:1, date:"2026-10-07",
@@ -786,7 +870,15 @@ const CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-
 function load(){ try{ return JSON.parse(localStorage.getItem("controles-suivi") || "{}"); }catch(e){ return {}; } }
 function save(s){ try{ localStorage.setItem("controles-suivi", JSON.stringify(s)); }catch(e){} }
 let SUIVI = load();
-let FILTRE = Object.assign({ mat:"all", statut:"all" }, SUIVI.__filtre || {});
+let FILTRE = Object.assign({ mat:"all", statut:"all", ctrl:"all" }, SUIVI.__filtre || {});
+/* lien direct vers une rubrique : controles.html#ecb1 */
+(function(){ const h = location.hash.replace("#","").toUpperCase(); if(/^ECB\d+$/.test(h)){ FILTRE.ctrl = h; FILTRE.mat = "all"; } })();
+/* rubriques transversales : contrôles portant un code commun (ECB1, ECB2…) */
+function rubriques(){
+  const out = {};
+  CONTROLES.forEach(C => { if(C.code){ (out[C.code] = out[C.code] || { code:C.code, nom:(C.nom || C.code).replace(/ du .*/, ""), date:C.date, ctrls:[] }).ctrls.push(C); } });
+  return Object.values(out);
+}
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const norm = s => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
@@ -836,13 +928,19 @@ function avenirHTML(s, color, C){
     </article>`;
 }
 
-function sujetHTML(s, color, q){
+function sujetHTML(s, color, q, programme){
   const st = SUIVI[s.id] || {};
   const qrmqru = s.qrm != null ? ` <span>(${s.qrm} QRM · ${s.qru} QRU)</span>` : "";
   const when = s.off ? "" :
     `<span class="when">${CAL_ICON} créé le <b>${fdate(s.date)}</b></span>`;
   const btns = s.pdfs.map(p =>
     `<a class="btn${p.alt ? " alt" : ""}${p.tips ? " tips" : ""}" href="${esc(p.href)}" target="_blank" rel="noopener">${p.tips ? TIPS_ICON : PDF_ICON}${esc(p.label)}</a>`).join("");
+  const sprog = (s.off || !programme) ? "" : (() => {
+    const idx = programme.map((k,i) => s.cours.some(c => c.t === k.t) ? i : -1).filter(i => i >= 0);
+    const pc = idx.map(i => `<span class="pc"><span class="n">${i+1}</span>${hl(programme[i].t, q)}</span>`).join("");
+    const tout = idx.length === programme.length;
+    return `<div class="s-prog"><span class="lbl">${tout ? "Programme complet" : `Programme de cet entraînement (${idx.length}/${programme.length} cours)`} :</span>${pc}</div>`;
+  })();
   const det = s.off ? "" : (() => {
     const open = q && s.cours.some(k => norm(k.t).includes(q) || (k.d && norm(k.d).includes(q)));
     const li = s.cours.map(k => `
@@ -863,6 +961,7 @@ function sujetHTML(s, color, q){
         ${when}
       </div>
       <div>
+        ${sprog}
         <div class="s-actions">
           ${btns}
           <div class="track">
@@ -882,6 +981,9 @@ function filtersHTML(){
   const stat = [["all","Tous"],["todo","À faire"],["done","Faits"]];
   return mats.map(([k,l,c]) => `<button class="chip${FILTRE.mat===k?" on":""}" data-f="mat" data-v="${k}"${c?` style="--c:${c}"`:""}>${c?`<span class="ico" style="width:15px;height:15px;color:${c}">${ICONS[k]}</span>`:""}${l}</button>`).join("")
     + `<span class="sep"></span>`
+    + [["all","Tous contrôles"], ...rubriques().map(r => [r.code, `${r.nom}${r.date ? " · " + fdate(r.date, true) : ""}`])]
+        .map(([k,l]) => `<button class="chip rub${FILTRE.ctrl===k?" on":""}" data-f="ctrl" data-v="${k}">${k !== "all" ? `<span class="ico" style="width:14px;height:14px">${CAL_ICON}</span>` : ""}${esc(l)}</button>`).join("")
+    + `<span class="sep"></span>`
     + stat.map(([k,l]) => `<button class="chip${FILTRE.statut===k?" on":""}" data-f="statut" data-v="${k}">${l}</button>`).join("");
 }
 
@@ -896,6 +998,7 @@ function render(){
     const all = tous.filter(s => !s.avenir);
     all.forEach(s => { nC++; nQ += s.nbQ; if((SUIVI[s.id]||{}).done) nDone++; });
     if(FILTRE.mat !== "all" && FILTRE.mat !== C.matiere) return;
+    if(FILTRE.ctrl !== "all" && C.code !== FILTRE.ctrl) return;
 
     const blocMatch = q && (norm(M.titre).includes(q) || norm(M.code).includes(q) || C.programme.some(k => norm(k.t).includes(q)));
     let list = all.filter(s => blocMatch || matchSujet(s, q));
@@ -920,8 +1023,11 @@ function render(){
         <div class="bar-prog"><i style="width:${pct}%"></i></div>
       </a>`;
 
-    const prog = C.programme.map((k,i) =>
-      `<li><span class="n">${i+1}</span><span>${hl(k.t, q)}</span></li>`).join("");
+    const ents = [...C.entrainements].sort((a,b) => a.n - b.n);
+    const prog = C.programme.map((k,i) => {
+      const e = ents.filter(x => x.cours.some(c => c.t === k.t)).map(x => `<b title="Entraînement ${x.n}">E${x.n}</b>`).join("");
+      return `<li><span class="n">${i+1}</span><span>${hl(k.t, q)}</span>${e ? `<span class="ent">${e}</span>` : ""}</li>`;
+    }).join("");
     blocs += `
       <section class="prog" id="${anchor}" style="--c:${M.color}">
         <div class="prog-head">
@@ -941,12 +1047,21 @@ function render(){
           <ol>${prog}</ol>
         </div>
         ${avenir && FILTRE.statut === "all" ? avenirHTML(avenir, M.color, C) : ""}
-        ${list.map(s => sujetHTML(s, M.color, blocMatch ? "" : q)).join("")}
+        ${list.map(s => sujetHTML(s, M.color, blocMatch ? "" : q, C.programme)).join("")}
       </section>`;
   });
 
+  const R = FILTRE.ctrl !== "all" ? rubriques().find(r => r.code === FILTRE.ctrl) : null;
+  let bandeau = "";
+  if(R){
+    const ss = R.ctrls.flatMap(C => sujets(C).filter(s => !s.avenir));
+    const f = ss.filter(s => (SUIVI[s.id]||{}).done).length;
+    const mats = R.ctrls.map(C => { const M = MATIERES[C.matiere]; return `<a href="#ctrl-${C.key}" style="--c:${M.color}"><span class="ico" style="color:${M.color}">${ICONS[C.matiere]}</span>${M.code === "PHYSIO" ? "Physiologie" : M.code} <b>${sujets(C).filter(s => !s.avenir).length}</b></a>`; }).join("");
+    bandeau = `<div class="rubrique"><div><div class="k">Rubrique</div><h2>${esc(R.nom)}${R.date ? ` <span>· ${R.date >= today() ? "prévu le" : "passé le"} ${fdate(R.date)}</span>` : ""}</h2>
+      <p>${R.ctrls.length} matière${R.ctrls.length > 1 ? "s" : ""} · ${ss.length} sujets · <b>${f}/${ss.length}</b> faits</p></div><div class="mats">${mats}</div></div>`;
+  }
   document.getElementById("content").innerHTML = blocs
-    ? `<p class="label"><span class="ico">${ICONS.sommaire}</span>Sommaire</p><div class="sommaire">${som}</div>
+    ? bandeau + `<p class="label"><span class="ico">${ICONS.sommaire}</span>Sommaire</p><div class="sommaire">${som}</div>
        <div class="divider"><span class="pill">${Object.entries(MATIERES).map(([k,m]) => `<span class="ico" style="color:${m.color}">${ICONS[k]}</span>`).join('<i class="sep-dot"></i>')}</span></div>
        ${blocs}
        <div class="regles"><span class="ico">${ICONS.info}</span><div><b>Sujets générés par Claude</b> : contenu tiré uniquement des fiches de synthèse, programme strict. Annales ACC et contrôles Médisup servent seulement à calibrer le niveau et le type de questions : aucune question proche.</div></div>`
