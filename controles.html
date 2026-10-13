@@ -6,6 +6,21 @@
 <meta http-equiv="Expires" content="0">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* Anti-cache : les <meta> ci-dessus sont ignorés par les navigateurs récents.
+   Si l'adresse n'a pas de ?v= récent (moins d'une minute), on recharge la page
+   avec ?v=<horodatage> : une adresse jamais vue force le navigateur à
+   redemander le fichier au lieu de reprendre la copie en cache. */
+(function(){
+  try{
+    var u = new URL(location.href), v = Number(u.searchParams.get("v")), now = Date.now();
+    if(!v || now - v > 60000){
+      u.searchParams.set("v", now);
+      location.replace(u.toString());
+    }
+  }catch(e){}
+})();
+</script>
 <title>Je m'entraîne — Révisions Médecine</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -78,6 +93,28 @@
   #searchBox:focus{ border-color:var(--ink); box-shadow:0 0 0 4px rgba(21,27,46,0.06); }
   #searchBox::placeholder{ color:#A9A492; }
   .filters{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+
+  /* ============ ONGLETS : un espace par ECB + un espace Contrôles ============ */
+  .vues{ display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:8px; }
+  .vue{
+    display:flex; align-items:center; gap:12px; text-align:left; cursor:pointer;
+    font-family:inherit; color:var(--ink); background:var(--card);
+    border:1.5px solid var(--line); border-radius:14px; padding:10px 14px;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .vue:hover{ border-color:var(--ink); }
+  .vue .vi{ width:36px; height:36px; border-radius:10px; flex:none; display:flex; align-items:center; justify-content:center;
+    background:var(--paper); color:var(--ink); }
+  .vue .vi svg{ width:20px; height:20px; }
+  .vue .vt{ font-family:'Fraunces', serif; font-weight:700; font-size:17px; line-height:1.15; }
+  .vue .vs{ font-size:12px; color:var(--ink-soft); margin-top:2px; }
+  .vue .vs b{ color:var(--ink); font-weight:600; }
+  .vue .tag{ display:inline-block; font-family:'IBM Plex Mono', monospace; font-size:10px; font-weight:600; letter-spacing:.05em;
+    padding:1px 6px; border-radius:5px; background:var(--gold); color:var(--ink); margin-left:6px; vertical-align:2px; }
+  .vue.on{ background:var(--ink); border-color:var(--ink); color:#fff; }
+  .vue.on .vi{ background:rgba(255,255,255,.12); color:#fff; }
+  .vue.on .vs, .vue.on .vs b{ color:#C9CCD6; }
+  .rubrique.ctrl{ border-left-color:var(--ink-soft); }
   .filters .sep{ width:1px; height:22px; background:var(--line); margin:0 4px; }
   .chip{
     display:inline-flex; align-items:center; gap:7px; cursor:pointer;
@@ -308,6 +345,12 @@
     .badge span{ font-size:16px; }
     .track{ margin-left:0; width:100%; }
     .filters .sep{ display:none; }
+    .vues{ grid-template-columns:1fr 1fr; gap:6px; }
+    .vue{ padding:8px 10px; gap:8px; border-radius:12px; }
+    .vue .vi{ display:none; }
+    .vue .vt{ font-size:15px; }
+    .vue .tag{ display:block; width:max-content; margin:3px 0 0; }
+    .vue .vs{ font-size:11px; }
     .chip{ padding:6px 10px; font-size:12.5px; }
   }
 </style>
@@ -323,7 +366,7 @@
 
 <div class="hero wrap">
   <h1>Je <em>m'entraîne</em></h1>
-  <p>Rangement : <b>un bloc par contrôle Médisup</b>, avec son programme en tête. Dans chaque bloc, le <b>sujet officiel</b> puis les <b>entraînements numérotés 1, 2, 3…</b> dans l'ordre de création, chacun daté.</p>
+  <p>Deux espaces séparés : <b>les ECB</b> (toutes les matières sur un même examen) et <b>les contrôles Médisup</b> (un contrôle par matière). Choisissez l'onglet en haut ; dans chaque bloc, le <b>sujet officiel</b> puis les <b>entraînements numérotés 1, 2, 3…</b></p>
   <div class="stats">
     <div><b id="stCtrl">0</b><span>sujets</span></div>
     <div><b id="stQ">0</b><span>questions</span></div>
@@ -333,6 +376,7 @@
 
 <div class="bar">
   <div class="wrap">
+    <div class="vues" id="vues"></div>
     <input type="text" id="searchBox" placeholder="Rechercher un cours, une notion (ex. « osmose », « pH », « CDA »), un code (ex. BAM-C1-E2)…">
     <div class="filters" id="filters"></div>
   </div>
@@ -415,10 +459,14 @@ const COURS_CHIMIE = {
   nomencl:  "FC4 Règles générales de nomenclature",
   premier:  "FC5 1er principe de la thermodynamique",
   second:   "FC6 2nd principe de la thermodynamique et équilibres",
+  alcenes:  "FC7 Alcènes",
+  alcynes:  "FC8 Alcynes",
 };
 
 const COURS_BIOCHIMIE = {
-  peptides:  "FC3 Liaison peptidique et peptides",
+  glucides:  "FC1 Glucides",
+  aa:        "FC2 Acides aminés",
+  peptides: "FC3 Liaison peptidique et peptides",
   proteines: "FC4 Protéines",
   lipides:   "FC5 Lipides",
   enzymo:    "FC6 Enzymologie",
@@ -856,6 +904,118 @@ const CONTROLES = [
       },
     ],
   },
+
+  /* ---------------- M2 · Chimie · ECB n°1 du 17.10 ---------------- */
+  {
+    key:"chimie-ecb1", matiere:"chimie", numero:1, nom:"ECB n°1 du 17.10", code:"ECB1", date:"2026-10-17",
+    programme:[
+      { t:COURS_CHIMIE.atome }, { t:COURS_CHIMIE.liaisons }, { t:COURS_CHIMIE.isomerie },
+      { t:COURS_CHIMIE.nomencl }, { t:COURS_CHIMIE.premier }, { t:COURS_CHIMIE.second },
+      { t:COURS_CHIMIE.alcenes }, { t:COURS_CHIMIE.alcynes },
+    ],
+    officiel:null,
+    entrainements:[
+      {
+        id:"chimie-ecb1-e1", n:1, date:"2026-10-13", nbQ:30, qrm:19, qru:11, duree:"60 min",
+        cours:[
+          { t:COURS_CHIMIE.atome, d:"niveaux d'organisation, visualiser l'atome, ion Zn²⁺, hydrogénoïde He⁺ (Bohr), spectre de H (calcul), description quantique, nombres quantiques, configurations, classification", q:"Q1–9" },
+          { t:COURS_CHIMIE.liaisons, d:"Lewis, OM de H₂, N₂ et ses ions, NO/NO⁺, VSEPR, hybridation de l'acétonitrile, moment dipolaire, Van der Waals et liaison H", q:"Q10–17" },
+          { t:COURS_CHIMIE.isomerie, d:"isomères K/L/M/N, éphédrine, D-ribose, acide sorbique, acide tartrique, pouvoir rotatoire du (R)-butan-2-ol, ethchlorvynol, cyclohexanol substitué", q:"Q18–25" },
+          { t:COURS_CHIMIE.nomencl, d:"noms de molécules, corps cétoniques, procaïne, nomenclature et stéréoisomérie", q:"Q26–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Chimie_ECB1_entrainement1.pdf" } ],
+        note:"Cours 1 à 4 de l'ECB. Corrigé à partir de la page 10 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+      {
+        id:"chimie-ecb1-e2", n:2, date:"2026-10-13", nbQ:30, qrm:19, qru:11, duree:"60 min",
+        cours:[
+          { t:COURS_CHIMIE.atome, d:"corps purs et allotropie, composition du corps humain, moles dans 9 g d'eau (calcul), Bohr n = 3, spectres de H, Heisenberg (calcul), sous-couches, Klechkowski, familles", q:"Q1–9" },
+          { t:COURS_CHIMIE.liaisons, d:"recouvrements σ/π, molécule C₂, liaison ionique, VSEPR, allène et acétone (hybridation), liaison H, London et hydrophilie", q:"Q10–17" },
+          { t:COURS_CHIMIE.isomerie, d:"paracétamol, D-thréose, fluoxétine, isoleucine, acides fumarique/maléique, menthol, cystéine en Fischer, linalol", q:"Q18–25" },
+          { t:COURS_CHIMIE.nomencl, d:"noms de molécules, molécules X et Y, GABA", q:"Q26–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Chimie_ECB1_entrainement2.pdf" } ],
+        note:"Autres parties des cours 1 à 4 que l'entraînement 1. Corrigé à partir de la page 10 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+      {
+        id:"chimie-ecb1-e3", n:3, date:"2026-10-13", nbQ:30, qrm:19, qru:11, duree:"60 min",
+        cours:[
+          { t:COURS_CHIMIE.premier, d:"bases et histoire, systèmes et variables, gaz rare, chauffage d'une poche d'eau (calcul), travail à pression constante (calcul), ΔU = Q + W, enthalpie, loi de Hess", q:"Q1–8" },
+          { t:COURS_CHIMIE.second, d:"réversibilité, entropie, ΔS de vaporisation (calcul), ΔG = ΔH − TΔS et température d'inversion, équilibre, Kp, Le Chatelier sur PCl₅", q:"Q9–16" },
+          { t:COURS_CHIMIE.alcenes, d:"structure et stabilité, effet inductif et carbocations, hydrogénation catalytique, addition de Br₂, Diels-Alder, addition de HBr", q:"Q17–24" },
+          { t:COURS_CHIMIE.alcynes, d:"structure, pent-2-yne, hydratation (HgSO₄), acidité des alcynes vrais, réactions du propynure de sodium, HBr et préparation", q:"Q25–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Chimie_ECB1_entrainement3.pdf" } ],
+        note:"Cours 5 à 8 de l'ECB (thermodynamique, alcènes, alcynes). Corrigé à partir de la page 8 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+      {
+        id:"chimie-ecb1-e4", n:4, date:"2026-10-13", nbQ:30, qrm:19, qru:11, duree:"60 min",
+        cours:[
+          { t:COURS_CHIMIE.premier, d:"origines et états de la matière, chaleur et travail, calorimétrie (calcul), unités et ordres de grandeur, gaz rare à P constante, ΔH − ΔU et Δn gaz, enthalpie de réaction, bilan énergétique du vivant", q:"Q1–8" },
+          { t:COURS_CHIMIE.second, d:"micro-états (4 molécules / 6 positions), entropie échangée et créée, variations d'entropie, ΔG° et température, potentiel chimique, K à partir de ΔG°, équilibre H₂/I₂/HI", q:"Q9–16" },
+          { t:COURS_CHIMIE.alcenes, d:"nomenclature, diène G, préparation du pentan-2-ol, diols du cyclohexène, mécanismes d'hydratation, ozonolyse, Diels-Alder avec le propénal, effet inductif", q:"Q17–24" },
+          { t:COURS_CHIMIE.alcynes, d:"généralités, hex-3-yne, synthèses à partir du but-1-yne, eau et HBr sur l'hex-1-yne, alcynures, dihalogènes", q:"Q25–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Chimie_ECB1_entrainement4.pdf" } ],
+        note:"Autres parties des cours 5 à 8 que l'entraînement 3. Corrigé à partir de la page 8 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+    ],
+  },
+
+  /* ---------------- M2 · Biochimie · ECB n°1 du 17.10 ---------------- */
+  {
+    key:"biochimie-ecb1", matiere:"biochimie", numero:1, nom:"ECB n°1 du 17.10", code:"ECB1", date:"2026-10-17",
+    programme:[
+      { t:COURS_BIOCHIMIE.glucides }, { t:COURS_BIOCHIMIE.aa },
+      { t:COURS_BIOCHIMIE.peptides }, { t:COURS_BIOCHIMIE.proteines }, { t:COURS_BIOCHIMIE.lipides },
+      { t:COURS_BIOCHIMIE.enzymo }, { t:COURS_BIOCHIMIE.nucleo1 },
+    ],
+    officiel:null,
+    entrainements:[
+      {
+        id:"biochimie-ecb1-e1", n:1, date:"2026-10-12", nbQ:30, qrm:24, qru:6, duree:"45 min",
+        cours:[
+          { t:COURS_BIOCHIMIE.glucides, d:"généralités, fonctions des oses, Fischer et Haworth, D-glucose en solution, sorbitol et diabète, liqueur de Fehling, acide gluconique, aldose ↔ cétose, intolérance au lactose, glycogène/amidon/cellulose", q:"Q1–11" },
+          { t:COURS_BIOCHIMIE.aa, d:"nomenclature, carrefour métabolique, titrage de la glycine, histidine, hydrophobes, proline, cystéine et sélénocystéine, phénylcétonurie, chromatographie échangeuse d'anions, absorption UV", q:"Q12–21" },
+          { t:COURS_BIOCHIMIE.peptides, d:"délocalisation, Ramachandran, résidus, dipeptides contenant une cystéine (calcul), structure primaire, charge d'un pentapeptide, SDS et isoélectrofocalisation, chromatographies, BNP", q:"Q22–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Biochimie_ECB1_entrainement1.pdf" } ],
+        note:"Cours 1 à 3 de l'ECB. Corrigé à partir de la page 8 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+      {
+        id:"biochimie-ecb1-e2", n:2, date:"2026-10-12", nbQ:30, qrm:24, qru:6, duree:"45 min",
+        cours:[
+          { t:COURS_BIOCHIMIE.glucides, d:"classification, représentations et pouvoir rotatoire, aldotétroses, stéréoisomères des aldoheptoses (calcul), méthylglucoside, hexokinase, diholosides, maladie de Pompe, glycoprotéines et GAG", q:"Q1–11" },
+          { t:COURS_BIOCHIMIE.aa, d:"généralités, Fischer, pHi (calcul), chaînes chargées, cystéine, ramifiés, aromatiques, Gln/Asn, modifications post-traductionnelles, pouvoir rotatoire", q:"Q12–21" },
+          { t:COURS_BIOCHIMIE.peptides, d:"nature et hydrolyse, lecture d'un tripeptide, séquençage d'un pentapeptide (Sanger, carboxypeptidase), spectrométrie de masse, LH-RH et BNP, charge d'un tétrapeptide, électrophorèse, exclusion, isoélectrofocalisation", q:"Q22–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Biochimie_ECB1_entrainement2.pdf" } ],
+        note:"Autres parties des cours 1 à 3 que l'entraînement 1. Corrigé à partir de la page 8 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+      {
+        id:"biochimie-ecb1-e3", n:3, date:"2026-10-13", nbQ:30, qrm:24, qru:6, duree:"45 min",
+        cours:[
+          { t:COURS_BIOCHIMIE.proteines, d:"interactions, structures secondaire à quaternaire, repliement et chaperonnes, dénaturation, kératine α, ancrage lipidique, immunoglobulines", q:"Q1–8" },
+          { t:COURS_BIOCHIMIE.lipides, d:"classification, lecture d'un lipide, acide gras C20:3, origine des acides gras, phosphoinositides, sphingolipides, cholestérol, organisation membranaire", q:"Q9–16" },
+          { t:COURS_BIOCHIMIE.enzymo, d:"coenzymes et cofacteurs, classes EC, kcat (calcul), Km et affinité, Lineweaver-Burk (calcul), inhibitions, allostérie, pH et température", q:"Q17–24" },
+          { t:COURS_BIOCHIMIE.nucleo1, d:"acide phosphorique, thymine, nucléosides et nucléotides, AMPc et ATP, fragment d'ADN B (calcul), formes A/B/Z", q:"Q25–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Biochimie_ECB1_entrainement3.pdf" } ],
+        note:"Cours 4 à 7 de l'ECB. Corrigé à partir de la page 9 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+      {
+        id:"biochimie-ecb1-e4", n:4, date:"2026-10-13", nbQ:30, qrm:24, qru:6, duree:"45 min",
+        cours:[
+          { t:COURS_BIOCHIMIE.proteines, d:"généralités, pentapeptides (calcul), doigt de zinc, hélice α et feuillet β, conformation, liaisons faibles, RCPG, immunoglobulines", q:"Q1–8" },
+          { t:COURS_BIOCHIMIE.lipides, d:"rôles, lecture d'un lipide, acide palmitoléique (ω/Δ), acides gras indispensables, triglycérides, glycérophospholipides, sphingolipidoses, céramides et sphingomyéline", q:"Q9–16" },
+          { t:COURS_BIOCHIMIE.enzymo, d:"uréase, enzymes et médecine, ordre de réaction, Vmax et Km (calcul), Michaelis-Menten, inhibiteur compétitif (calcul), Hill, température et classification", q:"Q17–24" },
+          { t:COURS_BIOCHIMIE.nucleo1, d:"oses des acides nucléiques, propriétés des bases (A260/A280), nucléases, bases modifiées et acide urique, ADN B, règles de Chargaff (calcul)", q:"Q25–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Biochimie_ECB1_entrainement4.pdf" } ],
+        note:"Autres parties des cours 4 à 7 que l'entraînement 3. Corrigé à partir de la page 8 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+    ],
+  },
 ];
 /* ===================================================================== */
 const PDF_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 14h6M9 17h4"/></svg>';
@@ -883,9 +1043,22 @@ const CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-
 function load(){ try{ return JSON.parse(localStorage.getItem("controles-suivi") || "{}"); }catch(e){ return {}; } }
 function save(s){ try{ localStorage.setItem("controles-suivi", JSON.stringify(s)); }catch(e){} }
 let SUIVI = load();
-let FILTRE = Object.assign({ mat:"all", statut:"all", ctrl:"all" }, SUIVI.__filtre || {});
-/* lien direct vers une rubrique : controles.html#ecb1 */
-(function(){ const h = location.hash.replace("#","").toUpperCase(); if(/^ECB\d+$/.test(h)){ FILTRE.ctrl = h; FILTRE.mat = "all"; } })();
+let FILTRE = Object.assign({ mat:"all", statut:"all" }, SUIVI.__filtre || {});
+delete FILTRE.ctrl;
+/* Onglet ouvert (FILTRE.vue) : "ECB1", "ECB2"… ou "CTRL" pour les contrôles Médisup.
+   Lien direct : controles.html#ecb1 ou controles.html#controles.
+   Sinon : dernier onglet ouvert, ou à défaut le prochain ECB. */
+const VUE_CTRL = "CTRL";
+(function(){
+  const h = location.hash.replace("#","").toUpperCase();
+  const codes = rubriques().map(r => r.code);
+  if(codes.includes(h)) FILTRE.vue = h;
+  else if(h === "CONTROLES") FILTRE.vue = VUE_CTRL;
+  if(FILTRE.vue !== VUE_CTRL && !codes.includes(FILTRE.vue)){
+    const prochain = rubriques().filter(r => r.date && r.date >= today()).sort((a,b) => a.date < b.date ? -1 : 1)[0];
+    FILTRE.vue = prochain ? prochain.code : (codes[codes.length-1] || VUE_CTRL);
+  }
+})();
 /* rubriques transversales : contrôles portant un code commun (ECB1, ECB2…) */
 function rubriques(){
   const out = {};
@@ -947,7 +1120,7 @@ function sujetHTML(s, color, q, programme){
   const when = s.off ? "" :
     `<span class="when">${CAL_ICON} créé le <b>${fdate(s.date)}</b></span>`;
   const btns = s.pdfs.map(p =>
-    `<a class="btn${p.alt ? " alt" : ""}${p.tips ? " tips" : ""}" href="${esc(p.href)}" target="_blank" rel="noopener">${p.tips ? TIPS_ICON : PDF_ICON}${esc(p.label)}</a>`).join("");
+    `<a class="btn${p.alt ? " alt" : ""}${p.tips ? " tips" : ""}" href="${esc(p.href)}?v=${Date.now()}" target="_blank" rel="noopener">${p.tips ? TIPS_ICON : PDF_ICON}${esc(p.label)}</a>`).join("");
   const sprog = (s.off || !programme) ? "" : (() => {
     const idx = programme.map((k,i) => s.cours.some(c => c.t === k.t) ? i : -1).filter(i => i >= 0);
     const pc = idx.map(i => `<span class="pc"><span class="n">${i+1}</span>${hl(programme[i].t, q)}</span>`).join("");
@@ -990,28 +1163,55 @@ function sujetHTML(s, color, q, programme){
 }
 
 function filtersHTML(){
-  const mats = [["all","Toutes", null], ...Object.entries(MATIERES).map(([k,m]) => [k, m.code === "PHYSIO" ? "Physio" : m.code === "BIOCHIMIE" ? "Biochimie" : m.code, m.color])];
+  const mats = [["all","Toutes", null], ...Object.entries(MATIERES).map(([k,m]) => [k, m.code === "PHYSIO" ? "Physio" : m.code === "BIOCHIMIE" ? "Biochimie" : m.code === "CHIMIE" ? "Chimie" : m.code, m.color])];
   const stat = [["all","Tous"],["todo","À faire"],["done","Faits"]];
   return mats.map(([k,l,c]) => `<button class="chip${FILTRE.mat===k?" on":""}" data-f="mat" data-v="${k}"${c?` style="--c:${c}"`:""}>${c?`<span class="ico" style="width:15px;height:15px;color:${c}">${ICONS[k]}</span>`:""}${l}</button>`).join("")
-    + `<span class="sep"></span>`
-    + [["all","Tous contrôles"], ...rubriques().map(r => [r.code, `${r.nom}${r.date ? " · " + fdate(r.date, true) : ""}`])]
-        .map(([k,l]) => `<button class="chip rub${FILTRE.ctrl===k?" on":""}" data-f="ctrl" data-v="${k}">${k !== "all" ? `<span class="ico" style="width:14px;height:14px">${CAL_ICON}</span>` : ""}${esc(l)}</button>`).join("")
     + `<span class="sep"></span>`
     + stat.map(([k,l]) => `<button class="chip${FILTRE.statut===k?" on":""}" data-f="statut" data-v="${k}">${l}</button>`).join("");
 }
 
+/* contrôles appartenant à un onglet */
+const dansVue = (C, vue) => vue === VUE_CTRL ? !C.code : C.code === vue;
+function bilan(vue){
+  const ctrls = CONTROLES.filter(C => dansVue(C, vue));
+  const ss = ctrls.flatMap(C => sujets(C).filter(s => !s.avenir));
+  return { ctrls, ss, faits: ss.filter(s => (SUIVI[s.id]||{}).done).length };
+}
+function dans(iso){
+  const [y,m,d] = iso.split("-").map(Number), [Y,M,D] = today().split("-").map(Number);
+  const n = Math.round((Date.UTC(y,m-1,d) - Date.UTC(Y,M-1,D)) / 864e5);
+  return n === 0 ? "aujourd'hui" : n === 1 ? "demain" : n > 1 ? `dans ${n} jours` : "passé";
+}
+function vuesHTML(){
+  const ecb = rubriques().map(r => {
+    const b = bilan(r.code), avenir = r.date && r.date >= today();
+    return `<button class="vue${FILTRE.vue===r.code?" on":""}" data-vue="${r.code}">
+      <span class="vi">${CAL_ICON}</span>
+      <span><span class="vt">${esc(r.nom)}${avenir ? `<span class="tag">${dans(r.date).toUpperCase()}</span>` : ""}</span>
+      <span class="vs" style="display:block">${r.date ? fdate(r.date) + " · " : ""}${b.ctrls.length} matières · <b>${b.faits}/${b.ss.length}</b> faits</span></span>
+    </button>`;
+  }).join("");
+  const b = bilan(VUE_CTRL);
+  return ecb + `<button class="vue${FILTRE.vue===VUE_CTRL?" on":""}" data-vue="${VUE_CTRL}">
+      <span class="vi">${ICONS.questions}</span>
+      <span><span class="vt">Contrôles Médisup</span>
+      <span class="vs" style="display:block">${b.ctrls.length} contrôles · <b>${b.faits}/${b.ss.length}</b> faits</span></span>
+    </button>`;
+}
+
 function render(){
   const q = norm(document.getElementById("searchBox").value.trim());
+  document.getElementById("vues").innerHTML = vuesHTML();
   document.getElementById("filters").innerHTML = filtersHTML();
   let som = "", blocs = "", nC = 0, nQ = 0, nDone = 0;
 
   CONTROLES.forEach(C => {
+    if(!dansVue(C, FILTRE.vue)) return;
     const M = MATIERES[C.matiere];
     const tous = sujets(C);
     const all = tous.filter(s => !s.avenir);
     all.forEach(s => { nC++; nQ += s.nbQ; if((SUIVI[s.id]||{}).done) nDone++; });
     if(FILTRE.mat !== "all" && FILTRE.mat !== C.matiere) return;
-    if(FILTRE.ctrl !== "all" && C.code !== FILTRE.ctrl) return;
 
     const blocMatch = q && (norm(M.titre).includes(q) || norm(M.code).includes(q) || C.programme.some(k => norm(k.t).includes(q)));
     let list = all.filter(s => blocMatch || matchSujet(s, q));
@@ -1064,27 +1264,37 @@ function render(){
       </section>`;
   });
 
-  const R = FILTRE.ctrl !== "all" ? rubriques().find(r => r.code === FILTRE.ctrl) : null;
-  let bandeau = "";
-  if(R){
-    const ss = R.ctrls.flatMap(C => sujets(C).filter(s => !s.avenir));
-    const f = ss.filter(s => (SUIVI[s.id]||{}).done).length;
-    const mats = R.ctrls.map(C => { const M = MATIERES[C.matiere]; return `<a href="#ctrl-${C.key}" style="--c:${M.color}"><span class="ico" style="color:${M.color}">${ICONS[C.matiere]}</span>${M.code === "PHYSIO" ? "Physiologie" : M.code} <b>${sujets(C).filter(s => !s.avenir).length}</b></a>`; }).join("");
-    bandeau = `<div class="rubrique"><div><div class="k">Rubrique</div><h2>${esc(R.nom)}${R.date ? ` <span>· ${R.date >= today() ? "prévu le" : "passé le"} ${fdate(R.date)}</span>` : ""}</h2>
-      <p>${R.ctrls.length} matière${R.ctrls.length > 1 ? "s" : ""} · ${ss.length} sujets · <b>${f}/${ss.length}</b> faits</p></div><div class="mats">${mats}</div></div>`;
-  }
-  document.getElementById("content").innerHTML = blocs
-    ? bandeau + `<p class="label"><span class="ico">${ICONS.sommaire}</span>Sommaire</p><div class="sommaire">${som}</div>
+  /* bandeau en tête de l'onglet ouvert */
+  const R = rubriques().find(r => r.code === FILTRE.vue);
+  const B = bilan(FILTRE.vue);
+  const nomMat = M => M.code === "PHYSIO" ? "Physiologie" : M.code === "CHIMIE" ? "Chimie" : M.code === "BIOCHIMIE" ? "Biochimie" : M.code;
+  const mats = B.ctrls.map(C => { const M = MATIERES[C.matiere]; return `<a href="#ctrl-${C.key}" style="--c:${M.color}"><span class="ico" style="color:${M.color}">${ICONS[C.matiere]}</span>${nomMat(M)}${R ? "" : " · " + esc(C.nom || "C" + C.numero)} <b>${sujets(C).filter(s => !s.avenir).length}</b></a>`; }).join("");
+  const bandeau = R
+    ? `<div class="rubrique"><div><div class="k">Examen commun · toutes matières</div><h2>${esc(R.nom)}${R.date ? ` <span>· ${R.date >= today() ? "prévu le" : "passé le"} ${fdate(R.date)}${R.date >= today() ? " (" + dans(R.date) + ")" : ""}</span>` : ""}</h2>
+      <p>${B.ctrls.length} matières · ${B.ss.length} sujets · <b>${B.faits}/${B.ss.length}</b> faits</p></div><div class="mats">${mats}</div></div>`
+    : `<div class="rubrique ctrl"><div><div class="k">Contrôles par matière</div><h2>Contrôles Médisup</h2>
+      <p>${B.ctrls.length} contrôles · ${B.ss.length} sujets · <b>${B.faits}/${B.ss.length}</b> faits</p></div><div class="mats">${mats}</div></div>`;
+  document.getElementById("content").innerHTML = bandeau + (blocs
+    ? `<p class="label"><span class="ico">${ICONS.sommaire}</span>Sommaire</p><div class="sommaire">${som}</div>
        <div class="divider"><span class="pill">${Object.entries(MATIERES).map(([k,m]) => `<span class="ico" style="color:${m.color}">${ICONS[k]}</span>`).join('<i class="sep-dot"></i>')}</span></div>
        ${blocs}
        <div class="regles"><span class="ico">${ICONS.info}</span><div><b>Sujets générés par Claude</b> : contenu tiré uniquement des fiches de synthèse, programme strict. Annales ACC et contrôles Médisup servent seulement à calibrer le niveau et le type de questions : aucune question proche.</div></div>`
-    : `<div class="empty">Aucun sujet ne correspond à cette recherche ou à ce filtre.</div>`;
+    : `<div class="empty">Aucun sujet de cet onglet ne correspond à cette recherche ou à ce filtre.</div>`);
   document.getElementById("stCtrl").textContent = nC;
   document.getElementById("stQ").textContent = nQ;
   document.getElementById("stDone").textContent = nDone;
 }
 
 document.getElementById("searchBox").addEventListener("input", render);
+document.getElementById("vues").addEventListener("click", e => {
+  const b = e.target.closest(".vue");
+  if(!b) return;
+  FILTRE.vue = b.dataset.vue;
+  SUIVI.__filtre = FILTRE; save(SUIVI);
+  try{ history.replaceState(null, "", "#" + (FILTRE.vue === VUE_CTRL ? "controles" : FILTRE.vue.toLowerCase())); }catch(err){}
+  render();
+  window.scrollTo({ top: document.querySelector(".bar").offsetTop, behavior: "smooth" });
+});
 document.getElementById("filters").addEventListener("click", e => {
   const b = e.target.closest(".chip");
   if(!b) return;
