@@ -415,9 +415,13 @@ const COURS_CHIMIE = {
   nomencl:  "FC4 Règles générales de nomenclature",
   premier:  "FC5 1er principe de la thermodynamique",
   second:   "FC6 2nd principe de la thermodynamique et équilibres",
+  alcenes:  "FC7 Alcènes",
+  alcynes:  "FC8 Alcynes",
 };
 
 const COURS_BIOCHIMIE = {
+  glucides:  "FC1 Glucides",
+  aa:        "FC2 Acides aminés",
   peptides:  "FC3 Liaison peptidique et peptides",
   proteines: "FC4 Protéines",
   lipides:   "FC5 Lipides",
@@ -800,6 +804,61 @@ const CONTROLES = [
       },
     ],
   },
+  /* ---------------- M2 · Chimie · ECB n°1 du 17.10 ---------------- */
+  {
+    key:"chimie-ecb1", matiere:"chimie", numero:1, nom:"ECB n°1 du 17.10", code:"ECB1", date:"2026-10-17",
+    programme:[
+      { t:COURS_CHIMIE.atome }, { t:COURS_CHIMIE.liaisons }, { t:COURS_CHIMIE.isomerie }, { t:COURS_CHIMIE.nomencl },
+      { t:COURS_CHIMIE.premier }, { t:COURS_CHIMIE.second }, { t:COURS_CHIMIE.alcenes }, { t:COURS_CHIMIE.alcynes },
+    ],
+    officiel:null,
+    entrainements:[
+      {
+        id:"chimie-ecb1-e1", n:1, date:"2026-10-13", nbQ:30, qrm:19, qru:11, duree:"60 min",
+        cours:[
+          { t:COURS_CHIMIE.atome, d:"échelle des tailles et abondances, pouvoir séparateur λ/2 et rayons X, composition de ⁶⁵Zn²⁺, hydrogénoïde He⁺, raie de Lyman (λ avec aide numérique), de Broglie/Heisenberg/Ψ, nombres quantiques et Zeeman, Ni²⁺ et Se²⁻, classification et EI/AE/χ", q:"Q1–9" },
+          { t:COURS_CHIMIE.liaisons, d:"bilan de Lewis (H₂O, H₃O⁺, N₂), OM liantes/antiliantes et H₂, ions de N₂ (OL et magnétisme), NO⁺, VSEPR (HCN, SO₃²⁻, OF₂, O₃, CF₄), hybridation de l'acétonitrile, Debye et moment dipolaire, Van der Waals et liaisons H", q:"Q10–17" },
+          { t:COURS_CHIMIE.isomerie, d:"isomères de C₄H₁₀O, éphédrine (2 C*), D-ribose en Fischer, acide sorbique (Z/E), acide tartrique méso, [α] du butan-2-ol, ethchlorvynol (règle n°3), cis/trans du 4-tert-butylcyclohexanol", q:"Q18–25" },
+          { t:COURS_CHIMIE.nomencl, d:"série de 5 molécules à nommer (cétone, alcène, ester, (E)-énal, ynol), corps cétoniques, procaïne (ester/amine), alcanes ramifiés et cycliques, (2R,3E)-pent-3-én-2-ol", q:"Q26–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Chimie_ECB1_entrainement1.pdf" } ],
+        note:"Programme de l'ECB (cours 1 à 4) ; stéréochimie et nomenclature sur molécules dessinées. Corrigé à partir de la page 10 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+      {
+        id:"chimie-ecb1-e2", n:2, date:"2026-10-13", nbQ:30, qrm:19, qru:11, duree:"60 min",
+        cours:[
+          { t:COURS_CHIMIE.atome, d:"corps simples/composés et allotropie, composition du corps humain, mole et N_A (calcul), rayon et énergie du niveau n = 3, spectres et raie de Paschen (aide numérique), Heisenberg chiffré (aide numérique), couches et orbitales, Klechkowski/Hund, familles et oxydes", q:"Q1–9" },
+          { t:COURS_CHIMIE.liaisons, d:"recouvrements σ/π, molécule C₂, Coulomb en 1/r et Van der Waals en 1/r⁶ (facteurs), VSEPR (NO₂⁻, SnCl₂, ClO₂⁻, SO₄²⁻), allène, acétone, liaisons H (types), hydrophilie et London/Keesom", q:"Q10–17" },
+          { t:COURS_CHIMIE.isomerie, d:"paracétamol (insaturations, amide), D-thréose en Fischer, fluoxétine, isoleucine (2 C*), acides fumarique/maléique, menthol (3 C*), cystéine R, linalol (C=C non stéréogènes)", q:"Q18–25" },
+          { t:COURS_CHIMIE.nomencl, d:"série de 5 molécules (nitrile, amide, éther, (R)-aldéhyde, (Z)-énol), acide insaturé hydroxylé, aldéhyde aminé et alcool chloré, alcyne/cycloalcène/alcène ramifié, GABA", q:"Q26–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Chimie_ECB1_entrainement2.pdf" } ],
+        note:"Autres parties des fiches que l'entraînement 1. Corrigé à partir de la page 10 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+      {
+        id:"chimie-ecb1-e3", n:3, date:"2026-10-13", nbQ:30, qrm:19, qru:11, duree:"60 min",
+        cours:[
+          { t:COURS_CHIMIE.premier, d:"thermodynamique classique/statistique, systèmes et variables, énergie interne d'un gaz rare (°C → K), Q = mCΔT (poche de perfusion), W = −PΔV (compression), ΔU = Q + W, enthalpie, loi de Hess (H₂O gaz)", q:"Q1–8" },
+          { t:COURS_CHIMIE.second, d:"réversibilité et conversions Q/W, entropie (Boltzmann, 3e principe), ΔS de vaporisation (calcul), température d'inversion ΔH/ΔS, tableau des signes, équilibre dynamique et K, Δn et Kp/Kc, Le Chatelier sur PCl₅", q:"Q9–16" },
+          { t:COURS_CHIMIE.alcenes, d:"structure et stabilité, effet inductif et carbocations, additions sur l'isopropénylcyclohexane (HBr, ROOR, BH₃, O₃), hydrogénation sélective du 4-vinylcyclohexène, Br₂ sur cyclopentène, diols cis/trans et coupures du (E)-hex-3-ène, Diels-Alder, HBr ionique/radicalaire", q:"Q17–24" },
+          { t:COURS_CHIMIE.alcynes, d:"structure, réductions du pent-2-yne (Lindlar, Na/NH₃, Pd/C), hydratation d'un alcyne dissymétrique, acidité et alcynures, alcynure + CO₂/RCOCl/EtBr/méthanal, HBr géminé et double déshydrohalogénation", q:"Q25–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Chimie_ECB1_entrainement3.pdf" } ],
+        note:"Cours 5 à 8 (les cours 1 à 4 sont dans les entraînements 1 et 2) ; alcènes et alcynes sur molécules dessinées. Corrigé à partir de la page 8 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+      {
+        id:"chimie-ecb1-e4", n:4, date:"2026-10-13", nbQ:30, qrm:19, qru:11, duree:"60 min",
+        cours:[
+          { t:COURS_CHIMIE.premier, d:"histoire et états de la matière, effets de la chaleur et du travail, calorimètre à rebours (1 kcal), unités et repères, chauffage isobare d'un gaz rare (W, ΔU, Qp), ΔH = ΔU + ΔnRT, réactions endo/exo/athermiques, bilan d'un être vivant", q:"Q1–8" },
+          { t:COURS_CHIMIE.second, d:"modèle statistique (configurations), entropie échangée/créée, signes de ΔS, ΔG à deux températures (ΔH < 0, ΔS < 0), potentiel chimique, K à partir de ΔG° (aide numérique), Van't Hoff, H₂/I₂/HI et Δn = 0", q:"Q9–16" },
+          { t:COURS_CHIMIE.alcenes, d:"vinyle/allyle et électrophiles, sélectivités sur le 6-méthylhepta-1,5-diène, synthèse du pentan-2-ol, diols cis/trans du cyclohexène, mécanismes d'hydratation et d'hydroboration, ozonolyse oxydante du 3-éthylpent-2-ène, Diels-Alder butadiène/propénal, +I/−I", q:"Q17–24" },
+          { t:COURS_CHIMIE.alcynes, d:"généralités, réductions de l'hex-3-yne, synthèses à partir du but-1-yne (comptage des C), hydratation et HBr sur un alcyne vrai, alcynures et carbonyles, tétrahalogénation", q:"Q25–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Chimie_ECB1_entrainement4.pdf" } ],
+        note:"Autres parties des fiches 5 à 8 que l'entraînement 3. Corrigé à partir de la page 8 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+    ],
+  },
   /* ---------------- M2 · Biochimie · Contrôle n°2 ---------------- */
   {
     key:"biochimie-2", matiere:"biochimie", numero:2, date:"2026-10-07",
@@ -840,6 +899,60 @@ const CONTROLES = [
         ],
         pdfs:[ { label:"Sujet + corrigé", href:"controles/Biochimie_C1_entrainement2.pdf" } ],
         note:"Autres parties du cours que l'entraînement 1. Corrigé à partir de la page 6.",
+      },
+    ],
+  },
+  /* ---------------- M2 · Biochimie · ECB n°1 du 17.10 ---------------- */
+  {
+    key:"biochimie-ecb1", matiere:"biochimie", numero:1, nom:"ECB n°1 du 17.10", code:"ECB1", date:"2026-10-17",
+    programme:[
+      { t:COURS_BIOCHIMIE.glucides }, { t:COURS_BIOCHIMIE.aa }, { t:COURS_BIOCHIMIE.peptides },
+      { t:COURS_BIOCHIMIE.proteines }, { t:COURS_BIOCHIMIE.lipides }, { t:COURS_BIOCHIMIE.enzymo },
+      { t:COURS_BIOCHIMIE.nucleo1 },
+    ],
+    officiel:null,
+    entrainements:[
+      {
+        id:"biochimie-ecb1-e1", n:1, date:"2026-10-12", nbQ:30, qrm:24, qru:6, duree:"45 min",
+        cours:[
+          { t:COURS_BIOCHIMIE.glucides, d:"généralités et holo/hétérosides, fonctions alcool, D-mannose en Fischer, équilibre α/β et mutarotation, galactose en Haworth, sorbitol et cataracte, Fehling, acide gluconique et lactone, ène-diol, intolérance au lactose, glycogène/amidon/cellulose", q:"Q1–11" },
+          { t:COURS_BIOCHIMIE.aa, d:"nomenclatures chimique et biochimique, rôles métaboliques, titration de la glycine, histidine et Henderson-Hasselbalch, hydrophobie, proline, cystéine et sélénocystéine, phénylcétonurie, échangeuse d'anions, absorption UV et Miller", q:"Q12–21" },
+          { t:COURS_BIOCHIMIE.peptides, d:"délocalisation et polarité, cis/trans et Ramachandran, définitions et n − 1 liaisons, dipeptides avec au moins une Cys (calcul), structure primaire et Sanger, charge et pHi d'un pentapeptide, SDS-PAGE et isoélectrofocalisation, chromatographies, enképhalines et BNP", q:"Q22–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Biochimie_ECB1_entrainement1.pdf" } ],
+        note:"Programme complet de l'ECB (FC1 à FC3), dont une QRM à 5/5. Corrigé à partir de la page 8 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+      {
+        id:"biochimie-ecb1-e2", n:2, date:"2026-10-12", nbQ:30, qrm:24, qru:6, duree:"45 min",
+        cours:[
+          { t:COURS_BIOCHIMIE.glucides, d:"classification, Fischer/Cram et pouvoir rotatoire, aldotétroses, stéréoisomères des aldoheptoses (calcul 2ⁿ), D-fructose en Fischer, méthylglucoside en Haworth, hexokinase et G6P, nomenclature des diholosides, maltase et maladie de Pompe, glycoprotéines/protéoglycanes, GAG", q:"Q1–11" },
+          { t:COURS_BIOCHIMIE.aa, d:"nombre et série, D-sérine en Fischer, charges et pHi d'un AA neutre, AA chargés, thiol de la cystéine (aide numérique), AA branchés, aromatiques, Gln/Asn, phosphorylation et dosage, glycine et expérience de Miller", q:"Q12–21" },
+          { t:COURS_BIOCHIMIE.peptides, d:"nature et hydrolyse, lecture d'un tripeptide écrit, séquençage d'un pentapeptide, spectrométrie de masse, LH-RH et BNP, charge et pHi d'un tétrapeptide acide, électrophorèse, exclusion, isoélectrofocalisation", q:"Q22–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Biochimie_ECB1_entrainement2.pdf" } ],
+        note:"Autres parties des fiches que l'entraînement 1, dont une QRM à 5/5. Corrigé à partir de la page 8.",
+      },
+      {
+        id:"biochimie-ecb1-e3", n:3, date:"2026-10-13", nbQ:30, qrm:24, qru:6, duree:"45 min",
+        cours:[
+          { t:COURS_BIOCHIMIE.proteines, d:"interactions (coordination, 1/d vs 1/d⁶), tertiaire/quaternaire et Hb, hélice α (n → n + 4) et feuillet β, repliement et HSP40/HSP70/NEF, dénaturation, kératine α et permanente, membranaires et myristoylation, domaines d'Ig et IgA", q:"Q1–8" },
+          { t:COURS_BIOCHIMIE.lipides, d:"simples/complexes et isoprénoïdes, phosphatidyléthanolamine dessinée (C16:0 / C18:2, phospholipases), C20:3 Δ8,11,14 (ω, Tf), voie malonique et désaturases, phosphoinositides et IP₃, sphingolipides et Niemann-Pick, cholestérol (27 C, ester), micelles et courbures", q:"Q9–16" },
+          { t:COURS_BIOCHIMIE.enzymo, d:"coenzyme/cofacteur/apoenzyme, classes EC, k_cat = V_max/[E]ₜ (calcul), v à [S] = K_m et 3 K_m, lecture de Lineweaver-Burk (calcul), types d'inhibition, allostérie et ATCase, température, site actif, Koshland, fumarase", q:"Q17–24" },
+          { t:COURS_BIOCHIMIE.nucleo1, d:"acide phosphorique (pKa 2,1 / 7,2), thymine, nucléosides/nucléotides et liaisons riches en énergie, AMPc, ADN B de 34 nm (paires, cytosines, liaisons H : calcul), ADN A/B/Z", q:"Q25–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Biochimie_ECB1_entrainement3.pdf" } ],
+        note:"Partie FC4 à FC7 du programme, dont une QRM à 5/5 (Q18). Corrigé à partir de la page 9 ; chaque question y a son encadré « Tips réflexes ».",
+      },
+      {
+        id:"biochimie-ecb1-e4", n:4, date:"2026-10-13", nbQ:30, qrm:24, qru:6, duree:"45 min",
+        cours:[
+          { t:COURS_BIOCHIMIE.proteines, d:"généralités, pentapeptides à Gly C-terminale (20ⁿ), doigt de zinc, hélice α et feuillet β, nombre de conformations et paysage énergétique, liaisons faibles, RCPG et palmitoylation, classes d'Ig", q:"Q1–8" },
+          { t:COURS_BIOCHIMIE.lipides, d:"rôles et 9 kcal/g, triglycéride dessiné (C14:0 / C20:4 / C18:0), acide palmitoléique (ω7), ω3/ω6, EPA et DHA, synthèse et transport des TG, glycérophospholipides et phospholipases, sphingolipidoses et groupes sanguins, céramides et sphingomyélinase", q:"Q9–16" },
+          { t:COURS_BIOCHIMIE.enzymo, d:"uréase (10¹⁴), enzymes en médecine (ALAT, glycémie, phénylcétonurie), ordres de réaction, v pour [S] = K_m/3 et 3 K_m (calcul), hypothèses de Michaelis-Menten, inhibiteur compétitif chiffré (pente × 3), Hill et ATCase, température et classes", q:"Q17–24" },
+          { t:COURS_BIOCHIMIE.nucleo1, d:"ribose et liaison N-glycosidique (N1/N9), tautomérie et absorption UV, phosphodiester et nucléases, électrophorèse, bases méthylées et acide urique, double hélice B, Chargaff à partir de 20 % de G", q:"Q25–30" },
+        ],
+        pdfs:[ { label:"Sujet + corrigé", href:"controles/Biochimie_ECB1_entrainement4.pdf" } ],
+        note:"Autres parties de FC4 à FC7 que l'entraînement 3, dont une QRM à 5/5 (Q21). Corrigé à partir de la page 8.",
       },
     ],
   },
