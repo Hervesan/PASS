@@ -405,6 +405,7 @@
 const MATIERES = {
   bam:    { code:"BAM",    module:"M1", titre:"Biophysique appliquée aux méthodes exploratoires", color:"var(--c-biophysique)", href:"biophysique.html" },
   physio: { code:"PHYSIO", module:"M1", titre:"Physiologie humaine",                              color:"var(--c-physiologie)", href:"physiologie.html" },
+  med:    { code:"MED",    module:"M1", titre:"Initiation aux médicaments",                       color:"var(--c-medicaments)", href:"medicaments.html" },
   bmi:    { code:"BMI",    module:"M2", titre:"Biophysique du milieu intérieur",                  color:"var(--c-milieu)",      href:"biophysique-milieu-interieur.html" },
   chimie: { code:"CHIMIE", module:"M2", titre:"Chimie",                                           color:"var(--c-chimie)",      href:"chimie.html" },
   biochimie: { code:"BIOCHIMIE", module:"M2", titre:"Biochimie",                                     color:"var(--c-biochimie)",   href:"biochimie.html" },
@@ -450,6 +451,12 @@ const COURS_PHYSIO = {
   renale:    "FC15 Physiologie rénale",
   debit:     "FC16 Débit cardiaque : déterminants et régulation",
   effort:    "FC17 Adaptation cardiovasculaire à l'effort",
+};
+
+const COURS_MED = {
+  pharmaco: "Cibles et mécanismes d'action des médicaments (récepteurs, enzymes, transporteurs)",
+  definition: "Définition et statut du médicament (Code de la santé publique, génériques, dénomination, substances vénéneuses)",
+  formes: "Dose, dosage, formes pharmaceutiques et voies d'administration",
 };
 
 const COURS_CHIMIE = {
@@ -524,12 +531,20 @@ const CONTROLES = [
   {
     key:"bam-ecb1", matiere:"bam", numero:1, nom:"ECB n°1 du 17.10", code:"ECB1", date:"2026-10-17",
     programme:[
-      { t:COURS_BAM.constitution }, { t:COURS_BAM.etats }, { t:COURS_BAM.gaz },
-      { t:COURS_BAM.noyaux }, { t:COURS_BAM.interaction }, { t:COURS_BAM.effets },
-      { t:COURS_BAM.radiopharma }, { t:COURS_BAM.radioprot }, { t:COURS_BAM.ondes },
-      { t:COURS_BAM.oem }, { t:COURS_BAM.rmn },
+      { t:COURS_BAM.constitution, q:"Q28" }, { t:COURS_BAM.etats, q:"Q34" }, { t:COURS_BAM.gaz, q:"Q36" },
+      { t:COURS_BAM.noyaux, q:"Q29–30" }, { t:COURS_BAM.interaction, q:"Q31" }, { t:COURS_BAM.effets, q:"Q32" },
+      { t:COURS_BAM.radiopharma, q:"Q35" }, { t:COURS_BAM.radioprot, q:"Q33" }, { t:COURS_BAM.ondes, q:"Q39" },
+      { t:COURS_BAM.oem, q:"—" }, { t:COURS_BAM.rmn, q:"Q37–38" },
     ],
-    officiel:null,
+    officiel:{
+      id:"bam-ecb1-off", nbQ:12, qrm:10, qru:2, duree:"≈ 20 min (épreuve M1 de 1h30)",
+      pdfs:[
+        { label:"Sujet", href:"controles/M1_ECB1_Medisup_sujet.pdf" },
+        { label:"Corrigé", href:"controles/M1_ECB1_Medisup_corrige.pdf", alt:true },
+        { label:"Tips", href:"controles/BAM_ECB1_Medisup_tips.pdf", tips:true },
+      ],
+      note:"Épreuve commune du module 1 (55 questions en 1h30) : la biophysique va de Q28 à Q39. La fiche « Tips » donne les raisonnements réflexes question par question ; verdicts vérifiés sur le corrigé Médisup.",
+    },
     entrainements:[
       {
         id:"bam-ecb1-e1", n:1, date:"2026-10-12", nbQ:30, qrm:24, qru:6, duree:"60 min",
@@ -588,14 +603,22 @@ const CONTROLES = [
   {
     key:"physio-1", matiere:"physio", numero:1, nom:"ECB n°1 du 17.10", code:"ECB1", date:"2026-10-17",
     programme:[
-      { t:COURS_PHYSIO.compart }, { t:COURS_PHYSIO.canaux }, { t:COURS_PHYSIO.intro },
-      { t:COURS_PHYSIO.bioen }, { t:COURS_PHYSIO.digestive }, { t:COURS_PHYSIO.snc_org },
-      { t:COURS_PHYSIO.synapse }, { t:COURS_PHYSIO.endoc }, { t:COURS_PHYSIO.acido },
-      { t:COURS_PHYSIO.thermo }, { t:COURS_PHYSIO.extero }, { t:COURS_PHYSIO.cognition },
-      { t:COURS_PHYSIO.couplage }, { t:COURS_PHYSIO.cycle }, { t:COURS_PHYSIO.renale },
-      { t:COURS_PHYSIO.debit }, { t:COURS_PHYSIO.effort },
+      { t:COURS_PHYSIO.compart, q:"Q18–19" }, { t:COURS_PHYSIO.canaux, q:"Q20" }, { t:COURS_PHYSIO.intro, q:"Q10" },
+      { t:COURS_PHYSIO.bioen, q:"Q4–6" }, { t:COURS_PHYSIO.digestive, q:"Q1–3" }, { t:COURS_PHYSIO.snc_org, q:"Q11" },
+      { t:COURS_PHYSIO.synapse, q:"Q11" }, { t:COURS_PHYSIO.endoc, q:"Q13–14" }, { t:COURS_PHYSIO.acido, q:"Q7–8" },
+      { t:COURS_PHYSIO.thermo, q:"Q9" }, { t:COURS_PHYSIO.extero, q:"Q12" }, { t:COURS_PHYSIO.cognition, q:"Q10" },
+      { t:COURS_PHYSIO.couplage, q:"Q21–22" }, { t:COURS_PHYSIO.cycle, q:"Q23–24" }, { t:COURS_PHYSIO.renale, q:"Q15–17" },
+      { t:COURS_PHYSIO.debit, q:"Q25–26" }, { t:COURS_PHYSIO.effort, q:"Q27" },
     ],
-    officiel:null,
+    officiel:{
+      id:"physio-ecb1-off", nbQ:27, qrm:23, qru:4, duree:"≈ 44 min (épreuve M1 de 1h30)",
+      pdfs:[
+        { label:"Sujet", href:"controles/M1_ECB1_Medisup_sujet.pdf" },
+        { label:"Corrigé", href:"controles/M1_ECB1_Medisup_corrige.pdf", alt:true },
+        { label:"Tips", href:"controles/Physiologie_ECB1_Medisup_tips.pdf", tips:true },
+      ],
+      note:"Épreuve commune du module 1 (55 questions en 1h30) : la physiologie va de Q1 à Q27. La fiche « Tips » donne les raisonnements réflexes question par question ; verdicts vérifiés sur le corrigé Médisup. Attention : Q1 a ses 5 propositions vraies.",
+    },
     entrainements:[
       {
         id:"physio-c1-e1", n:1, date:"2026-10-11", nbQ:30, qrm:20, qru:10, duree:"60 min",
@@ -674,6 +697,24 @@ const CONTROLES = [
         note:"Autres parties de FC13 à FC17 que l'entraînement 5. Corrigé à partir de la page 8.",
       },
     ],
+  },
+
+  /* ---------------- M1 · Médicaments · ECB n°1 du 17.10 ---------------- */
+  {
+    key:"med-ecb1", matiere:"med", numero:1, nom:"ECB n°1 du 17.10", code:"ECB1", date:"2026-10-17",
+    programme:[
+      { t:COURS_MED.pharmaco, q:"Q40–47" }, { t:COURS_MED.definition, q:"Q48–51" }, { t:COURS_MED.formes, q:"Q52–55" },
+    ],
+    officiel:{
+      id:"med-ecb1-off", nbQ:16, qrm:14, qru:2, duree:"≈ 26 min (épreuve M1 de 1h30)",
+      pdfs:[
+        { label:"Sujet", href:"controles/M1_ECB1_Medisup_sujet.pdf" },
+        { label:"Corrigé", href:"controles/M1_ECB1_Medisup_corrige.pdf", alt:true },
+        { label:"Tips", href:"controles/Medicaments_ECB1_Medisup_tips.pdf", tips:true },
+      ],
+      note:"Épreuve commune du module 1 (55 questions en 1h30) : les médicaments vont de Q40 à Q55. La fiche « Tips » donne les raisonnements réflexes question par question ; verdicts vérifiés sur le corrigé Médisup.",
+    },
+    entrainements:[],
   },
 
   /* ---------------- M1 · Physiologie · Contrôle n°2 ---------------- */
@@ -770,10 +811,18 @@ const CONTROLES = [
   {
     key:"bmi-ecb1", matiere:"bmi", numero:1, nom:"ECB n°1 du 17.10", code:"ECB1", date:"2026-10-17",
     programme:[
-      { t:COURS_BMI.grandeurs }, { t:COURS_BMI.energie }, { t:COURS_BMI.ph },
-      { t:COURS_BMI.colligatives }, { t:COURS_BMI.cinetiques }, { t:COURS_BMI.mecaniques },
+      { t:COURS_BMI.grandeurs, q:"Q56–57" }, { t:COURS_BMI.energie, q:"Q58–59" }, { t:COURS_BMI.ph, q:"Q53–54" },
+      { t:COURS_BMI.colligatives, q:"Q50–52" }, { t:COURS_BMI.cinetiques, q:"—" }, { t:COURS_BMI.mecaniques, q:"Q55" },
     ],
-    officiel:null,
+    officiel:{
+      id:"bmi-ecb1-off", nbQ:10, qrm:6, qru:4, duree:"≈ 15 min (épreuve M2 de 1h30)",
+      pdfs:[
+        { label:"Sujet", href:"controles/M2_ECB1_Medisup_sujet.pdf" },
+        { label:"Corrigé", href:"controles/M2_ECB1_Medisup_corrige.pdf", alt:true },
+        { label:"Tips", href:"controles/BMI_ECB1_Medisup_tips.pdf", tips:true },
+      ],
+      note:"Épreuve commune du module 2 (59 questions en 1h30) : la BMI va de Q50 à Q59 (corrigé p. 19–22). La fiche « Tips » donne les raisonnements réflexes question par question ; verdicts vérifiés sur le corrigé Médisup. Q58–59 partagent un énoncé commun (satellite).",
+    },
     entrainements:[
       {
         id:"bmi-ecb1-e1", n:1, date:"2026-10-12", nbQ:30, qrm:20, qru:10, duree:"60 min",
@@ -909,11 +958,19 @@ const CONTROLES = [
   {
     key:"chimie-ecb1", matiere:"chimie", numero:1, nom:"ECB n°1 du 17.10", code:"ECB1", date:"2026-10-17",
     programme:[
-      { t:COURS_CHIMIE.atome }, { t:COURS_CHIMIE.liaisons }, { t:COURS_CHIMIE.isomerie },
-      { t:COURS_CHIMIE.nomencl }, { t:COURS_CHIMIE.premier }, { t:COURS_CHIMIE.second },
-      { t:COURS_CHIMIE.alcenes }, { t:COURS_CHIMIE.alcynes },
+      { t:COURS_CHIMIE.atome, q:"Q1–3" }, { t:COURS_CHIMIE.liaisons, q:"Q4–7" }, { t:COURS_CHIMIE.isomerie, q:"Q13–16" },
+      { t:COURS_CHIMIE.nomencl, q:"Q13–15, Q17" }, { t:COURS_CHIMIE.premier, q:"Q6–9" }, { t:COURS_CHIMIE.second, q:"Q7, Q9–12" },
+      { t:COURS_CHIMIE.alcenes, q:"Q17–19" }, { t:COURS_CHIMIE.alcynes, q:"Q20–22" },
     ],
-    officiel:null,
+    officiel:{
+      id:"chimie-ecb1-off", nbQ:22, qrm:12, qru:10, duree:"≈ 34 min (épreuve M2 de 1h30)",
+      pdfs:[
+        { label:"Sujet", href:"controles/M2_ECB1_Medisup_sujet.pdf" },
+        { label:"Corrigé", href:"controles/M2_ECB1_Medisup_corrige.pdf", alt:true },
+        { label:"Tips", href:"controles/Chimie_ECB1_Medisup_tips.pdf", tips:true },
+      ],
+      note:"Épreuve commune du module 2 (59 questions en 1h30) : la chimie va de Q1 à Q22 (corrigé p. 2–12). La fiche « Tips » donne les raisonnements réflexes question par question ; verdicts vérifiés sur le corrigé Médisup. Q6–7 mêlent atomistique et thermodynamique ; Q17–22 : schémas réactionnels dessinés.",
+    },
     entrainements:[
       {
         id:"chimie-ecb1-e1", n:1, date:"2026-10-13", nbQ:30, qrm:19, qru:11, duree:"60 min",
@@ -966,11 +1023,19 @@ const CONTROLES = [
   {
     key:"biochimie-ecb1", matiere:"biochimie", numero:1, nom:"ECB n°1 du 17.10", code:"ECB1", date:"2026-10-17",
     programme:[
-      { t:COURS_BIOCHIMIE.glucides }, { t:COURS_BIOCHIMIE.aa },
-      { t:COURS_BIOCHIMIE.peptides }, { t:COURS_BIOCHIMIE.proteines }, { t:COURS_BIOCHIMIE.lipides },
-      { t:COURS_BIOCHIMIE.enzymo }, { t:COURS_BIOCHIMIE.nucleo1 },
+      { t:COURS_BIOCHIMIE.glucides, q:"Q23–27" }, { t:COURS_BIOCHIMIE.aa, q:"Q28–32" },
+      { t:COURS_BIOCHIMIE.peptides, q:"Q33–35" }, { t:COURS_BIOCHIMIE.proteines, q:"Q36–38" }, { t:COURS_BIOCHIMIE.lipides, q:"Q46–49" },
+      { t:COURS_BIOCHIMIE.enzymo, q:"Q39–41" }, { t:COURS_BIOCHIMIE.nucleo1, q:"Q42–45" },
     ],
-    officiel:null,
+    officiel:{
+      id:"biochimie-ecb1-off", nbQ:27, qrm:21, qru:6, duree:"≈ 41 min (épreuve M2 de 1h30)",
+      pdfs:[
+        { label:"Sujet", href:"controles/M2_ECB1_Medisup_sujet.pdf" },
+        { label:"Corrigé", href:"controles/M2_ECB1_Medisup_corrige.pdf", alt:true },
+        { label:"Tips", href:"controles/Biochimie_ECB1_Medisup_tips.pdf", tips:true },
+      ],
+      note:"Épreuve commune du module 2 (59 questions en 1h30) : la biochimie va de Q23 à Q49 (corrigé p. 12–18). La fiche « Tips » donne les raisonnements réflexes question par question ; verdicts vérifiés sur le corrigé Médisup. Plusieurs molécules dessinées sans leur nom (Q23, Q26, Q28, Q48, Q49).",
+    },
     entrainements:[
       {
         id:"biochimie-ecb1-e1", n:1, date:"2026-10-12", nbQ:30, qrm:24, qru:6, duree:"45 min",
@@ -1028,6 +1093,7 @@ const ICONS = {
   bmi:    SV('<path d="M12 3s6.5 7 6.5 11.3A6.5 6.5 0 0 1 5.5 14.3C5.5 10 12 3 12 3z"/><path d="M9.2 15a3 3 0 0 0 2.8 2.5"/>'),
   chimie: SV('<path d="M9 3h6M10 3v6L4.5 18.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"/><path d="M7 15h10"/>'),
   biochimie: SV('<path d="M7 3c0 4.5 10 4.5 10 9s-10 4.5-10 9"/><path d="M17 3c0 4.5-10 4.5-10 9s10 4.5 10 9"/><path d="M8.5 6.5h7M8.5 17.5h7M10 12h4"/>'),
+  med:    SV('<rect x="3.5" y="8.5" width="17" height="7" rx="3.5" transform="rotate(-40 12 12)"/><path d="M9.6 9.1l5.3 5.8"/>'),
   sommaire: SV('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>'),
   programme: SV('<path d="M3 5.5C5.5 4.3 8.5 4.3 12 6c3.5-1.7 6.5-1.7 9-.5V19c-2.5-1.2-5.5-1.2-9 .5-3.5-1.7-6.5-1.7-9-.5z"/><path d="M12 6v13.5"/>'),
   questions: SV('<path d="M4 6l1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17"/><path d="M11 6h9M11 12h9M11 18h9"/>'),
@@ -1163,7 +1229,7 @@ function sujetHTML(s, color, q, programme){
 }
 
 function filtersHTML(){
-  const mats = [["all","Toutes", null], ...Object.entries(MATIERES).map(([k,m]) => [k, m.code === "PHYSIO" ? "Physio" : m.code === "BIOCHIMIE" ? "Biochimie" : m.code === "CHIMIE" ? "Chimie" : m.code, m.color])];
+  const mats = [["all","Toutes", null], ...Object.entries(MATIERES).map(([k,m]) => [k, m.code === "PHYSIO" ? "Physio" : m.code === "BIOCHIMIE" ? "Biochimie" : m.code === "CHIMIE" ? "Chimie" : m.code === "MED" ? "Médic." : m.code, m.color])];
   const stat = [["all","Tous"],["todo","À faire"],["done","Faits"]];
   return mats.map(([k,l,c]) => `<button class="chip${FILTRE.mat===k?" on":""}" data-f="mat" data-v="${k}"${c?` style="--c:${c}"`:""}>${c?`<span class="ico" style="width:15px;height:15px;color:${c}">${ICONS[k]}</span>`:""}${l}</button>`).join("")
     + `<span class="sep"></span>`
@@ -1223,7 +1289,7 @@ function render(){
     const faits = all.filter(s => (SUIVI[s.id]||{}).done).length;
     const pct = all.length ? Math.round(100 * faits / all.length) : 0;
     const anchor = "ctrl-" + C.key;
-    const titre = `${M.code === "PHYSIO" ? "Physiologie" : M.code === "CHIMIE" ? "Chimie" : M.code === "BIOCHIMIE" ? "Biochimie" : M.code} · ${C.nom || "Contrôle n°" + C.numero}`;
+    const titre = `${M.code === "PHYSIO" ? "Physiologie" : M.code === "CHIMIE" ? "Chimie" : M.code === "BIOCHIMIE" ? "Biochimie" : M.code === "MED" ? "Médicaments" : M.code} · ${C.nom || "Contrôle n°" + C.numero}`;
 
     som += `
       <a class="som" href="#${anchor}" style="--c:${M.color}">
@@ -1267,7 +1333,7 @@ function render(){
   /* bandeau en tête de l'onglet ouvert */
   const R = rubriques().find(r => r.code === FILTRE.vue);
   const B = bilan(FILTRE.vue);
-  const nomMat = M => M.code === "PHYSIO" ? "Physiologie" : M.code === "CHIMIE" ? "Chimie" : M.code === "BIOCHIMIE" ? "Biochimie" : M.code;
+  const nomMat = M => M.code === "PHYSIO" ? "Physiologie" : M.code === "CHIMIE" ? "Chimie" : M.code === "BIOCHIMIE" ? "Biochimie" : M.code === "MED" ? "Médicaments" : M.code;
   const mats = B.ctrls.map(C => { const M = MATIERES[C.matiere]; return `<a href="#ctrl-${C.key}" style="--c:${M.color}"><span class="ico" style="color:${M.color}">${ICONS[C.matiere]}</span>${nomMat(M)}${R ? "" : " · " + esc(C.nom || "C" + C.numero)} <b>${sujets(C).filter(s => !s.avenir).length}</b></a>`; }).join("");
   const bandeau = R
     ? `<div class="rubrique"><div><div class="k">Examen commun · toutes matières</div><h2>${esc(R.nom)}${R.date ? ` <span>· ${R.date >= today() ? "prévu le" : "passé le"} ${fdate(R.date)}${R.date >= today() ? " (" + dans(R.date) + ")" : ""}</span>` : ""}</h2>
