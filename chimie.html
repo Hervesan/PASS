@@ -592,6 +592,8 @@
   .theme-chip{ display:inline-block; margin-left:6px; padding:1px 7px; border-radius:100px; background:#E3F0F2; color:#1B6577; font-weight:700; font-size:10px; letter-spacing:.05em; }
   .mode-card.is-kit .mode-icon{ background:#E3F0F2; color:#1B6577; }
   .mode-card.is-kit[data-mode="kitThermo"] .mode-icon, #kitThermoTile .tile-monogram{ font-weight:800; font-size:17px; }
+  .mode-card.is-kit[data-mode="kitIso"] .mode-icon, #kitIsoTile .tile-monogram{ font-weight:800; font-size:17px; }
+  .mode-card.is-kit[data-mode="kitAlc"] .mode-icon, #kitAlcTile .tile-monogram{ font-weight:800; font-size:15px; }
   .mode-card.is-kit{ text-decoration:none; }
   .mode-card.is-kit .mode-title, .mode-card.is-kit .mode-desc{ display:block; }
   .mode-card.is-kit .mode-title{ margin-bottom:6px; }
@@ -619,7 +621,7 @@
   <div class="search-row"><input type="text" id="searchBox" placeholder="Rechercher un cours..."></div>
   <div class="content">
     <div id="themesBlock" class="chapter-block">
-      <div class="chapter-head"><span class="chapter-name">Thématiques à réflexion</span><span class="chapter-sub">2 thématiques</span></div>
+      <div class="chapter-head"><span class="chapter-name">Thématiques à réflexion</span><span class="chapter-sub">4 thématiques</span></div>
       <div class="card-stack">
         <button class="course-tile theme-tile" id="kitTile">
           <span class="tile-monogram">⚛</span>
@@ -635,6 +637,24 @@
           <span class="tile-body">
             <span class="tile-kicker">Module 2 · Chimie · FC5 + FC6</span>
             <span class="tile-title">Thermodynamique : avoir tout bon</span>
+            <span class="tile-meta">Mémo · pièges · cahier · contrôle<span class="theme-chip">MÉTHODE</span></span>
+          </span>
+          <span class="tile-arrow">→</span>
+        </button>
+        <button class="course-tile theme-tile" id="kitIsoTile">
+          <span class="tile-monogram">C*</span>
+          <span class="tile-body">
+            <span class="tile-kicker">Module 2 · Chimie · FC3 + FC4</span>
+            <span class="tile-title">Isomérie et nomenclature : avoir tout bon</span>
+            <span class="tile-meta">Mémo · pièges · cahier · contrôle<span class="theme-chip">MÉTHODE</span></span>
+          </span>
+          <span class="tile-arrow">→</span>
+        </button>
+        <button class="course-tile theme-tile" id="kitAlcTile">
+          <span class="tile-monogram">C=C</span>
+          <span class="tile-body">
+            <span class="tile-kicker">Module 2 · Chimie · FC7 + FC8</span>
+            <span class="tile-title">Alcènes et alcynes : avoir tout bon</span>
             <span class="tile-meta">Mémo · pièges · cahier · contrôle<span class="theme-chip">MÉTHODE</span></span>
           </span>
           <span class="tile-arrow">→</span>
@@ -897,6 +917,151 @@
           <li><b>Avant chaque épreuve</b> : relire le mémo.</li>
         </ol>
         <div class="kit-note">Les flashcards et les QRM des cours 1<sup>er</sup> principe et 2<sup>nd</sup> principe restent utiles pour les notions de restitution pure (historique, définitions).</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============ RUBRIQUE THÉMATIQUE : KIT ISOMÉRIE ET NOMENCLATURE ============ -->
+<div id="kitIsoView" class="light-screen">
+  <div class="top-back-row"><button class="top-back-btn" id="kitIsoBackBtn">← Retour</button></div>
+  <div class="course-intro">
+    <p class="eyebrow"><span class="dot"></span>Thématique · FC3 + FC4</p>
+    <h2>Isomérie et nomenclature : avoir tout bon</h2>
+    <p>Les questions sur une molécule dessinée (carbone asymétrique, R/S, Z/E, énantiomères et méso, lumière polarisée, Fischer, fonctions, nom, nombres de stéréoisomères et d'insaturations) se tranchent avec une méthode fixe, écrite au crayon. Ces six documents couvrent les deux fiches (isomérie et stéréoisomérie, règles générales de nomenclature) et les pièges relevés dans les annales et les sujets Médisup.</p>
+  </div>
+  <div class="content">
+    <div class="chapter-block" style="margin-top:26px;">
+      <div class="chapter-head"><span class="chapter-name">Les documents</span><span class="chapter-sub">6 PDF</span></div>
+      <div class="mode-grid">
+        <a class="mode-card is-kit" href="isomerie-nomenclature/Chimie_Isomerie_Nomenclature_Memo.pdf" target="_blank" rel="noopener">
+          <span class="mode-icon">🧭</span>
+          <span class="mode-body"><span class="mode-title">Mémo</span>
+            <span class="mode-desc">Comment résoudre un item : repérer son type (A à I, mêmes lettres que les pièges et le cahier), puis pour chaque type la démarche au crayon, la matrice, l'aide-mémoire et un exemple tranché. Une question déroulée (la carvone) et les grandes lignes du cours. À relire avant chaque épreuve.</span>
+            <span class="mode-meta"><span class="mode-badge">4 pages</span></span></span>
+          <span class="mode-arrow">→</span>
+        </a>
+        <a class="mode-card is-kit" href="isomerie-nomenclature/Chimie_Isomerie_Nomenclature_Elements_a_connaitre.pdf" target="_blank" rel="noopener">
+          <span class="mode-icon">🔢</span>
+          <span class="mode-body"><span class="mode-title">Éléments à connaître</span>
+            <span class="mode-desc">Numéros atomiques pour les priorités, préfixes de chaîne, groupements alkyles et ordre des fonctions avec leurs suffixes et préfixes.</span>
+            <span class="mode-meta"><span class="mode-badge">½ page</span></span></span>
+          <span class="mode-arrow">→</span>
+        </a>
+        <a class="mode-card is-kit" href="isomerie-nomenclature/Chimie_Isomerie_Nomenclature_Tout_retrouver.pdf" target="_blank" rel="noopener">
+          <span class="mode-icon">🔑</span>
+          <span class="mode-body"><span class="mode-title">Tout retrouver</span>
+            <span class="mode-desc">Les 3 choses à savoir (quatre substituants différents, le miroir, les priorités) et tout ce qu'on en déduit : méso, racémique, ni Z ni E, groupe 4 vers l'avant, Fischer.</span>
+            <span class="mode-meta"><span class="mode-badge">1 page</span></span></span>
+          <span class="mode-arrow">→</span>
+        </a>
+        <a class="mode-card is-kit" href="isomerie-nomenclature/Chimie_Isomerie_Nomenclature_Pieges_et_methodes.pdf" target="_blank" rel="noopener">
+          <span class="mode-icon">⚡</span>
+          <span class="mode-body"><span class="mode-title">Pièges et méthodes</span>
+            <span class="mode-desc">Les neuf types de pièges (dont les calculs) : comment Médisup les pose, les mots qui les trahissent, un arbre de décision pour déjouer chacun et des items piégés passés dans l'arbre.</span>
+            <span class="mode-meta"><span class="mode-badge">5 pages</span></span></span>
+          <span class="mode-arrow">→</span>
+        </a>
+        <a class="mode-card is-kit" href="isomerie-nomenclature/Chimie_Isomerie_Nomenclature_Cahier_exercices.pdf" target="_blank" rel="noopener">
+          <span class="mode-icon">✏️</span>
+          <span class="mode-body"><span class="mode-title">Cahier d'exercices</span>
+            <span class="mode-desc">20 exercices (119 lignes) à remplir au crayon sur des molécules inédites, dont 7 sur les notions jamais tombées, puis un corrigé qui suit les mêmes arbres que le document « pièges » et les lignes de calcul du mémo.</span>
+            <span class="mode-meta"><span class="mode-badge">20 exercices · corrigé détaillé</span></span></span>
+          <span class="mode-arrow">→</span>
+        </a>
+        <a class="mode-card is-kit" href="isomerie-nomenclature/Chimie_Isomerie_Nomenclature_Controle_verification.pdf" target="_blank" rel="noopener">
+          <span class="mode-icon">⏱️</span>
+          <span class="mode-body"><span class="mode-title">Contrôle de vérification</span>
+            <span class="mode-desc">18 questions chronométrées (10 QRM, 8 QRU) au format de l'ECB de chimie, molécules dessinées. Corrigé avec un encadré Tips réflexes par question.</span>
+            <span class="mode-meta"><span class="mode-badge">18 questions · 27 min</span></span></span>
+          <span class="mode-arrow">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="chapter-block">
+      <div class="chapter-head"><span class="chapter-name">Le parcours</span></div>
+      <div class="kit-route">
+        <ol>
+          <li><b>J0</b> : lire la fiche « tout retrouver », le mémo et les éléments à connaître, puis les pièges et méthodes.</li>
+          <li><b>Cahier</b> : une partie (un type de piège) par séance, au crayon et sans le mémo ; entourer chaque erreur avec la lettre de son type.</li>
+          <li><b>J+2 et J+7</b> : refaire uniquement les lignes ratées du cahier.</li>
+          <li><b>Quand tout est juste</b> : faire le contrôle de vérification, chronométré.</li>
+          <li><b>Avant chaque épreuve</b> : relire le mémo.</li>
+        </ol>
+        <div class="kit-note">Les effets électroniques (inductif, mésomère), souvent posés sur les mêmes molécules, ne sont pas dans ce kit : ils seront traités avec la fiche sur les alcènes. Les flashcards et les QRM des cours Isomérie et Nomenclature restent utiles pour la restitution pure.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ RUBRIQUE THÉMATIQUE : KIT ALCÈNES ET ALCYNES ============ -->
+<div id="kitAlcView" class="light-screen">
+  <div class="top-back-row"><button class="top-back-btn" id="kitAlcBackBtn">← Retour</button></div>
+  <div class="course-intro">
+    <p class="eyebrow"><span class="dot"></span>Thématique · FC7 + FC8</p>
+    <h2>Alcènes et alcynes : avoir tout bon</h2>
+    <p>Les questions de réactivité (où va le groupe, conditions exactes, stéréochimie du produit, coupure de la double liaison, rôle des espèces, fonction obtenue, effet inductif, comptages) se tranchent avec une méthode fixe, écrite au crayon sur la molécule. Ces six documents couvrent les deux fiches (alcènes, alcynes) et les pièges relevés dans les annales et les sujets Médisup.</p>
+  </div>
+  <div class="content">
+    <div class="chapter-block" style="margin-top:26px;">
+      <div class="chapter-head"><span class="chapter-name">Les documents</span><span class="chapter-sub">6 PDF</span></div>
+      <div class="mode-grid">
+        <a class="mode-card is-kit" href="alcenes-alcynes/Chimie_Alcenes_Alcynes_Memo.pdf" target="_blank" rel="noopener">
+          <span class="mode-icon">🧭</span>
+          <span class="mode-body"><span class="mode-title">Mémo</span>
+            <span class="mode-desc">Comment résoudre un item : repérer son type (A à H, mêmes lettres que les pièges et le cahier), puis pour chaque type la démarche au crayon, la matrice, l'aide pour retenir et un exemple tranché. Une question déroulée et les grandes lignes du cours. À relire avant chaque épreuve.</span>
+            <span class="mode-meta"><span class="mode-badge">5 pages</span></span></span>
+          <span class="mode-arrow">→</span>
+        </a>
+        <a class="mode-card is-kit" href="alcenes-alcynes/Chimie_Alcenes_Alcynes_Elements_a_connaitre.pdf" target="_blank" rel="noopener">
+          <span class="mode-icon">🔢</span>
+          <span class="mode-body"><span class="mode-title">Éléments à connaître</span>
+            <span class="mode-desc">Le socle par cœur : chaque réactif (sur un alcène, sur un alcyne) et ce qu'il donne, les groupes donneurs et attracteurs, les repères.</span>
+            <span class="mode-meta"><span class="mode-badge">1 page</span></span></span>
+          <span class="mode-arrow">→</span>
+        </a>
+        <a class="mode-card is-kit" href="alcenes-alcynes/Chimie_Alcenes_Alcynes_Tout_retrouver.pdf" target="_blank" rel="noopener">
+          <span class="mode-icon">🔑</span>
+          <span class="mode-body"><span class="mode-title">Tout retrouver</span>
+            <span class="mode-desc">Les 3 choses à savoir (le premier groupe fixé, le côté de l'addition, la coupure) et tout ce qu'on en déduit sans rien apprendre de plus : Markovnikov, effet Kharash, hydroboration, méso ou racémique, produits d'ozonolyse.</span>
+            <span class="mode-meta"><span class="mode-badge">1 page</span></span></span>
+          <span class="mode-arrow">→</span>
+        </a>
+        <a class="mode-card is-kit" href="alcenes-alcynes/Chimie_Alcenes_Alcynes_Pieges_et_methodes.pdf" target="_blank" rel="noopener">
+          <span class="mode-icon">⚡</span>
+          <span class="mode-body"><span class="mode-title">Pièges et méthodes</span>
+            <span class="mode-desc">Les huit types de pièges (dont les comptages) : comment Médisup les pose, les mots qui les trahissent, un arbre de décision pour déjouer chacun et des items piégés passés dans l'arbre.</span>
+            <span class="mode-meta"><span class="mode-badge">5 pages</span></span></span>
+          <span class="mode-arrow">→</span>
+        </a>
+        <a class="mode-card is-kit" href="alcenes-alcynes/Chimie_Alcenes_Alcynes_Cahier_exercices.pdf" target="_blank" rel="noopener">
+          <span class="mode-icon">✏️</span>
+          <span class="mode-body"><span class="mode-title">Cahier d'exercices</span>
+            <span class="mode-desc">29 exercices à remplir au crayon sur des cas inédits (dont les notions jamais tombées), puis un corrigé qui suit les mêmes arbres de décision que le document « pièges » et les lignes de comptage du mémo.</span>
+            <span class="mode-meta"><span class="mode-badge">29 exercices · corrigé détaillé</span></span></span>
+          <span class="mode-arrow">→</span>
+        </a>
+        <a class="mode-card is-kit" href="alcenes-alcynes/Chimie_Alcenes_Alcynes_Controle_verification.pdf" target="_blank" rel="noopener">
+          <span class="mode-icon">⏱️</span>
+          <span class="mode-body"><span class="mode-title">Contrôle de vérification</span>
+            <span class="mode-desc">12 questions chronométrées au format ECB (7 QRM, 5 QRU, enchaînements réactionnels dessinés) pour vérifier que tout est acquis. Corrigé avec un encadré Tips réflexes par question.</span>
+            <span class="mode-meta"><span class="mode-badge">12 questions · 18 min</span></span></span>
+          <span class="mode-arrow">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="chapter-block">
+      <div class="chapter-head"><span class="chapter-name">Le parcours</span></div>
+      <div class="kit-route">
+        <ol>
+          <li><b>J0</b> : lire la fiche « tout retrouver », le mémo et les éléments à connaître, puis les pièges et méthodes.</li>
+          <li><b>Cahier</b> : une partie (un type de piège) par séance, au crayon et sans le mémo ; entourer chaque erreur avec la lettre de son type.</li>
+          <li><b>J+2 et J+7</b> : refaire uniquement les lignes ratées du cahier.</li>
+          <li><b>Quand tout est juste</b> : faire le contrôle de vérification, chronométré.</li>
+          <li><b>Avant chaque épreuve</b> : relire le mémo.</li>
+        </ol>
+        <div class="kit-note">Les réactions des annales qui ne sont pas dans les fiches 7 et 8 (oxydation des alcools, LiAlH<sub>4</sub>, NaBH<sub>4</sub>, Claisen, Baeyer-Villiger, Williamson, Birch, effets mésomères…) ne sont pas dans ce kit. Les flashcards et les QRM des cours Alcènes et Alcynes restent utiles pour la restitution pure.</div>
       </div>
     </div>
   </div>
@@ -75256,7 +75421,7 @@ function renderHome(filter){
 document.getElementById('searchBox').addEventListener('input', (e)=> renderHome(e.target.value));
 
 function showOnly(viewId){
-  ['homeView','courseView','decksView','seriesView','studyView','quizView','kitView','kitThermoView'].forEach(id=>{
+  ['homeView','courseView','decksView','seriesView','studyView','quizView','kitView','kitThermoView','kitIsoView','kitAlcView'].forEach(id=>{
     document.getElementById(id).style.display = (id===viewId) ? (id==='studyView'||id==='quizView' ? 'flex' : 'block') : 'none';
   });
   window.scrollTo(0,0);
@@ -75338,11 +75503,37 @@ function openCourseDetail(courseId){
       </button>
     `);
   }
+  if(['isomerie','isomerie-2','nomenclature'].includes(course.id)){
+    modes.push(`
+      <button class="mode-card is-kit" data-mode="kitIso">
+        <span class="mode-icon">C*</span>
+        <span class="mode-body">
+          <span class="mode-title">Isomérie et nomenclature : avoir tout bon</span>
+          <span class="mode-meta"><span class="mode-badge">Mémo · pièges · cahier · contrôle</span></span>
+        </span>
+        <span class="mode-arrow">→</span>
+      </button>
+    `);
+  }
+  if(['alcenes','alcynes-p1','alcynes-p2'].includes(course.id)){
+    modes.push(`
+      <button class="mode-card is-kit" data-mode="kitAlc">
+        <span class="mode-icon">C=C</span>
+        <span class="mode-body">
+          <span class="mode-title">Alcènes et alcynes : avoir tout bon</span>
+          <span class="mode-meta"><span class="mode-badge">Mémo · pièges · cahier · contrôle</span></span>
+        </span>
+        <span class="mode-arrow">→</span>
+      </button>
+    `);
+  }
   document.getElementById('modeGrid').innerHTML = modes.join('');
   document.getElementById('modeGrid').querySelectorAll('.mode-card[data-mode]').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       if(btn.dataset.mode === 'kit') openKit('course');
       else if(btn.dataset.mode === 'kitThermo') openKitThermo('course');
+      else if(btn.dataset.mode === 'kitIso') openKitIso('course');
+      else if(btn.dataset.mode === 'kitAlc') openKitAlc('course');
       else if(btn.dataset.mode === 'flashcards') openDecksList(currentCourseId);
       else openSeriesList(currentCourseId);
     });
@@ -75906,10 +76097,14 @@ document.getElementById('searchBox').addEventListener('input', (e)=>{
   const q = e.target.value.trim().toLowerCase();
   const hay = 'atomistique atome liaisons orbitales vsepr klechkowski bohr pièges méthode mémo cahier contrôle';
   const hayThermo = 'thermodynamique thermo principe énergie interne enthalpie entropie gibbs équilibre chatelier pièges méthode mémo cahier contrôle';
-  const showA = !q || hay.includes(q), showT = !q || hayThermo.includes(q);
+  const hayIso = 'isomérie isomerie stéréoisomérie stéréochimie nomenclature chiralité chiral carbone asymétrique énantiomère diastéréoisomère méso fischer cahn ingold prelog fonction pièges méthode mémo cahier contrôle';
+  const hayAlc = 'alcènes alcenes alcynes alcyne alcène hydrogénation markovnikov kharash hydroboration ozonolyse époxyde diels alder lindlar alcynure effet inductif carbocation réactivité pièges méthode mémo cahier contrôle';
+  const showA = !q || hay.includes(q), showT = !q || hayThermo.includes(q), showI = !q || hayIso.includes(q), showL = !q || hayAlc.includes(q);
   document.getElementById('kitTile').style.display = showA ? '' : 'none';
   document.getElementById('kitThermoTile').style.display = showT ? '' : 'none';
-  document.getElementById('themesBlock').style.display = (showA || showT) ? 'block' : 'none';
+  document.getElementById('kitIsoTile').style.display = showI ? '' : 'none';
+  document.getElementById('kitAlcTile').style.display = showL ? '' : 'none';
+  document.getElementById('themesBlock').style.display = (showA || showT || showI || showL) ? 'block' : 'none';
 });
 // ================= RUBRIQUE THÉMATIQUE : KIT THERMODYNAMIQUE =================
 let kitThermoFrom = 'home';
@@ -75917,6 +76112,20 @@ function openKitThermo(from){ kitThermoFrom = from; showOnly('kitThermoView'); }
 document.getElementById('kitThermoTile').addEventListener('click', ()=> openKitThermo('home'));
 document.getElementById('kitThermoBackBtn').addEventListener('click', ()=>{
   if(kitThermoFrom==='course' && currentCourseId) openCourseDetail(currentCourseId); else showOnly('homeView');
+});
+// ================= RUBRIQUE THÉMATIQUE : KIT ISOMÉRIE ET NOMENCLATURE =================
+let kitIsoFrom = 'home';
+function openKitIso(from){ kitIsoFrom = from; showOnly('kitIsoView'); }
+document.getElementById('kitIsoTile').addEventListener('click', ()=> openKitIso('home'));
+document.getElementById('kitIsoBackBtn').addEventListener('click', ()=>{
+  if(kitIsoFrom==='course' && currentCourseId) openCourseDetail(currentCourseId); else showOnly('homeView');
+});
+// ================= RUBRIQUE THÉMATIQUE : KIT ALCÈNES ET ALCYNES =================
+let kitAlcFrom = 'home';
+function openKitAlc(from){ kitAlcFrom = from; showOnly('kitAlcView'); }
+document.getElementById('kitAlcTile').addEventListener('click', ()=> openKitAlc('home'));
+document.getElementById('kitAlcBackBtn').addEventListener('click', ()=>{
+  if(kitAlcFrom==='course' && currentCourseId) openCourseDetail(currentCourseId); else showOnly('homeView');
 });
 
 renderHeroStats();
