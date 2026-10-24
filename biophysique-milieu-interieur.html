@@ -515,6 +515,11 @@
   }
   .exam-qblock .qz-stem{ margin-bottom:10px; }
   .exam-qblock + .exam-qblock{ border-top: 1px solid var(--sline); padding-top: 18px; }
+  .theme-parcours{ font-size:15px; line-height:1.55; }
+  .theme-parcours ol{ margin:6px 0 0 0; padding-left:22px; }
+  .theme-parcours li{ margin:4px 0; }
+  .mode-card.is-theme .mode-icon{ background: rgba(27,101,119,0.12); }
+  .mode-card.is-theme{ text-decoration:none; }
 </style>
 </head>
 <body>
@@ -532,6 +537,7 @@
   </div>
   <div class="search-row"><input type="text" id="searchBox" placeholder="Rechercher un cours..."></div>
   <div class="content">
+    <div id="themesBlock"></div>
     <div id="chapters"></div>
     <div class="empty" id="emptyHome" style="display:none;">Aucun cours ne correspond à cette recherche.</div>
   </div>
@@ -550,6 +556,26 @@
     <div class="chapter-block" style="margin-top:26px;">
       <div class="chapter-head"><span class="chapter-name">Comment voulez-vous réviser ?</span></div>
       <div class="mode-grid" id="modeGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ THÉMATIQUE À RÉFLEXION ============ -->
+<div id="themeView" class="light-screen">
+  <div class="top-back-row"><button class="top-back-btn" id="themeBackBtn">← Retour</button></div>
+  <div class="course-intro">
+    <p class="eyebrow" id="themeEyebrow" style="margin-bottom:14px;"><span class="dot"></span>Thématique à réflexion</p>
+    <h2 id="themeTitle">—</h2>
+    <p id="themeDesc"></p>
+  </div>
+  <div class="content">
+    <div class="chapter-block" style="margin-top:26px;">
+      <div class="chapter-head"><span class="chapter-name">Les documents, dans l'ordre d'utilisation</span><span class="chapter-sub" id="themeCount"></span></div>
+      <div class="mode-grid" id="themeDocs"></div>
+    </div>
+    <div class="chapter-block">
+      <div class="chapter-head"><span class="chapter-name">Parcours conseillé</span></div>
+      <div id="themeParcours" class="theme-parcours"></div>
     </div>
   </div>
 </div>
@@ -31302,6 +31328,38 @@ const CATS = [
   {key:"energiechimique", label:"Énergie chimique (liaison)", color:"var(--c-energiechimique)"},
   {key:"autresenergies", label:"Autres formes d'énergie", color:"var(--c-autresenergies)"},
 ];
+// ---------------------------------------------------------------------
+// Thématiques à réflexion : documents PDF rangés dans un dossier dédié.
+// ---------------------------------------------------------------------
+const THEMATIQUES = [
+  {
+    id: "proprietes-colligatives",
+    title: "Propriétés colligatives",
+    fiches: "FC3",
+    courses: ["proprietes-colligatives"],
+    folder: "proprietes-colligatives/",
+    desc: "Compter les osmoles, savoir si l'eau entre ou sort, prévoir ce qui monte ou baisse, vérifier les mots, les unités et les nombres : une méthode fixe pour chaque type d'item.",
+    keywords: "réflexe reflexe thématique osmolarité osmolalité osmose isotonique hémolyse plasmolyse cryoscopie pression osmotique colligatives mémo pièges cahier contrôle",
+    docs: [
+      {icon:"⚡", title:"Fiche réflexe", file:"BMI_Proprietes_colligatives_Fiche_reflexe.pdf", use:"L'outil principal : les 4 gestes de lecture, les 3 règles mères et les faits à savoir, avec des exemples dessinés.", size:"4 pages"},
+      {icon:"🧭", title:"Mémo", file:"BMI_Proprietes_colligatives_Memo.pdf", use:"Comment résoudre chaque type d'item (A, B, C, G, H) : démarche au crayon, matrice, exemple, tableau des calculs.", size:"4 pages"},
+      {icon:"🔢", title:"Éléments à connaître", file:"BMI_Proprietes_colligatives_Elements_a_connaitre.pdf", use:"Les valeurs et conversions à savoir par cœur (300, 260 à 340, constante cryoscopique, i des solutés…).", size:"1 page"},
+      {icon:"🧩", title:"Tout retrouver", file:"BMI_Proprietes_colligatives_Tout_retrouver.pdf", use:"Les 3 choses à savoir et tout ce qu'on en déduit sans rien apprendre de plus.", size:"1 page"},
+      {icon:"🪤", title:"Pièges et méthodes", file:"BMI_Proprietes_colligatives_Pieges_et_methodes.pdf", use:"Un arbre de décision par type de piège, les mots qui le trahissent et des items corrigés.", size:"3 pages · 20 items et une question complète"},
+      {icon:"✏️", title:"Cahier d'exercices", file:"BMI_Proprietes_colligatives_Cahier_exercices.pdf", use:"Des cas inédits à remplir au crayon, un type de piège par séance, corrigés avec les mêmes arbres.", size:"16 pages · 16 exercices, 92 lignes"},
+      {icon:"⏱️", title:"Contrôle de vérification", file:"BMI_Proprietes_colligatives_Controle_verification.pdf", use:"À faire chronométré quand tout le cahier est juste ; corrigé avec tips réflexes.", size:"9 pages · 17 questions, 34 min"},
+    ],
+    parcours: [
+      "<b>J0</b> : fiche réflexe (refaire les exemples dessinés de mémoire), puis mémo avec Tout retrouver et Éléments à connaître, puis Pièges et méthodes.",
+      "<b>Cahier</b> : un type de piège par séance, au crayon, sans le mémo ; entourer chaque erreur avec la lettre de son type.",
+      "<b>J+2 et J+7</b> : refaire les lignes ratées du cahier.",
+      "<b>Quand tout est juste</b> : contrôle de vérification chronométré (34 min).",
+      "<b>Avant chaque épreuve</b> : relire la fiche réflexe et le mémo.",
+    ],
+  },
+];
+const THEME_LIST_LABEL = "Fiche réflexe · mémo · pièges · cahier · contrôle";
+
 const CAT_COLOR = Object.fromEntries(CATS.filter(c=>c.key!=="all").map(c=>[c.key,c.color]));
 const CAT_LABEL = Object.fromEntries(CATS.filter(c=>c.key!=="all").map(c=>[c.key,c.label]));
 
@@ -31345,6 +31403,62 @@ function courseItemHTML(c){
   `;
 }
 
+function themeTileHTML(t){
+  return `
+    <button class="course-tile" data-theme="${t.id}">
+      <span class="tile-monogram">⚡</span>
+      <span class="tile-body">
+        <span class="tile-kicker">${t.fiches}</span>
+        <span class="tile-title">${t.title} : avoir tout bon</span>
+        <span class="tile-meta">${THEME_LIST_LABEL} · ${t.docs.length} PDF</span>
+      </span>
+      <span class="tile-arrow">→</span>
+    </button>
+  `;
+}
+
+function renderThemes(q){
+  const wrap = document.getElementById('themesBlock');
+  const items = THEMATIQUES.filter(t => !q || (t.title + " " + t.fiches + " " + t.desc + " " + t.keywords + " " + THEME_LIST_LABEL).toLowerCase().includes(q));
+  if(items.length === 0){ wrap.innerHTML = ''; return false; }
+  wrap.innerHTML = `
+    <div class="chapter-block">
+      <div class="chapter-head"><span class="chapter-name">Thématiques à réflexion</span><span class="chapter-sub">${items.length} thématique${items.length>1?'s':''}</span></div>
+      <div class="card-stack">${items.map(themeTileHTML).join('')}</div>
+    </div>`;
+  wrap.querySelectorAll('.course-tile[data-theme]').forEach(btn=>{
+    btn.addEventListener('click', ()=> openTheme(btn.dataset.theme, 'home'));
+  });
+  return true;
+}
+
+let themeReturn = 'home';
+function openTheme(themeId, from){
+  const t = THEMATIQUES.find(x=>x.id===themeId);
+  if(!t) return;
+  themeReturn = from || 'home';
+  document.getElementById('themeEyebrow').innerHTML = `<span class="dot"></span>Thématique à réflexion · ${t.fiches}`;
+  document.getElementById('themeTitle').textContent = `${t.title} : avoir tout bon`;
+  document.getElementById('themeDesc').textContent = t.desc;
+  document.getElementById('themeCount').textContent = `${t.docs.length} PDF`;
+  document.getElementById('themeDocs').innerHTML = t.docs.map((d,i)=>`
+      <a class="mode-card is-theme" href="${t.folder}${d.file}" target="_blank" rel="noopener">
+        <span class="mode-icon">${d.icon}</span>
+        <span class="mode-body">
+          <span class="mode-title">${i+1}. ${d.title}</span>
+          <span class="mode-meta">${d.use}</span>
+          <span class="mode-meta"><span class="mode-badge">${d.size}</span></span>
+        </span>
+        <span class="mode-arrow">→</span>
+      </a>`).join('');
+  document.getElementById('themeParcours').innerHTML = `<ol>${t.parcours.map(p=>`<li>${p}</li>`).join('')}</ol>`;
+  document.getElementById('themeBackBtn').textContent = themeReturn === 'home' ? '← Tous les cours' : '← Retour au cours';
+  showOnly('themeView');
+}
+document.getElementById('themeBackBtn').addEventListener('click', ()=>{
+  if(themeReturn === 'home') showOnly('homeView'); else openCourseDetail(themeReturn);
+});
+
 function renderHome(filter){
   const wrap = document.getElementById('chapters');
   const empty = document.getElementById('emptyHome');
@@ -31358,7 +31472,7 @@ function renderHome(filter){
     byChapter[c.chapter].push(c);
   });
 
-  let anyVisible = false;
+  let anyVisible = renderThemes(q);
   wrap.innerHTML = chapterOrder.map(chapterName=>{
     const items = byChapter[chapterName].filter(matches);
     if(items.length === 0) return '';
@@ -31379,7 +31493,7 @@ function renderHome(filter){
 document.getElementById('searchBox').addEventListener('input', (e)=> renderHome(e.target.value));
 
 function showOnly(viewId){
-  ['homeView','courseView','decksView','seriesView','studyView','quizView'].forEach(id=>{
+  ['homeView','courseView','themeView','decksView','seriesView','studyView','quizView'].forEach(id=>{
     document.getElementById(id).style.display = (id===viewId) ? (id==='studyView'||id==='quizView' ? 'flex' : 'block') : 'none';
   });
   window.scrollTo(0,0);
@@ -31434,7 +31548,22 @@ function openCourseDetail(courseId){
       </a>
     `);
   }
+  THEMATIQUES.filter(t=>t.courses.includes(course.id)).forEach(t=>{
+    modes.push(`
+      <button class="mode-card is-theme" data-theme="${t.id}">
+        <span class="mode-icon">⚡</span>
+        <span class="mode-body">
+          <span class="mode-title">Thématique à réflexion : ${t.title}</span>
+          <span class="mode-meta"><span class="mode-badge">${THEME_LIST_LABEL}</span></span>
+        </span>
+        <span class="mode-arrow">→</span>
+      </button>
+    `);
+  });
   document.getElementById('modeGrid').innerHTML = modes.join('');
+  document.getElementById('modeGrid').querySelectorAll('.mode-card[data-theme]').forEach(btn=>{
+    btn.addEventListener('click', ()=> openTheme(btn.dataset.theme, courseId));
+  });
   document.getElementById('modeGrid').querySelectorAll('.mode-card[data-mode]').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       if(btn.dataset.mode === 'flashcards') openDecksList(currentCourseId);
