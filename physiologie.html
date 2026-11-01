@@ -391,6 +391,18 @@
     color:#fff; background: linear-gradient(90deg,#2E8B57,#1F5FBF 55%,#D9690F); padding:2px 7px; border-radius:100px;
   }
 
+  /* ---- thématiques à réflexion ---- */
+  .theme-tile .tile-monogram{ background: linear-gradient(150deg, #1B6577, #2F8A9E); font-size: 15px; }
+  .theme-chip{ display:inline-flex; margin-left:6px; vertical-align:1px; font-family:'IBM Plex Mono', monospace; font-size:9.5px; font-weight:700; letter-spacing:.05em; color:#fff; background:#1B6577; padding:2px 7px; border-radius:100px; }
+  .mode-card.is-theme{ text-decoration:none; }
+  .mode-card.is-theme .mode-icon{ background: rgba(27,101,119,0.12); color:#1B6577; }
+  .mode-card.is-theme:hover .mode-arrow{ color:#1B6577; }
+  .theme-doc .mode-desc{ margin-bottom: 8px; }
+  .theme-step{ display:flex; gap:12px; align-items:flex-start; padding: 10px 0; border-top: 1px solid var(--line); font-size: 14px; line-height:1.5; color: var(--ink); }
+  .theme-step:first-child{ border-top: none; }
+  .theme-step .ts-when{ flex-shrink:0; min-width: 118px; font-family:'IBM Plex Mono', monospace; font-size: 11.5px; font-weight:700; color:#1B6577; padding-top:2px; }
+  .theme-route{ border:1px solid var(--line); background: var(--card); border-radius: 18px; padding: 8px 20px; }
+
   /* ---- deck / serie item cards (level 3 lists) ---- */
   .item-card{
     border: 1px solid var(--line); background: var(--card); border-radius: 16px;
@@ -665,6 +677,7 @@
   </div>
   <div class="search-row"><input type="text" id="searchBox" placeholder="Rechercher un cours..."></div>
   <div class="content">
+    <div id="themesBlock"></div>
     <div id="chapters"></div>
     <div class="empty" id="emptyHome" style="display:none;">Aucun cours ne correspond à cette recherche.</div>
   </div>
@@ -688,6 +701,26 @@
     <div class="chapter-block" style="margin-top:26px;">
       <div class="chapter-head"><span class="chapter-name">Comment voulez-vous réviser ?</span></div>
       <div class="mode-grid" id="modeGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ THÉMATIQUE À RÉFLEXION (page dédiée) ============ -->
+<div id="themeView" class="light-screen">
+  <div class="top-back-row"><button class="top-back-btn" id="themeBackBtn">← Retour</button></div>
+  <div class="course-intro">
+    <p class="eyebrow" style="margin-bottom:14px;"><span class="dot"></span><span id="themeEyebrow">Thématique à réflexion</span></p>
+    <h2 id="themeTitle">—</h2>
+    <p id="themeDesc"></p>
+  </div>
+  <div class="content">
+    <div class="chapter-block" style="margin-top:26px;">
+      <div class="chapter-head"><span class="chapter-name">Les documents, dans l'ordre</span><span class="chapter-sub" id="themeCount"></span></div>
+      <div class="mode-grid" id="themeDocs"></div>
+    </div>
+    <div class="chapter-block" style="margin-top:30px;">
+      <div class="chapter-head"><span class="chapter-name">Parcours conseillé</span></div>
+      <div class="theme-route" id="themeRoute"></div>
     </div>
   </div>
 </div>
@@ -3361,6 +3394,96 @@ const COURSES = [
   },
 ];
 
+// ---------------------------------------------------------------------
+// Thématiques à réflexion : documents PDF rangés dans un dossier dédié,
+// à côté de ce fichier (ex. physio/). Mettre à jour pages et tailles
+// à chaque modification d'un document.
+// ---------------------------------------------------------------------
+const THEMES = [
+  {
+    id: "physio",
+    title: "Physio",
+    tileTitle: "Physio : avoir tout bon",
+    folder: "physio/",
+    courses: ["bioenergetique", "compartiments-liquidiens", "equilibre-acido-basique", "thermoregulation", "physiologie-renale"],
+    desc: "Les questions à calcul de physiologie, carte par carte (A à I) : une démarche au crayon, des raccourcis de calcul de tête, les appâts à repérer avant de calculer et le contrôle après.",
+    keywords: "calcul calculs mémo memo pièges pieges méthodes cahier exercices réflexe reflexe dépense régime travail rendement chaleur eau capital perfusion urée pH thermique clairance DFG",
+    docs: [
+      { kind: "Mémo", icon: "🧭", file: "Physiologie_Calculs_Memo.pdf", size: "5 pages · 9 cartes (A à I)",
+        desc: "Comment résoudre chaque type de calcul : le raccourci, ① avant de calculer, ② la démarche au crayon, ③ vérifier, et deux exemples corrigés par carte." },
+      { kind: "Pièges et méthodes", icon: "⚠️", file: "Physiologie_Calculs_Pieges_et_methodes.pdf", size: "4 pages · 10 blocs",
+        desc: "Les pièges, carte par carte, sur les étapes de la démarche du mémo : une ligne par cas avec la règle qui le déjoue, et 3 petits exercices par bloc." },
+      { kind: "Cahier d'exercices", icon: "✏️", file: "Physiologie_Calculs_Cahier_exercices.pdf", size: "16 pages · 64 exercices",
+        desc: "Des cas inédits à faire au crayon sans le mémo (calcule, vrai ou faux, laquelle est juste ?), puis le corrigé raisonné pas à pas." }
+    ],
+    route: [
+      ["J0", "Mémo, puis pièges et méthodes : refaire de tête les deux exemples de chaque carte."],
+      ["Cahier", "Une partie (une lettre) par séance, au crayon, sans le mémo ; entourer chaque erreur avec la lettre de sa carte."],
+      ["J+2 et J+7", "Refaire les lignes ratées du cahier."],
+      ["Avant l'épreuve", "Relire le mémo."]
+    ]
+  }
+];
+function themeShortList(t){ return t.docs.map(d=>d.kind.toLowerCase()).join(' · ').replace(/^./, c=>c.toUpperCase()); }
+function themeTileHTML(t){
+  const names = t.courses.map(id=>{ const c = COURSES.find(x=>x.id===id); return c ? c.title : id; });
+  return `
+    <button class="course-tile theme-tile" data-theme="${t.id}">
+      <span class="tile-monogram">✎</span>
+      <span class="tile-body">
+        <span class="tile-kicker">${names.join(' · ')}</span>
+        <span class="tile-title">${t.tileTitle}</span>
+        <span class="tile-meta">${themeShortList(t)} · ${t.docs.length} PDF<span class="theme-chip">RÉFLEXION</span></span>
+      </span>
+      <span class="tile-arrow">→</span>
+    </button>`;
+}
+function renderThemes(filter){
+  const wrap = document.getElementById('themesBlock');
+  const q = (filter||"").trim().toLowerCase();
+  const matches = (t) => {
+    if(!q) return true;
+    const names = t.courses.map(id=>{ const c = COURSES.find(x=>x.id===id); return c ? c.title : ''; }).join(' ');
+    return (t.tileTitle+' '+t.desc+' '+t.keywords+' '+names+' thématique réflexion').toLowerCase().includes(q);
+  };
+  const items = THEMES.filter(matches);
+  wrap.innerHTML = items.length ? `
+    <div class="chapter-block">
+      <div class="chapter-head"><span class="chapter-name">Thématiques à réflexion</span><span class="chapter-sub">${items.length} thématique${items.length>1?'s':''}</span></div>
+      <div class="card-stack">${items.map(themeTileHTML).join('')}</div>
+    </div>` : '';
+  wrap.querySelectorAll('.theme-tile').forEach(btn=>{
+    btn.addEventListener('click', ()=> openTheme(btn.dataset.theme, null));
+  });
+  return items.length > 0;
+}
+let themeReturnCourse = null;
+function openTheme(themeId, fromCourseId){
+  const t = THEMES.find(x=>x.id===themeId);
+  if(!t) return;
+  themeReturnCourse = fromCourseId;
+  document.getElementById('themeBackBtn').textContent = fromCourseId ? '← Retour au cours' : '← Tous les cours';
+  document.getElementById('themeTitle').textContent = t.tileTitle;
+  const names = t.courses.map(id=>{ const c = COURSES.find(x=>x.id===id); return c ? c.title : id; });
+  document.getElementById('themeDesc').textContent = t.desc + ' Cours couverts : ' + names.join(', ') + '.';
+  document.getElementById('themeCount').textContent = `${t.docs.length} PDF`;
+  document.getElementById('themeDocs').innerHTML = t.docs.map(d=>`
+    <a class="mode-card is-theme theme-doc" href="${t.folder}${d.file}" target="_blank" rel="noopener">
+      <span class="mode-icon">${d.icon}</span>
+      <span class="mode-body">
+        <span class="mode-title">${d.kind}</span>
+        <span class="mode-desc" style="display:block">${d.desc}</span>
+        <span class="mode-meta"><span class="mode-badge">${d.size}</span></span>
+      </span>
+      <span class="mode-arrow">→</span>
+    </a>`).join('');
+  document.getElementById('themeRoute').innerHTML = t.route.map(r=>`<div class="theme-step"><span class="ts-when">${r[0]}</span><span>${r[1]}</span></div>`).join('');
+  showOnly('themeView');
+}
+document.getElementById('themeBackBtn').addEventListener('click', ()=>{
+  if(themeReturnCourse) openCourseDetail(themeReturnCourse); else showOnly('homeView');
+});
+
 const CATS = [
   {key:"all", label:"Toutes les catégories", color:"var(--saccent)"},
   {key:"concepts", label:"Généralités", color:"var(--c-concepts)"},
@@ -3594,7 +3717,8 @@ function renderHome(filter){
     `;
   }).join('');
 
-  empty.style.display = anyVisible ? "none" : "block";
+  const anyTheme = renderThemes(filter);
+  empty.style.display = (anyVisible || anyTheme) ? "none" : "block";
   wrap.querySelectorAll('.course-tile').forEach(btn=>{
     btn.addEventListener('click', ()=> openCourseDetail(btn.dataset.course));
   });
@@ -3602,7 +3726,7 @@ function renderHome(filter){
 document.getElementById('searchBox').addEventListener('input', (e)=> renderHome(e.target.value));
 
 function showOnly(viewId){
-  ['homeView','courseView','decksView','seriesView','studyView','quizView'].forEach(id=>{
+  ['homeView','courseView','themeView','decksView','seriesView','studyView','quizView'].forEach(id=>{
     document.getElementById(id).style.display = (id===viewId) ? (id==='studyView'||id==='quizView' ? 'flex' : 'block') : 'none';
   });
   window.scrollTo(0,0);
@@ -3660,7 +3784,22 @@ function openCourseDetail(courseId){
       </a>
     `);
   }
+  THEMES.filter(t=>t.courses.includes(course.id)).forEach(t=>{
+    modes.push(`
+      <button class="mode-card is-theme" data-theme="${t.id}">
+        <span class="mode-icon">✎</span>
+        <span class="mode-body">
+          <span class="mode-title">Thématique à réflexion : ${t.title}</span>
+          <span class="mode-meta"><span class="mode-badge">${themeShortList(t)} · ${t.docs.length} PDF</span></span>
+        </span>
+        <span class="mode-arrow">→</span>
+      </button>
+    `);
+  });
   document.getElementById('modeGrid').innerHTML = modes.join('');
+  document.getElementById('modeGrid').querySelectorAll('.mode-card[data-theme]').forEach(btn=>{
+    btn.addEventListener('click', ()=> openTheme(btn.dataset.theme, currentCourseId));
+  });
   document.getElementById('modeGrid').querySelectorAll('.mode-card[data-mode]').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       if(btn.dataset.mode === 'flashcards') openDecksList(currentCourseId);

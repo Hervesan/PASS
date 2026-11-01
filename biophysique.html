@@ -222,6 +222,23 @@
   .tile-arrow{ flex-shrink:0; font-size: 16px; color: var(--ink-soft); transition: transform .16s ease, color .16s ease; }
   .course-tile:hover .tile-arrow{ transform: translateX(4px); color: var(--accent); }
 
+
+  /* ---- Thématiques à réflexion ---- */
+  .theme-tile{ border-color: rgba(27,101,119,0.35); background: linear-gradient(135deg,#FFFFFF 0%,#EEF6F7 100%); }
+  .theme-tile .tile-monogram{ background:#1B6577; color:#fff; }
+  .theme-tile .tile-kicker{ color:#1B6577; }
+  .theme-tile:hover .tile-arrow{ color:#1B6577; }
+  .theme-pill{ display:inline-block; margin-left:6px; padding:1px 7px; border-radius:999px; font-size:10px; font-weight:700; letter-spacing:.05em; color:#fff; background:#1B6577; vertical-align:1px; }
+  .mode-card.is-theme{ text-decoration:none; border-color: rgba(27,101,119,0.35); }
+  .mode-card.is-theme .mode-icon{ background: rgba(27,101,119,0.12); color:#1B6577; }
+  .mode-card.is-theme:hover .mode-arrow{ color:#1B6577; }
+  .theme-doc .item-kicker{ color:#1B6577; }
+  .theme-doc::before{ background:#1B6577 !important; }
+  .theme-doc .open-link{ color:#1B6577; }
+  .theme-steps{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .theme-steps li{ display:flex; gap:12px; align-items:flex-start; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 14px; font-size:14px; line-height:1.5; }
+  .theme-steps .when{ flex-shrink:0; font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:700; color:#fff; background:#1B6577; border-radius:8px; padding:3px 8px; min-width:92px; text-align:center; }
+  .theme-note{ margin-top:14px; font-size:13px; color:var(--ink-soft); line-height:1.55; }
   /* ---- course detail intro ---- */
   .course-intro{ max-width: 780px; margin: 26px auto 0; padding: 0 22px; }
   .course-intro h2{ font-family:'Fraunces', serif; font-weight:700; font-size: clamp(24px, 5.5vw, 32px); margin: 0 0 10px; line-height:1.15; }
@@ -542,6 +559,7 @@
   </div>
   <div class="search-row"><input type="text" id="searchBox" placeholder="Rechercher un cours..."></div>
   <div class="content">
+    <div id="themes"></div>
     <div id="chapters"></div>
     <div class="empty" id="emptyHome" style="display:none;">Aucun cours ne correspond à cette recherche.</div>
   </div>
@@ -600,6 +618,28 @@
     <div class="chapter-block" style="margin-top:26px;">
       <div class="chapter-head"><span class="chapter-name">Séries disponibles</span><span class="chapter-sub" id="serieCountSub"></span></div>
       <div class="card-stack" id="serieList"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============ THÉMATIQUE À RÉFLEXION (page dédiée) ============ -->
+<div id="themeView" class="light-screen">
+  <div class="top-back-row"><button class="top-back-btn" id="themeBackBtn">← Retour</button></div>
+  <div class="course-intro">
+    <p class="eyebrow" id="themeEyebrow" style="margin-bottom:14px;"><span class="dot"></span>Thématique à réflexion</p>
+    <h2 id="themeTitle">—</h2>
+    <p id="themeDesc"></p>
+  </div>
+  <div class="content">
+    <div class="chapter-block" style="margin-top:26px;">
+      <div class="chapter-head"><span class="chapter-name">Les documents, dans l'ordre d'utilisation</span><span class="chapter-sub" id="themeCount"></span></div>
+      <div class="card-stack" id="themeDocs"></div>
+    </div>
+    <div class="chapter-block" style="margin-top:30px;">
+      <div class="chapter-head"><span class="chapter-name">Parcours conseillé</span></div>
+      <ol class="theme-steps" id="themeSteps"></ol>
+      <p class="theme-note" id="themeNote"></p>
     </div>
   </div>
 </div>
@@ -1271,7 +1311,8 @@ function renderHome(filter){
     `;
   }).join('');
 
-  empty.style.display = anyVisible ? "none" : "block";
+  const anyTheme = (typeof renderThemes === 'function') ? renderThemes(q) : false;
+  empty.style.display = (anyVisible || anyTheme) ? "none" : "block";
   wrap.querySelectorAll('.course-tile').forEach(btn=>{
     btn.addEventListener('click', ()=> openCourseDetail(btn.dataset.course));
   });
@@ -1279,7 +1320,7 @@ function renderHome(filter){
 document.getElementById('searchBox').addEventListener('input', (e)=> renderHome(e.target.value));
 
 function showOnly(viewId){
-  ['homeView','courseView','decksView','seriesView','studyView','quizView'].forEach(id=>{
+  ['homeView','courseView','decksView','seriesView','studyView','quizView','themeView'].forEach(id=>{
     document.getElementById(id).style.display = (id===viewId) ? (id==='studyView'||id==='quizView' ? 'flex' : 'block') : 'none';
   });
   window.scrollTo(0,0);
@@ -1337,7 +1378,22 @@ function openCourseDetail(courseId){
       </a>
     `);
   }
+  (typeof THEMES !== 'undefined' ? THEMES : []).filter(t=>t.courses.includes(course.id)).forEach(t=>{
+    modes.push(`
+      <button class="mode-card is-theme" data-theme="${t.id}">
+        <span class="mode-icon">✦</span>
+        <span class="mode-body">
+          <span class="mode-title">${t.title}</span>
+          <span class="mode-meta"><span class="mode-badge">${THEME_LIST_LABEL} · ${t.docs.length} PDF</span></span>
+        </span>
+        <span class="mode-arrow">→</span>
+      </button>
+    `);
+  });
   document.getElementById('modeGrid').innerHTML = modes.join('');
+  document.getElementById('modeGrid').querySelectorAll('.mode-card[data-theme]').forEach(btn=>{
+    btn.addEventListener('click', ()=> openTheme(btn.dataset.theme, currentCourseId));
+  });
   document.getElementById('modeGrid').querySelectorAll('.mode-card[data-mode]').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       if(btn.dataset.mode === 'flashcards') openDecksList(currentCourseId);
@@ -1876,6 +1932,97 @@ document.getElementById('toIndexBtn').addEventListener('click', (e) => {
 });
 document.getElementById('quizResetBtn').addEventListener('click', () => { resetSerieProgress(); renderQuiz(); });
 document.getElementById('quizBackBtn').addEventListener('click', () => openSeriesList(quizCourseId));
+
+
+// ================= THÉMATIQUES À RÉFLEXION =================
+// Une thématique = un dossier de PDF à côté de ce fichier. Mettre à jour pages / tailles à chaque modification d'un document.
+const THEMES = [
+  {
+    id: "ondes",
+    title: "Ondes : avoir tout bon",
+    fiches: "FC9",
+    courses: ["ondes"],
+    folder: "ondes/",
+    desc: "Une méthode fixe, appliquée au crayon, pour trancher chaque item de la FC9 Ondes en 15 à 30 secondes : familles d'ondes, équation, changement de milieu, indice, réfraction, réflexion totale, son et échographie, calculs.",
+    keywords: "ondes fc9 réflexe fiche réflexe mémo pièges méthodes cahier contrôle réfraction snell descartes réflexion totale indice optique longueur d'onde fréquence célérité son échographie impédance décibel écho",
+    docs: [
+      {file:"BAM_Ondes_Fiche_reflexe.pdf", kicker:"1 · Outil principal", title:"Fiche réflexe", size:"4 pages", use:"Lire le support en 4 gestes, appliquer les 3 règles mères et les faits à savoir, avec des exemples dessinés. À apprendre en premier."},
+      {file:"BAM_Ondes_Memo.pdf", kicker:"2 · Comment résoudre", title:"Mémo", size:"7 pages · 9 rubriques (A à I)", use:"Pour chaque type d'item : la démarche au crayon, la matrice, un exemple tranché ; le tableau des calculs et une question complète déroulée."},
+      {file:"BAM_Ondes_Elements_a_connaitre.pdf", kicker:"3 · Socle", title:"Éléments à connaître", size:"1 page", use:"Les chiffres à savoir par cœur : célérités, bornes des sons, seuils en dB, impédances, unités et préfixes."},
+      {file:"BAM_Ondes_Tout_retrouver.pdf", kicker:"4 · Déduire", title:"Tout retrouver", size:"1 page", use:"Les 3 choses à savoir (source, milieu, interface) et tout ce qu'on en déduit sans rien apprendre de plus."},
+      {file:"BAM_Ondes_Pieges_et_methodes.pdf", kicker:"5 · Pièges", title:"Pièges et méthodes", size:"7 pages · 9 pièges", use:"Pour chaque piège : l'arbre de décision dans l'ordre, les mots qui le trahissent et 4 exemples tranchés ; une question complète."},
+      {file:"BAM_Ondes_Cahier_exercices.pdf", kicker:"6 · Entraînement", title:"Cahier d'exercices", size:"23 pages · 45 exercices (151 lignes), corrigé inclus", use:"Cas inédits à remplir au crayon, une partie par piège, puis les notions jamais tombées et les calculs à risque dans tous les sens."},
+      {file:"BAM_Ondes_Controle_verification.pdf", kicker:"7 · Vérification", title:"Contrôle de vérification", size:"11 pages · 12 questions (10 QRM, 2 QRU) · 20 min", use:"Au format ECB du BAM, à faire chronométré quand le cahier est juste ; corrigé méthodique et tips réflexes."}
+    ],
+    steps: [
+      ["J0", "Fiche réflexe (refaire les exemples dessinés de mémoire), puis le mémo avec « Tout retrouver » et « Éléments à connaître », puis « Pièges et méthodes »."],
+      ["Ensuite", "Le cahier d'exercices : un type de piège par séance, au crayon, sans le mémo ; entourer chaque erreur avec la lettre de son piège."],
+      ["J+2 et J+7", "Refaire les lignes ratées du cahier."],
+      ["Quand tout est juste", "Le contrôle de vérification, chronométré (20 minutes)."],
+      ["Avant l'épreuve", "Relire la fiche réflexe et le mémo."]
+    ],
+    note: "Temps à prévoir : environ 6 à 7 h étalées sur une semaine, ou 4 h en version serrée sur 2 jours. Opérationnel quand toutes les lignes du cahier sont justes au deuxième passage et le contrôle réussi presque en entier dans le temps."
+  }
+];
+const THEME_LIST_LABEL = "Fiche réflexe · mémo · pièges · cahier · contrôle";
+
+function themeTileHTML(t){
+  return `
+    <button class="course-tile theme-tile" data-theme="${t.id}">
+      <span class="tile-monogram">✦</span>
+      <span class="tile-body">
+        <span class="tile-kicker">Thématique à réflexion · ${t.fiches}</span>
+        <span class="tile-title">${t.title}</span>
+        <span class="tile-meta">${THEME_LIST_LABEL}<span class="theme-pill">${t.docs.length} PDF</span></span>
+      </span>
+      <span class="tile-arrow">→</span>
+    </button>
+  `;
+}
+
+function renderThemes(q){
+  const wrap = document.getElementById('themes');
+  const matches = (t) => !q || (t.title + " " + t.desc + " " + t.keywords + " " + t.fiches + " thématique réflexion réflexe").toLowerCase().includes(q);
+  const items = THEMES.filter(matches);
+  wrap.innerHTML = items.length ? `
+    <div class="chapter-block">
+      <div class="chapter-head"><span class="chapter-name">Thématiques à réflexion</span><span class="chapter-sub">${items.length} thématique${items.length>1?'s':''}</span></div>
+      <div class="card-stack">${items.map(themeTileHTML).join('')}</div>
+    </div>` : '';
+  wrap.querySelectorAll('.theme-tile').forEach(btn=>{
+    btn.addEventListener('click', ()=> openTheme(btn.dataset.theme, null));
+  });
+  return items.length > 0;
+}
+
+let themeReturnCourse = null;
+function openTheme(themeId, fromCourseId){
+  const t = THEMES.find(x=>x.id===themeId);
+  if(!t) return;
+  themeReturnCourse = fromCourseId;
+  document.getElementById('themeBackBtn').textContent = fromCourseId ? '← Retour au cours' : '← Tous les cours';
+  document.getElementById('themeEyebrow').innerHTML = `<span class="dot"></span>Thématique à réflexion · ${t.fiches}`;
+  document.getElementById('themeTitle').textContent = t.title;
+  document.getElementById('themeDesc').textContent = t.desc;
+  document.getElementById('themeCount').textContent = `${t.docs.length} PDF`;
+  document.getElementById('themeDocs').innerHTML = t.docs.map(d=>`
+    <a class="item-card theme-doc" href="${t.folder}${d.file}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+      <span class="item-kicker">${d.kicker}</span>
+      <span class="item-title" style="display:block;font-family:'Fraunces',serif;font-weight:600;font-size:18px;margin:2px 0 4px;">${d.title}</span>
+      <span style="display:block;font-size:14px;line-height:1.5;color:var(--ink-soft);">${d.use}</span>
+      <span style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+        <span class="mode-badge">${d.size}</span>
+        <span class="open-link">Ouvrir le PDF <span class="arrow">→</span></span>
+      </span>
+    </a>`).join('');
+  document.getElementById('themeSteps').innerHTML = t.steps.map(([w, txt])=>`<li><span class="when">${w}</span><span>${txt}</span></li>`).join('');
+  document.getElementById('themeNote').textContent = t.note;
+  showOnly('themeView');
+}
+document.getElementById('themeBackBtn').addEventListener('click', ()=>{
+  if(themeReturnCourse) openCourseDetail(themeReturnCourse);
+  else showOnly('homeView');
+});
 
 renderHeroStats();
 renderHome("");
