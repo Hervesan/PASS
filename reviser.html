@@ -1479,6 +1479,8 @@ CONTENU["chimie"] = {
       fichier: DOSSIER_BENZ + "Chimie_Benzene_Pour_demarrer.pdf" },
     { titre:"Le benzène en 3 règles + 5 exceptions", desc:"Tout le cours : le réactif dit où ça agit, ce qui se colle, donneur ou attracteur, la mésomérie, les 5 exceptions détaillées, puis les compléments et ce qui tombe hors fiche.", chap:"benz",
       fichier: DOSSIER_BENZ + "Chimie_Benzene_3_regles_5_exceptions.pdf" },
+    { titre:"Les 14 groupements dessinés", desc:"La planche des attracteurs (méta) et des donneurs (ortho / para), toutes les liaisons dessinées.", chap:"benz",
+      fichier: DOSSIER_BENZ + "Groupements_benzene.png" },
     { titre:"Les réactifs en 5 phrases", desc:"Alcènes (phrases 1, 2, 4), alcynes (3, 5), autres réactifs, schémas, tableau, effet inductif, ce qui tombe aussi.", chap:"alc",
       fichier: DOSSIER_ALC + "Chimie_Alcenes_Alcynes_Reactifs_en_5_phrases.pdf" },
   ],
@@ -2449,7 +2451,7 @@ function renderCourse(){
   document.getElementById("courseHead").innerHTML = `<small>${m.title} · Cours ${i+1}</small><b>${ch.label}</b>`;
   const tabs = document.getElementById("tabs");
   const cnt = arr => arr.filter(inChap).length;
-  document.getElementById("nDocs").textContent = courseDocs(c).length + " PDF";
+  document.getElementById("nDocs").textContent = plural(courseDocs(c).length, "document");
   document.getElementById("nTrain").textContent = cnt(c.qcm) + " questions";
   tabs.querySelectorAll("button").forEach(b => {
     b.classList.toggle("on", b.dataset.tab === state.tab);
@@ -2493,7 +2495,7 @@ function renderDocs(c){
 
 function docHTML(d){
   return `<a class="doc" href="${encodeURI(d.fichier)}" target="_blank" rel="noopener">
-    <span class="ic">PDF</span><span><b>${esc(d.titre)}</b><small>${esc(d.desc||"")}</small></span></a>`;
+    <span class="ic">${/\.png$/i.test(d.fichier) ? "IMG" : "PDF"}</span><span><b>${esc(d.titre)}</b><small>${esc(d.desc||"")}</small></span></a>`;
 }
 /* ---------- rubrique M'entraîner ---------- */
 function renderTrain(c, panel){
