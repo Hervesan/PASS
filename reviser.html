@@ -273,6 +273,18 @@
   .tilesmall{display:flex;gap:14px;margin-top:8px;font-size:12.5px;font-weight:600;color:var(--soft);}
   .tilesmall span{display:inline-flex;align-items:center;gap:6px;}
   .tilesmall i{width:8px;height:8px;border-radius:50%;}
+
+  /* ===== onglet Documents ===== */
+  .tabs{grid-template-columns:1.3fr 1fr !important;}
+  .tabs button[data-tab=docs].on{color:#1E88FF;}
+  .panel.k-docs{padding-top:18px;}
+  .dsec{margin:0 0 24px;}
+  .dhead{display:flex;align-items:center;gap:12px;margin:0 2px 12px;}
+  .dhead .dn{flex:none;width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:var(--k);color:#fff;font-family:'Outfit',sans-serif;font-weight:800;font-size:17px;}
+  .dhead b{display:block;font-family:'Outfit',sans-serif;font-size:19px;font-weight:800;letter-spacing:-.01em;color:var(--ink);}
+  .dhead small{display:block;font-size:12.5px;font-weight:600;color:var(--soft);}
+  .dnone{font-size:13px;color:var(--mute);padding:12px 14px;border:1.5px dashed #D3D7E0;border-radius:14px;}
+  .dsec .doc{border-left:5px solid var(--k);}
 </style>
 </head>
 <body>
@@ -312,8 +324,7 @@
     </div>
     <div class="tabs" id="tabs">
       <button data-tab="train"><b>✍️ QCM</b><span id="nTrain"></span></button>
-      <button data-tab="fiches">Fiches<span id="nFiches"></span></button>
-      <button data-tab="herve">Pour Hervé<span id="nHerve"></span></button>
+      <button data-tab="docs">📚 Documents<span id="nDocs"></span></button>
     </div>
   </div></div>
   <div class="wrap"><div class="panel" id="panel"></div></div>
@@ -365,11 +376,11 @@ const CONTENU = {
     ],
     herve: [
       { titre:"Guide pour expliquer · Radioactivité", desc:"Tout le cours en 7 blocs : quoi dire, quoi montrer, quoi faire trancher.", chap:"radio",
-        fichier: DOSSIER_BAM + "Pour Hervé/BAM_Radioactivite_Guide_pour_expliquer.pdf" },
+        fichier: DOSSIER_BAM + "BAM_Radioactivite_Guide_pour_expliquer.pdf" },
       { titre:"Guide pour expliquer · Interaction", desc:"Suivre un rayonnement, de sa nature à l'énergie qu'il dépose.", chap:"inter",
-        fichier: DOSSIER_BAM + "Pour Hervé/BAM_Interaction_Guide_pour_expliquer.pdf" },
+        fichier: DOSSIER_BAM + "BAM_Interaction_Guide_pour_expliquer.pdf" },
       { titre:"Guide pour expliquer · Effets biologiques", desc:"Suivre une irradiation, de l'atome à l'organisme.", chap:"bio",
-        fichier: DOSSIER_BAM + "Pour Hervé/BAM_Effets_biologiques_Guide_pour_expliquer.pdf" },
+        fichier: DOSSIER_BAM + "BAM_Effets_biologiques_Guide_pour_expliquer.pdf" },
     ],
     fiches: [
       { titre:"Pour démarrer · Radioactivité + Interaction", desc:"Ce qui tombe, comment travailler, l'essentiel et les cas types.", chap:["radio","inter"],
@@ -877,8 +888,8 @@ CONTENU.biophysique.qcm = [
 /* =====================================================================
    BIOPHYSIQUE DU MILIEU INTÉRIEUR · Propriétés cinétiques et mécaniques
    ===================================================================== */
-const DOSSIER_BMI = "Revision Proprietes cinetiques et mecaniques/";
-const DOSSIER_ENER = "Revision Energie et equilibre/";
+const DOSSIER_BMI = "Revision Cinétique et mécanique/";
+const DOSSIER_ENER = "Révision Energie et équilibre/";
 
 CONTENU["biophysique-milieu-interieur"] = {
   sousTitre: "Propriétés cinétiques et mécaniques des solutions · Énergie et équilibre",
@@ -890,9 +901,9 @@ CONTENU["biophysique-milieu-interieur"] = {
   ],
   herve: [
     { titre:"Séance d'explication · Cinétique", desc:"8 étapes, environ 1 heure : quoi dire, quoi faire faire, les pièges à anticiper.", chap:"cin",
-      fichier: DOSSIER_BMI + "Pour Hervé/Cinetique_Seance_d_explication.pdf" },
+      fichier: DOSSIER_BMI + "Cinetique_Seance_d_explication.pdf" },
     { titre:"Séance d'explication · Mécanique", desc:"8 étapes, environ 1 heure : reconnaître l'objet, choisir la formule, ne rater aucune conversion.", chap:"meca",
-      fichier: DOSSIER_BMI + "Pour Hervé/Mecanique_Seance_d_explication.pdf" },
+      fichier: DOSSIER_BMI + "Mecanique_Seance_d_explication.pdf" },
   ],
   fiches: [
     { titre:"Ce qui risque de tomber (A5)", desc:"Le format de l'épreuve et les exercices qui reviennent, cinétique et mécanique.", chap:["cin","meca"],
@@ -1451,7 +1462,7 @@ CONTENU["biophysique-milieu-interieur"] = {
 /* =====================================================================
    CHIMIE · Alcènes et alcynes
    ===================================================================== */
-const DOSSIER_ALC = "Revision Alcenes Alcynes/";
+const DOSSIER_ALC = "Revision Alcène et Alcyne/";
 
 CONTENU["chimie"] = {
   sousTitre: "Alcènes et alcynes (FC7 · FC8)",
@@ -1459,7 +1470,7 @@ CONTENU["chimie"] = {
   chapitres: [ { id:"alc", label:"Alcènes et alcynes", code:"FC7 · FC8" } ],
   herve: [
     { titre:"Explications en dessins", desc:"Tous les dessins faits pendant les séances, rangés par phrase (49 pages).", chap:"alc",
-      fichier: DOSSIER_ALC + "Pour Hervé/Chimie_Alcenes_Alcynes_Explications_en_dessins.pdf" },
+      fichier: DOSSIER_ALC + "Chimie_Alcenes_Alcynes_Explications_en_dessins.pdf" },
   ],
   fiches: [
     { titre:"Les réactifs en 5 phrases", desc:"Alcènes (phrases 1, 2, 4), alcynes (3, 5), autres réactifs, schémas, tableau, effet inductif, ce qui tombe aussi.", chap:"alc",
@@ -2106,11 +2117,13 @@ function renderMatiere(){
           <span class="bar2"><i style="width:${pct(ok)}%;background:var(--ok)"></i><i style="width:${pct(ko)}%;background:var(--ko)"></i></span>
           <span class="tq2">${ok}/${qs.length} réussis</span>
         </div>
-        <div class="tilesmall"><span><i style="background:var(--fiches)"></i>${plural(nf,"fiche")}</span><span><i style="background:var(--herve)"></i>${plural(nh,"guide")}</span></div>
+        <div class="tilesmall"><span><i style="background:#1E88FF"></i>${plural(courseDocsFor(c,ch.id),"document")}</span></div>
         <div class="enter"><span>Entrer dans le cours</span><span>→</span></div>
       </div></a>`;
   }).join("");
 }
+
+const courseDocsFor = (c, id) => [...c.herve, ...c.fiches, ...c.entrainement].filter(d => inC(d,id)).length;
 
 /* ---------- 3. un cours ---------- */
 function renderCourse(){
@@ -2122,8 +2135,7 @@ function renderCourse(){
   document.getElementById("courseHead").innerHTML = `<small>${m.title} · Cours ${i+1}</small><b>${ch.label}</b>`;
   const tabs = document.getElementById("tabs");
   const cnt = arr => arr.filter(inChap).length;
-  document.getElementById("nHerve").textContent = plural(cnt(c.herve),"guide");
-  document.getElementById("nFiches").textContent = plural(cnt(c.fiches),"fiche");
+  document.getElementById("nDocs").textContent = courseDocs(c).length + " PDF";
   document.getElementById("nTrain").textContent = cnt(c.qcm) + " questions";
   tabs.querySelectorAll("button").forEach(b => {
     b.classList.toggle("on", b.dataset.tab === state.tab);
@@ -2131,15 +2143,38 @@ function renderCourse(){
   });
   const panel = document.getElementById("panel");
   panel.className = "panel k-" + state.tab;
-  if (state.tab === "herve") panel.innerHTML =
-    `<div class="intro">Les guides pour expliquer le cours : quoi dire, quoi montrer, les pièges à anticiper et ce qu'il faut faire trancher.</div>` + docList(c.herve);
-  else if (state.tab === "fiches") panel.innerHTML =
-    `<div class="intro">${c.introFiches || "Les fiches à apprendre, en PDF."}</div>` + docList(c.fiches);
+  if (state.tab === "docs") panel.innerHTML = renderDocs(c);
   else renderTrain(c, panel);
 }
-function docList(list){
-  const docs = list.filter(inChap);
-  return docs.length ? `<div class="docs">${docs.map(docHTML).join("")}</div>` : `<div class="empty">Aucun document dans cette rubrique pour ce cours.</div>`;
+
+/* ---------- onglet Documents : 3 rubriques, dans l'ordre où on s'en sert ---------- */
+const DOC_CATS = [
+  { id:"comprendre", n:1, titre:"Comprendre", sous:"ce qui sert à expliquer le cours", color:"#7C5CFF", bg:"#EFEAFF" },
+  { id:"apprendre",  n:2, titre:"Apprendre",  sous:"ce qu'on relit et qu'on retient",  color:"#1E88FF", bg:"#E3F0FF" },
+  { id:"cibler",     n:3, titre:"Cibler le concours", sous:"ce qui tombe, comment ça tombe, les exercices sur papier", color:"#0E9F9A", bg:"#DDF5F2" },
+];
+function catOf(d, from){
+  if (d.cat) return d.cat;
+  if (from === "herve") return "comprendre";
+  if (from === "entrainement") return "cibler";
+  return /Ce_qui_risque|Annales_par_rubrique/.test(d.fichier) ? "cibler" : "apprendre";
+}
+function courseDocs(c){
+  const out = [];
+  [["herve",c.herve],["fiches",c.fiches],["entrainement",c.entrainement]].forEach(([from,list]) =>
+    list.filter(inChap).forEach(d => out.push({ d, cat: catOf(d, from) })));
+  return out;
+}
+function renderDocs(c){
+  const all = courseDocs(c);
+  if (!all.length) return `<div class="empty">Pas encore de document pour ce cours.</div>`;
+  return DOC_CATS.map(k => {
+    const docs = all.filter(x => x.cat === k.id).map(x => x.d);
+    return `<section class="dsec" style="--k:${k.color};--k-bg:${k.bg}">
+      <div class="dhead"><span class="dn">${k.n}</span><span><b>${k.titre}</b><small>${k.sous}</small></span></div>
+      ${docs.length ? `<div class="docs">${docs.map(docHTML).join("")}</div>` : `<div class="dnone">Rien dans cette rubrique pour ce cours.</div>`}
+    </section>`;
+  }).join("");
 }
 
 function docHTML(d){
@@ -2166,9 +2201,7 @@ function renderTrain(c, panel){
           <button class="linkbtn" id="resetAll">Remettre à zéro</button>
         </div></span>
     </div>
-    <div id="qList">${qs.map(qHTML).join("") || `<div class="empty">Pas encore de QCM pour ce cours.</div>`}</div>
-    ${pdfs.length ? `<div class="chap-block pdfline"><div class="chap-title">Le PDF d'exercices<small>énoncés et corrigés, à imprimer</small></div>
-      <div class="docs">${pdfs.map(docHTML).join("")}</div></div>` : ""}`;
+    <div id="qList">${qs.map(qHTML).join("") || `<div class="empty">Pas encore de QCM pour ce cours.</div>`}</div>`;
 
   panel.querySelectorAll(".qtools .chip").forEach(b => b.onclick = () => { state[b.dataset.k] = b.dataset.v; renderCourse(); });
   panel.querySelector("#resetAll").onclick = () => {
@@ -2295,7 +2328,7 @@ function route(){
   const c = id ? CONTENU[id] : null;
   if (id && findMat(id) && c && chap && c.chapitres.some(x => x.id === chap)){
     state.course = id; state.chap = chap;
-    state.tab = ["herve","fiches","train"].includes(tab) ? tab : "train";
+    state.tab = tab === "train" || !tab ? "train" : "docs";
     show("viewCourse"); renderCourse();
   } else if (id && findMat(id)){
     state.course = id; state.chap = "all";
