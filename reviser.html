@@ -472,7 +472,7 @@ const SCHEMA_RADIO7 = `
 
 CONTENU.biophysique.qcm = [
 /* ---------------- RADIOACTIVITÉ ---------------- */
-{ id:"radio-1", chap:"radio", n:1, type:"QRM", titre:"Capture électronique",
+{ id:"radio-1", chap:"radio", serie:1, n:1, type:"QRM", titre:"Capture électronique",
   enonce:"L'iode 125 (¹²⁵₅₃I) se transforme en tellure 125 (¹²⁵₅₂Te) par capture électronique. À propos de cette transformation :",
   items:["le noyau d'iode 125 présente un excès de protons",
          "elle s'accompagne de l'émission d'un antineutrino",
@@ -491,7 +491,7 @@ CONTENU.biophysique.qcm = [
         "Étape 1 : Z passe de 53 à 52, il diminue. Z augmente de 1 en β−."],
   pieges:"Capture électronique et β+ ont le même excès (protons) et le même effet sur Z (moins 1) : seul ce qui sort les distingue. Après une capture, la suite (X, Auger) se passe dans le cortège." },
 
-{ id:"radio-2", chap:"radio", n:2, type:"QRM", titre:"À quoi sert chaque émetteur",
+{ id:"radio-2", chap:"radio", serie:1, n:2, type:"QRM", titre:"À quoi sert chaque émetteur",
   enonce:"Quatre radioéléments sont disponibles dans un service : R1, émetteur β+ de période 20 min ; R2, émetteur γ pur de période 6 h ; R3, émetteur β− de période 7 jours ; R4, émetteur α de période 11 jours.",
   items:["R1 est adapté à la tomographie par émission de positons",
          "R2 est détecté à l'aide d'une caméra à positons",
@@ -509,7 +509,7 @@ CONTENU.biophysique.qcm = [
         "Étape 3 : une période courte convient à l'imagerie, pas à la thérapie (sens inversé)."],
   pieges:"Toujours partir du rayonnement émis, pas du nom du radioélément. TEP et TEMP sont faciles à échanger : TEP = positons (β+), TEMP = monophotonique (γ)." },
 
-{ id:"radio-3", chap:"radio", n:3, type:"QRU", titre:"Isotopes, isotones, isobares",
+{ id:"radio-3", chap:"radio", serie:1, n:3, type:"QRU", titre:"Isotopes, isotones, isobares",
   enonce:"On considère les noyaux ³¹₁₅P, ³²₁₅P, ³²₁₆S et ³³₁₆S. Parmi les propositions suivantes, laquelle est exacte ?",
   items:["³²P et ³²S ont le même nombre de neutrons",
          "³²S et ³³S ont des propriétés chimiques différentes",
@@ -528,7 +528,7 @@ CONTENU.biophysique.qcm = [
         "Étape 3 : 16 et 15 électrons, puisque Z diffère."],
   pieges:"Deux noyaux de même nombre (ici 32) ne sont pas forcément identiques en tout : écrire les trois nombres avant de lire les items évite de confondre isobares et isotones." },
 
-{ id:"radio-4", chap:"radio", n:4, type:"QRU", titre:"Vocabulaire et unités",
+{ id:"radio-4", chap:"radio", serie:1, n:4, type:"QRU", titre:"Vocabulaire et unités",
   enonce:"À propos de la radioactivité et de ses unités, laquelle des propositions suivantes est exacte ?",
   items:["la radioactivité est un phénomène qui se produit dans le cortège électronique",
          "une désintégration radioactive ne peut se produire que si l'on apporte de l'énergie au noyau",
@@ -547,7 +547,7 @@ CONTENU.biophysique.qcm = [
         "Étape 4 : le dernier noyau stable est le bismuth (Z = 83) ; l'uranium est radioactif."],
   pieges:"Ce type de QRU se joue sur un seul mot par item : noyau ou cortège, spontané ou provoqué, Becquerel ou Joliot-Curie, MeV ou MeV/c²." },
 
-{ id:"radio-5", chap:"radio", n:5, type:"QRU", titre:"Décroissance : remonter le temps",
+{ id:"radio-5", chap:"radio", serie:1, n:5, type:"QRU", titre:"Décroissance : remonter le temps",
   enonce:"Une gélule d'iode 131 (période 8 jours) a été préparée au laboratoire. Elle est administrée au patient 24 jours plus tard ; à ce moment, son activité mesurée est de 50 MBq. Quelle était son activité au moment de sa préparation ?",
   items:["6,25 MBq","150 MBq","200 MBq","400 MBq","800 MBq"],
   rep:"D",
@@ -562,7 +562,7 @@ CONTENU.biophysique.qcm = [
         "800 = 50 × 16 : on a compté une période de trop (étape 1)."],
   pieges:"Avant de calculer, se demander si l'on avance ou si l'on remonte le temps : avancer divise, remonter multiplie. Et toujours 2 puissance n, jamais n." },
 
-{ id:"radio-6", chap:"radio", n:6, type:"QRU", titre:"Périodes et activité",
+{ id:"radio-6", chap:"radio", serie:1, n:6, type:"QRU", titre:"Périodes et activité",
   enonce:"À propos des périodes et de l'activité d'un radionucléide, laquelle des propositions suivantes est exacte ?",
   items:["la constante radioactive λ d'un radionucléide augmente quand on chauffe l'échantillon",
          "la période biologique d'un médicament radiopharmaceutique dépend uniquement du noyau radioactif qu'il contient",
@@ -581,7 +581,7 @@ CONTENU.biophysique.qcm = [
         "Étape 3 : au bout d'une période, l'activité a diminué de moitié (50 %). 75 % correspond à deux périodes."],
   pieges:"Physique = le noyau ; biologique = l'organisme ; effective = les deux ensemble, donc plus courte. « Diminué de 75 % » cache deux périodes, pas une." },
 
-{ id:"radio-7", chap:"radio", n:7, type:"QRM", titre:"Schéma de désintégration",
+{ id:"radio-7", chap:"radio", serie:1, n:7, type:"QRM", titre:"Schéma de désintégration",
   enonce:"Le schéma ci-dessous représente la désintégration d'un noyau X (numéro atomique Z) en un noyau Y. Seules les transitions β1, β2 et β3 partent de X. Les termes A, B, C et D sont à déterminer. Dans ce schéma :",
   extra: SCHEMA_RADIO7,
   items:["le terme A vaut 1 100 keV",
@@ -603,7 +603,7 @@ CONTENU.biophysique.qcm = [
         "Étape 6."],
   pieges:"Deux pièges propres aux schémas : prendre un niveau d'énergie pour l'énergie d'une transition (toujours faire départ − arrivée), et oublier qu'un niveau peut être rempli par plusieurs flèches (additionner tout ce qui arrive)." },
 
-{ id:"radio-8", chap:"radio", n:8, type:"QRU", titre:"Période effective",
+{ id:"radio-8", chap:"radio", serie:1, n:8, type:"QRU", titre:"Période effective",
   enonce:"Un médicament radiopharmaceutique est marqué au technétium 99m, de période physique 6 h. Sa période effective dans l'organisme est de 2 h. Quelle est sa période biologique ?",
   items:["1,5 h","3 h","4 h","8 h","12 h"],
   rep:"B",
@@ -619,7 +619,7 @@ CONTENU.biophysique.qcm = [
   pieges:"La période effective est toujours la plus petite des trois. Pour retrouver une des deux autres, on soustrait les inverses, jamais les périodes." },
 
 /* ---------------- INTERACTION ---------------- */
-{ id:"inter-1", chap:"inter", n:1, type:"QRU", titre:"Effet photoélectrique",
+{ id:"inter-1", chap:"inter", serie:1, n:1, type:"QRU", titre:"Effet photoélectrique",
   enonce:"À propos de l'effet photoélectrique, quelle est la seule proposition exacte ?",
   items:["il se produit entre un photon incident et un noyau du milieu traversé",
          "le photon incident cède une partie de son énergie à un électron et poursuit sa route",
@@ -638,7 +638,7 @@ CONTENU.biophysique.qcm = [
         "Étape 4 : à 1 MeV dans l'eau, c'est le Compton qui domine."],
   pieges:"Lire chaque mot qui désigne un acteur : photon ou positon, électron ou noyau, toute ou une partie de l'énergie. Un seul mot échangé suffit à rendre l'item faux." },
 
-{ id:"inter-2", chap:"inter", n:2, type:"QRM", titre:"Effet Compton",
+{ id:"inter-2", chap:"inter", serie:1, n:2, type:"QRM", titre:"Effet Compton",
   enonce:"Un photon γ de 500 keV interagit par effet Compton avec un électron des tissus. À propos de cette interaction :",
   items:["l'électron concerné est un électron peu lié, des couches externes",
          "le photon incident disparaît totalement",
@@ -657,7 +657,7 @@ CONTENU.biophysique.qcm = [
         "Étape 4 : 500 keV < 1,022 MeV, pas de paire possible."],
   pieges:"« Toute l'énergie est transmise à l'électron » est le piège Compton le plus fréquent (LAS 2022, LAS 2023). Compton = partage ; photoélectrique = tout." },
 
-{ id:"inter-3", chap:"inter", n:3, type:"QRM", titre:"Nature des rayonnements X et γ",
+{ id:"inter-3", chap:"inter", serie:1, n:3, type:"QRM", titre:"Nature des rayonnements X et γ",
   enonce:"À propos des rayonnements X et γ :",
   items:["ce sont des rayonnements électromagnétiques",
          "les photons X ont une origine nucléaire",
@@ -676,7 +676,7 @@ CONTENU.biophysique.qcm = [
         "Étape 4."],
   pieges:"X = cortège, γ = noyau : c'est la seule différence. Toute phrase qui donne une masse au photon, ou qui en fait un rayonnement « particulaire », est fausse." },
 
-{ id:"inter-4", chap:"inter", n:4, type:"QRM", titre:"Ionisant ou non",
+{ id:"inter-4", chap:"inter", serie:1, n:4, type:"QRM", titre:"Ionisant ou non",
   enonce:"On considère un rayonnement électromagnétique de longueur d'onde 50 nm.",
   donnee:"Donnée : E (en eV) ≈ 1 240 ÷ λ (en nm)",
   items:["son énergie est d'environ 25 eV",
@@ -696,7 +696,7 @@ CONTENU.biophysique.qcm = [
         "Étape 4 : neutres, ils sont indirectement ionisants."],
   pieges:"100 nm et 12,4 eV sont le même seuil vu de deux côtés : plus λ est courte, plus l'énergie est grande. Surveiller l'unité (eV, keV, MeV) dans chaque item." },
 
-{ id:"inter-5", chap:"inter", n:5, type:"QRM", titre:"Parcours, portée et écrans",
+{ id:"inter-5", chap:"inter", serie:1, n:5, type:"QRM", titre:"Parcours, portée et écrans",
   enonce:"À propos du comportement des particules dans la matière et de la radioprotection :",
   items:["pour un faisceau d'électrons, le parcours est supérieur à la portée",
          "pour des particules α, le parcours et la portée sont pratiquement égaux",
@@ -715,7 +715,7 @@ CONTENU.biophysique.qcm = [
         "Étape 4 : le béton (piège de 2025)."],
   pieges:"Parcours et portée : se demander si la trajectoire est droite (α) ou en zigzag (électrons). Écrans : chaque rayonnement a le sien, et le plomb n'est pas universel." },
 
-{ id:"inter-6", chap:"inter", n:6, type:"QRM", titre:"Question mixte FC4 · FC5 · FC7",
+{ id:"inter-6", chap:"inter", serie:1, n:6, type:"QRM", titre:"Question mixte FC4 · FC5 · FC7",
   enonce:"Le fluor 18 (Z = 9), émetteur β+, est utilisé en tomographie par émission de positons (TEP). À ce propos :",
   items:["le noyau fils est l'oxygène 18 (Z = 8)",
          "la TEP détecte les deux photons de 511 keV émis dans des directions opposées",
@@ -734,7 +734,7 @@ CONTENU.biophysique.qcm = [
         "Étape 4 : quelques millimètres."],
   pieges:"Une question peut partir d'un radioélément (FC4), passer par son usage (FC7) et finir sur ce que son rayonnement fait dans la matière (FC5). Traiter chaque item avec le bon chapitre." },
 
-{ id:"inter-7", chap:"inter", n:7, type:"QRU", titre:"Quel effet domine",
+{ id:"inter-7", chap:"inter", serie:1, n:7, type:"QRU", titre:"Quel effet domine",
   enonce:"Dans l'eau ou les tissus mous, quelle est la seule proposition exacte ?",
   items:["pour un photon de 20 keV, l'effet Compton est prépondérant",
          "pour un photon de 200 keV, l'effet photoélectrique est prépondérant",
@@ -752,7 +752,7 @@ CONTENU.biophysique.qcm = [
         "Étape 2 : au-dessus de 20 MeV, ce sont les paires."],
   pieges:"Dans l'ordre des énergies : photo, Compton, paires. Ne pas confondre les limites de l'eau (50 keV, 20 MeV) avec celles du plomb (500 keV, 1 MeV)." },
 
-{ id:"inter-8", chap:"inter", n:8, type:"QRU", titre:"Calcul de CDA",
+{ id:"inter-8", chap:"inter", serie:1, n:8, type:"QRU", titre:"Calcul de CDA",
   enonce:"Un faisceau de photons traverse une plaque de 12 mm d'un matériau. Le nombre de photons transmis est divisé par 16. Quelle est la couche de demi-atténuation (CDA) de ce matériau ?",
   items:["0,75 mm","1,33 mm","3 mm","4 mm","6 mm"],
   rep:"C",
@@ -767,7 +767,7 @@ CONTENU.biophysique.qcm = [
   pieges:"Comme pour les périodes : le facteur s'écrit 2 puissance n, et c'est n qu'on utilise, jamais le facteur lui-même. Bien lire si l'énoncé parle de photons transmis ou atténués." },
 
 /* ---------------- EFFETS BIOLOGIQUES ---------------- */
-{ id:"bio-1", chap:"bio", n:1, type:"QRM", titre:"Stochastiques ou déterministes",
+{ id:"bio-1", chap:"bio", serie:1, n:1, type:"QRM", titre:"Stochastiques ou déterministes",
   enonce:"À propos des effets biologiques des rayonnements ionisants :",
   items:["les effets déterministes n'apparaissent qu'au-delà d'une dose seuil",
          "la gravité des effets stochastiques augmente avec la dose reçue",
@@ -786,7 +786,7 @@ CONTENU.biophysique.qcm = [
         "Étape 1 : c'est la définition des effets déterministes."],
   pieges:"Les items échangent les deux colonnes du tableau : seuil, gravité ou probabilité, délai, cause. Écrire au crayon « S » ou « D » à côté de chaque item, puis vérifier chaque mot." },
 
-{ id:"bio-2", chap:"bio", n:2, type:"QRM", titre:"ADN et devenir de la cellule",
+{ id:"bio-2", chap:"bio", serie:1, n:2, type:"QRM", titre:"ADN et devenir de la cellule",
   enonce:"Une cellule est irradiée et son ADN est lésé. À ce propos :",
   items:["si l'ADN est faiblement lésé et mal réparé, la cellule peut devenir une cellule mutée",
          "ce sont les cellules dont l'ADN est trop lésé qui sont à l'origine des mutations",
@@ -804,7 +804,7 @@ CONTENU.biophysique.qcm = [
         "Étape 3 : ils peuvent être dépassés (piège de 2019)."],
   pieges:"Une cellule morte ne transmet rien : seule une cellule survivante mal réparée peut donner une mutation. Apoptose = « non agressive », nécrose = inflammation : le mot « agressif » est souvent inversé." },
 
-{ id:"bio-3", chap:"bio", n:3, type:"QRM", titre:"Radiolyse de l'eau et radicaux libres",
+{ id:"bio-3", chap:"bio", serie:1, n:3, type:"QRM", titre:"Radiolyse de l'eau et radicaux libres",
   enonce:"À propos de l'action des rayonnements ionisants sur les molécules du vivant :",
   items:["les effets biologiques sont dus surtout aux interactions avec les noyaux des atomes des milieux traversés",
          "l'eau étant le constituant principal de l'organisme, sa radiolyse joue un rôle majeur dans les effets indirects",
@@ -823,7 +823,7 @@ CONTENU.biophysique.qcm = [
         "Étape 4."],
   pieges:"Deux couples à ne pas inverser : électrons et non noyaux ; OH· oxydant, H· réducteur. Et « radical libre » va toujours avec « très réactif »." },
 
-{ id:"bio-4", chap:"bio", n:4, type:"QRM", titre:"Radiosensibilité",
+{ id:"bio-4", chap:"bio", serie:1, n:4, type:"QRM", titre:"Radiosensibilité",
   enonce:"À propos de la radiosensibilité et des facteurs qui modifient les effets des rayonnements :",
   items:["plus une cellule est jeune, peu différenciée et à forte activité mitotique, plus elle est radiosensible",
          "les neurones font partie des cellules les plus radiosensibles",
@@ -841,7 +841,7 @@ CONTENU.biophysique.qcm = [
         "Étape 3."],
   pieges:"Le sens de variation est le piège : « plus jeune → plus sensible », « plus d'oxygène → plus sensible », « plus court → plus destructeur ». Vérifier que l'item ne l'a pas retourné." },
 
-{ id:"bio-5", chap:"bio", n:5, type:"QRM", titre:"Dose absorbée et unités",
+{ id:"bio-5", chap:"bio", serie:1, n:5, type:"QRM", titre:"Dose absorbée et unités",
   enonce:"À propos de la dose absorbée :",
   items:["elle est définie comme la quantité d'énergie cédée par unité de masse de matière exposée",
          "dans le système international, elle s'exprime en joules par gramme",
@@ -859,7 +859,7 @@ CONTENU.biophysique.qcm = [
         "Étape 1."],
   pieges:"Kilogramme et non gramme ; gray pour la dose absorbée, sievert pour les doses pondérées. Ces deux échanges reviennent dans presque toutes les questions d'unités." },
 
-{ id:"bio-6", chap:"bio", n:6, type:"QRM", titre:"Dose équivalente et dose efficace",
+{ id:"bio-6", chap:"bio", serie:1, n:6, type:"QRM", titre:"Dose équivalente et dose efficace",
   enonce:"À propos de l'évaluation du risque lié aux rayonnements ionisants :",
   items:["la dose équivalente tient compte d'un facteur de pondération lié à la nature du rayonnement",
          "pour calculer la dose équivalente, il faut connaître le facteur de pondération lié au tissu irradié",
@@ -877,7 +877,7 @@ CONTENU.biophysique.qcm = [
         "Étape 3."],
   pieges:"Équivalente ↔ rayonnement (WR) ; efficace ↔ tissu (WT). L'item de 2023 a simplement échangé « rayonnement » et « tissu »." },
 
-{ id:"bio-7", chap:"bio", n:7, type:"QRM", titre:"Courbes de survie cellulaire",
+{ id:"bio-7", chap:"bio", serie:1, n:7, type:"QRM", titre:"Courbes de survie cellulaire",
   enonce:"À propos des courbes de survie cellulaire :",
   items:["elles représentent la fraction de cellules survivantes en fonction de la dose absorbée",
          "la dose létale moyenne D₀ est la dose qui laisse survivre la moitié des cellules irradiées",
@@ -896,7 +896,7 @@ CONTENU.biophysique.qcm = [
         "Étape 1."],
   pieges:"D₀ = 37 %, D₅₀ = 50 %. Et le sens : dose létale élevée = cellules résistantes, faible = cellules sensibles." },
 
-{ id:"bio-8", chap:"bio", n:8, type:"QRU", titre:"Calcul de dose équivalente et efficace",
+{ id:"bio-8", chap:"bio", serie:1, n:8, type:"QRU", titre:"Calcul de dose équivalente et efficace",
   enonce:"Le poumon d'un travailleur reçoit une dose absorbée de 2 mGy de photons γ et de 0,1 mGy de particules α. Quelle est la contribution du poumon à la dose efficace ?",
   donnee:"Données : WR(γ) = 1 ; WR(α) = 20 ; WT(poumon) = 0,12",
   items:["0,25 mSv","0,48 mSv","2,1 mSv","4 mSv","33 mSv"],
@@ -910,6 +910,31 @@ CONTENU.biophysique.qcm = [
         "4 mSv : c'est la dose équivalente, on a oublié WT (étape 2).",
         "33 ≈ 4 ÷ 0,12 : on a divisé au lieu de multiplier (étape 2)."],
   pieges:"Jamais tombé en calcul, mais il vérifie la place de chaque facteur : WR d'abord (rayonnement), WT ensuite (tissu). Les deux multiplient." },
+/* ---------------- BAM QCM A (série 2) et B (série 3) ---------------- */
+{ id:"bamqcmA-1", chap:["radio","inter","bio"], serie:2, n:1, type:"QRM", titre:"Désintégration d'un émetteur inconnu (très fréquent)", enonce:"Un radioélément X (Z = 53, A = 125) se transforme en un noyau Y de même nombre de masse et de numéro atomique 52, sans émettre de positon. À propos de cette transformation :", items:["il s'agit d'une capture électronique", "elle s'accompagne de l'émission d'un antineutrino", "elle laisse une place vacante dans une couche électronique profonde", "elle peut être suivie de l'émission de photons de 511 keV", "elle peut être suivie de l'émission d'électrons Auger"], rep:"ACE", methode:["J'annote : Z passe de 53 à 52 (Z − 1), A ne change pas, pas de positon → capture électronique.", "Je rappelle ce qui sort du noyau : un neutrino seul.", "Je rappelle la suite dans le cortège : l'électron capté laisse une place vide en couche K → photon X ou électron Auger.", "Je vérifie : pas de positon → pas d'annihilation."], expl:["Étape 1.", "Étape 2 : neutrino, pas antineutrino (l'antineutrino accompagne la β−).", "Étape 3.", "Étape 4 : 511 keV = annihilation d'un positon ; il n'y en a pas ici.", "Étape 3."], pieges:"Z − 1 sans positon = capture. Les 511 keV n'existent qu'avec un positon (β+). X et Auger viennent du cortège." },
+{ id:"bamqcmA-2", chap:["radio","inter","bio"], serie:2, n:2, type:"QRU", titre:"Spectres et particules émises (très fréquent)", enonce:"Quelle est la seule proposition exacte ?", items:["le spectre d'énergie des particules α émises par un radioélément est continu", "lors d'une désintégration β+, l'énergie disponible est partagée entre le positon et un antineutrino", "l'énergie moyenne des électrons β− est voisine du tiers de leur énergie maximale", "la capture électronique s'accompagne de l'émission d'un électron par le noyau", "la désintégration α diminue le nombre de masse de 2"], rep:"C", methode:["Je classe les spectres : continu pour β− et β+ (énergie partagée avec le (anti)neutrino) ; raies pour α, γ, capture.", "J'associe les particules : β− → antineutrino ; β+ → neutrino ; capture → neutrino seul.", "Je rappelle les bilans : α → Z − 2 et A − 4.", "Je rappelle la valeur moyenne : Emoy ≈ Emax ÷ 3."], expl:["Étape 1 : spectre de raies pour α.", "Étape 2 : β+ → neutrino.", "Étape 4.", "Étape 2 : rien ne sort du noyau à part le neutrino.", "Étape 3 : A diminue de 4 (c'est Z qui diminue de 2)."], pieges:"Continu = β− et β+ seulement. « Anti » va avec « moins ». α : − 2 pour Z, − 4 pour A." },
+{ id:"bamqcmA-3", chap:["radio","inter","bio"], serie:2, n:3, type:"QRM", titre:"Usages médicaux (très fréquent)", enonce:"À propos de l'utilisation médicale des radioéléments :", items:["en TEP, on détecte en coïncidence deux photons émis dans des directions opposées", "le technétium 99m est adapté à la TEMP grâce à son émission γ de 140 keV", "un émetteur α est préféré pour l'imagerie car son rayonnement est très pénétrant", "l'iode 131, émetteur β−, est utilisé en thérapie", "un radioélément destiné à l'imagerie doit avoir une période de plusieurs mois"], rep:"ABD", methode:["J'associe : β+ → TEP ; γ → TEMP ; β− et α → thérapie.", "Je rappelle ce que détecte la TEP : les 2 photons de 511 keV de l'annihilation, à 180°.", "Je rappelle les propriétés : α très peu pénétrant (TLE élevé) ; imagerie → période courte (minutes à heures)."], expl:["Étape 2.", "Étape 1.", "Étape 3 : l'α est très peu pénétrant : il sert en thérapie.", "Étape 1.", "Étape 3 : imagerie → minutes ou heures (¹⁸F : 110 min ; ⁹⁹ᵐTc : 6 h)."], pieges:"« Le + et le γ pour voir, le − et l'α pour soigner. » En TEP, on détecte des photons, jamais le positon." },
+{ id:"bamqcmA-7", chap:["radio","inter","bio"], serie:2, n:4, type:"QRU", titre:"Effet photoélectrique (très fréquent)", enonce:"À propos de l'effet photoélectrique, quelle est la seule proposition exacte ?", items:["le photon incident interagit avec un électron peu lié des couches externes", "il est suivi d'un réarrangement du cortège pouvant produire un photon X de fluorescence", "l'électron éjecté emporte toute l'énergie du photon incident, sans aucune perte", "il s'accompagne d'un photon diffusé de plus faible énergie", "il est d'autant plus probable que l'énergie du photon est grande"], rep:"B", methode:["Je pose le partenaire : un électron profond (K, L).", "Je pose le bilan : le photon disparaît ; l'électron sort avec E − E de liaison.", "Je pose la suite : la place vide est comblée → X de fluorescence ou Auger.", "Je pose la probabilité : τ ≈ Z³/E³, elle chute quand l'énergie monte."], expl:["Étape 1 : électron profond ; « peu lié, externe » décrit le Compton.", "Étape 3.", "Étape 2 : on retire l'énergie de liaison.", "Étape 2 : photon diffusé = Compton.", "Étape 4 : c'est l'inverse."], pieges:"Photoélectrique = électron profond, tout le photon absorbé, puis X ou Auger. Compton = électron externe, photon diffusé." },
+{ id:"bamqcmA-4", chap:["radio","inter","bio"], serie:2, n:5, type:"QRU", titre:"Isotopes, isotones, isobares, isomères (fréquent)", enonce:"Quelle est la seule proposition exacte ?", items:["¹²C (Z = 6) et ¹⁴C (Z = 6) sont isobares", "⁴⁰K (Z = 19) et ⁴⁰Ca (Z = 20) sont isotopes", "¹³C (Z = 6) et ¹⁴N (Z = 7) sont isotones", "⁹⁹ᵐTc et ⁹⁹Tc ont des numéros atomiques différents", "deux noyaux isobares appartiennent au même élément chimique"], rep:"C", methode:["J'écris Z · N · A sous chaque noyau (N = A − Z).", "J'entoure ce qui est égal : même Z → isotopes ; même N → isotones ; même A → isobares ; même Z et A, énergie différente → isomères.", "Je compare avec l'item."], expl:["Étape 2 : même Z → isotopes.", "Étape 2 : même A → isobares.", "Étape 2 : N = 7 pour les deux.", "Étape 2 : même Z (43) : ce sont des isomères.", "Étape 2 : des isobares ont des Z différents, donc des éléments différents."], pieges:"Toujours calculer N. Isotopes = protons, isotones = neutrons, isobares = A." },
+{ id:"bamqcmA-5", chap:["radio","inter","bio"], serie:2, n:6, type:"QRU", titre:"Calcul : remonter le temps (fréquent)", enonce:"Une seringue de fluor 18 (période 110 min) a une activité de 50 MBq à 14 h 20. Quelle était son activité lors de sa préparation, à 8 h 50 ?", items:["6,25 MBq", "150 MBq", "200 MBq", "400 MBq", "800 MBq"], rep:"D", methode:["J'encadre : on remonte le temps → l'activité de départ est plus grande que 50 MBq (élimine A).", "Je convertis : de 8 h 50 à 14 h 20 = 5 h 30 = 330 min.", "Je calcule n = t ÷ T = 330 ÷ 110 = 3.", "Je multiplie : A₀ = 50 × 2³ = 400 MBq."], expl:["Étape 1 : on a divisé au lieu de multiplier.", "Étape 4 : 50 × 3 : on a multiplié par n au lieu de 2ⁿ.", "Étape 2 : 2 périodes seulement : erreur de conversion des heures.", "Étape 4.", "Étape 2 : 4 périodes : erreur de conversion."], pieges:"Remonter le temps = multiplier. Convertir les heures en minutes avant de diviser par la période. Utiliser 2ⁿ, pas n." },
+{ id:"bamqcmA-8", chap:["radio","inter","bio"], serie:2, n:7, type:"QRM", titre:"Nature des rayonnements X et γ (fréquent)", enonce:"À propos des rayonnements X et γ :", items:["les photons γ sont émis lors de la désexcitation d'un noyau", "les photons X proviennent du noyau", "un photon X et un photon γ de même énergie se comportent de la même façon dans la matière", "ce sont des rayonnements particulaires", "l'énergie d'un photon augmente quand sa longueur d'onde diminue"], rep:"ACE", methode:["Je classe : X et γ sont des photons, donc électromagnétiques, sans masse.", "Je distingue l'origine : γ = noyau ; X = cortège.", "J'écris E = hc ÷ λ : l'énergie est inversement proportionnelle à λ."], expl:["Étape 2.", "Étape 2 : origine électronique (cortège).", "Étape 2 : seule l'origine diffère.", "Étape 1 : électromagnétiques.", "Étape 3."], pieges:"X = cortège, γ = noyau : c'est la seule différence. Électromagnétique ≠ particulaire." },
+{ id:"bamqcmA-9", chap:["radio","inter","bio"], serie:2, n:8, type:"QRM", titre:"Parcours, portée et TLE (fréquent)", enonce:"On compare une particule α et un électron de même énergie dans les tissus mous :", items:["la trajectoire de l'électron est sinueuse, son parcours est supérieur à sa portée", "la particule α a un transfert linéique d'énergie plus élevé que l'électron", "la portée de la particule α est de l'ordre du centimètre", "l'électron est arrêté par une feuille de papier", "plus une particule ralentit, moins elle ionise"], rep:"AB", methode:["Je pose les trajectoires : α droite (parcours = portée) ; électron en zigzag (parcours > portée).", "Je pose les distances : α → quelques dizaines de µm dans les tissus ; électron → environ 1 cm.", "Je pose les écrans : α → papier ; β → plexiglas.", "Je pose le TLE : l'α dépose son énergie très vite ; une particule lente ionise davantage."], expl:["Étape 1.", "Étape 4.", "Étape 2 : quelques dizaines de µm.", "Étape 3 : plexiglas ; le papier arrête les α.", "Étape 4 : c'est l'inverse : plus lente, plus elle ionise."], pieges:"Électron : parcours > portée. α : µm dans les tissus, pas cm. Le pouvoir d'ioniser augmente quand la vitesse diminue." },
+{ id:"bamqcmA-11", chap:["radio","inter","bio"], serie:2, n:9, type:"QRM", titre:"Stochastique ou déterministe : cas décrits (fréquent)", enonce:"Parmi les effets suivants, lesquels sont des effets stochastiques ?", items:["une leucémie apparue 6 ans après une exposition accidentelle", "un érythème cutané apparu 3 semaines après une irradiation localisée de 6 Gy", "un cancer de la thyroïde survenu chez un enfant plusieurs années après une contamination par de l'iode radioactif", "une cataracte apparue après une forte dose reçue au cristallin", "une aplasie médullaire survenue quelques semaines après une irradiation globale de 3 Gy"], rep:"AC", methode:["Je classe la cause : cellule mutée → stochastique ; mort de nombreuses cellules → déterministe.", "J'utilise le délai : des années → stochastique ; des jours à des mois → déterministe.", "J'utilise la dose : forte dose avec seuil → déterministe."], expl:["Étape 2.", "Étape 2 : précoce, seuil, forte dose : déterministe.", "Étape 1 : cancer radio-induit.", "Étape 1 : destruction de cellules au-delà d'un seuil : déterministe.", "Étape 2 : quelques semaines, moelle détruite : déterministe."], pieges:"Cancer ou leucémie = stochastique. Brûlure, cataracte, stérilité, aplasie = déterministe. Le délai trahit la catégorie." },
+{ id:"bamqcmA-12", chap:["radio","inter","bio"], serie:2, n:10, type:"QRM", titre:"Radiosensibilité (fréquent)", enonce:"À propos de la radiosensibilité :", items:["les cellules de la moelle osseuse sont plus radiosensibles que les neurones", "une cellule très différenciée qui ne se divise plus est particulièrement radiosensible", "une tumeur mal oxygénée est plus radiorésistante qu'une tumeur bien oxygénée", "à dose égale, une irradiation délivrée sur une longue durée est plus destructrice", "plus la dose létale moyenne D₀ d'une lignée cellulaire est faible, plus cette lignée est radiosensible"], rep:"ACE", methode:["J'applique Bergonié et Tribondeau : jeune, peu différenciée, qui se divise → sensible.", "J'applique l'effet oxygène : plus d'oxygène → plus sensible.", "J'applique le débit : à dose égale, plus court → plus destructeur.", "J'interprète D₀ : faible D₀ → peu de dose suffit à tuer → sensible."], expl:["Étape 1.", "Étape 1 : c'est l'inverse : différenciée et sans division → résistante.", "Étape 2.", "Étape 3 : plus longue = débit plus faible = moins destructrice.", "Étape 4."], pieges:"Vérifier le sens de chaque variation : jeune → sensible ; oxygène → sensible ; court → destructeur ; D₀ faible → sensible." },
+{ id:"bamqcmA-6", chap:["radio","inter","bio"], serie:2, n:11, type:"QRM", titre:"Schéma de désintégration (format 2026) (parfois)", enonce:"Le radioélément X se désintègre selon le schéma ci-dessous. La transition a concerne 70 % des désintégrations. À propos de ce schéma :", items:["la case A vaut 0,80 MeV", "la case B vaut 30 %", "la case C vaut 1,60 MeV", "la case D vaut 30 %", "le noyau Y est isobare du noyau X"], rep:"ADE", methode:["Je lis les flèches : a et b vont vers la gauche (Z − 1) ; γ est verticale (même noyau Y).", "Énergie du γ = 0,80 − 0 = 0,80 MeV.", "Le niveau 0,80 MeV se vide autant qu'il se remplit : il reçoit les 70 % de a, donc le γ vaut 70 %.", "Le père fait 100 % : b = 100 − 70 = 30 %.", "Emax du positon = (2,40 − 0,80) − 1,022 = 0,58 MeV."], expl:["Étape 2.", "Étape 3 : le γ reçoit les 70 % de a, pas les 30 % de b.", "Étape 5 : on a oublié de retirer 1,022 MeV : 0,58 MeV.", "Étape 4.", "Étape 1 : β+ et capture ne changent pas A."], pieges:"Un niveau excité se vide autant qu'il se remplit. Les intensités issues du père font 100 %. β+ : toujours retirer 1,022 MeV.", extra:"<div class=\"schema\"><svg viewBox=\"0 0 460 210\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"IBM Plex Sans, sans-serif\" font-size=\"12\"><defs><marker id=\"qa6b\" markerWidth=\"8\" markerHeight=\"8\" refX=\"7\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 z\" fill=\"#1B6577\"/></marker><marker id=\"qa6g\" markerWidth=\"8\" markerHeight=\"8\" refX=\"7\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 z\" fill=\"#C0392B\"/></marker></defs><line x1=\"250\" y1=\"34\" x2=\"390\" y2=\"34\" stroke=\"#151B2E\" stroke-width=\"3\"/><text x=\"250\" y=\"24\" font-weight=\"700\">X (Z) · 2,40 MeV</text><line x1=\"40\" y1=\"104\" x2=\"200\" y2=\"104\" stroke=\"#151B2E\" stroke-width=\"2.5\"/><text x=\"40\" y=\"96\">0,80 MeV</text><line x1=\"40\" y1=\"184\" x2=\"200\" y2=\"184\" stroke=\"#151B2E\" stroke-width=\"3\"/><text x=\"40\" y=\"176\">0 MeV</text><text x=\"40\" y=\"202\" font-weight=\"700\">Y (Z − 1)</text><line x1=\"262\" y1=\"36\" x2=\"182\" y2=\"101\" stroke=\"#1B6577\" stroke-width=\"2\" marker-end=\"url(#qa6b)\"/><text x=\"226\" y=\"62\" fill=\"#1B6577\" font-weight=\"600\">a</text><line x1=\"290\" y1=\"36\" x2=\"196\" y2=\"181\" stroke=\"#1B6577\" stroke-width=\"2\" marker-end=\"url(#qa6b)\"/><text x=\"252\" y=\"120\" fill=\"#1B6577\" font-weight=\"600\">b</text><line x1=\"110\" y1=\"107\" x2=\"110\" y2=\"181\" stroke=\"#C0392B\" stroke-width=\"2\" stroke-dasharray=\"5,3\" marker-end=\"url(#qa6g)\"/><text x=\"118\" y=\"148\" fill=\"#C0392B\" font-weight=\"600\">γ</text></svg><table class=\"mini\"><tr><th>transition</th><th>type</th><th>énergie</th><th>intensité</th></tr><tr><td>a</td><td>β+</td><td>Emax = case C</td><td>70 %</td></tr><tr><td>b</td><td>capture</td><td>—</td><td>case D</td></tr><tr><td>γ</td><td>γ</td><td>case A</td><td>case B</td></tr></table></div>" },
+{ id:"bamqcmA-10", chap:["radio","inter","bio"], serie:2, n:12, type:"QRU", titre:"Calcul de CDA, à rebours (parfois)", enonce:"Un écran de plomb de 6 mm laisse passer 12,5 % des photons d'un faisceau. Quelle épaisseur de ce plomb faut-il pour ne laisser passer qu'environ un millième des photons ?", items:["2 mm", "10 mm", "14 mm", "20 mm", "60 mm"], rep:"D", methode:["J'écris la transmission en 2ⁿ : 12,5 % = 1/8 = 1/2³ → 6 mm = 3 CDA.", "Je calcule la CDA : 6 ÷ 3 = 2 mm.", "J'écris le but en 2ⁿ : un millième ≈ 1/2¹⁰ → 10 CDA.", "Je calcule : 10 × 2 = 20 mm."], expl:["Étape 2 : c'est la CDA, pas l'épaisseur demandée.", "Étape 3 : 5 CDA → 1/32 seulement.", "Étape 3 : 7 CDA → environ un centième.", "Étape 4.", "Étape 4 : on a multiplié l'épaisseur de départ par 10."], pieges:"Écrire chaque fraction en 2ⁿ. 2⁷ ≈ 100 et 2¹⁰ ≈ 1 000. Multiplier la CDA, pas l'épaisseur donnée." },
+{ id:"bamqcmB-1", chap:["radio","inter","bio"], serie:3, n:1, type:"QRM", titre:"Désintégration et usage d'un même radioélément (très fréquent)", enonce:"Le gallium 68 (Z = 31) est un émetteur β+ de période 68 minutes, utilisé en TEP. À ce propos :", items:["le noyau fils a pour numéro atomique 32", "le noyau fils est isobare du gallium 68", "les photons détectés en TEP ont chacun une énergie de 1,022 MeV", "4 h 32 après sa préparation, l'activité est divisée par 16", "la caméra TEP détecte directement le positon émis"], rep:"BD", methode:["J'annote : β+ → Z − 1 = 30, A identique (68).", "Je pose la TEP : annihilation → 2 photons de 511 keV, détectés en coïncidence.", "Je convertis : 4 h 32 = 272 min ; n = 272 ÷ 68 = 4 ; 2⁴ = 16."], expl:["Étape 1 : β+ → Z − 1 = 30 (et non + 1).", "Étape 1.", "Étape 2 : 511 keV chacun ; 1,022 MeV est leur somme.", "Étape 3.", "Étape 2 : on détecte les photons d'annihilation."], pieges:"β+ fait diminuer Z. 511 keV par photon. Convertir 4 h 32 en minutes avant de diviser par 68." },
+{ id:"bamqcmB-2", chap:["radio","inter","bio"], serie:3, n:2, type:"QRM", titre:"Compétitions : β+ / capture et γ / conversion interne (très fréquent)", enonce:"À propos des modes de désintégration et de désexcitation :", items:["la capture électronique est en compétition avec l'émission β+", "pour un noyau trop riche en protons, si l'écart d'énergie disponible est inférieur à 1,022 MeV, seule la capture électronique est possible", "la conversion interne est en compétition avec l'émission γ", "la conversion interne modifie le numéro atomique du noyau", "l'électron de conversion interne provient du noyau"], rep:"ABC", methode:["Je pose la première compétition : β+ et capture donnent le même fils (Z − 1).", "Je pose le seuil : la β+ exige plus de 1,022 MeV ; la capture n'a pas de seuil.", "Je pose la seconde compétition : un noyau excité se calme par γ ou en donnant son énergie à un électron du cortège (conversion interne).", "Je vérifie : désexcitation → Z et A inchangés ; l'électron éjecté vient du cortège."], expl:["Étape 1.", "Étape 2.", "Étape 3.", "Étape 4 : Z et A ne changent pas.", "Étape 4 : il vient du cortège."], pieges:"Capture ↔ β+ (pas β−). Conversion interne ↔ γ. L'électron de conversion vient du cortège, comme l'électron Auger." },
+{ id:"bamqcmB-7", chap:["radio","inter","bio"], serie:3, n:3, type:"QRM", titre:"Effet Compton (très fréquent)", enonce:"Un photon γ de 600 keV subit un effet Compton dans les tissus mous. À ce propos :", items:["il interagit avec un électron faiblement lié", "le photon diffusé a une énergie inférieure à 600 keV", "toute l'énergie du photon est transférée à l'électron Compton", "à cette énergie, l'effet Compton est l'interaction prépondérante dans les tissus", "ce photon pourrait aussi produire une paire électron-positon"], rep:"ABD", methode:["Je pose le partenaire : électron peu lié, externe.", "Je pose le partage : une partie de l'énergie à l'électron, le reste au photon diffusé.", "Je place 600 keV dans l'eau : entre 50 keV et 20 MeV → Compton.", "Je vérifie le seuil des paires : 600 keV < 1,022 MeV."], expl:["Étape 1.", "Étape 2.", "Étape 2 : une partie seulement : un photon diffusé repart.", "Étape 3.", "Étape 4 : impossible sous 1,022 MeV."], pieges:"Compton = partage. « Toute l'énergie à l'électron » est le piège le plus fréquent. Pas de paire sous 1,022 MeV." },
+{ id:"bamqcmB-8", chap:["radio","inter","bio"], serie:3, n:4, type:"QRM", titre:"Les effets comparés, création de paires (très fréquent)", enonce:"À propos des interactions des photons avec la matière :", items:["la création de paires se produit dans le champ électrique d'un noyau", "un photon de 1 MeV peut créer une paire électron-positon", "le positon issu d'une création de paires finit par s'annihiler avec un électron", "l'effet photoélectrique peut se produire entre une particule α et un électron", "dans l'effet photoélectrique, le photon incident disparaît"], rep:"ACE", methode:["Je pose les partenaires : photoélectrique et Compton → électrons ; paires → noyau.", "Je vérifie le seuil : paires au-dessus de 1,022 MeV.", "Je suis le positon : annihilation → 2 photons de 511 keV.", "Je vérifie l'acteur : les 3 effets concernent des photons uniquement."], expl:["Étape 1.", "Étape 2 : 1 MeV < 1,022 MeV.", "Étape 3.", "Étape 4 : une α n'est pas un photon.", "Étape 1."], pieges:"Seuil des paires : 1,022 MeV, pas 1 MeV. Les 3 effets concernent des photons, jamais des α ni des positons." },
+{ id:"bamqcmB-3", chap:["radio","inter","bio"], serie:3, n:5, type:"QRU", titre:"Phénomène, vocabulaire et unités (fréquent)", enonce:"Quelle est la seule proposition exacte ?", items:["la radioactivité est un phénomène qui concerne le cortège électronique", "une activité de 1 Ci correspond à 37 GBq", "le becquerel correspond à une désintégration par minute", "l'énergie de liaison moyenne par nucléon est maximale pour les noyaux les plus lourds", "la radioactivité artificielle a été découverte par Henri Becquerel"], rep:"B", methode:["Je rappelle la définition : phénomène nucléaire, spontané ou provoqué, aléatoire.", "Je rappelle les unités : 1 Bq = 1 désintégration par seconde ; 1 Ci = 37 GBq.", "Je rappelle la stabilité : énergie de liaison par nucléon maximale pour les noyaux moyens.", "Je rappelle l'histoire : Becquerel 1896 (naturelle) ; Joliot-Curie 1934 (artificielle)."], expl:["Étape 1 : phénomène nucléaire.", "Étape 2.", "Étape 2 : par seconde.", "Étape 3 : noyaux moyens.", "Étape 4 : Irène et Frédéric Joliot-Curie, 1934."], pieges:"Nucléaire, pas électronique. Bq = par seconde. Noyaux moyens = les plus stables. Becquerel → naturelle ; Joliot-Curie → artificielle." },
+{ id:"bamqcmB-4", chap:["radio","inter","bio"], serie:3, n:6, type:"QRU", titre:"Calcul d'activité à partir du nombre de noyaux (fréquent)", enonce:"Une préparation contient 2,16 × 10¹² noyaux de technétium 99m (période 6 h). Quelle est son activité ?", items:["70 MBq", "100 MBq", "143 MBq", "4,2 GBq", "252 GBq"], rep:"A", methode:["J'écris la formule : A = λN = 0,7 × N ÷ T, avec T en secondes pour obtenir des Bq.", "Je simplifie : N ÷ T = 2,16 × 10¹² ÷ 2,16 × 10⁴ = 10⁸.", "Je multiplie : A = 0,7 × 10⁸ = 7 × 10⁷ Bq = 70 MBq."], expl:["Étape 3.", "Étape 1 : on a oublié le facteur 0,7.", "Étape 1 : on a divisé par 0,7 au lieu de multiplier.", "Étape 1 : T laissée en minutes (360).", "Étape 1 : T laissée en heures (6)."], pieges:"T en secondes pour obtenir des becquerels. λ = 0,7 ÷ T : on multiplie par 0,7.", donnee:"Donnée : 6 h = 21 600 s" },
+{ id:"bamqcmB-9", chap:["radio","inter","bio"], serie:3, n:7, type:"QRM", titre:"Ionisant ou non, et radioprotection (fréquent)", enonce:"Dans un laboratoire, on manipule une source α, une source β−, une source γ et un générateur de neutrons. La pièce est éclairée par une lampe UV. À propos de la protection :", items:["une feuille de papier suffit à arrêter les particules α", "un écran de plexiglas d'un centimètre est adapté pour arrêter les électrons β−", "un écran de plomb arrête totalement les photons γ", "une paroi de plomb est la protection la plus adaptée contre les neutrons", "le rayonnement de la lampe UV est ionisant"], rep:"AB", methode:["Je pose les écrans : α → papier ; β → plexiglas ; X et γ → plomb, qui atténue ; neutrons → béton épais.", "Je vérifie le seuil ionisant : λ < 100 nm ; les UV en sont au-dessus."], expl:["Étape 1.", "Étape 1.", "Étape 1 : le plomb atténue, il n'arrête jamais totalement.", "Étape 1 : béton épais ; les neutrons interagissent avec les noyaux.", "Étape 2 : UV non ionisants."], pieges:"Un faisceau de photons est atténué, jamais arrêté. Le plomb n'est pas universel : il ne convient pas aux neutrons." },
+{ id:"bamqcmB-11", chap:["radio","inter","bio"], serie:3, n:8, type:"QRM", titre:"ADN et devenir de la cellule (fréquent)", enonce:"Une population de cellules est irradiée. À propos du devenir de ces cellules :", items:["une cellule dont l'ADN est faiblement lésé peut être réparée fidèlement", "une réparation erronée de l'ADN peut aboutir à une cellule mutée viable", "la nécrose est une mort cellulaire programmée sans réaction inflammatoire", "les radicaux libres produits par la radiolyse de l'eau sont des espèces peu réactives", "la mort d'un grand nombre de cellules est à l'origine des effets déterministes"], rep:"ABE", methode:["Je pose le niveau de lésion : faible → réparation (fidèle ou erronée) ; forte → mort.", "Je distingue les morts : nécrose → éclatement, inflammation ; apoptose → programmée, fragments non agressifs.", "Je rappelle la radiolyse : radicaux libres = électron célibataire = très réactifs.", "Je relie à l'organisme : mutation → stochastique ; mort massive → déterministe."], expl:["Étape 1.", "Étape 1.", "Étape 2 : c'est la définition de l'apoptose ; la nécrose provoque une inflammation.", "Étape 3 : très grande réactivité.", "Étape 4."], pieges:"Nécrose ↔ inflammation ; apoptose ↔ non agressive. Radical libre = très réactif. Mutation → stochastique." },
+{ id:"bamqcmB-5", chap:["radio","inter","bio"], serie:3, n:9, type:"QRU", titre:"Période effective, puis activité dans l'organe (parfois)", enonce:"400 MBq d'iode 131 (période physique 8 jours) se fixent dans la thyroïde, où la période biologique de l'iode est de 24 jours. Quelle activité reste dans la thyroïde 18 jours plus tard ?", items:["50 MBq", "84 MBq", "133 MBq", "238 MBq", "271 MBq"], rep:"A", methode:["Je choisis la période : « dans la thyroïde » → période effective.", "Je calcule Te = (8 × 24) ÷ (8 + 24) = 192 ÷ 32 = 6 jours.", "Je calcule n = 18 ÷ 6 = 3.", "Je divise : 400 ÷ 2³ = 50 MBq."], expl:["Étape 4.", "Étape 1 : on a pris la période physique seule (8 j).", "Étape 3 : on a divisé par n au lieu de 2ⁿ.", "Étape 1 : on a pris la période biologique seule (24 j).", "Étape 2 : on a additionné les périodes (32 j)."], pieges:"« Dans l'organisme » → période effective. Te = produit ÷ somme, plus petite que les deux. Diviser par 2ⁿ." },
+{ id:"bamqcmB-12", chap:["radio","inter","bio"], serie:3, n:10, type:"QRM", titre:"Doses équivalente et efficace (parfois)", enonce:"À propos des grandeurs dosimétriques :", items:["la dose équivalente s'obtient en multipliant la dose absorbée par un facteur lié à la nature du rayonnement", "la dose efficace s'exprime en gray", "à dose absorbée égale, des particules α donnent une dose équivalente 20 fois plus élevée que des photons γ", "le facteur de pondération tissulaire des gonades est le plus faible de tous les tissus", "dans le système international, la dose absorbée s'exprime en J/kg"], rep:"ACE", methode:["Je range : H = WR × D (rayonnement) ; E = Σ WT × H (tissu).", "Je rappelle les unités : D en gray (J/kg) ; H et E en sievert.", "Je rappelle les valeurs : WR = 1 (γ) et 20 (α) ; WT des gonades = 0,20, le plus élevé."], expl:["Étape 1.", "Étape 2 : en sievert.", "Étape 3 : 20 ÷ 1 = 20.", "Étape 3 : 0,20 : le plus élevé.", "Étape 2."], pieges:"Équivalente ↔ rayonnement (WR) ; efficace ↔ tissu (WT). Gray pour D, sievert pour H et E." },
+{ id:"bamqcmB-6", chap:["radio","inter","bio"], serie:3, n:11, type:"QRM", titre:"Filiation radioactive (rare)", enonce:"Un radioélément père de période 30 jours donne un fils radioactif de période 2 jours. On part d'un échantillon ne contenant que le père. À ce propos :", items:["il s'établit un équilibre transitoire", "à l'équilibre, l'activité du fils est légèrement supérieure à celle du père", "il s'établit un équilibre séculaire", "au début, l'activité du fils commence par augmenter", "à l'équilibre, les deux activités décroissent avec la période du fils"], rep:"ABD", methode:["Je calcule le rapport : 30 ÷ 2 = 15, entre 10 et 100 → équilibre transitoire.", "Je rappelle le transitoire : A₂ parallèle à A₁, un peu supérieure ; les deux décroissent avec la période du père.", "Je rappelle le départ : sans fils au début, son activité monte, passe par un maximum, puis suit le père."], expl:["Étape 1.", "Étape 2.", "Étape 1 : séculaire seulement si le rapport dépasse 100.", "Étape 3.", "Étape 2 : elles suivent la période du père (30 j)."], pieges:"Calculer le rapport T₁ ÷ T₂ avant de nommer l'équilibre. À l'équilibre, le fils suit le père." },
+{ id:"bamqcmB-10", chap:["radio","inter","bio"], serie:3, n:12, type:"QRU", titre:"Quel effet domine (rare)", enonce:"Quelle est la seule proposition exacte ?", items:["dans l'eau, l'effet photoélectrique est prépondérant pour des photons de 200 keV", "dans le plomb, l'effet Compton est prépondérant pour des photons de 5 MeV", "dans le plomb, l'effet photoélectrique est prépondérant pour des photons de 300 keV", "dans l'eau, la création de paires est prépondérante dès 2 MeV", "le coefficient d'atténuation photoélectrique augmente avec l'énergie du photon"], rep:"C", methode:["J'écris les limites : eau → 50 keV et 20 MeV ; plomb → 500 keV et 1 MeV.", "Je place chaque énergie dans la bonne case.", "Je rappelle la variation : τ ≈ Z³/E³, il diminue quand E augmente."], expl:["Étape 2 : 200 keV dans l'eau → Compton.", "Étape 2 : 5 MeV dans le plomb → paires.", "Étape 2 : 300 keV < 500 keV.", "Étape 2 : dans l'eau, les paires dominent au-dessus de 20 MeV.", "Étape 3 : il diminue."], pieges:"Ne pas mélanger les limites de l'eau (50 keV, 20 MeV) et du plomb (500 keV, 1 MeV)." },
 ];
 
 /* =====================================================================
