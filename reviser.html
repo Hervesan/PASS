@@ -3279,7 +3279,7 @@ let results = {};
 try { results = JSON.parse(localStorage.getItem(STORE_KEY) || "{}") || {}; } catch(e){ results = {}; }
 function saveResults(){ try { localStorage.setItem(STORE_KEY, JSON.stringify(results)); } catch(e){} }
 
-const state = { course:null, chap:"all", tab:"fiches", qType:"all", qStatus:"all", serie:1 };
+const state = { course:null, chap:"all", tab:"fiches", qType:"all", qStatus:"all", serie:null };
 const selections = {};   // id -> Set des lettres cochées
 const validated = {};    // id -> true quand corrigé à l'écran
 
@@ -3399,7 +3399,7 @@ function docHTML(d){
     <span class="ic">${/\.png$/i.test(d.fichier) ? "IMG" : "PDF"}</span><span><b>${esc(d.titre)}</b><small>${esc(d.desc||"")}</small></span></a>`;
 }
 /* ---------- rubrique M'entraîner ---------- */
-function seriesOf(c){ return [...new Set(c.qcm.filter(inChap).map(q=>q.serie).filter(Boolean))].sort(); }
+function seriesOf(c){ return [...new Set(c.qcm.filter(inChap).map(q=>q.serie).filter(Boolean))].sort((a,b) => b - a); } /* la série la plus récente en premier */
 function trainPool(c){
   const all = c.qcm.filter(inChap), ss = seriesOf(c);
   if (!ss.length) return all;
@@ -3558,6 +3558,7 @@ function route(){
   const [id, chap, tab] = decodeURIComponent(currentHash.replace(/^#/, "")).split("/");
   const c = id ? CONTENU[id] : null;
   if (id && findMat(id) && c && chap && c.chapitres.some(x => x.id === chap)){
+    if (state.course !== id || state.chap !== chap) state.serie = null; /* on rouvre sur la dernière série */
     state.course = id; state.chap = chap;
     state.tab = tab === "train" || !tab ? "train" : "docs";
     show("viewCourse"); renderCourse();
