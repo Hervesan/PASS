@@ -1488,12 +1488,14 @@ CONTENU["biophysique-milieu-interieur"] = {
 const DOSSIER_ALC = "Revision Alcène et Alcyne/";
 const DOSSIER_BENZ = "Revision Benzene/";
 const DOSSIER_ALD = "Revision Aldehydes et cetones/";
+const DOSSIER_APE = "Revision Alcools Phenols Ethers/";
 
 CONTENU["chimie"] = {
-  sousTitre: "Alcènes et alcynes (FC7 · FC8) · Benzène et dérivés (FC10) · Aldéhydes et cétones (FC13)",
+  sousTitre: "Alcènes et alcynes (FC7 · FC8) · Benzène et dérivés (FC10) · Alcools, phénols, éthers (FC12) · Aldéhydes et cétones (FC13)",
   introFiches: "La fiche à apprendre, en PDF : les réactifs en 5 phrases, avec les schémas, le tableau, l'alcynure, l'eau, l'électrophile/nucléophile et l'effet inductif.",
   chapitres: [ { id:"alc", label:"Alcènes et alcynes", code:"FC7 · FC8" },
                { id:"benz", label:"Benzène et dérivés", code:"FC10" },
+               { id:"ape", label:"Alcools, phénols, éthers", code:"FC12" },
                { id:"ald", label:"Aldéhydes et cétones", code:"FC13" } ],
   herve: [
     { titre:"Explications en dessins", desc:"Tous les dessins faits pendant les séances, rangés par phrase (49 pages).", chap:"alc",
@@ -1508,6 +1510,10 @@ CONTENU["chimie"] = {
       fichier: DOSSIER_BENZ + "Groupements_benzene.png" },
     { titre:"Les réactifs en 5 phrases", desc:"Alcènes (phrases 1, 2, 4), alcynes (3, 5), autres réactifs, schémas, tableau, effet inductif, ce qui tombe aussi.", chap:"alc",
       fichier: DOSSIER_ALC + "Chimie_Alcenes_Alcynes_Reactifs_en_5_phrases.pdf" },
+    { titre:"Matrice générale fonction × réactif", desc:"Quelle fonction + quel réactif → quel produit, avec les conditions (dilué, concentré, chaleur, sans eau…) et la fréquence aux annales ; les 6 règles qui font les items ; Claisen de A à Z.", chap:"ape", cat:"apprendre",
+      fichier: DOSSIER_APE + "Chimie_Alcools_Phenols_Ethers_matrice_generalisee.pdf" },
+    { titre:"Claisen en dessin", desc:"Le réarrangement en 4 étapes (numéroter O–C1–C2=C3, couper O–C1, coller C3 en ortho, tautomérie), le retournement de la chaîne et le piège du QCM. 1 page.", chap:"ape", cat:"comprendre",
+      fichier: DOSSIER_APE + "Chimie_Claisen_dessin.pdf" },
     { titre:"Synthèse : le riche donne au pauvre", desc:"Le principe qui explique tout le chapitre, avec les dessins. À lire en premier.", chap:"ald", cat:"comprendre",
       fichier: DOSSIER_ALD + "Chimie_Aldehydes_cetones_synthese_le_riche_donne_au_pauvre.pdf" },
     { titre:"Placer le carbanion", desc:"La méthode en 4 questions (plus « qui donne ? ») et 7 molécules dessinées, de la butanone au G de Robinson.", chap:"ald", cat:"comprendre",
