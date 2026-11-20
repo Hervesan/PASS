@@ -3018,13 +3018,15 @@ CONTENU["biophysique-milieu-interieur"] = {
 const DOSSIER_ALC = "Revision Alcène et Alcyne/";
 const DOSSIER_BENZ = "Revision Benzene/";
 const DOSSIER_ALD = "Revision Aldehydes et cetones/";
-const DOSSIER_APE = "Revision Alcools Phenols Ethers/";
+const DOSSIER_APE = "Revision Alcools Phenols Ethers/"
+const DOSSIER_ORGA = "Revision Organometalliques/";
 
 CONTENU["chimie"] = {
-  sousTitre: "Alcènes et alcynes (FC7 · FC8) · Benzène et dérivés (FC10) · Alcools, phénols, éthers (FC12) · Aldéhydes et cétones (FC13)",
+  sousTitre: "Alcènes et alcynes (FC7 · FC8) · Benzène et dérivés (FC10) · Dérivés organométalliques (FC11) · Alcools, phénols, éthers (FC12) · Aldéhydes et cétones (FC13)",
   introFiches: "La fiche à apprendre, en PDF : les réactifs en 5 phrases, avec les schémas, le tableau, l'alcynure, l'eau, l'électrophile/nucléophile et l'effet inductif.",
   chapitres: [ { id:"alc", label:"Alcènes et alcynes", code:"FC7 · FC8" },
                { id:"benz", label:"Benzène et dérivés", code:"FC10" },
+               { id:"orga", label:"Dérivés organométalliques", code:"FC11" },
                { id:"ape", label:"Alcools, phénols, éthers", code:"FC12" },
                { id:"ald", label:"Aldéhydes et cétones", code:"FC13" } ],
   herve: [
@@ -3058,6 +3060,8 @@ CONTENU["chimie"] = {
       fichier: DOSSIER_ALD + "Chimie_Aldehydes_cetones_matrice_generalisee.pdf" },
     { titre:"Les réactions à nom", desc:"Pour chacune : réactifs, conditions, molécule de départ et produit, dessinés. Cyclisation comprise.", chap:"ald", cat:"apprendre",
       fichier: DOSSIER_ALD + "Chimie_Aldehydes_cetones_reactions_a_nom.pdf" },
+    { titre:"Matrice générale substrat × organométallique", desc:"RMgX, RMgX + CuBr, RLi sur 11 substrats, produits dessinés et fréquence aux annales ; les 6 règles qui font les items (acide + 2 RLi 9/9, énone 1,4, nitrile → cétone, ester/lactone, compter les C, synthèse aromatique) ; les mécanismes ; les annales 2018-2026 item par item.", chap:"orga", cat:"apprendre",
+      fichier: DOSSIER_ORGA + "Chimie_Organometalliques_matrice_et_fiche.pdf" },
   ],
   entrainement: [
     { titre:"6 exercices · sujet et corrigé", desc:"Format des épreuves PASS 2025-2026 (QRM et QRU), corrigé illustré avec tips réflexes.", chap:"benz",
