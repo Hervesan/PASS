@@ -3022,16 +3022,18 @@ const DOSSIER_ALD = "Revision Aldehydes et cetones/";
 const DOSSIER_APE = "Revision Alcools Phenols Ethers/"
 const DOSSIER_ORGA = "Revision Organometalliques/";
 const DOSSIER_BLANC = "Chimie-QCM-Clanc/";
+const DOSSIER_ANNALE = "Chimie-Annales/";
 
 CONTENU["chimie"] = {
-  sousTitre: "Alcènes et alcynes (FC7 · FC8) · Benzène et dérivés (FC10) · Dérivés organométalliques (FC11) · Alcools, phénols, éthers (FC12) · Aldéhydes et cétones (FC13) · QCM Blanc",
+  sousTitre: "Alcènes et alcynes (FC7 · FC8) · Benzène et dérivés (FC10) · Dérivés organométalliques (FC11) · Alcools, phénols, éthers (FC12) · Aldéhydes et cétones (FC13) · QCM Blanc · Annales",
   introFiches: "La fiche à apprendre, en PDF : les réactifs en 5 phrases, avec les schémas, le tableau, l'alcynure, l'eau, l'électrophile/nucléophile et l'effet inductif.",
   chapitres: [ { id:"alc", label:"Alcènes et alcynes", code:"FC7 · FC8" },
                { id:"benz", label:"Benzène et dérivés", code:"FC10" },
                { id:"orga", label:"Dérivés organométalliques", code:"FC11" },
                { id:"ape", label:"Alcools, phénols, éthers", code:"FC12" },
                { id:"ald", label:"Aldéhydes et cétones", code:"FC13" },
-               { id:"blanc", label:"QCM Blanc", code:"Tous chapitres" } ],
+               { id:"blanc", label:"QCM Blanc", code:"Tous chapitres" },
+               { id:"annale", label:"Annales", code:"2018 → 2026 · questions clones" } ],
   herve: [
     { titre:"Explications en dessins", desc:"Tous les dessins faits pendant les séances, rangés par phrase (49 pages).", chap:"alc",
       fichier: DOSSIER_ALC + "Chimie_Alcenes_Alcynes_Explications_en_dessins.pdf" },
@@ -3107,6 +3109,12 @@ CONTENU["chimie"] = {
       fichier: DOSSIER_ALD + "Chimie_Aldehydes_cetones_serie3_10_QCM_calee_annales.pdf" },
     { titre:"QCM blanc · 28 questions type examen (v3)", desc:"Tous chapitres, même difficulté et mêmes formulations que les annales : cartes d'identité, alcyne, alcène, stéréo, Diels-Alder, benzène, synthèses aromatiques (3 groupes, propyle), Claisen, dérivé halogéné, acidité, 5 réactions variées, oxydation, cétolisation, Robinson, Wittig, changer le cycle, malonique, organométalliques, α/β, mésomérie (texte et formes limites dessinées), effets, Birch, acides et dérivés. Sujet puis corrigé à la fin, chaque item relié à son étape de routine et à sa fiche. Aussi en QCM interactifs (28 questions).", chap:"blanc",
       fichier: DOSSIER_BLANC + "28_questions_type_examen_v3.pdf" },
+    { titre:"Recueil des arbres de décision", desc:"Les 9 arbres oui / non (carbanion / carbocation, oxydo-réduction, réducteur, stéréo, base, acide, acides carboxyliques, mésomérie, azote), avec molécules dessinées et items des annales. 14 pages.", chap:"annale", cat:"apprendre",
+      fichier: DOSSIER_ANNALE + "Arbres_chimie_organique_recueil.pdf" },
+    { titre:"Recueil des questions clones", desc:"Les 14 questions qui reviennent chaque année (2018-2026) : énoncés d'origine côte à côte, ce qui change et ce qui ne change jamais. Sans les réponses, pour s'entraîner. 19 pages.", chap:"annale", cat:"cibler",
+      fichier: DOSSIER_ANNALE + "Questions_clones_recueil.pdf" },
+    { titre:"Corrigé du recueil des questions clones", desc:"Pour chaque question : l'énoncé et ses items, la réponse officielle et la correction détaillée Médisup item par item, le réflexe de chaque type. 127 pages.", chap:"annale", cat:"cibler",
+      fichier: DOSSIER_ANNALE + "Corrige_recueil_questions_clones.pdf" },
   ],
   qcm: [
 {
